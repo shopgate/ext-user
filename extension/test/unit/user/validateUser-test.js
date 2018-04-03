@@ -9,8 +9,8 @@ describe('validateUser', () => {
       password: 'qwerty88 ',
       firstName: 'John ',
       lastName: 'Doe ',
-      gender: 'male ',
-      birthday: '01-01-19710 ',
+      gender: 'male',
+      birthday: '01-01-1970',
       phone: '+11230000001 '
     }
     const expectedUser = {
@@ -19,7 +19,7 @@ describe('validateUser', () => {
       firstName: 'John',
       lastName: 'Doe',
       gender: 'male',
-      birthday: '01-01-19710',
+      birthday: '01-01-1970',
       phone: '+11230000001'
     }
     validateUser(context, validUser, (err, user) => {
@@ -41,7 +41,7 @@ describe('validateUser', () => {
     }
     validateUser(context, invalidUser, (err) => {
       assert.equal(err.code, EINVAL)
-      assert.equal(err.message, 'child "mail" fails because ["mail" must be a valid email]. child "firstName" fails because ["firstName" must only contain alpha-numeric characters]. child "lastName" fails because ["lastName" must only contain alpha-numeric characters]. child "gender" fails because ["gender" must be one of [female, male]]. child "birthday" fails because ["birthday" must be a number of milliseconds or valid date string]')
+      assert.equal(err.message, '"mail" must be a valid email')
       done()
     })
   })

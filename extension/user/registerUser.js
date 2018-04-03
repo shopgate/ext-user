@@ -18,17 +18,23 @@ const crypto = require('crypto')
  * @param {function} cb
  */
 module.exports = (context, input, cb) => {
-  const password = crypto.createHash('md5').update(input.password).digest('hex')
+  // is logged in
+  if (context.meta.userId) {
+    return cb(null, {
+      userId: context.meta.userId
+    })
+  }
 
+  const password = crypto.createHash('md5').update(input.password).digest('hex')
   const user = {
     id: uuidv4(),
     mail: input.mail,
     password: password,
     firstName: input.firstName,
     lastName: input.lastName,
-    gender: input.gender,
-    birthday: input.birthday,
-    phone: input.phone
+    gender: input.gender || null, // optional
+    birthday: input.birthday || null,
+    phone: input.phone || null
   }
 
   context.storage.extension.set(user.id, user, (err) => {

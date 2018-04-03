@@ -22,9 +22,9 @@ module.exports = (context, input, cb) => {
     password: input.password.trim(),
     firstName: input.firstName.trim(),
     lastName: input.lastName.trim(),
-    gender: input.gender.trim(),
-    birthday: input.birthday.trim(),
-    phone: input.phone.trim()
+    gender: input.gender,
+    birthday: input.birthday,
+    phone: input.phone ? input.phone.trim() : input.phone
   }
 
   // Validation schema
@@ -39,9 +39,9 @@ module.exports = (context, input, cb) => {
   }
 
   // Validation
-  Joi.validate(user, schema, {abortEarly: false}, (errValidate) => {
+  Joi.validate(user, schema, /* {abortEarly: false}, */ (errValidate) => {
     if (errValidate) {
-      return cb(customError(EINVAL, errValidate.message))
+      return cb(customError(EINVAL, errValidate.details[0].message))
     }
     cb(null, user)
   })

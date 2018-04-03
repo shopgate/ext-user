@@ -44,12 +44,6 @@
           { "key": "data", "id": "4"}
         ],
         "output": []
-      },
-      {
-        "type": "pipeline",
-        "id": "shopgate.cart.trackCartChangedEvent.v1",
-        "input": [],
-        "output": []
       }
     ]
   }

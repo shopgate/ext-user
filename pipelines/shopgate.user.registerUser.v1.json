@@ -1,16 +1,16 @@
 {
   "version": "1",
   "pipeline": {
-    "id": "shopgate.user.getUser.v1",
+    "id": "shopgate.user.registerUser.v1",
     "public": true,
     "input": [
       {"key": "mail", "id": "1001"},
       {"key": "password", "id": "1002"},
       {"key": "firstName", "id": "1003"},
       {"key": "lastName", "id": "1004"},
-      {"key": "gender", "id": "1005", "optional": "true"},
-      {"key": "birthday", "id": "1006", "optional": "true"},
-      {"key": "phone", "id": "1007", "optional": "true"}
+      {"key": "gender", "id": "1005", "optional": true},
+      {"key": "birthday", "id": "1006", "optional": true},
+      {"key": "phone", "id": "1007", "optional": true}
     ],
     "output": [
       {"key": "userId", "id": "1000"}
@@ -25,18 +25,18 @@
           {"key": "password", "id": "1002"},
           {"key": "firstName", "id": "1003"},
           {"key": "lastName", "id": "1004"},
-          {"key": "gender", "id": "1005", "optional": "true"},
-          {"key": "birthday", "id": "1006", "optional": "true"},
-          {"key": "phone", "id": "1007", "optional": "true"}
+          {"key": "gender", "id": "1005", "optional": true},
+          {"key": "birthday", "id": "1006", "optional": true},
+          {"key": "phone", "id": "1007", "optional": true}
         ],
         "output": [
           {"key": "mail", "id": "1001"},
           {"key": "password", "id": "1002"},
           {"key": "firstName", "id": "1003"},
           {"key": "lastName", "id": "1004"},
-          {"key": "gender", "id": "1005", "optional": "true"},
-          {"key": "birthday", "id": "1006", "optional": "true"},
-          {"key": "phone", "id": "1007", "optional": "true"}
+          {"key": "gender", "id": "1005", "optional": true},
+          {"key": "birthday", "id": "1006", "optional": true},
+          {"key": "phone", "id": "1007", "optional": true}
         ]
       },
       {
@@ -48,9 +48,9 @@
           {"key": "password", "id": "1002"},
           {"key": "firstName", "id": "1003"},
           {"key": "lastName", "id": "1004"},
-          {"key": "gender", "id": "1005", "optional": "true"},
-          {"key": "birthday", "id": "1006", "optional": "true"},
-          {"key": "phone", "id": "1007", "optional": "true"}
+          {"key": "gender", "id": "1005", "optional": true},
+          {"key": "birthday", "id": "1006", "optional": true},
+          {"key": "phone", "id": "1007", "optional": true}
         ],
         "output": [
           {"key": "userId", "id": "1000"}

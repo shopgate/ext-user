@@ -6,7 +6,7 @@ const {EACCESS, ENOTFOUND, customError} = require('../error')
  */
 module.exports = (context, input, cb) => {
   if (!context.meta.userId) {
-    cb(customError(EACCESS, 'Unauthorized access'))
+    return cb(customError(EACCESS, 'Unauthorized access'))
   }
 
   context.storage.extension.get(context.meta.userId, (err, user) => {
@@ -15,7 +15,7 @@ module.exports = (context, input, cb) => {
     }
 
     if (!user) {
-      cb(customError(ENOTFOUND, 'User not found'))
+      return cb(customError(ENOTFOUND, 'User not found'))
     }
 
     cb(null, user)

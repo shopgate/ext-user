@@ -3,6 +3,9 @@ const registerUser = require('../../../user/registerUser')
 
 describe('registerUser', () => {
   const context = {
+    meta: {
+      userId: null
+    },
     storage: {
       extension: {
         set: (key, cb) => cb() // noop

@@ -27,7 +27,7 @@ module.exports = function (context, input, cb) {
     }
 
     if (!userId) {
-      cb(customError(ENOTFOUND, 'User is not found'))
+      return cb(customError(ENOTFOUND, 'User is not found'))
     }
 
     context.storage.extension.get(userId, (err, user) => {
@@ -35,10 +35,14 @@ module.exports = function (context, input, cb) {
         return cb(err)
       }
 
+      if (!user) {
+        return cb(customError(ENOTFOUND, 'User not found'))
+      }
+
       // Check password match
       const password = crypto.createHash('md5').update(input.parameters.password).digest('hex')
       if (user.password !== password) {
-        cb(customError(EINVALIDCREDENTIALS, 'Password mismatch'))
+        return cb(customError(EINVALIDCREDENTIALS, 'Password mismatch'))
       }
 
       cb(null, {

@@ -48,7 +48,6 @@ describe('login', () => {
   })
 
   it('Should throw error when user is not found', (done) => {
-    let userId = 'c558841a-9e15-4b08-a5ba-d5db8845439a'
     context.storage.extension.get = (keyEmail, cb) => {
       assert.equal(keyEmail, input.parameters.login)
       cb()

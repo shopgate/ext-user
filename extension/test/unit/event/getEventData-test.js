@@ -8,6 +8,7 @@ describe('getEventData', () => {
       lastName: 'Doe'
     }
 
+    // noinspection JSCheckFunctionSignatures
     getEventData({}, input, (err, result) => {
       assert.ifError(err)
       assert.equal(result.eventData, input)
