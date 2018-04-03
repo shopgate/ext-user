@@ -1,0 +1,38 @@
+{
+  "version": "1",
+  "pipeline": {
+    "id": "shopgate.user.logoutUser.v1",
+    "public": true,
+    "input": [],
+    "output": [
+      {"key": "success", "id": "1010"}
+    ],
+    "steps": [
+      {
+        "type": "auth",
+        "input": [],
+        "output": [
+          {"key": "success", "id": "1010"}
+        ]
+      },
+      {
+        "type": "staticValue",
+        "input": [],
+        "values": [
+          {"key": "eventType", "value": "userLoggedOut"}
+        ],
+        "output": [
+          {"key": "eventType", "id": "1030"}
+        ]
+      },
+      {
+        "type": "pipeline",
+        "id": "shopgate.tracking.trackEvent.v1",
+        "input": [
+          { "key": "type", "id": "1030" }
+        ],
+        "output": []
+      }
+    ]
+  }
+}
