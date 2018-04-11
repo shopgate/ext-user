@@ -3,16 +3,17 @@ const validateUser = require('../../../user/validateUser')
 const {EINVAL} = require('../../../error')
 
 describe('validateUser', () => {
-  it('Should validate user', (done) => {
-    const validUser = {
-      mail: 'john@doe.com ', // with whitespaces
-      password: 'qwerty88 ',
-      firstName: 'John ',
-      lastName: 'Doe ',
-      gender: 'male',
-      birthday: '01-01-1970',
-      phone: '+11230000001 '
-    }
+  const validUser = {
+    mail: 'john@doe.com ', // with whitespaces
+    password: 'qwerty88 ',
+    firstName: 'John ',
+    lastName: 'Doe ',
+    gender: 'male',
+    birthday: '01-01-1970',
+    phone: '+11230000001 '
+  }
+
+  it('Should normalize, validate and return normalized user data', (done) => {
     const expectedUser = {
       mail: 'john@doe.com',
       password: 'qwerty88',
@@ -29,16 +30,12 @@ describe('validateUser', () => {
     })
   })
 
-  it('Should not validate user', (done) => {
-    const invalidUser = {
-      mail: 'not email string',
-      password: 'qwerty88',
-      firstName: '^! non alphanum \\%$',
-      lastName: '^! Doe \\%$',
-      gender: '^! male \\%$',
-      birthday: '01- non date -19710',
-      phone: '+11230000001'
-    }
+  it('Should throw error on user email validation', (done) => {
+    const invalidUser = Object.assign(validUser, {
+      mail: 'not email string'
+    })
+
+    // noinspection JSCheckFunctionSignatures
     validateUser(context, invalidUser, (err) => {
       assert.equal(err.code, EINVAL)
       assert.equal(err.message, '"mail" must be a valid email')

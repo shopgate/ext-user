@@ -13,7 +13,7 @@ describe('getUser', () => {
       }
     }
   }
-  it('Should get user', (done) => {
+  it('Should load correct user', (done) => {
     const expectedUser = {
       id: 'c558841a-9e15-4b08-a5ba-d5db8845439a',
       mail: 'john@doe.com',

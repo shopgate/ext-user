@@ -1,5 +1,6 @@
 const assert = require('assert')
 const registerUser = require('../../../user/registerUser')
+const {EACCESS} = require('../../../error')
 
 describe('registerUser', () => {
   const context = {
@@ -22,6 +23,7 @@ describe('registerUser', () => {
     birthday: '01-01-19710',
     phone: '+11230000001'
   }
+
   it('Should register user', (done) => {
     let userId = null
     context.storage.extension.set = (keyUserId, userInfo, cb) => {
@@ -44,6 +46,16 @@ describe('registerUser', () => {
     registerUser(context, user, (err, result) => {
       assert.ifError(err)
       assert.equal(result.userId, userId)
+      done()
+    })
+  })
+
+  it('Should return error when user is logged in', (done) => {
+    context.meta.userId = 'iuib-sjdbsjd-0knskd'
+
+    // noinspection JSCheckFunctionSignatures
+    registerUser(context, user, (err) => {
+      assert.equal(err.code, EACCESS)
       done()
     })
   })

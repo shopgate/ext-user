@@ -40,12 +40,12 @@
 
 /**
  * @typedef {Object} SDKContextLog
- * @property {function} log.trace
- * @property {function} log.debug
- * @property {function} log.info
- * @property {function} log.warn
- * @property {function} log.error
- * @property {function} log.fatal
+ * @property {function} trace
+ * @property {function} debug
+ * @property {function} info
+ * @property {function} warn
+ * @property {function} error
+ * @property {function} fatal
  */
 
 /**

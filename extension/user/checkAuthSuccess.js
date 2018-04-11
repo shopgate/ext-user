@@ -1,4 +1,4 @@
-const {EAUTH, customError} = require('../error')
+const {EINTERNAL, createCustomError} = require('../error')
 /**
  * @typedef {Object} CheckAuthSuccessArgs
  * @property {boolean} authSuccess
@@ -11,7 +11,7 @@ const {EAUTH, customError} = require('../error')
  */
 module.exports = function (context, input, cb) {
   if (input.authSuccess !== true) {
-    return cb(customError(EAUTH, 'Auth failed'))
+    return cb(createCustomError(EINTERNAL, 'Auth failed'))
   }
   return cb(null, {})
 }

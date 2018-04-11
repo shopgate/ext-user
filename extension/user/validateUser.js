@@ -1,5 +1,5 @@
 const Joi = require('joi')
-const {EINVAL, customError} = require('./../error')
+const {EINVAL, createCustomError} = require('./../error')
 /**
  * @typedef {Object} RegisterInputArgs
  * @property {string} mail
@@ -41,7 +41,7 @@ module.exports = (context, input, cb) => {
   // Validation
   Joi.validate(user, schema, /* {abortEarly: false}, */ (errValidate) => {
     if (errValidate) {
-      return cb(customError(EINVAL, errValidate.details[0].message))
+      return cb(createCustomError(EINVAL, errValidate.details[0].message))
     }
     cb(null, user)
   })
