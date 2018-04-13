@@ -1,4 +1,4 @@
-const {EACCESS, ENOTFOUND, customError} = require('../error')
+const {EACCESS, ENOTFOUND, EINTERNAL, createCustomError} = require('../error')
 /**
  * @param {SDKContext} context
  * @param {Object} input
@@ -6,16 +6,17 @@ const {EACCESS, ENOTFOUND, customError} = require('../error')
  */
 module.exports = (context, input, cb) => {
   if (!context.meta.userId) {
-    return cb(customError(EACCESS, 'Unauthorized access'))
+    return cb(createCustomError(EACCESS, 'Unauthorized access'))
   }
 
   context.storage.extension.get(context.meta.userId, (err, user) => {
     if (err) {
-      return cb(err)
+      context.log.warn(err, 'Extension storage error')
+      return cb(createCustomError(EINTERNAL, 'Internal error'))
     }
 
     if (!user) {
-      return cb(customError(ENOTFOUND, 'User not found'))
+      return cb(createCustomError(ENOTFOUND, 'User not found'))
     }
 
     cb(null, user)

@@ -9,7 +9,8 @@
   "scripts": {
     "test": "mocha --use_strict recursive test/unit",
     "coverage": "nyc mocha --use_strict recursive test/unit",
-    "coverage-html": "nyc --reporter=html --report-dir=test/coverage mocha --use_strict recursive test/unit"
+    "coverage-html": "nyc --reporter=html --report-dir=test/coverage mocha --use_strict recursive test/unit",
+    "standard": "./node_modules/.bin/standard"
   },
   "license": "Apache-2.0",
   "dependencies": {

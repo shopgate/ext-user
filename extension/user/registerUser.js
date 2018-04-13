@@ -1,5 +1,6 @@
 const uuidv4 = require('uuid/v4')
 const crypto = require('crypto')
+const {EACCESS, EINTERNAL, createCustomError} = require('./../error')
 /**
  * @typedef {Object} RegisterInputArgs
  * @property {string} mail
@@ -18,11 +19,9 @@ const crypto = require('crypto')
  * @param {function} cb
  */
 module.exports = (context, input, cb) => {
-  // is logged in
+  // forbid for logged in user
   if (context.meta.userId) {
-    return cb(null, {
-      userId: context.meta.userId
-    })
+    return cb(createCustomError(EACCESS, 'User is logged in'))
   }
 
   const password = crypto.createHash('md5').update(input.password).digest('hex')
@@ -39,12 +38,14 @@ module.exports = (context, input, cb) => {
 
   context.storage.extension.set(user.id, user, (err) => {
     if (err) {
-      return cb(err)
+      context.log.warn(err, 'Extension storage error')
+      return cb(createCustomError(EINTERNAL, 'Internal error'))
     }
     // Store meta key, pointing to our user via email for login process
     context.storage.extension.set(input.mail, user.id, (err) => {
       if (err) {
-        return cb(err)
+        context.log.warn(err, 'Extension storage error')
+        return cb(createCustomError(EINTERNAL, 'Internal error'))
       }
 
       cb(null, {
