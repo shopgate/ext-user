@@ -1,0 +1,24 @@
+{
+  "name": "@shopgate/user",
+  "version": "1.0.0",
+  "description": "Shopgate Connect user extension",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/shopgate/ext-user.git"
+  },
+  "scripts": {
+    "standard": "./node_modules/.bin/standard"
+  },
+  "license": "Apache-2.0",
+  "dependencies": {
+    "glamor": "^2.20.40"
+  },
+  "devDependencies": {
+    "@shopgate/pwa-core": "^5.1.0",
+    "@shopgate/pwa-common": "^5.1.0",
+    "@shopgate/eslint-config": "^5.1.0",
+    "standard": "^10.0.3",
+    "prop-types": "^15.6.0",
+    "react": "^16.2.0"
+  }
+}
