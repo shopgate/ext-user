@@ -1,5 +1,18 @@
 {
   "version": "1.0.0",
   "id": "@shopgate/user",
-  "trusted": true
+  "trusted": true,
+  "components": [
+    {
+      "id": "RegisterRoute",
+      "path": "frontend/Register/route.jsx",
+      "target": "app.routes",
+      "type": "portals"
+    },
+    {
+      "id": "RegisterSubscription",
+      "path": "frontend/Register/subscribers.js",
+      "type": "subscribers"
+    }
+  ]
 }
