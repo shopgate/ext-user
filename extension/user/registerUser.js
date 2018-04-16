@@ -1,6 +1,6 @@
 const uuidv4 = require('uuid/v4')
-const crypto = require('crypto')
-const {EACCESS, EINTERNAL, createCustomError} = require('./../error')
+const {EACCESS, EINTERNAL, EEXISTS, createCustomError} = require('./../error')
+const Password = require('./Password')
 /**
  * @typedef {Object} RegisterInputArgs
  * @property {string} mail
@@ -24,32 +24,44 @@ module.exports = (context, input, cb) => {
     return cb(createCustomError(EACCESS, 'User is logged in'))
   }
 
-  const password = crypto.createHash('md5').update(input.password).digest('hex')
-  const user = {
-    id: uuidv4(),
-    mail: input.mail,
-    password: password,
-    firstName: input.firstName,
-    lastName: input.lastName,
-    gender: input.gender || null, // optional
-    birthday: input.birthday || null,
-    phone: input.phone || null
-  }
-
-  context.storage.extension.set(user.id, user, (err) => {
-    if (err) {
-      context.log.warn(err, 'Extension storage error')
+  context.storage.extension.get(input.mail, (errUserId, userId) => {
+    if (errUserId) {
+      context.log.warn(errUserId, 'Extension storage error')
       return cb(createCustomError(EINTERNAL, 'Internal error'))
     }
-    // Store meta key, pointing to our user via email for login process
-    context.storage.extension.set(input.mail, user.id, (err) => {
+
+    // Already exists
+    if (userId) {
+      return cb(createCustomError(EEXISTS, 'User already exists'))
+    }
+
+    const password = new Password(input.password)
+    const user = {
+      id: uuidv4(),
+      mail: input.mail,
+      password: password.password,
+      firstName: input.firstName,
+      lastName: input.lastName,
+      gender: input.gender || null, // optional
+      birthday: input.birthday || null,
+      phone: input.phone || null
+    }
+
+    context.storage.extension.set(user.id, user, (err) => {
       if (err) {
         context.log.warn(err, 'Extension storage error')
         return cb(createCustomError(EINTERNAL, 'Internal error'))
       }
+      // Store meta key, pointing to our user via email for login process
+      context.storage.extension.set(input.mail, user.id, (err) => {
+        if (err) {
+          context.log.warn(err, 'Extension storage error')
+          return cb(createCustomError(EINTERNAL, 'Internal error'))
+        }
 
-      cb(null, {
-        userId: user.id
+        cb(null, {
+          userId: user.id
+        })
       })
     })
   })

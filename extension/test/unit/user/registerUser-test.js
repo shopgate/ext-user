@@ -1,6 +1,6 @@
 const assert = require('assert')
 const registerUser = require('../../../user/registerUser')
-const {EACCESS} = require('../../../error')
+const {EACCESS, EEXISTS} = require('../../../error')
 
 describe('registerUser', () => {
   const context = {
@@ -26,6 +26,9 @@ describe('registerUser', () => {
 
   it('Should register user', (done) => {
     let userId = null
+    context.storage.extension.get = (keyEmail, cb) => {
+      cb()
+    }
     context.storage.extension.set = (keyUserId, userInfo, cb) => {
       assert(keyUserId) // UUID
       assert.equal(userInfo.id, keyUserId)
@@ -46,6 +49,22 @@ describe('registerUser', () => {
     registerUser(context, user, (err, result) => {
       assert.ifError(err)
       assert.equal(result.userId, userId)
+      done()
+    })
+  })
+
+  it('Should return error when user already exists', (done) => {
+    context.storage.extension.get = (keyEmail, cb) => {
+      cb(null, 'iuib-sjdbsjd-0knskd')
+    }
+    context.storage.extension.set = () => {
+      // should not be called
+      assert.fail()
+    }
+
+    // noinspection JSCheckFunctionSignatures
+    registerUser(context, user, (err) => {
+      assert.equal(err.code, EEXISTS)
       done()
     })
   })
