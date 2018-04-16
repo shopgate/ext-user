@@ -1,5 +1,6 @@
-const crypto = require('crypto')
-const {EINVALIDCREDENTIALS, ENOTFOUND, EINTERNAL, createCustomError} = require('../error')
+const {ENOTFOUND, EINTERNAL, createCustomError} = require('../error')
+const Password = require('./Password')
+
 /**
  * @typedef {Object} LoginInputArgs
  * @property {string} strategy
@@ -16,10 +17,13 @@ const {EINVALIDCREDENTIALS, ENOTFOUND, EINTERNAL, createCustomError} = require('
 module.exports = function (context, input, cb) {
   // is logged in
   if (context.meta.userId) {
+    context.log.warn('User is already logged in')
     return cb(null, {
       userId: context.meta.userId
     })
   }
+
+  const userNotFound = createCustomError(ENOTFOUND, 'User not found or wrong credentials')
 
   context.storage.extension.get(input.parameters.login, (errUserId, userId) => {
     if (errUserId) {
@@ -28,7 +32,7 @@ module.exports = function (context, input, cb) {
     }
 
     if (!userId) {
-      return cb(createCustomError(ENOTFOUND, 'User is not found'))
+      return cb(userNotFound)
     }
 
     context.storage.extension.get(userId, (err, user) => {
@@ -38,13 +42,13 @@ module.exports = function (context, input, cb) {
       }
 
       if (!user) {
-        return cb(createCustomError(ENOTFOUND, 'User not found'))
+        return cb(userNotFound)
       }
 
       // Check password match
-      const password = crypto.createHash('md5').update(input.parameters.password).digest('hex')
-      if (user.password !== password) {
-        return cb(createCustomError(EINVALIDCREDENTIALS, 'Password mismatch'))
+      const password = new Password(input.parameters.password)
+      if (user.password !== password.password) {
+        return cb(userNotFound)
       }
 
       cb(null, {

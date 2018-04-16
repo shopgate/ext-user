@@ -4,6 +4,7 @@
     "id": "shopgate.user.loginUser.v1",
     "public": true,
     "input": [
+      {"key": "sgxsMeta", "id": "100"},
       {"key": "strategy",  "id": "1010"},
       {"key": "parameters", "id": "1020"}
     ],
@@ -38,6 +39,15 @@
         "path": "@shopgate/user/user/checkAuthSuccess.js",
         "input": [
           {"key": "authSuccess", "id": "1040"}
+        ],
+        "output": []
+      },
+      {
+        "type": "pipeline",
+        "id": "shopgate.cart.migrateCartContents.v1",
+        "trusted": false,
+        "input": [
+          {"key": "sgxsMeta", "id": "100"}
         ],
         "output": []
       },

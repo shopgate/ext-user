@@ -4,6 +4,7 @@ module.exports = {
   EINVALIDCREDENTIALS: 'EINVALIDCREDENTIALS',
   EACCESS: 'EACCESS',
   ENOTFOUND: 'ENOTFOUND',
+  EEXISTS: 'EEXISTS',
 
   createCustomError: (code, message) => {
     const error = new Error()

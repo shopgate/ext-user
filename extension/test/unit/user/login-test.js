@@ -1,7 +1,7 @@
 const assert = require('assert')
 const login = require('../../../user/login')
-const crypto = require('crypto')
-const {EINVALIDCREDENTIALS, ENOTFOUND} = require('../../../error')
+const {ENOTFOUND} = require('../../../error')
+const Password = require('../../../user/Password')
 
 describe('login', () => {
   const context = {
@@ -32,7 +32,7 @@ describe('login', () => {
         // return user
         cb(null, {
           id: userId,
-          password: crypto.createHash('md5').update(input.parameters.password).digest('hex')
+          password: (new Password(input.parameters.password)).password
         })
       }
       // return userId
@@ -47,7 +47,7 @@ describe('login', () => {
     })
   })
 
-  it('Should throw error when user is not found', (done) => {
+  it('Should throw error when user is not found by email', (done) => {
     context.storage.extension.get = (keyEmail, cb) => {
       assert.equal(keyEmail, input.parameters.login)
       cb()
@@ -59,11 +59,23 @@ describe('login', () => {
     })
   })
 
+  it('Should throw error when user is not found by id', (done) => {
+    context.storage.extension.get = (keyEmail, cb) => {
+      context.storage.extension.get = (keyUserId, cb) => {
+        cb()
+      }
+      cb(null, 'c558841a-9e15-4b08-a5ba-d5db8845439a')
+    }
+    // noinspection JSCheckFunctionSignatures
+    login(context, input, (err) => {
+      assert.equal(err.code, ENOTFOUND)
+      done()
+    })
+  })
+
   it('Should throw error when wrong credentials are given', (done) => {
     let userId = 'c558841a-9e15-4b08-a5ba-d5db8845439a'
     context.storage.extension.get = (keyEmail, cb) => {
-      assert.equal(keyEmail, input.parameters.login)
-
       context.storage.extension.get = (keyUserId, cb) => {
         assert.equal(keyUserId, userId)
 
@@ -79,7 +91,7 @@ describe('login', () => {
 
     // noinspection JSCheckFunctionSignatures
     login(context, input, (err) => {
-      assert.equal(err.code, EINVALIDCREDENTIALS)
+      assert.equal(err.code, ENOTFOUND)
       done()
     })
   })

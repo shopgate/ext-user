@@ -4,6 +4,7 @@
     "id": "shopgate.user.registerUser.v1",
     "public": true,
     "input": [
+      {"key": "sgxsMeta", "id": "100"},
       {"key": "mail", "id": "1001"},
       {"key": "password", "id": "1002"},
       {"key": "firstName", "id": "1003"},
@@ -71,6 +72,15 @@
         "path": "@shopgate/user/user/checkAuthSuccess.js",
         "input": [
           {"key": "authSuccess", "id": "1040"}
+        ],
+        "output": []
+      },
+      {
+        "type": "pipeline",
+        "id": "shopgate.cart.migrateCartContents.v1",
+        "trusted": false,
+        "input": [
+          {"key": "sgxsMeta", "id": "100"}
         ],
         "output": []
       },
