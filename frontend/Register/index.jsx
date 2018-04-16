@@ -1,5 +1,6 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
+import I18n from '@shopgate/pwa-common/components/I18n';
 import connect from './connector.js'
 import styles from './style.js'
 
@@ -51,17 +52,17 @@ class Register extends Component {
       <View>
         <section className={styles.container} data-test-id="RegisterPage">
           <div className={styles.headline}>
-            Register
+            <I18n.Text string="register.title" />
           </div>
           <div className={styles.subline}>
-            create new account
+            <I18n.Text string="register.subTitle" />
           </div>
           <form onSubmit={this.handleSubmitForm}>
             <TextField
               type="email"
               name="mail"
               className={styles.input}
-              label="register.mail"
+              label={<I18n.Text string="register.mail" />}
               onChange={this.handleMailChange}
               value={this.state.mail}
             />
@@ -69,7 +70,7 @@ class Register extends Component {
               type="password"
               name="password"
               className={styles.input}
-              label="register.password"
+              label={<I18n.Text string="register.password" />}
               onChange={this.handlePasswordChange}
               value={this.state.password}
             />
@@ -77,7 +78,7 @@ class Register extends Component {
               type="text"
               name="firstName"
               className={styles.input}
-              label="register.firstName"
+              label={<I18n.Text string="register.firstName" />}
               onChange={this.handleFirstNameChange}
               value={this.state.firstName}
             />
@@ -85,13 +86,13 @@ class Register extends Component {
               type="text"
               name="lastName"
               className={styles.input}
-              label="register.lastName"
+              label={<I18n.Text string="register.lastName" />}
               onChange={this.handleLastNameChange}
               value={this.state.lastName}
             />
             <div className={styles.buttonWrapper} data-test-id="LoginButton">
               <RippleButton className={styles.button} type="secondary" disabled={this.props.isLoading}>
-                register.button
+                <I18n.Text string="register.button" />
               </RippleButton>
             </div>
           </form>
