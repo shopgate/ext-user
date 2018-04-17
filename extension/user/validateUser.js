@@ -31,8 +31,8 @@ module.exports = (context, input, cb) => {
   const schema = {
     mail: Joi.string().email({minDomainAtoms: 2}).required(),
     password: Joi.string().min(8).required(),
-    firstName: Joi.string().alphanum().required(),
-    lastName: Joi.string().alphanum().required(),
+    firstName: Joi.string().required(),
+    lastName: Joi.string().required(),
     gender: Joi.string().valid(['female', 'male']),
     birthday: Joi.date(),
     phone: Joi.string()
