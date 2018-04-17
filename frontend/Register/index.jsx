@@ -71,6 +71,7 @@ class Register extends Component {
               name="password"
               className={styles.input}
               label={<I18n.Text string="register.password" />}
+              minLength={8}
               onChange={this.handlePasswordChange}
               value={this.state.password}
             />

@@ -29,7 +29,7 @@ module.exports = (context, input, cb) => {
 
   // Validation schema
   const schema = {
-    mail: Joi.string().email().required(),
+    mail: Joi.string().email({minDomainAtoms: 2}).required(),
     password: Joi.string().min(8).required(),
     firstName: Joi.string().alphanum().required(),
     lastName: Joi.string().alphanum().required(),
