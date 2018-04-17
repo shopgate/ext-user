@@ -1,0 +1,11 @@
+{
+  "register": {
+    "title": "Register",
+    "subTitle": "Create a new account",
+    "mail": "eMail address",
+    "password": "Password",
+    "firstName": "First name",
+    "lastName": "Last name",
+    "button": "Register"
+  }
+}

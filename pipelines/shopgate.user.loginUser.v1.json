@@ -1,0 +1,63 @@
+{
+  "version": "1",
+  "pipeline": {
+    "id": "shopgate.user.loginUser.v1",
+    "public": true,
+    "input": [
+      {"key": "sgxsMeta", "id": "100"},
+      {"key": "strategy",  "id": "1010"},
+      {"key": "parameters", "id": "1020"}
+    ],
+    "output": [
+      {"key": "success", "id": "1040"}
+    ],
+    "steps": [
+      {
+        "type": "extension",
+        "id": "@shopgate/user",
+        "path": "@shopgate/user/user/login.js",
+        "input": [
+          {"key": "strategy", "id": "1010"},
+          {"key": "parameters", "id": "1020"}
+        ],
+        "output": [
+          {"key": "userId", "id": "1030"}
+        ]
+      },
+      {
+        "type": "auth",
+        "input": [
+          {"key": "userId", "id": "1030"}
+        ],
+        "output": [
+          {"key": "success", "id": "1040"}
+        ]
+      },
+      {
+        "type": "extension",
+        "id": "@shopgate/user",
+        "path": "@shopgate/user/user/checkAuthSuccess.js",
+        "input": [
+          {"key": "authSuccess", "id": "1040"}
+        ],
+        "output": []
+      },
+      {
+        "type": "pipeline",
+        "id": "shopgate.cart.migrateCartContents.v1",
+        "trusted": false,
+        "input": [
+          {"key": "sgxsMeta", "id": "100"}
+        ],
+        "output": []
+      },
+      {
+        "type": "pipeline",
+        "id": "shopgate.user.trackUserLoggedInEvent.v1",
+        "trusted": true,
+        "input": [],
+        "output": []
+      }
+    ]
+  }
+}

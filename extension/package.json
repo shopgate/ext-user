@@ -1,0 +1,37 @@
+{
+  "name": "@shopgate/user",
+  "version": "1.0.0",
+  "description": "Shopgate Connect user extension",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/shopgate/ext-user.git"
+  },
+  "scripts": {
+    "test": "mocha --use_strict recursive test/unit",
+    "coverage": "nyc mocha --use_strict recursive test/unit",
+    "coverage-html": "nyc --reporter=html --report-dir=test/coverage mocha --use_strict recursive test/unit",
+    "standard": "./node_modules/.bin/standard"
+  },
+  "license": "Apache-2.0",
+  "dependencies": {
+    "uuid": "^3.2.1",
+    "joi": "^13.1.2"
+  },
+  "devDependencies": {
+    "eslint": "^3.19.0",
+    "eslint-config-standard": "^10.2.1",
+    "eslint-plugin-import": "^2.8.0",
+    "eslint-plugin-node": "^5.2.1",
+    "eslint-plugin-promise": "^3.6.0",
+    "eslint-plugin-standard": "^3.0.1",
+    "mocha": "^3.2.0",
+    "mocha-jenkins-reporter": "^0.3.7",
+    "standard": "^10.0.3",
+    "nyc": "latest"
+  },
+  "standard": {
+    "env": [
+      "mocha"
+    ]
+  }
+}

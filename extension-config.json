@@ -1,0 +1,28 @@
+{
+  "version": "1.0.0",
+  "id": "@shopgate/user",
+  "trusted": true,
+  "components": [
+    {
+      "id": "RegisterRoute",
+      "path": "frontend/Register/route.jsx",
+      "target": "app.routes",
+      "type": "portals"
+    },
+    {
+      "id": "RegisterSubscription",
+      "path": "frontend/Register/subscribers.js",
+      "type": "subscribers"
+    },
+    {
+      "id": "en-US",
+      "path": "frontend/locale/en-US.json",
+      "type": "translations"
+    },
+    {
+      "id": "de-DE",
+      "path": "frontend/locale/de-DE.json",
+      "type": "translations"
+    }
+  ]
+}

@@ -1,0 +1,22 @@
+{
+  "version": "1",
+  "pipeline": {
+    "id": "shopgate.user.getRegistrationUrl.v1",
+    "public": true,
+    "input": [],
+    "output": [
+      {"key": "url", "id": "1010"}
+    ],
+    "steps": [
+      {
+        "type": "extension",
+        "id": "@shopgate/user",
+        "path": "@shopgate/user/user/getRegistrationUrl.js",
+        "input": [],
+        "output": [
+          {"key": "url", "id": "1010"}
+        ]
+      }
+    ]
+  }
+}
