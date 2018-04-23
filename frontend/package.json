@@ -11,6 +11,10 @@
   },
   "license": "Apache-2.0",
   "dependencies": {
+  },
+  "devDependencies": {
+    "@shopgate/eslint-config": "^5.1.0",
+    "standard": "^10.0.3",
     "glamor": "^2.20.40",
     "prop-types": "^15.6.0",
     "react": "^16.2.0",
@@ -18,9 +22,5 @@
     "react-inline-transition-group": "^2.2.1",
     "@shopgate/pwa-core": "^5.1.0",
     "@shopgate/pwa-common": "^5.1.0"
-  },
-  "devDependencies": {
-    "@shopgate/eslint-config": "^5.1.0",
-    "standard": "^10.0.3"
   }
 }
