@@ -21,7 +21,8 @@ const subline = css({
 }).toString()
 
 const input = css({
-  width: '100%'
+  width: '100%',
+  border: '1px solid black'
 }).toString()
 
 const buttonWrapper = css({
@@ -30,7 +31,12 @@ const buttonWrapper = css({
 }).toString()
 
 const button = css({
-  width: '100%'
+  width: '100%',
+  color: '#fff',
+  fontWeight: '500',
+  textTransform: 'uppercase',
+  padding: '9px 16px 7px',
+  backgroundColor: '#fa5400'
 }).toString()
 
 export default {
