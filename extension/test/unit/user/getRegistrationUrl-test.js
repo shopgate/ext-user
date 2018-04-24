@@ -5,7 +5,7 @@ describe('getRegistrationUrl', () => {
   it('Should get url', (done) => {
     getRegistrationUrl(context, {}, (err, result) => {
       assert.ifError(err)
-      assert.equal(result.url, '')
+      assert.equal(result.url, '/registerNative')
       done()
     })
   })

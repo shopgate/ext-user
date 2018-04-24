@@ -10,8 +10,7 @@
     "standard": "./node_modules/.bin/standard"
   },
   "license": "Apache-2.0",
-  "dependencies": {
-  },
+  "dependencies": {},
   "devDependencies": {
     "@shopgate/eslint-config": "^5.1.0",
     "standard": "^10.0.3",

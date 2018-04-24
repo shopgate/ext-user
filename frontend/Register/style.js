@@ -1,7 +1,7 @@
 import { css } from 'glamor'
-import { themeConfig } from '@shopgate/pwa-common/helpers/config';
+import { themeConfig } from '@shopgate/pwa-common/helpers/config'
 
-const { variables, colors } = themeConfig;
+const { variables, colors } = themeConfig
 
 const container = css({
   flexGrow: 1,
