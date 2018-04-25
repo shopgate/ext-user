@@ -2,6 +2,7 @@
   "version": "1.0.0",
   "id": "@shopgate/user",
   "trusted": true,
+  "configuration": {},
   "components": [
     {
       "id": "RegisterRoute",
