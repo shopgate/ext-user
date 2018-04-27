@@ -4,6 +4,6 @@
  * @param {function} cb
  */
 module.exports = function (context, input, cb) {
-  const url = '/registerNative'
+  const url = '/register'
   cb(null, {url})
 }

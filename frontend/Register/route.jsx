@@ -4,7 +4,7 @@ import Register from './index'
 
 const RegisterRoute = (props) => (
   <Route
-    path='/registerNative'
+    path='/register'
     component={Register}
     {...props}
   />
