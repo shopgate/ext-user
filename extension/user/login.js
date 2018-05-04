@@ -23,7 +23,7 @@ module.exports = function (context, input, cb) {
     })
   }
 
-  const invalidCredentials = createCustomError(EINVALIDCREDENTIALS, 'User not found or wrong credentials')
+  const invalidCredentials = createCustomError(EINVALIDCREDENTIALS, 'The given credentials are wrong or do not exist.')
 
   context.storage.extension.get(input.parameters.login, (errUserId, userId) => {
     if (errUserId) {
