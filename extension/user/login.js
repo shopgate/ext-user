@@ -1,4 +1,4 @@
-const {ENOTFOUND, EINTERNAL, createCustomError} = require('../error')
+const {EINVALIDCREDENTIALS, EINTERNAL, createCustomError} = require('../error')
 const Password = require('./Password')
 
 /**
@@ -23,7 +23,7 @@ module.exports = function (context, input, cb) {
     })
   }
 
-  const userNotFound = createCustomError(ENOTFOUND, 'User not found or wrong credentials')
+  const invalidCredentials = createCustomError(EINVALIDCREDENTIALS, 'The given credentials are wrong or do not exist.')
 
   context.storage.extension.get(input.parameters.login, (errUserId, userId) => {
     if (errUserId) {
@@ -32,7 +32,7 @@ module.exports = function (context, input, cb) {
     }
 
     if (!userId) {
-      return cb(userNotFound)
+      return cb(invalidCredentials)
     }
 
     context.storage.extension.get(userId, (err, user) => {
@@ -42,13 +42,13 @@ module.exports = function (context, input, cb) {
       }
 
       if (!user) {
-        return cb(userNotFound)
+        return cb(invalidCredentials)
       }
 
       // Check password match
       const password = new Password(input.parameters.password)
       if (user.password !== password.password) {
-        return cb(userNotFound)
+        return cb(invalidCredentials)
       }
 
       cb(null, {

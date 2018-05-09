@@ -1,6 +1,6 @@
 const assert = require('assert')
 const login = require('../../../user/login')
-const {ENOTFOUND} = require('../../../error')
+const {EINVALIDCREDENTIALS} = require('../../../error')
 const Password = require('../../../user/Password')
 
 describe('login', () => {
@@ -54,7 +54,7 @@ describe('login', () => {
     }
     // noinspection JSCheckFunctionSignatures
     login(context, input, (err) => {
-      assert.equal(err.code, ENOTFOUND)
+      assert.equal(err.code, EINVALIDCREDENTIALS)
       done()
     })
   })
@@ -68,7 +68,7 @@ describe('login', () => {
     }
     // noinspection JSCheckFunctionSignatures
     login(context, input, (err) => {
-      assert.equal(err.code, ENOTFOUND)
+      assert.equal(err.code, EINVALIDCREDENTIALS)
       done()
     })
   })
@@ -91,7 +91,7 @@ describe('login', () => {
 
     // noinspection JSCheckFunctionSignatures
     login(context, input, (err) => {
-      assert.equal(err.code, ENOTFOUND)
+      assert.equal(err.code, EINVALIDCREDENTIALS)
       done()
     })
   })
