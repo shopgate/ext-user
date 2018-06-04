@@ -1,0 +1,91 @@
+{
+  "version": "1",
+  "pipeline": {
+    "id": "shopgate.user.addAddress.v1",
+    "public": true,
+    "input": [
+      {"key": "firstName", "id": "10"},
+      {"key": "lastName", "id": "11"},
+      {"key": "street", "id": "12"},
+      {"key": "city", "id": "13"},
+      {"key": "provinceCode", "id": "14", "optional": true},
+      {"key": "countryCode", "id": "15"},
+      {"key": "zipCode", "id": "16"}
+    ],
+    "output": [
+      {"key": "id", "id": "20"}
+    ],
+    "steps": [
+      {
+        "type": "extension",
+        "id": "@shopgate/user",
+        "path": "@shopgate/user/user/checkIfUserAuthorized.js",
+        "input": [],
+        "output": []
+      },
+      {
+        "type": "extension",
+        "id": "@shopgate/user",
+        "path": "@shopgate/user/address/validateAddress.js",
+        "input": [
+          {"key": "firstName", "id": "10"},
+          {"key": "lastName", "id": "11"},
+          {"key": "street", "id": "12"},
+          {"key": "city", "id": "13"},
+          {"key": "provinceCode", "id": "14", "optional": true},
+          {"key": "countryCode", "id": "15"},
+          {"key": "zipCode", "id": "16"}
+        ],
+        "output": [
+          {"key": "firstName", "id": "10"},
+          {"key": "lastName", "id": "11"},
+          {"key": "street", "id": "12"},
+          {"key": "city", "id": "13"},
+          {"key": "provinceCode", "id": "14", "optional": true},
+          {"key": "countryCode", "id": "15"},
+          {"key": "zipCode", "id": "16"}
+        ]
+      },
+      {
+        "type": "extension",
+        "id": "@shopgate/user",
+        "path": "@shopgate/user/address/findAddress.js",
+        "input": [
+          {"key": "firstName", "id": "10"},
+          {"key": "lastName", "id": "11"},
+          {"key": "street", "id": "12"},
+          {"key": "city", "id": "13"},
+          {"key": "provinceCode", "id": "14", "optional": true},
+          {"key": "countryCode", "id": "15"},
+          {"key": "zipCode", "id": "16"}
+        ],
+        "output": [
+          {"key": "id", "id": "20"}
+        ]
+      },
+      {
+        "type": "conditional",
+        "input": [
+          {"key": "id", "id": "20"}
+        ],
+        "expression": {"null": [{"name": "id"}]},
+        "then": {
+          "id": "@shopgate/user",
+          "path": "@shopgate/user/address/addAddress.js",
+          "input": [
+            {"key": "firstName", "id": "10"},
+            {"key": "lastName", "id": "11"},
+            {"key": "street", "id": "12"},
+            {"key": "city", "id": "13"},
+            {"key": "provinceCode", "id": "14", "optional": true},
+            {"key": "countryCode", "id": "15"},
+            {"key": "zipCode", "id": "16"}
+          ],
+          "output": [
+            {"key": "id", "id": "20"}
+          ]
+        }
+      }
+    ]
+  }
+}
