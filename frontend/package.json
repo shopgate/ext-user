@@ -7,19 +7,23 @@
     "url": "https://github.com/shopgate/ext-user.git"
   },
   "scripts": {
-    "standard": "./node_modules/.bin/standard"
+    "lint": "eslint --ignore-path ../.gitignore --ext .js --ext .jsx ."
   },
   "license": "Apache-2.0",
-  "dependencies": {},
+  "dependencies": {
+    "joi-browser": "^13.0.1"
+  },
   "devDependencies": {
-    "@shopgate/eslint-config": "^5.1.0",
-    "standard": "^10.0.3",
-    "glamor": "^2.20.40",
+    "@shopgate/eslint-config": "^5.3.0",
+    "@shopgate/pwa-core": "^5.3.0",
+    "@shopgate/pwa-common": "^5.3.0",
+    "@shopgate/pwa-common-commerce": "^5.3.0",
+    "@shopgate/pwa-ui-shared": "^5.3.0",
+    "babel-plugin-transform-object-assign": "^6.8.0",
+    "babel-plugin-transform-proto-to-assign": "^6.9.0",
+    "react": "^16.3.2",
     "prop-types": "^15.6.0",
-    "react": "^16.2.0",
-    "react-dom": "^16.3.2",
-    "react-inline-transition-group": "^2.2.1",
-    "@shopgate/pwa-core": "^5.1.0",
-    "@shopgate/pwa-common": "^5.1.0"
+    "react-redux": "^5.0.5",
+    "eslint": "^4.19.1"
   }
 }

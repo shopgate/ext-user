@@ -8,7 +8,7 @@
       {"key": "lastName", "id": "11"},
       {"key": "street", "id": "12"},
       {"key": "city", "id": "13"},
-      {"key": "provinceCode", "id": "14", "optional": true},
+      {"key": "provinceCode", "id": "14"},
       {"key": "countryCode", "id": "15"},
       {"key": "zipCode", "id": "16"}
     ],
@@ -32,7 +32,7 @@
           {"key": "lastName", "id": "11"},
           {"key": "street", "id": "12"},
           {"key": "city", "id": "13"},
-          {"key": "provinceCode", "id": "14", "optional": true},
+          {"key": "provinceCode", "id": "14"},
           {"key": "countryCode", "id": "15"},
           {"key": "zipCode", "id": "16"}
         ],
@@ -41,7 +41,7 @@
           {"key": "lastName", "id": "11"},
           {"key": "street", "id": "12"},
           {"key": "city", "id": "13"},
-          {"key": "provinceCode", "id": "14", "optional": true},
+          {"key": "provinceCode", "id": "14"},
           {"key": "countryCode", "id": "15"},
           {"key": "zipCode", "id": "16"}
         ]
@@ -55,7 +55,7 @@
           {"key": "lastName", "id": "11"},
           {"key": "street", "id": "12"},
           {"key": "city", "id": "13"},
-          {"key": "provinceCode", "id": "14", "optional": true},
+          {"key": "provinceCode", "id": "14"},
           {"key": "countryCode", "id": "15"},
           {"key": "zipCode", "id": "16"}
         ],
@@ -70,6 +70,7 @@
         ],
         "expression": {"null": [{"name": "id"}]},
         "then": {
+          "type": "extension",
           "id": "@shopgate/user",
           "path": "@shopgate/user/address/addAddress.js",
           "input": [
@@ -77,7 +78,7 @@
             {"key": "lastName", "id": "11"},
             {"key": "street", "id": "12"},
             {"key": "city", "id": "13"},
-            {"key": "provinceCode", "id": "14", "optional": true},
+            {"key": "provinceCode", "id": "14"},
             {"key": "countryCode", "id": "15"},
             {"key": "zipCode", "id": "16"}
           ],

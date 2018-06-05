@@ -1,5 +1,5 @@
 const Joi = require('joi')
-const addressSchema = require('./addressSchema')
+const userAddressSchema = require('./../../common/userAddressSchema')(Joi)
 const ValidationError = require('./../common/Error/ValidationError')
 
 /**
@@ -18,7 +18,7 @@ module.exports = async (context, input) => {
     zipCode: input.zipCode.trim()
   }
 
-  let validationResult = Joi.validate(address, addressSchema)
+  let validationResult = Joi.validate(address, userAddressSchema)
   if (validationResult.error) {
     throw new ValidationError(validationResult.error.details[0].message)
   }

@@ -9,7 +9,7 @@ const InternalError = require('./../common/Error/InternalError')
 module.exports = async (context, input) => {
   let addresses
   try {
-    addresses = await context.storage.user.get('addresses')
+    addresses = (await context.storage.user.get('addresses')) || []
   } catch (err) {
     context.log.warn(err, 'User storage error')
     throw new InternalError('User storage error')

@@ -7,5 +7,25 @@
     "firstName": "First name",
     "lastName": "Last name",
     "button": "Register"
+  },
+  "address": {
+    "add": {
+      "pageTitle": "Add new address",
+      "firstName": "First name",
+      "lastName": "Last name",
+      "street": "Streen and number",
+      "city": "City",
+      "countryCode": "Country",
+      "zipCode": "ZIP",
+      "button": "Save address",
+      "errors": {
+        "firstName": "Only letters and space",
+        "lastName": "Only letters and space",
+        "street": "Only letters, numbers, symbols and space",
+        "city": "Only letters and space",
+        "countryCode": "Only letters and numbers",
+        "zipCode": "Only letters and numbers"
+      }
+    }
   }
 }

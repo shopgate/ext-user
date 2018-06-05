@@ -1,6 +1,6 @@
-import PipelineRequest from '@shopgate/pwa-core/classes/PipelineRequest'
+import PipelineRequest from '@shopgate/pwa-core/classes/PipelineRequest';
 
-export default (user) => (dispatch) => {
+export default user => (dispatch) => {
   new PipelineRequest('shopgate.user.registerUser')
     .setTrusted()
     .setInput(user)
@@ -8,13 +8,13 @@ export default (user) => (dispatch) => {
     .then(({ userId }) => {
       dispatch({
         type: 'REGISTER_SUCCESS',
-        userId
-      })
+        userId,
+      });
     })
     .catch((error) => {
       dispatch({
         type: 'REGISTER_FAIL',
-        error
-      })
-    })
-}
+        error,
+      });
+    });
+};

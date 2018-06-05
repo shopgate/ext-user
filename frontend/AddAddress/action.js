@@ -1,20 +1,20 @@
-import PipelineRequest from '@shopgate/pwa-core/classes/PipelineRequest'
+import PipelineRequest from '@shopgate/pwa-core/classes/PipelineRequest';
+import getUser from '@shopgate/pwa-common/actions/user/getUser';
+import goBackHistory from '@shopgate/pwa-common/actions/history/goBackHistory';
 
-export default (user) => (dispatch) => {
-  new PipelineRequest('shopgate.user.registerUser')
+export default address => (dispatch) => {
+  new PipelineRequest('shopgate.user.addAddress')
     .setTrusted()
-    .setInput(user)
+    .setInput(address)
     .dispatch()
-    .then(({ userId }) => {
-      dispatch({
-        type: 'REGISTER_SUCCESS',
-        userId
-      })
+    .then(() => {
+      dispatch(getUser());
+      dispatch(goBackHistory());
     })
     .catch((error) => {
       dispatch({
-        type: 'REGISTER_FAIL',
-        error
-      })
-    })
-}
+        type: 'ADD_ADDRESS_FAIL',
+        error,
+      });
+    });
+};

@@ -1,8 +1,22 @@
-import connect from '@shopgate/pwa-common/components/Router/helpers/connect'
-import register from './action'
+import joi from 'joi-browser';
+import connect from '@shopgate/pwa-common/components/Router/helpers/connect';
+import addAddress from './action';
+import { joiToValidationErrors, validationErrorsToMap } from './../../common/transform';
+import userAddressSchema from './../../common/userAddressSchema';
 
-const mapDispatchToProps = (dispatch) => ({
-  register: (user) => dispatch(register(user))
-})
+/**
+ * @param {function} dispatch dispatch
+ * @return {{addAddress: (function(*=): *)}}
+ */
+const mapDispatchToProps = dispatch => ({
+  addAddress: address => dispatch(addAddress(address)),
+  validateAddress: (address) => {
+    const result = userAddressSchema(joi).validate(address, { abortEarly: false });
+    if (!result.error) {
+      return {};
+    }
+    return validationErrorsToMap(joiToValidationErrors(result.error, 'address.add.errors'));
+  },
+});
 
-export default connect(null, mapDispatchToProps)
+export default connect(null, mapDispatchToProps);

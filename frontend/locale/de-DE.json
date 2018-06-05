@@ -7,5 +7,25 @@
     "firstName": "Vorname",
     "lastName": "Nachname",
     "button": "Registrieren"
+  },
+  "address": {
+    "add": {
+      "pageTitle": "Add new address",
+      "firstName": "Name",
+      "lastName": "Nachname",
+      "street": "Strasse",
+      "city": "Stadt",
+      "countryCode": "Land",
+      "zipCode": "PLZ",
+      "button": "Speicher Addresse",
+      "errors": {
+        "firstName": "Nur Buchstaben sind erlaubt",
+        "lastName": "Nur Buchstaben sind erlaubt",
+        "street": "Strasse numer ist verpflichtend",
+        "city": "Nur Buchstaben sind erlaubt",
+        "countryCode": "Max 3 Buchstaben sind erlaubt",
+        "zipCode": "Max 10 Buchstaben sind erlaubt"
+      }
+    }
   }
 }
