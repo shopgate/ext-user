@@ -2,7 +2,15 @@
   "version": "2.0.0",
   "id": "@shopgate/user",
   "trusted": true,
-  "configuration": {},
+  "configuration": {
+    "countryCodes": {
+      "type": "static",
+      "destination": "frontend",
+      "params": {
+        "value": "DE,AT,FR,US"
+      }
+    }
+  },
   "components": [
     {
       "id": "RegisterRoute",
