@@ -1,0 +1,86 @@
+{
+  "version": "1",
+  "pipeline": {
+    "id": "shopgate.checkout.processUser.v1",
+    "public": false,
+    "input": [
+      {"key": "checkout", "id": "1"}
+    ],
+    "output": [
+      {"key": "checkout", "id": "100"}
+    ],
+    "steps": [
+      {
+        "_comment": "Copy checkout object for modification.",
+
+        "type": "extension",
+        "id": "@shopgate/user",
+        "path": "@shopgate/user/util/merge.js",
+        "input": [
+          {"key": "first", "id": "1"}
+        ],
+        "output": [
+          {"key": "data", "id": "100"}
+        ]
+      },
+
+      {
+        "_comment": "Fetch user data for the checkout",
+
+        "type": "pipeline",
+        "id": "shopgate.user.getUser.v1",
+        "trusted": true,
+        "input": [],
+        "output": [
+          {"key": "id", "id": "112"},
+          {"key": "mail", "id": "113"},
+          {"key": "firstName", "id": "114"},
+          {"key": "lastName", "id": "115"}
+        ]
+      },
+      {
+        "_comment": "Put user data into a single object for later use.",
+
+        "type": "extension",
+        "id": "@shopgate/user",
+        "path": "@shopgate/user/util/pack.js",
+        "input": [
+          {"key": "id", "id": "112"},
+          {"key": "mail", "id": "113"},
+          {"key": "firstName", "id": "114"},
+          {"key": "lastName", "id": "115"}
+        ],
+        "output": [
+          {"key": "data", "id": "111"}
+        ]
+      },
+      {
+        "_comment": "Pack user data into a property named 'user' to attach to checkout.",
+
+        "type": "extension",
+        "id": "@shopgate/user",
+        "path": "@shopgate/user/util/pack.js",
+        "input": [
+          {"key": "user", "id": "111"}
+        ],
+        "output": [
+          {"key": "data", "id": "110"}
+        ]
+      },
+      {
+        "_comment": "Merge user data into the checkout object.",
+
+        "type": "extension",
+        "id": "@shopgate/user",
+        "path": "@shopgate/user/util/merge.js",
+        "input": [
+          {"key": "first", "id": "100"},
+          {"key": "second", "id": "110"}
+        ],
+        "output": [
+          {"key": "data", "id": "100"}
+        ]
+      }
+    ]
+  }
+}
