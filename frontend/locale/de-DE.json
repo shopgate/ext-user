@@ -15,6 +15,7 @@
       "lastName": "Nachname",
       "street": "Strasse",
       "city": "Stadt",
+      "provinceCode": "Bundesland",
       "countryCode": "Land",
       "zipCode": "PLZ",
       "button": "Speicher Addresse",

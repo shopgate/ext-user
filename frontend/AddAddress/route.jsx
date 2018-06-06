@@ -11,7 +11,7 @@ import AddAddress from './index';
 const AddAddressRoute = props => (
   <AuthRoutes to="/login">
     <Route
-      path="/add_address"
+      path="/user/addAddress"
       component={AddAddress}
       {...props}
     />

@@ -6,7 +6,7 @@ import userAddressSchema from './../../common/userAddressSchema';
 
 /**
  * @param {function} dispatch dispatch
- * @return {{addAddress: (function(*=): *)}}
+ * @return {{addAddress: (function(*=): *), validateAddress: validateAddress}}
  */
 const mapDispatchToProps = dispatch => ({
   addAddress: address => dispatch(addAddress(address)),

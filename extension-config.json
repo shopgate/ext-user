@@ -7,7 +7,7 @@
       "type": "static",
       "destination": "frontend",
       "params": {
-        "value": "DE,AT,FR,US"
+        "value": "DE,AT,FR,GB"
       }
     }
   },

@@ -15,6 +15,7 @@
       "lastName": "Last name",
       "street": "Streen and number",
       "city": "City",
+      "provinceCode": "State",
       "countryCode": "Country",
       "zipCode": "ZIP",
       "button": "Save address",
