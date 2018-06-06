@@ -26,7 +26,7 @@ describe('validateUserAddress', () => {
     }
     try {
       // noinspection JSCheckFunctionSignatures
-      const actualAddress = await stepExecute({}, validAddress)
+      const actualAddress = (await stepExecute({}, {address: validAddress})).address
       assert.deepEqual(actualAddress, expectedAddress)
     } catch (stepError) {
       assert.ifError(stepError)
@@ -45,7 +45,7 @@ describe('validateUserAddress', () => {
       it(testTitle, async () => {
         try {
           // noinspection JSCheckFunctionSignatures
-          await stepExecute({}, {...validAddress, ...testDouble})
+          await stepExecute({}, {address: {...validAddress, ...testDouble}})
         } catch (stepError) {
           assert.ifError(stepError instanceof ValidationError)
         }

@@ -5,7 +5,7 @@ import goBackHistory from '@shopgate/pwa-common/actions/history/goBackHistory';
 export default address => (dispatch) => {
   new PipelineRequest('shopgate.user.addAddress')
     .setTrusted()
-    .setInput(address)
+    .setInput({ address })
     .dispatch()
     .then(() => {
       dispatch(getUser());

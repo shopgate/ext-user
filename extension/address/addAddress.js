@@ -3,7 +3,7 @@ const InternalError = require('./../common/Error/InternalError')
 
 /**
  * @param {SDKContext} context
- * @param {ExtUserAddress} input
+ * @param {{address: ExtUserAddress}} input
  * @return {Promise<{id: string}>}
  */
 module.exports = async (context, input) => {
@@ -16,7 +16,7 @@ module.exports = async (context, input) => {
   }
 
   const newAddress = {
-    ...input,
+    ...input.address,
     id: uuidv4()
   }
 

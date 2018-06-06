@@ -3,7 +3,7 @@ const InternalError = require('./../common/Error/InternalError')
 
 /**
  * @param {SDKContext} context
- * @param {ExtUserAddress} input
+ * @param {{address: ExtUserAddress}} input
  * @return {Promise<{id: ?string}>}
  */
 module.exports = async (context, input) => {
@@ -19,7 +19,7 @@ module.exports = async (context, input) => {
     // exclude id from assertion
     const {id, ...addressContent} = address
     try {
-      assert.deepEqual(input, addressContent)
+      assert.deepEqual(input.address, addressContent)
       return address
     } catch (assertionErrIgnore) {}
   })

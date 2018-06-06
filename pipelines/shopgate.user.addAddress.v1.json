@@ -4,13 +4,7 @@
     "id": "shopgate.user.addAddress.v1",
     "public": true,
     "input": [
-      {"key": "firstName", "id": "10"},
-      {"key": "lastName", "id": "11"},
-      {"key": "street", "id": "12"},
-      {"key": "city", "id": "13"},
-      {"key": "provinceCode", "id": "14"},
-      {"key": "countryCode", "id": "15"},
-      {"key": "zipCode", "id": "16"}
+      {"key": "address", "id": "1"}
     ],
     "output": [
       {"key": "id", "id": "20"}
@@ -28,22 +22,10 @@
         "id": "@shopgate/user",
         "path": "@shopgate/user/address/validateAddress.js",
         "input": [
-          {"key": "firstName", "id": "10"},
-          {"key": "lastName", "id": "11"},
-          {"key": "street", "id": "12"},
-          {"key": "city", "id": "13"},
-          {"key": "provinceCode", "id": "14"},
-          {"key": "countryCode", "id": "15"},
-          {"key": "zipCode", "id": "16"}
+          {"key": "address", "id": "1"}
         ],
         "output": [
-          {"key": "firstName", "id": "10"},
-          {"key": "lastName", "id": "11"},
-          {"key": "street", "id": "12"},
-          {"key": "city", "id": "13"},
-          {"key": "provinceCode", "id": "14"},
-          {"key": "countryCode", "id": "15"},
-          {"key": "zipCode", "id": "16"}
+          {"key": "address", "id": "10"}
         ]
       },
       {
@@ -51,13 +33,7 @@
         "id": "@shopgate/user",
         "path": "@shopgate/user/address/findAddress.js",
         "input": [
-          {"key": "firstName", "id": "10"},
-          {"key": "lastName", "id": "11"},
-          {"key": "street", "id": "12"},
-          {"key": "city", "id": "13"},
-          {"key": "provinceCode", "id": "14"},
-          {"key": "countryCode", "id": "15"},
-          {"key": "zipCode", "id": "16"}
+          {"key": "address", "id": "10"}
         ],
         "output": [
           {"key": "id", "id": "20"}
@@ -74,13 +50,7 @@
           "id": "@shopgate/user",
           "path": "@shopgate/user/address/addAddress.js",
           "input": [
-            {"key": "firstName", "id": "10"},
-            {"key": "lastName", "id": "11"},
-            {"key": "street", "id": "12"},
-            {"key": "city", "id": "13"},
-            {"key": "provinceCode", "id": "14"},
-            {"key": "countryCode", "id": "15"},
-            {"key": "zipCode", "id": "16"}
+            {"key": "address", "id": "10"}
           ],
           "output": [
             {"key": "id", "id": "20"}
