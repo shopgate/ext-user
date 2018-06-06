@@ -28,5 +28,13 @@
         "zipCode": "Only letters and numbers"
       }
     }
+  },
+  "checkout": {
+    "shipping": {
+      "title": "Shipping address"
+    },
+    "billing": {
+      "title": "Billing address"
+    }
   }
 }
