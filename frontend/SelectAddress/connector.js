@@ -1,5 +1,6 @@
 import { connect } from 'react-redux';
 import { getUserData } from '@shopgate/pwa-common/selectors/user';
+import { getQueryParam } from '@shopgate/pwa-common/selectors/history';
 import goBackHistory from '@shopgate/pwa-common/actions/history/goBackHistory';
 
 /**
@@ -8,6 +9,8 @@ import goBackHistory from '@shopgate/pwa-common/actions/history/goBackHistory';
  */
 const mapStateToProps = state => ({
   addresses: getUserData(state).addresses,
+  addressType: getQueryParam(state, 'type') || '',
+  selectedId: getQueryParam(state, 'selected') || '',
 });
 
 /**
@@ -15,10 +18,10 @@ const mapStateToProps = state => ({
  * @return {{selectAddress: (function(*): *)}}
  */
 const mapDispatchToProps = dispatch => ({
-  selectAddress: (address) => {
+  selectAddress: (address, id) => {
     dispatch({
       type: 'CHECKOUT_DATA',
-      id: 'shippingAddress',
+      id: `${id}Address`,
       data: {
         ...address,
       },

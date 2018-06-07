@@ -11,11 +11,17 @@ import styles from '../Register/style';
  * @param {Object} props props
  * @return {*}
  */
-const SelectAddress = ({ View, selectAddress, addresses }) => (
+const SelectAddress = ({
+  View, selectAddress, addresses, addressType, selectedId,
+}) => (
   <View>
     <section className={styles.container} data-test-id="AddAddressPage">
       <Title />
-      <Addresses addresses={addresses} selectAddress={selectAddress} />
+      <Addresses
+        addresses={addresses}
+        selectedId={selectedId}
+        selectAddress={address => selectAddress(address, addressType)}
+      />
       <Link href="/user/addAddress">
         <I18n.Text string="address.add.title" />
       </Link>
@@ -25,8 +31,10 @@ const SelectAddress = ({ View, selectAddress, addresses }) => (
 
 SelectAddress.propTypes = {
   addresses: PropTypes.arrayOf(PropTypes.shape()).isRequired,
+  addressType: PropTypes.string.isRequired,
   selectAddress: PropTypes.func.isRequired,
-  View: PropTypes.shape().isRequired,
+  selectedId: PropTypes.string.isRequired,
+  View: PropTypes.func.isRequired,
 };
 
 export default connect(SelectAddress);

@@ -8,7 +8,7 @@ import UncheckedIcon from '@shopgate/pwa-ui-shared/icons/UncheckedIcon';
 /**
  * @return {*}
  */
-const Addresses = ({ selectAddress, addresses }) => (
+const Addresses = ({ selectAddress, addresses, selectedId }) => (
   <Fragment>
     {
       addresses.map(address => (
@@ -21,8 +21,8 @@ const Addresses = ({ selectAddress, addresses }) => (
             </Grid.Item>
             <Grid.Item grow={1}>
               <Button onClick={() => selectAddress(address)}>
-                {address.selected && <CheckedIcon size={28} color="#FA5400" />}
-                {!address.selected && <UncheckedIcon size={28} color="#FA5400" />}
+                {address.id === selectedId && <CheckedIcon size={28} color="#FA5400" />}
+                {address.id !== selectedId && <UncheckedIcon size={28} color="#FA5400" />}
               </Button>
             </Grid.Item>
           </Grid>
@@ -36,6 +36,7 @@ const Addresses = ({ selectAddress, addresses }) => (
 Addresses.propTypes = {
   addresses: PropTypes.arrayOf(PropTypes.shape()).isRequired,
   selectAddress: PropTypes.func.isRequired,
+  selectedId: PropTypes.string.isRequired,
 };
 
 export default Addresses;

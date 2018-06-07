@@ -14,7 +14,7 @@ const BillingAddress = () => (
       <Fragment>
         <Title title="checkout.billing.title" />
         <Address address={checkout.billingAddress} />
-        <Link href="/user/selectAddress">
+        <Link href={`/user/selectAddress?type=billing&selected=${checkout.billingAddress ? checkout.billingAddress.id : ''}`}>
           <I18n.Text string="checkout.billing.selectAddress" />
         </Link>
       </Fragment>
