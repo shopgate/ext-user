@@ -7,5 +7,26 @@
     "firstName": "Vorname",
     "lastName": "Nachname",
     "button": "Registrieren"
+  },
+  "address": {
+    "add": {
+      "pageTitle": "Add new address",
+      "firstName": "Vorname",
+      "lastName": "Nachname",
+      "street": "Straße",
+      "city": "Stadt",
+      "provinceCode": "Bundesland",
+      "countryCode": "Land",
+      "zipCode": "PLZ",
+      "button": "Addresse speichern",
+      "errors": {
+        "firstName": "Nur Buchstaben und Leerzeichen sind erlaubt",
+        "lastName": "Nur Buchstaben und Leerzeichen sind erlaubt",
+        "street": "Straße und Hausnummer sind erforderlich",
+        "city": "Nur Buchstaben und Leerzeichen sind erlaubt",
+        "countryCode": "Wähle ein Land aus",
+        "zipCode": "Höchstens 10 Zeichen sind erlaubt"
+      }
+    }
   }
 }

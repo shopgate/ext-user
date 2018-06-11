@@ -1,51 +1,63 @@
-import React, {Component} from 'react'
-import PropTypes from 'prop-types'
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import I18n from '@shopgate/pwa-common/components/I18n';
-import Button from '@shopgate/pwa-common/components/Button';
-import Input from '@shopgate/pwa-common/components/Input';
-import connect from './connector.js'
-import styles from './style.js'
+import TextField from '@shopgate/pwa-ui-shared/TextField';
+import RippleButton from '@shopgate/pwa-ui-shared/RippleButton';
+import connect from './connector';
+import styles from './style';
 
+// eslint-disable-next-line valid-jsdoc
+/**
+ * Register component
+ */
 class Register extends Component {
   static propTypes = {
-    register: PropTypes.func
+    register: PropTypes.func.isRequired,
+    disabled: PropTypes.bool,
   }
 
   static defaultProps = {
-    register: () => {}
-  }
+    disabled: false,
+  };
 
+  /**
+   * @param {Object} props props
+   */
   constructor(props) {
-    super(props)
+    super(props);
 
     this.state = {
       mail: '',
       password: '',
       firstName: '',
       lastName: '',
-    }
+    };
   }
 
   handleMailChange = (mail) => {
-    this.setState({mail})
+    this.setState({ mail });
   }
   handlePasswordChange = (password) => {
-    this.setState({password})
+    this.setState({ password });
   }
   handleFirstNameChange = (firstName) => {
-    this.setState({firstName})
+    this.setState({ firstName });
   }
   handleLastNameChange = (lastName) => {
-    this.setState({lastName})
+    this.setState({ lastName });
   }
 
   handleSubmitForm = (event) => {
-    event.preventDefault()
-    this.props.register(this.state)
+    event.preventDefault();
+    this.props.register(this.state);
   }
 
+  /**
+   * @return {*}
+   */
   render() {
-    const {View} = this.props
+    // eslint-disable-next-line react/prop-types
+    const { View } = this.props;
     return (
       <View>
         <section className={styles.container} data-test-id="RegisterPage">
@@ -56,49 +68,45 @@ class Register extends Component {
             <I18n.Text string="register.subTitle" />
           </div>
           <form onSubmit={this.handleSubmitForm}>
-            <label><I18n.Text string={"register.mail"} /></label>
-            <Input
+            <TextField
               type="email"
+              label="register.mail"
               name="mail"
-              className={styles.input}
               onChange={this.handleMailChange}
               value={this.state.mail}
             />
-            <label><I18n.Text string={"register.password"} /></label>
-            <Input
+            <TextField
               type="password"
               name="password"
-              className={styles.input}
+              label="register.password"
               minLength={8}
               onChange={this.handlePasswordChange}
               value={this.state.password}
             />
-            <label><I18n.Text string={"register.firstName"} /></label>
-            <Input
+            <TextField
               type="text"
               name="firstName"
-              className={styles.input}
+              label="register.firstName"
               onChange={this.handleFirstNameChange}
               value={this.state.firstName}
             />
-            <label><I18n.Text string={"register.lastName"} /></label>
-            <Input
+            <TextField
               type="text"
               name="lastName"
-              className={styles.input}
+              label="register.lastName"
               onChange={this.handleLastNameChange}
               value={this.state.lastName}
             />
-            <div className={styles.buttonWrapper} data-test-id="LoginButton">
-              <Button className={styles.button} type="secondary" disabled={this.props.isLoading}>
+            <div data-test-id="RegisterButton">
+              <RippleButton type="secondary" disabled={this.props.disabled}>
                 <I18n.Text string="register.button" />
-              </Button>
+              </RippleButton>
             </div>
           </form>
         </section>
       </View>
-    )
+    );
   }
 }
 
-export default connect(Register)
+export default connect(Register);

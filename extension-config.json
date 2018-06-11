@@ -2,11 +2,25 @@
   "version": "2.0.0",
   "id": "@shopgate/user",
   "trusted": true,
-  "configuration": {},
+  "configuration": {
+    "countryCodes": {
+      "type": "static",
+      "destination": "frontend",
+      "params": {
+        "value": "DE,AT,FR,GB"
+      }
+    }
+  },
   "components": [
     {
       "id": "RegisterRoute",
       "path": "frontend/Register/route.jsx",
+      "target": "app.routes",
+      "type": "portals"
+    },
+    {
+      "id": "AddAddressRoute",
+      "path": "frontend/AddAddress/route.jsx",
       "target": "app.routes",
       "type": "portals"
     },

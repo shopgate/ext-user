@@ -1,0 +1,63 @@
+{
+  "version": "1",
+  "pipeline": {
+    "id": "shopgate.user.addAddress.v1",
+    "public": true,
+    "input": [
+      {"key": "address", "id": "1"}
+    ],
+    "output": [
+      {"key": "id", "id": "20"}
+    ],
+    "steps": [
+      {
+        "_comment": "Only logged in users can have saved addresses.",
+        "type": "extension",
+        "id": "@shopgate/user",
+        "path": "@shopgate/user/user/checkLoginStatus.js",
+        "input": [],
+        "output": []
+      },
+      {
+        "type": "extension",
+        "id": "@shopgate/user",
+        "path": "@shopgate/user/address/validateAddress.js",
+        "input": [
+          {"key": "address", "id": "1"}
+        ],
+        "output": [
+          {"key": "address", "id": "10"}
+        ]
+      },
+      {
+        "type": "extension",
+        "id": "@shopgate/user",
+        "path": "@shopgate/user/address/findAddress.js",
+        "input": [
+          {"key": "address", "id": "10"}
+        ],
+        "output": [
+          {"key": "id", "id": "20"}
+        ]
+      },
+      {
+        "type": "conditional",
+        "input": [
+          {"key": "id", "id": "20"}
+        ],
+        "expression": {"null": [{"name": "id"}]},
+        "then": {
+          "type": "extension",
+          "id": "@shopgate/user",
+          "path": "@shopgate/user/address/addAddress.js",
+          "input": [
+            {"key": "address", "id": "10"}
+          ],
+          "output": [
+            {"key": "id", "id": "20"}
+          ]
+        }
+      }
+    ]
+  }
+}

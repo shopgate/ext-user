@@ -53,6 +53,17 @@
  * @property {?string} birthday
  * @property {?string} phone
  * @property {?Array} customerGroups
- * @property {?Array} addresses
+ * @property {ExtUserAddress[]} addresses
  * @property {?Array} messages
+ */
+
+/**
+ * @typedef {Object} ExtUserAddress
+ * @property {string} firstName
+ * @property {string} lastName
+ * @property {string} street
+ * @property {string} city
+ * @property {string} provinceCode
+ * @property {string} countryCode
+ * @property {string} zipCode
  */
