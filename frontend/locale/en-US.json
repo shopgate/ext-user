@@ -10,7 +10,7 @@
   },
   "address": {
     "add": {
-      "pageTitle": "Add new Address",
+      "title": "Add new Address",
       "firstName": "First Name",
       "lastName": "Last Name",
       "street": "Street and Number",
@@ -27,6 +27,14 @@
         "countryCode": "Choose a country",
         "zipCode": "A max. of 10 characters are allowed"
       }
+    }
+  },
+  "checkout": {
+    "shipping": {
+      "title": "Shipping address"
+    },
+    "billing": {
+      "title": "Billing address"
     }
   }
 }

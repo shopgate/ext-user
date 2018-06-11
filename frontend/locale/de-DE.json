@@ -10,7 +10,7 @@
   },
   "address": {
     "add": {
-      "pageTitle": "Add new address",
+      "title": "Adresse hinzufügen",
       "firstName": "Vorname",
       "lastName": "Nachname",
       "street": "Straße",
@@ -27,6 +27,16 @@
         "countryCode": "Wähle ein Land aus",
         "zipCode": "Höchstens 10 Zeichen sind erlaubt"
       }
+    }
+  },
+  "checkout": {
+    "shipping": {
+      "title": "Shipping address",
+      "selectAddress": "Add shipping address"
+    },
+    "billing": {
+      "title": "Billing address",
+      "selectAddress": "Add billing address"
     }
   }
 }

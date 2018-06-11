@@ -25,6 +25,24 @@
       "type": "portals"
     },
     {
+      "id": "SelectAddressRoute",
+      "path": "frontend/SelectAddress/route.jsx",
+      "target": "app.routes",
+      "type": "portals"
+    },
+    {
+      "id": "CheckoutShipping",
+      "path": "frontend/Checkout/ShippingAddress/index.jsx",
+      "target": "checkout.shipping_address",
+      "type": "portals"
+    },
+    {
+      "id": "CheckoutBilling",
+      "path": "frontend/Checkout/BillingAddress/index.jsx",
+      "target": "checkout.billing_address",
+      "type": "portals"
+    },
+    {
       "id": "RegisterSubscription",
       "path": "frontend/Register/subscribers.js",
       "type": "subscribers"

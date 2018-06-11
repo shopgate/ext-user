@@ -102,7 +102,7 @@ class AddAddress extends Component {
         <View>
           <section className={styles.container} data-test-id="AddAddressPage">
             <div>
-              <I18n.Text string="address.add.pageTitle" />
+              <I18n.Text string="address.add.title" />
             </div>
             <TextField
               name="firstName"
