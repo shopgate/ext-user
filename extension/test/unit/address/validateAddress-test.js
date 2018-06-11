@@ -14,7 +14,7 @@ describe('validateUserAddress', () => {
     zipCode: ' 35510 '
   }
 
-  it('Should normalize, validate and return normalized user data', async () => {
+  it('Should return normalized user data', async () => {
     const expectedAddress = {
       firstName: 'John',
       lastName: 'Doe',
@@ -33,12 +33,12 @@ describe('validateUserAddress', () => {
     }
   })
 
-  describe('Should throw error on address validation', async () => {
+  describe('Should throw error on occuring address validation errors', async () => {
     const tests = {
       'First name is empty': {firstName: ''},
-      'Last name is too long': {lastName: 'Vary long last name. More then 255 characters'.repeat(10)},
-      'Street is too long': {street: 'Vary long street'.repeat(100)},
-      'Country is too long': {countryCode: 'Vary long countryCode'}
+      'Last name is too long': {lastName: 'Very long last name. More then 255 characters'.repeat(10)},
+      'Street is too long': {street: 'Very long street'.repeat(100)},
+      'Country is too long': {countryCode: 'Very long countryCode'}
     }
 
     Object.keys(tests).forEach((testTitle, testDouble) => {

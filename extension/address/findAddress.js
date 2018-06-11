@@ -24,11 +24,7 @@ module.exports = async (context, input) => {
     } catch (assertionErrIgnore) {}
   })
 
-  if (existingAddress) {
-    return existingAddress
-  }
-
-  return {
+  return existingAddress || {
     id: null
   }
 }

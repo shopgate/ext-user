@@ -11,9 +11,10 @@
     ],
     "steps": [
       {
+        "_comment": "Only logged in users can have saved addresses.",
         "type": "extension",
         "id": "@shopgate/user",
-        "path": "@shopgate/user/user/checkIfUserAuthorized.js",
+        "path": "@shopgate/user/user/checkLoginStatus.js",
         "input": [],
         "output": []
       },

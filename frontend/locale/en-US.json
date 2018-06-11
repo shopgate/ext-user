@@ -10,22 +10,22 @@
   },
   "address": {
     "add": {
-      "pageTitle": "Add new address",
-      "firstName": "First name",
-      "lastName": "Last name",
-      "street": "Streen and number",
+      "pageTitle": "Add new Address",
+      "firstName": "First Name",
+      "lastName": "Last Name",
+      "street": "Street and Number",
       "city": "City",
       "provinceCode": "State",
       "countryCode": "Country",
-      "zipCode": "ZIP",
-      "button": "Save address",
+      "zipCode": "Zip Code",
+      "button": "Save Address",
       "errors": {
-        "firstName": "Only letters and space",
-        "lastName": "Only letters and space",
-        "street": "Only letters, numbers, symbols and space",
-        "city": "Only letters and space",
-        "countryCode": "Only letters and numbers",
-        "zipCode": "Only letters and numbers"
+        "firstName": "Only letters and spaces are allowed",
+        "lastName": "Only letters and spaces are allowed",
+        "street": "Street and number are required",
+        "city": "Only letters and spaces are allowed",
+        "countryCode": "Choose a country",
+        "zipCode": "A max. of 10 characters are allowed"
       }
     }
   },
