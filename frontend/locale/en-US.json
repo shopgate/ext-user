@@ -10,7 +10,7 @@
   },
   "address": {
     "add": {
-      "pageTitle": "Add new Address",
+      "title": "Add new Address",
       "firstName": "First Name",
       "lastName": "Last Name",
       "street": "Street and Number",
