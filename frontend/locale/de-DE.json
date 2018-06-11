@@ -11,21 +11,21 @@
   "address": {
     "add": {
       "pageTitle": "Add new address",
-      "firstName": "Name",
+      "firstName": "Vorname",
       "lastName": "Nachname",
-      "street": "Strasse",
+      "street": "Straße",
       "city": "Stadt",
       "provinceCode": "Bundesland",
       "countryCode": "Land",
       "zipCode": "PLZ",
-      "button": "Speicher Addresse",
+      "button": "Addresse speichern",
       "errors": {
-        "firstName": "Nur Buchstaben sind erlaubt",
-        "lastName": "Nur Buchstaben sind erlaubt",
-        "street": "Strasse numer ist verpflichtend",
-        "city": "Nur Buchstaben sind erlaubt",
-        "countryCode": "Max 3 Buchstaben sind erlaubt",
-        "zipCode": "Max 10 Buchstaben sind erlaubt"
+        "firstName": "Nur Buchstaben und Leerzeichen sind erlaubt",
+        "lastName": "Nur Buchstaben und Leerzeichen sind erlaubt",
+        "street": "Straße und Hausnummer sind erforderlich",
+        "city": "Nur Buchstaben und Leerzeichen sind erlaubt",
+        "countryCode": "Wähle ein Land aus",
+        "zipCode": "Höchstens 10 Zeichen sind erlaubt"
       }
     }
   }
