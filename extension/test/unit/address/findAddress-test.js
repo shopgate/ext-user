@@ -23,7 +23,7 @@ describe('findUserAddress', () => {
     }
   }
 
-  it('Should find address by exact match', async () => {
+  it('Should find addresses by exact match if there is one', async () => {
     const expectedAddress = {
       ...existingAddress,
       id
@@ -38,7 +38,7 @@ describe('findUserAddress', () => {
     }
   })
 
-  it('Should not find address by exact match', async () => {
+  it('Should not find any addresses by exact match if there is none', async () => {
     const expectedAddress = {
       id: null
     }
