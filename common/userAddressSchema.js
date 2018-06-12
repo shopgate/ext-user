@@ -9,7 +9,7 @@ module.exports = joi => (
     street: joi.string().regex(/^[\w #-]+$/).required().min(1).max(255),
     city: joi.string().required().regex(/^[\w ]+$/).min(1).max(100),
     provinceCode: joi.string().required().regex(/^[\w-]+$/).max(10),
-    countryCode: joi.string().regex(/^[A-Z]+$/).required().min(3).max(3),
+    countryCode: joi.string().regex(/^[A-Z]+$/).required().min(2).max(2),
     zipCode: joi.string().regex(/^[\w ]+$/).required().min(1).max(10)
   })
 )
