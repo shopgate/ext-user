@@ -91,7 +91,7 @@ class AddAddress extends Component {
 
   handleCountryCode = ({ target }) => {
     // force a province code to be selected if there are any available for the selected country
-    this.updateAddress({ [target.name]: target.value, provinceCode: countries[target.value].divisions ? '' : null });
+    this.updateAddress({ [target.name]: target.value, provinceCode: countries[target.value].hideProvince ? null : '' });
   }
 
   saveAddress = (event) => {
@@ -141,7 +141,7 @@ class AddAddress extends Component {
               value={this.state.address.city}
               errorText={this.state.errors.city}
             />
-            {/* @TODO add materail or native select for country selection */}
+            {/* @TODO add material or native select for country selection */}
             <select name="countryCode" onChange={this.handleCountryCode} className={styles.select}>
               <option value="" key="country"><I18n.Text string="address.add.countryCode" /></option>
               {
@@ -154,7 +154,7 @@ class AddAddress extends Component {
             </select>
             {/* @TODO add materail or native select for country selection */}
             {this.state.address.countryCode &&
-            countries[this.state.address.countryCode].divisions &&
+            !countries[this.state.address.countryCode].hideProvince &&
             <div>
               <select name="provinceCode" onChange={this.handleSelectChange} className={styles.select}>
                 <option value="" key="province"><I18n.Text string="address.add.provinceCode" /></option>
