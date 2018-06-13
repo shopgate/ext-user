@@ -68,21 +68,30 @@ class AddAddress extends Component {
   handleFirstNameChange = (firstName) => {
     this.updateAddress({ firstName });
   }
+
   handleLastNameChange = (lastName) => {
     this.updateAddress({ lastName });
   }
+
   handleStreetChange = (street) => {
     this.updateAddress({ street });
   }
+
   handleCityChange = (city) => {
     this.updateAddress({ city });
   }
+
   handleZipCodeChange = (zipCode) => {
     this.updateAddress({ zipCode });
   }
 
   handleSelectChange = ({ target }) => {
     this.updateAddress({ [target.name]: target.value });
+  }
+
+  handleCountryCode = ({ target }) => {
+    // force a province code to be selected if there are any available for the selected country
+    this.updateAddress({ [target.name]: target.value, provinceCode: countries[target.value].divisions ? '' : null });
   }
 
   saveAddress = (event) => {
@@ -133,7 +142,7 @@ class AddAddress extends Component {
               errorText={this.state.errors.city}
             />
             {/* @TODO add materail or native select for country selection */}
-            <select name="countryCode" onChange={this.handleSelectChange} className={styles.select}>
+            <select name="countryCode" onChange={this.handleCountryCode} className={styles.select}>
               <option value="" key="country"><I18n.Text string="address.add.countryCode" /></option>
               {
                 Object.keys(countries).map(countryCode => (
