@@ -10,7 +10,7 @@
   },
   "address": {
     "add": {
-      "title": "Add new Address",
+      "title": "Add new address",
       "firstName": "First Name *",
       "lastName": "Last Name *",
       "street": "Street and Number *",
@@ -18,7 +18,7 @@
       "provinceCode": "State *",
       "countryCode": "Country *",
       "zipCode": "Zip Code *",
-      "button": "Save Address",
+      "button": "Save address",
       "errors": {
         "firstName": "Only letters and spaces are allowed",
         "lastName": "Only letters and spaces are allowed",
