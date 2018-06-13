@@ -15,7 +15,18 @@ const mapDispatchToProps = dispatch => ({
     if (!result.error) {
       return {};
     }
-    return validationErrorsToMap(joiToValidationErrors(result.error, 'address.add.errors'));
+    const validationErrors = joiToValidationErrors(result.error, 'address.add.errors')
+      // Make error message empty when input is empty
+      .map((err) => {
+        if (address[err.path] === '') {
+          return {
+            ...err,
+            message: '',
+          };
+        }
+        return err;
+      });
+    return validationErrorsToMap(validationErrors);
   },
 });
 

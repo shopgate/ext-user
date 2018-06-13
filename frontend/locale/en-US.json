@@ -11,13 +11,13 @@
   "address": {
     "add": {
       "title": "Add new Address",
-      "firstName": "First Name",
-      "lastName": "Last Name",
-      "street": "Street and Number",
-      "city": "City",
-      "provinceCode": "State",
-      "countryCode": "Country",
-      "zipCode": "Zip Code",
+      "firstName": "First Name *",
+      "lastName": "Last Name *",
+      "street": "Street and Number *",
+      "city": "City *",
+      "provinceCode": "State *",
+      "countryCode": "Country *",
+      "zipCode": "Zip Code *",
       "button": "Save Address",
       "errors": {
         "firstName": "Only letters and spaces are allowed",
