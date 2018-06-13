@@ -11,13 +11,13 @@
   "address": {
     "add": {
       "title": "Adresse hinzufügen",
-      "firstName": "Vorname",
-      "lastName": "Nachname",
-      "street": "Straße",
-      "city": "Stadt",
-      "provinceCode": "Bundesland",
-      "countryCode": "Land",
-      "zipCode": "PLZ",
+      "firstName": "Vorname *",
+      "lastName": "Nachname *",
+      "street": "Straße *",
+      "city": "Stadt *",
+      "provinceCode": "Bundesland *",
+      "countryCode": "Land *",
+      "zipCode": "PLZ *",
       "button": "Addresse speichern",
       "errors": {
         "firstName": "Nur Buchstaben und Leerzeichen sind erlaubt",

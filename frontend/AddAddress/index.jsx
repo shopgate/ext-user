@@ -6,8 +6,8 @@ import I18n from '@shopgate/pwa-common/components/I18n';
 import TextField from '@shopgate/pwa-ui-shared/TextField';
 import RippleButton from '@shopgate/pwa-ui-shared/RippleButton';
 import connect from './connector';
-import styles from './../Register/style';
 import countries from './countries';
+import styles from './style';
 
 // eslint-disable-next-line valid-jsdoc
 /**
@@ -68,21 +68,30 @@ class AddAddress extends Component {
   handleFirstNameChange = (firstName) => {
     this.updateAddress({ firstName });
   }
+
   handleLastNameChange = (lastName) => {
     this.updateAddress({ lastName });
   }
+
   handleStreetChange = (street) => {
     this.updateAddress({ street });
   }
+
   handleCityChange = (city) => {
     this.updateAddress({ city });
   }
+
   handleZipCodeChange = (zipCode) => {
     this.updateAddress({ zipCode });
   }
 
   handleSelectChange = ({ target }) => {
     this.updateAddress({ [target.name]: target.value });
+  }
+
+  handleCountryCode = ({ target }) => {
+    // force a province code to be selected if there are any available for the selected country
+    this.updateAddress({ [target.name]: target.value, provinceCode: countries[target.value].hideProvince ? null : '' });
   }
 
   saveAddress = (event) => {
@@ -100,40 +109,40 @@ class AddAddress extends Component {
     return (
       <AppContext.Provider value={{ updateAddress: this.updateAddress }}>
         <View>
-          <section className={styles.container} data-test-id="AddAddressPage">
-            <div>
+          <section className={styles.page} data-test-id="AddAddressPage">
+            <div className={styles.title}>
               <I18n.Text string="address.add.title" />
             </div>
             <TextField
               name="firstName"
               label="address.add.firstName"
               onChange={this.handleFirstNameChange}
-              value={this.state.firstName}
+              value={this.state.address.firstName}
               errorText={this.state.errors.firstName}
             />
             <TextField
               name="lastName"
               label="address.add.lastName"
               onChange={this.handleLastNameChange}
-              value={this.state.lastName}
+              value={this.state.address.lastName}
               errorText={this.state.errors.lastName}
             />
             <TextField
               name="street"
               label="address.add.street"
               onChange={this.handleStreetChange}
-              value={this.state.street}
+              value={this.state.address.street}
               errorText={this.state.errors.street}
             />
             <TextField
               name="city"
               label="address.add.city"
               onChange={this.handleCityChange}
-              value={this.state.city}
+              value={this.state.address.city}
               errorText={this.state.errors.city}
             />
-            {/* @TODO add materail or native select for country selection */}
-            <select name="countryCode" onChange={this.handleSelectChange}>
+            {/* @TODO add material or native select for country selection */}
+            <select name="countryCode" onChange={this.handleCountryCode} className={styles.select}>
               <option value="" key="country"><I18n.Text string="address.add.countryCode" /></option>
               {
                 Object.keys(countries).map(countryCode => (
@@ -145,8 +154,9 @@ class AddAddress extends Component {
             </select>
             {/* @TODO add materail or native select for country selection */}
             {this.state.address.countryCode &&
-            <div><br />
-              <select name="provinceCode" onChange={this.handleSelectChange}>
+            !countries[this.state.address.countryCode].hideProvince &&
+            <div>
+              <select name="provinceCode" onChange={this.handleSelectChange} className={styles.select}>
                 <option value="" key="province"><I18n.Text string="address.add.provinceCode" /></option>
                 {
                   Object.keys(countries[this.state.address.countryCode].divisions)
@@ -163,14 +173,14 @@ class AddAddress extends Component {
               name="zipCode"
               label="address.add.zipCode"
               onChange={this.handleZipCodeChange}
-              value={this.state.zipCode}
+              value={this.state.address.zipCode}
               errorText={this.state.errors.zipCode}
             />
 
             <Portal name="user.address.add.after" />
 
             <div data-test-id="AddAddressButton">
-              <RippleButton type="secondary" disabled={this.state.disabled} onClick={this.saveAddress}>
+              <RippleButton type="secondary" disabled={this.state.disabled} onClick={this.saveAddress} className={styles.button}>
                 <I18n.Text string="address.add.button" />
               </RippleButton>
             </div>
