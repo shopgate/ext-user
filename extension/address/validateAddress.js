@@ -13,7 +13,7 @@ module.exports = async (context, input) => {
     lastName: input.address.lastName.trim(),
     street: input.address.street.trim(),
     city: input.address.city.trim(),
-    provinceCode: input.address.provinceCode.trim(),
+    provinceCode: input.address.provinceCode && input.address.provinceCode.trim(),
     countryCode: input.address.countryCode.trim(),
     zipCode: input.address.zipCode.trim()
   }

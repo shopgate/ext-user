@@ -10,7 +10,10 @@ export default (Object.keys(iso3166).reduce((reducer, countryCode) => {
   }
   return {
     ...reducer,
-    [countryCode]: iso3166[countryCode],
+    [countryCode]: {
+      ...iso3166[countryCode],
+      hideProvince: countryCode === 'DE',
+    },
   };
 }, {})
 );
