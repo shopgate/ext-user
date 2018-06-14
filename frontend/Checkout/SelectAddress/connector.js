@@ -18,7 +18,7 @@ const mapStateToProps = state => ({
  * @return {{selectAddress: (function(*): *)}}
  */
 const mapDispatchToProps = dispatch => ({
-  selectAddress: (address, id) => {
+  selectAddress: (address, id, returnToCheckout) => {
     dispatch({
       type: 'CHECKOUT_DATA',
       id: `${id}Address`,
@@ -27,7 +27,9 @@ const mapDispatchToProps = dispatch => ({
       },
     });
 
-    dispatch(goBackHistory());
+    if (returnToCheckout) {
+      dispatch(goBackHistory());
+    }
   },
 });
 

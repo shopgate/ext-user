@@ -30,11 +30,16 @@
     }
   },
   "checkout": {
-    "shipping": {
-      "title": "Shipping address"
+    "shippingAddress": {
+      "title": "Shipping address",
+      "select": "Add shipping address",
+      "change": "Change",
+      "makeBilling": "Make this my billing address"
     },
-    "billing": {
-      "title": "Billing address"
+    "billingAddress": {
+      "title": "Billing address",
+      "select": "Add billing address",
+      "change": "Change"
     }
   }
 }
