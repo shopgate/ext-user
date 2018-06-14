@@ -8,8 +8,7 @@ const page = css({
 }).toString();
 
 const title = css({
-  fontSize: 20,
-  fontWeight:500,
+  fontWeight: 500,
 }).toString();
 
 const button = css({
