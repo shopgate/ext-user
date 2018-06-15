@@ -5,6 +5,7 @@ import Portal from '@shopgate/pwa-common/components/Portal';
 import I18n from '@shopgate/pwa-common/components/I18n';
 import TextField from '@shopgate/pwa-ui-shared/TextField';
 import RippleButton from '@shopgate/pwa-ui-shared/RippleButton';
+import MakeBilling from './../components/MakeBilling';
 import connect from './connector';
 import countries from './countries';
 import styles from './style';
@@ -16,6 +17,7 @@ import styles from './style';
 class AddAddress extends Component {
   static propTypes = {
     addAddress: PropTypes.func.isRequired,
+    addressType: PropTypes.string.isRequired,
     validateAddress: PropTypes.func.isRequired,
   }
 
@@ -45,6 +47,7 @@ class AddAddress extends Component {
         zipCode: '',
       },
       disabled: true,
+      makeBilling: false,
     };
   }
 
@@ -90,14 +93,20 @@ class AddAddress extends Component {
   }
 
   handleCountryCode = ({ target }) => {
-    // force a province code to be selected if there are any available for the selected country
-    this.updateAddress({ [target.name]: target.value, provinceCode: countries[target.value].hideProvince ? null : '' });
+    // Force a province code to be selected if there are any available for the selected country
+    this.updateAddress({
+      [target.name]: target.value,
+      provinceCode: countries[target.value].hideProvince ? null : '',
+    });
   }
 
-  saveAddress = (event) => {
-    event.preventDefault();
+  handleMakeBilling = (makeBilling) => {
+    this.updateAddress({ makeBilling });
+  }
+
+  saveAddress = () => {
     this.setState({ disabled: true });
-    this.props.addAddress(this.state.address);
+    this.props.addAddress(this.state.address, this.props.addressType, this.state.makeBilling);
   }
 
   /**
@@ -106,6 +115,7 @@ class AddAddress extends Component {
   render() {
     // eslint-disable-next-line react/prop-types
     const { View } = this.props;
+    const isShipping = this.props.addressType === 'shipping';
     return (
       <AppContext.Provider value={{ updateAddress: this.updateAddress }}>
         <View>
@@ -178,6 +188,8 @@ class AddAddress extends Component {
             />
 
             <Portal name="user.address.add.after" />
+
+            {isShipping && <MakeBilling handleMakeBilling={this.handleMakeBilling} />}
 
             <div data-test-id="AddAddressButton">
               <RippleButton type="secondary" disabled={this.state.disabled} onClick={this.saveAddress} className={styles.button}>

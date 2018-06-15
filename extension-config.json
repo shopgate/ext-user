@@ -19,8 +19,8 @@
       "type": "portals"
     },
     {
-      "id": "AddAddressRoute",
-      "path": "frontend/AddAddress/route.jsx",
+      "id": "CheckoutAddAddressRoute",
+      "path": "frontend/Checkout/AddAddress/route.jsx",
       "target": "app.routes",
       "type": "portals"
     },
