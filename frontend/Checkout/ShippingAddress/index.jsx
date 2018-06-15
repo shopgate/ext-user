@@ -10,7 +10,7 @@ const ShippingAddress = () => (
   <App>
     {({ checkout }) => (
       <Fragment>
-        <Title title="checkout.shippingAddress.title" />
+        <Title title="checkout.shipping.address.title" />
         <Address address={checkout.shippingAddress} type="shipping" />
       </Fragment>
     )}

@@ -99,7 +99,7 @@ class SelectAddress extends Component {
                 />
               </Grid.Item>
               <Grid.Item grow={1} className={style.checkboxLabel}>
-                <I18n.Text string="checkout.shippingAddress.makeBilling" />
+                <I18n.Text string="checkout.shipping.address.makeBilling" />
               </Grid.Item>
             </Grid>
           }
