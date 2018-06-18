@@ -67,7 +67,7 @@ class SelectAddress extends Component {
     const {
       // eslint-disable-next-line react/prop-types
       View, addressType, addresses,
-    } = this.props;
+    } = this.props
 
     const isShipping = this.props.addressType === 'shipping';
 
@@ -79,7 +79,7 @@ class SelectAddress extends Component {
     return (
       <View>
         <section className={style.page} data-test-id="SelectAddressPage">
-          <Title title={addressType === 'shipping' ? 'checkout.shipping.address.title' : `checkout.payment.address.title'} />
+          <Title title={addressType === 'shipping' ? 'checkout.shipping.address.title' : 'checkout.payment.address.title'} />
           <Addresses
             addresses={addressesWitSelection}
             selectAddress={this.handleAddressSelection}
