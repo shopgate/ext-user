@@ -26,10 +26,13 @@ class SelectAddress extends Component {
   constructor(props) {
     super(props);
 
+    let address = {};
+    if (this.props.selectedId) {
+      address = this.props.addresses.find(addr => addr.id === this.props.selectedId);
+    }
+
     this.state = {
-      address: {
-        id: this.props.selectedId,
-      },
+      address,
       makeBilling: false,
     };
   }
@@ -66,7 +69,7 @@ class SelectAddress extends Component {
     const {
       // eslint-disable-next-line react/prop-types
       View, addressType, addresses,
-    } = this.props
+    } = this.props;
 
     const isShipping = this.props.addressType === 'shipping';
 
