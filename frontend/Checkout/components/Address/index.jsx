@@ -36,7 +36,7 @@ const Address = ({ type, address }) => (
       </div>
     }
     <Link
-      href={`/user/selectAddress?type=${type}&selected=${address ? address.id : ''}`}
+      href={`/checkout/selectAddress?type=${type}&selected=${address ? address.id : ''}`}
       className={style.link}
     >
       <I18n.Text string={getLinkTextByType(type, !address)} />

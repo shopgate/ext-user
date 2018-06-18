@@ -1,15 +1,25 @@
 import joi from 'joi-browser';
 import connect from '@shopgate/pwa-common/components/Router/helpers/connect';
+import { getQueryParam } from '@shopgate/pwa-common/selectors/history';
 import addAddress from './action';
-import { joiToValidationErrors, validationErrorsToMap } from './../../common/transform';
-import userAddressSchema from './../../common/userAddressSchema';
+import { joiToValidationErrors, validationErrorsToMap } from './../../../common/transform';
+import userAddressSchema from './../../../common/userAddressSchema';
+
+/**
+ * @param {Object} state state
+ * @return {{addressType: (*|string)}}
+ */
+const mapStateToProps = state => ({
+  addressType: getQueryParam(state, 'type') || 'shipping',
+});
 
 /**
  * @param {function} dispatch dispatch
  * @return {{addAddress: (function(*=): *), validateAddress: validateAddress}}
  */
 const mapDispatchToProps = dispatch => ({
-  addAddress: address => dispatch(addAddress(address)),
+  addAddress: (address, addressType, makeBilling) =>
+    dispatch(addAddress(address, addressType, makeBilling)),
   validateAddress: (address) => {
     const result = userAddressSchema(joi).validate(address, { abortEarly: false });
     if (!result.error) {
@@ -30,4 +40,4 @@ const mapDispatchToProps = dispatch => ({
   },
 });
 
-export default connect(null, mapDispatchToProps);
+export default connect(mapStateToProps, mapDispatchToProps);

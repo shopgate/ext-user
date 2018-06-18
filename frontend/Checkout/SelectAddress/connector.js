@@ -9,7 +9,7 @@ import goBackHistory from '@shopgate/pwa-common/actions/history/goBackHistory';
  */
 const mapStateToProps = state => ({
   addresses: getUserData(state).addresses,
-  addressType: getQueryParam(state, 'type') || '',
+  addressType: getQueryParam(state, 'type') || 'shipping',
   selectedId: getQueryParam(state, 'selected') || '',
 });
 
