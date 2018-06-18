@@ -31,10 +31,19 @@
   },
   "checkout": {
     "shipping": {
-      "title": "Shipping address"
+      "address": {
+        "title": "Shipping address",
+        "select": "Add shipping address",
+        "change": "Change",
+        "makeBilling": "Make this my billing address"
+      }
     },
     "billing": {
-      "title": "Billing address"
+      "address": {
+        "title": "Billing address",
+        "select": "Add billing address",
+        "change": "Change"
+      }
     }
   }
 }

@@ -1,0 +1,121 @@
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import I18n from '@shopgate/pwa-common/components/I18n';
+import Link from '@shopgate/pwa-common/components/Router/components/Link';
+import RippleButton from '@shopgate/pwa-ui-shared/RippleButton';
+import Grid from '@shopgate/pwa-common/components/Grid';
+import Checkbox from '@shopgate/pwa-ui-shared/Checkbox';
+import connect from './connector';
+import Title from './components/Title';
+import Addresses from './components/Addresses';
+import style from './style';
+
+/**
+ * Select address component
+ */
+class SelectAddress extends Component {
+  static propTypes = {
+    addresses: PropTypes.arrayOf(PropTypes.shape()).isRequired,
+    addressType: PropTypes.string.isRequired,
+    selectAddress: PropTypes.func.isRequired,
+    selectedId: PropTypes.string.isRequired,
+  }
+
+  /**
+   * @param {Object} props props
+   */
+  constructor(props) {
+    super(props);
+
+    let address = {};
+    if (this.props.selectedId) {
+      address = this.props.addresses.find(addr => addr.id === this.props.selectedId);
+    }
+
+    this.state = {
+      address,
+      makeBilling: false,
+    };
+  }
+
+  /**
+   * @param {Object} address address
+   */
+  handleAddressSelection = (address) => {
+    this.setState({ address });
+  }
+
+  /**
+   * @param {boolean} makeBilling makeBilling
+   */
+  handleMakeBillingAddress = (makeBilling) => {
+    this.setState({ makeBilling });
+  }
+
+  /**
+   * @param {Object} event App event
+   */
+  submitAddress = (event) => {
+    event.preventDefault();
+    if (this.state.makeBilling) {
+      this.props.selectAddress(this.state.address, 'billing');
+    }
+    this.props.selectAddress(this.state.address, this.props.addressType, true);
+  }
+
+  /**
+   * @return {*}
+   */
+  render() {
+    const {
+      // eslint-disable-next-line react/prop-types
+      View, addressType, addresses,
+    } = this.props;
+
+    const isShipping = this.props.addressType === 'shipping';
+
+    const addressesWitSelection = addresses.map(address => ({
+      ...address,
+      selected: this.state.address.id === address.id,
+    }));
+
+    return (
+      <View>
+        <section className={style.page} data-test-id="SelectAddressPage">
+          <Title title={addressType === 'shipping' ? 'checkout.shipping.address.title' : 'checkout.billing.address.title'} />
+          <Addresses
+            addresses={addressesWitSelection}
+            selectAddress={this.handleAddressSelection}
+          />
+
+          {/* Add new address */}
+          <Link href="/user/addAddress" className={style.link}>
+            <I18n.Text string="address.add.title" />
+          </Link>
+
+          {isShipping &&
+            <Grid className={style.checkboxGrid}>
+              <Grid.Item grow={0}>
+                <Checkbox
+                  onCheck={this.handleMakeBillingAddress}
+                  defaultChecked={false}
+                />
+              </Grid.Item>
+              <Grid.Item grow={1} className={style.checkboxLabel}>
+                <I18n.Text string="checkout.shipping.address.makeBilling" />
+              </Grid.Item>
+            </Grid>
+          }
+
+          <div data-test-id="SelectAddressButton">
+            <RippleButton type="secondary" disabled={!this.state.address.id} onClick={this.submitAddress} className={style.button}>
+              <I18n.Text string="address.add.button" />
+            </RippleButton>
+          </div>
+        </section>
+      </View>
+    );
+  }
+}
+
+export default connect(SelectAddress);

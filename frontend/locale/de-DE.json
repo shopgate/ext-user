@@ -31,12 +31,19 @@
   },
   "checkout": {
     "shipping": {
-      "title": "Shipping address",
-      "selectAddress": "Add shipping address"
+      "address": {
+        "title": "Versandadresse",
+        "select": "Versandadresse hinzufügen",
+        "change": "Ändern",
+        "makeBilling": "Als Rechnungsadresse verwenden"
+      }
     },
     "billing": {
-      "title": "Billing address",
-      "selectAddress": "Add billing address"
+      "address": {
+        "title": "Rechnungsadresse",
+        "select": "Rechnungsadresse hinzufügen",
+        "change": "Ändern"
+      }
     }
   }
 }
