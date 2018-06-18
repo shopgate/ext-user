@@ -1,6 +1,5 @@
 import React from 'react';
 import Route from '@shopgate/pwa-common/components/Router/components/Route';
-import AuthRoutes from '@shopgate/pwa-common/components/Router/components/AuthRoutes';
 import AddAddress from './index';
 
 /**
@@ -9,13 +8,11 @@ import AddAddress from './index';
  * @constructor
  */
 const AddAddressRoute = props => (
-  <AuthRoutes to="/login">
-    <Route
-      path="/user/addAddress"
-      component={AddAddress}
-      {...props}
-    />
-  </AuthRoutes>
+  <Route
+    path="/checkout/addAddress"
+    component={AddAddress}
+    {...props}
+  />
 );
 
 export default AddAddressRoute;

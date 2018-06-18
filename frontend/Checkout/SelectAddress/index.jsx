@@ -3,10 +3,9 @@ import PropTypes from 'prop-types';
 import I18n from '@shopgate/pwa-common/components/I18n';
 import Link from '@shopgate/pwa-common/components/Router/components/Link';
 import RippleButton from '@shopgate/pwa-ui-shared/RippleButton';
-import Grid from '@shopgate/pwa-common/components/Grid';
-import Checkbox from '@shopgate/pwa-ui-shared/Checkbox';
 import connect from './connector';
 import Title from './components/Title';
+import MakeBilling from './../components/MakeBilling';
 import Addresses from './components/Addresses';
 import style from './style';
 
@@ -89,22 +88,12 @@ class SelectAddress extends Component {
           />
 
           {/* Add new address */}
-          <Link href="/user/addAddress" className={style.link}>
+          <Link href={`/checkout/addAddress?type=${addressType}`} className={style.link}>
             <I18n.Text string="address.add.title" />
           </Link>
 
           {isShipping &&
-            <Grid className={style.checkboxGrid}>
-              <Grid.Item grow={0}>
-                <Checkbox
-                  onCheck={this.handleMakeBillingAddress}
-                  defaultChecked={false}
-                />
-              </Grid.Item>
-              <Grid.Item grow={1} className={style.checkboxLabel}>
-                <I18n.Text string="checkout.shipping.address.makeBilling" />
-              </Grid.Item>
-            </Grid>
+            <MakeBilling handleMakeBilling={this.handleMakeBillingAddress} />
           }
 
           <div data-test-id="SelectAddressButton">
