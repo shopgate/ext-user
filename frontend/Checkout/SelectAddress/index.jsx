@@ -79,7 +79,7 @@ class SelectAddress extends Component {
     return (
       <View>
         <section className={style.page} data-test-id="SelectAddressPage">
-          <Title title={`checkout.${addressType}Address.title`} />
+          <Title title={addressType === 'shipping' ? 'checkout.shipping.address.title' : `checkout.payment.address.title'} />
           <Addresses
             addresses={addressesWitSelection}
             selectAddress={this.handleAddressSelection}
