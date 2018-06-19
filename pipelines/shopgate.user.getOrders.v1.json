@@ -1,0 +1,50 @@
+{
+  "version": "1",
+  "pipeline": {
+    "id": "shopgate.user.getOrders.v1",
+    "public": true,
+    "input": [
+      {"key": "limit", "id": "10", "optional": true},
+      {"key": "offset", "id": "11", "optional": true},
+      {"key": "sort", "id": "12", "optional": true},
+      {"key": "filters", "id": "13", "optional": true}
+    ],
+    "output": [
+      {"key": "orders", "id": "20"}
+    ],
+    "steps": [
+      {
+        "type": "extension",
+        "id": "@shopgate/user",
+        "path": "@shopgate/user/user/checkLoginStatus.js",
+        "input": [],
+        "output": []
+      },
+      {
+        "type": "extension",
+        "id": "@shopgate/user",
+        "path": "@shopgate/user/order/addUserFilter.js",
+        "input": [
+          {"key": "filters", "id": "13", "optional": true}
+        ],
+        "output": [
+          {"key": "filters", "id": "13", "optional": true}
+        ]
+      },
+      {
+        "type": "pipeline",
+        "id": "shopgate.order.getOrders.v1",
+        "trusted": false,
+        "input": [
+          {"key": "limit", "id": "10", "optional": true},
+          {"key": "offset", "id": "11", "optional": true},
+          {"key": "sort", "id": "12", "optional": true},
+          {"key": "filters", "id": "13", "optional": true}
+        ],
+        "output": [
+          {"key": "orders", "id": "20"}
+        ]
+      }
+    ]
+  }
+}
