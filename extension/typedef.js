@@ -59,6 +59,7 @@
 
 /**
  * @typedef {Object} ExtUserAddress
+ * @property {string|undefined} id
  * @property {string} firstName
  * @property {string} lastName
  * @property {string} street
@@ -66,4 +67,5 @@
  * @property {string} provinceCode
  * @property {string} countryCode
  * @property {string} zipCode
+ * @property {string[]|null} tags
  */

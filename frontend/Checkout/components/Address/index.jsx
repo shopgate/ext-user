@@ -4,7 +4,12 @@ import I18n from '@shopgate/pwa-common/components/I18n';
 import Link from '@shopgate/pwa-common/components/Router/components/Link';
 import style from './style';
 
-function getLinkTextByType (type, select = true) {
+/**
+ * @param {string} type type
+ * @param {boolean} select select
+ * @return {string}
+ */
+const getLinkTextByType = (type, select = true) => {
   if (type === 'shipping') {
     if (select) {
       return 'checkout.shipping.address.select';
@@ -18,8 +23,8 @@ function getLinkTextByType (type, select = true) {
     return 'checkout.billing.address.change';
   }
 
-  return ''
-}
+  return '';
+};
 
 /**
  * @return {*}
