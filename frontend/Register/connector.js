@@ -1,5 +1,8 @@
-import connect from '@shopgate/pwa-common/components/Router/helpers/connect';
+import { connect } from 'react-redux';
+import joi from 'joi-browser';
 import register from './action';
+import userSchema from './../../common/userSchema';
+import { joiToValidationErrors, validationErrorsToMap } from './../../common/transform';
 
 /**
  * @param {function} dispatch dispatch
@@ -7,6 +10,24 @@ import register from './action';
  */
 const mapDispatchToProps = dispatch => ({
   register: user => dispatch(register(user)),
+  validateUser: (user) => {
+    const result = userSchema(joi).validate(user, { abortEarly: false });
+    if (!result.error) {
+      return {};
+    }
+    const validationErrors = joiToValidationErrors(result.error, 'register.errors')
+    // Make error message empty when input is empty
+      .map((err) => {
+        if (user[err.path] === '') {
+          return {
+            ...err,
+            message: '',
+          };
+        }
+        return err;
+      });
+    return validationErrorsToMap(validationErrors);
+  },
 });
 
-export default connect(null, mapDispatchToProps);
+export default connect(null, mapDispatchToProps, null, { withRef: true });

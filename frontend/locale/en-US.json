@@ -6,7 +6,13 @@
     "password": "Password",
     "firstName": "First name",
     "lastName": "Last name",
-    "button": "Register"
+    "button": "Register",
+    "errors": {
+      "mail": "Please enter a valid e-mail address",
+      "password": "The minimum password length must be 8 characters",
+      "firstName": "Only letters and spaces are allowed",
+      "lastName": "Only letters and spaces are allowed"
+    }
   },
   "address": {
     "add": {
