@@ -10,6 +10,7 @@ module.exports = joi => (
     city: joi.string().required().regex(/^[^!<>;?=#"$%]*$/).min(1).max(100),
     provinceCode: joi.string().required().allow(null).regex(/^[\w-]+$/).max(10),
     countryCode: joi.string().regex(/^[A-Z]+$/).required().min(2).max(2),
-    zipCode: joi.string().regex(/^[\w ]+$/).required().min(1).max(10)
+    zipCode: joi.string().regex(/^[\w ]+$/).required().min(1).max(10),
+    tags: joi.array().items(joi.string()).optional().default([]),
   })
 )

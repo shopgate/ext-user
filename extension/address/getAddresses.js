@@ -9,8 +9,8 @@ module.exports = async (context) => {
   try {
     addresses = (await context.storage.user.get('addresses')) || []
   } catch (err) {
-    context.log.warn(err, 'User storage error')
-    throw new InternalError('User storage error')
+    context.log.warn(err, 'User storage error: Failed to load the user\'s addresses.')
+    throw new InternalError()
   }
 
   return {addresses}

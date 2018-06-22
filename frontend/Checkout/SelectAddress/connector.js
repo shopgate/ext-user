@@ -2,6 +2,7 @@ import { connect } from 'react-redux';
 import { getUserData } from '@shopgate/pwa-common/selectors/user';
 import { getQueryParam } from '@shopgate/pwa-common/selectors/history';
 import goBackHistory from '@shopgate/pwa-common/actions/history/goBackHistory';
+import updateAddress from './action';
 
 /**
  * @param {Object} state state
@@ -19,6 +20,12 @@ const mapStateToProps = state => ({
  */
 const mapDispatchToProps = dispatch => ({
   selectAddress: (address, id, returnToCheckout) => {
+    // Assign new tag: shipping|billing to address, update
+    dispatch(updateAddress({
+      ...address,
+      tags: [...address.tags || [], id],
+    }));
+
     dispatch({
       type: 'CHECKOUT_DATA',
       id: `${id}Address`,

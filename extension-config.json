@@ -43,6 +43,11 @@
       "type": "portals"
     },
     {
+      "type": "subscribers",
+      "id": "CheckoutSubscribers",
+      "path": "frontend/Checkout/subscribers.js"
+    },
+    {
       "id": "RegisterSubscription",
       "path": "frontend/Register/subscribers.js",
       "type": "subscribers"

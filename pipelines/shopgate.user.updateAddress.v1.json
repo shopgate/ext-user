@@ -1,0 +1,64 @@
+{
+  "version": "1",
+  "pipeline": {
+    "id": "shopgate.user.updateAddress.v1",
+    "public": true,
+    "input": [
+      {"key": "addressId", "id": "1"},
+      {"key": "address", "id": "2"}
+    ],
+    "output": [],
+    "steps": [
+      {
+        "type": "extension",
+        "id": "@shopgate/user",
+        "path": "@shopgate/user/user/checkLoginStatus.js",
+        "input": [],
+        "output": []
+      },
+      {
+        "type": "extension",
+        "id": "@shopgate/user",
+        "path": "@shopgate/user/address/getAddress.js",
+        "input": [
+          {"key": "addressId", "id": "1"}
+        ],
+        "output": [
+          {"key": "address", "id": "20"}
+        ]
+      },
+      {
+        "type": "extension",
+        "id": "@shopgate/user",
+        "path": "@shopgate/user/address/patchAddress.js",
+        "input": [
+          {"key": "originalAddress", "id": "20"},
+          {"key": "address", "id": "2"}
+        ],
+        "output": [
+          {"key": "address", "id": "30"}
+        ]
+      },
+      {
+        "type": "extension",
+        "id": "@shopgate/user",
+        "path": "@shopgate/user/address/validateAddress.js",
+        "input": [
+          {"key": "address", "id": "30"}
+        ],
+        "output": [
+          {"key": "address", "id": "30"}
+        ]
+      },
+      {
+        "type": "extension",
+        "id": "@shopgate/user",
+        "path": "@shopgate/user/address/updateAddress.js",
+        "input": [
+          {"key": "address", "id": "30"}
+        ],
+        "output": []
+      }
+    ]
+  }
+}

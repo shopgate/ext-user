@@ -22,11 +22,32 @@ describe('validateUserAddress', () => {
       city: 'City',
       provinceCode: 'HS',
       countryCode: 'DE',
-      zipCode: '35510'
+      zipCode: '35510',
+      tags: []
     }
     try {
       // noinspection JSCheckFunctionSignatures
       const actualAddress = (await stepExecute({}, {address: validAddress})).address
+      assert.deepEqual(actualAddress, expectedAddress)
+    } catch (stepError) {
+      assert.ifError(stepError)
+    }
+  })
+
+  it('Should return normalized user data with tags', async () => {
+    const expectedAddress = {
+      firstName: 'John',
+      lastName: 'Doe',
+      street: 'Street 10',
+      city: 'City',
+      provinceCode: 'HS',
+      countryCode: 'DE',
+      zipCode: '35510',
+      tags: ['shipping']
+    }
+    try {
+      // noinspection JSCheckFunctionSignatures
+      const actualAddress = (await stepExecute({}, {address: {...validAddress, tags: ['shipping']}})).address
       assert.deepEqual(actualAddress, expectedAddress)
     } catch (stepError) {
       assert.ifError(stepError)
