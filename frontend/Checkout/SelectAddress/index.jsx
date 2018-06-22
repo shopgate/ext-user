@@ -17,6 +17,7 @@ class SelectAddress extends Component {
     addresses: PropTypes.arrayOf(PropTypes.shape()).isRequired,
     addressType: PropTypes.string.isRequired,
     selectAddress: PropTypes.func.isRequired,
+    updateAddress: PropTypes.func.isRequired,
     selectedId: PropTypes.string.isRequired,
   }
 
@@ -56,10 +57,18 @@ class SelectAddress extends Component {
    */
   submitAddress = (event) => {
     event.preventDefault();
+    const tags = [];
     if (this.state.makeBilling) {
-      this.props.selectAddress(this.state.address, 'billing');
+      const billing = 'billing';
+      tags.push(billing)
+      this.props.selectAddress(this.state.address, billing);
+    }
+    tags.push('shipping');
+    if (this.state.address.tags && Array.isArray(this.state.address.tags)) {
+      tags.concat(this.state.address.tags)
     }
     this.props.selectAddress(this.state.address, this.props.addressType, true);
+    this.props.updateAddress({id: this.state.address.id, tags});
   }
 
   /**
