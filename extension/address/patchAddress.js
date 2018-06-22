@@ -8,11 +8,14 @@ module.exports = async (context, input) => {
     ...input.originalAddress,
     ...input.address,
     id: input.originalAddress.id,
-    // Merge tags, make unique set
+    // Merge tags
     tags: [
       ...input.originalAddress.tags || [],
       ...input.address.tags || []
-    ].filter((tag, i, self) => self.indexOf(tag) === i)
+    ].filter((tag, index, tags) => (
+      // Remove duplicates
+      tags.indexOf(tag) === index
+    ))
   }
 
   return {address}
