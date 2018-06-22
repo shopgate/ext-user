@@ -13,12 +13,8 @@ import styles from './style';
 class Register extends Component {
   static propTypes = {
     register: PropTypes.func.isRequired,
-    disabled: PropTypes.bool,
+    validateUser: PropTypes.func.isRequired,
   }
-
-  static defaultProps = {
-    disabled: false,
-  };
 
   /**
    * @param {Object} props props
@@ -27,29 +23,55 @@ class Register extends Component {
     super(props);
 
     this.state = {
-      mail: '',
-      password: '',
-      firstName: '',
-      lastName: '',
+      user: {
+        mail: '',
+        password: '',
+        firstName: '',
+        lastName: '',
+      },
+      errors: {
+        mail: '',
+        password: '',
+        firstName: '',
+        lastName: '',
+      },
+      disabled: true,
     };
   }
 
+  updateUser = (user) => {
+    this.setState({
+      user: {
+        ...this.state.user,
+        ...user,
+      },
+    }, () => this.validate());
+  }
+
+  validate = () => {
+    const errors = this.props.validateUser(this.state.user);
+    this.setState({
+      errors,
+      disabled: !!Object.keys(errors).length,
+    });
+  }
+
   handleMailChange = (mail) => {
-    this.setState({ mail });
+    this.updateUser({ mail });
   }
   handlePasswordChange = (password) => {
-    this.setState({ password });
+    this.updateUser({ password });
   }
   handleFirstNameChange = (firstName) => {
-    this.setState({ firstName });
+    this.updateUser({ firstName });
   }
   handleLastNameChange = (lastName) => {
-    this.setState({ lastName });
+    this.updateUser({ lastName });
   }
 
   handleSubmitForm = (event) => {
     event.preventDefault();
-    this.props.register(this.state);
+    this.props.register(this.state.user);
   }
 
   /**
@@ -73,7 +95,8 @@ class Register extends Component {
               label="register.mail"
               name="mail"
               onChange={this.handleMailChange}
-              value={this.state.mail}
+              value={this.state.user.mail}
+              errorText={this.state.errors.mail}
             />
             <TextField
               type="password"
@@ -81,24 +104,27 @@ class Register extends Component {
               label="register.password"
               minLength={8}
               onChange={this.handlePasswordChange}
-              value={this.state.password}
+              value={this.state.user.password}
+              errorText={this.state.errors.password}
             />
             <TextField
               type="text"
               name="firstName"
               label="register.firstName"
               onChange={this.handleFirstNameChange}
-              value={this.state.firstName}
+              value={this.state.user.firstName}
+              errorText={this.state.errors.firstName}
             />
             <TextField
               type="text"
               name="lastName"
               label="register.lastName"
               onChange={this.handleLastNameChange}
-              value={this.state.lastName}
+              value={this.state.user.lastName}
+              errorText={this.state.errors.lastName}
             />
-            <div data-test-id="RegisterButton">
-              <RippleButton type="secondary" disabled={this.props.disabled}>
+            <div data-test-id="RegisterButton" className={styles.buttonWrapper}>
+              <RippleButton type="secondary" disabled={this.state.disabled} className={styles.button}>
                 <I18n.Text string="register.button" />
               </RippleButton>
             </div>

@@ -1,5 +1,7 @@
 const Joi = require('joi')
-const {EINVAL, createCustomError} = require('./../error')
+const ValidationError = require('./../common/Error/ValidationError')
+const userSchema = require('./../../common/userSchema')(Joi)
+
 /**
  * @typedef {Object} RegisterInputArgs
  * @property {string} mail
@@ -14,9 +16,9 @@ const {EINVAL, createCustomError} = require('./../error')
 /**
  * @param {SDKContext} context
  * @param {RegisterInputArgs} input
- * @param {function} cb
+ * @return {Promise<Object>}
  */
-module.exports = (context, input, cb) => {
+module.exports = async (context, input) => {
   const user = {
     mail: input.mail.trim(),
     password: input.password.trim(),
@@ -27,22 +29,10 @@ module.exports = (context, input, cb) => {
     phone: input.phone ? input.phone.trim() : input.phone
   }
 
-  // Validation schema
-  const schema = {
-    mail: Joi.string().email({minDomainAtoms: 2}).required(),
-    password: Joi.string().min(8).required(),
-    firstName: Joi.string().required(),
-    lastName: Joi.string().required(),
-    gender: Joi.string().valid(['female', 'male']),
-    birthday: Joi.date(),
-    phone: Joi.string()
-  }
-
   // Validation
-  Joi.validate(user, schema, /* {abortEarly: false}, */ (errValidate) => {
-    if (errValidate) {
-      return cb(createCustomError(EINVAL, errValidate.details[0].message))
-    }
-    cb(null, user)
-  })
+  let validationResult = Joi.validate(user, userSchema)
+  if (validationResult.error) {
+    throw new ValidationError(validationResult.error.details[0].message)
+  }
+  return user
 }

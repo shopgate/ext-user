@@ -1,6 +1,6 @@
 const assert = require('assert')
-const validateUser = require('../../../user/validateUser')
-const {EINVAL} = require('../../../error')
+const executeStep = require('../../../user/validateUser')
+const ValidationError = require('../../../common/Error/ValidationError')
 
 describe('validateUser', () => {
   const validUser = {
@@ -13,7 +13,7 @@ describe('validateUser', () => {
     phone: '+11230000001 '
   }
 
-  it('Should normalize, validate and return normalized user data', (done) => {
+  it('Should normalize, validate and return normalized user data', async () => {
     const expectedUser = {
       mail: 'john@doe.com',
       password: 'qwerty88',
@@ -23,23 +23,24 @@ describe('validateUser', () => {
       birthday: '01-01-1970',
       phone: '+11230000001'
     }
-    validateUser(context, validUser, (err, user) => {
-      assert.ifError(err)
-      assert.deepEqual(user, expectedUser)
-      done()
-    })
+    try {
+      // noinspection JSCheckFunctionSignatures
+      const actualUser = await executeStep({}, {...validUser})
+      assert.deepEqual(actualUser, expectedUser)
+    } catch (stepError) {
+      assert.ifError(stepError)
+    }
   })
 
-  it('Should throw error on user email validation', (done) => {
+  it('Should throw error on user email validation', async () => {
     const invalidUser = Object.assign(validUser, {
       mail: 'not email string'
     })
-
-    // noinspection JSCheckFunctionSignatures
-    validateUser(context, invalidUser, (err) => {
-      assert.equal(err.code, EINVAL)
-      assert.equal(err.message, '"mail" must be a valid email')
-      done()
-    })
+    try {
+      // noinspection JSCheckFunctionSignatures
+      await executeStep({}, {...invalidUser})
+    } catch (stepError) {
+      assert(stepError instanceof ValidationError)
+    }
   })
 })

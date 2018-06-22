@@ -49,12 +49,12 @@
  * @property {string} password
  * @property {string} firstName
  * @property {string} lastName
- * @property {?string} gender
- * @property {?string} birthday
- * @property {?string} phone
- * @property {?Array} customerGroups
- * @property {ExtUserAddress[]} addresses
- * @property {?Array} messages
+ * @property {string|undefined} gender
+ * @property {string|undefined} birthday
+ * @property {string|undefined} phone
+ * @property {Object[]|undefined} customerGroups
+ * @property {ExtUserAddress[]|undefined} addresses
+ * @property {Array|undefined} messages
  */
 
 /**
