@@ -20,12 +20,6 @@ const mapStateToProps = state => ({
  */
 const mapDispatchToProps = dispatch => ({
   selectAddress: (address, id, returnToCheckout) => {
-    // Assign new tag: shipping|billing to address, update
-    dispatch(updateAddress({
-      ...address,
-      tags: [...address.tags || [], id],
-    }));
-
     dispatch({
       type: 'CHECKOUT_DATA',
       id: `${id}Address`,
@@ -37,6 +31,9 @@ const mapDispatchToProps = dispatch => ({
     if (returnToCheckout) {
       dispatch(goBackHistory());
     }
+  },
+  updateAddress: (address) => {
+    dispatch(updateAddress(address));
   },
 });
 
