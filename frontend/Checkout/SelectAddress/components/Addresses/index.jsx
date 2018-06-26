@@ -13,17 +13,13 @@ const Addresses = ({ selectAddress, addresses }) => (
     {
       addresses.map(address => (
         <Fragment key={`address_${address.id}`}>
-          <Grid className={style.address}>
+          <Grid className={style.address} onClick={() => selectAddress(address)}>
             <Grid.Item grow={1}>
               <div>{`${address.firstName} ${address.lastName}`}</div>
               <div>{address.street}</div>
               <div>{`${address.zipCode} ${address.city}`}</div>
             </Grid.Item>
-            <Grid.Item
-              grow={0}
-              onClick={() => selectAddress(address)}
-              className={style.radio}
-            >
+            <Grid.Item grow={0} className={style.radio}>
               {address.selected && <RadioCheckedIcon size={28} />}
               {!address.selected && <RadioUncheckedIcon size={28} />}
             </Grid.Item>
