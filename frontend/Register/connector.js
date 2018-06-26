@@ -1,8 +1,8 @@
 import { connect } from 'react-redux';
 import joi from 'joi-browser';
 import register from './action';
-import userSchema from './../../common/userSchema';
-import { joiToValidationErrors, validationErrorsToMap } from './../../common/transform';
+import userSchema from './../common/userSchema';
+import { joiToValidationErrors, validationErrorsToMap } from './../common/transform';
 
 /**
  * @param {function} dispatch dispatch

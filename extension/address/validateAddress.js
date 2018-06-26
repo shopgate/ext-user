@@ -1,5 +1,5 @@
 const Joi = require('joi')
-const userAddressSchema = require('./../../common/userAddressSchema')(Joi)
+const userAddressSchema = require('./../common/userAddressSchema')(Joi)
 const ValidationError = require('./../common/Error/ValidationError')
 
 /**

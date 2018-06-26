@@ -1,6 +1,6 @@
 const Joi = require('joi')
 const ValidationError = require('./../common/Error/ValidationError')
-const userSchema = require('./../../common/userSchema')(Joi)
+const userSchema = require('./../common/userSchema')(Joi)
 
 /**
  * @typedef {Object} RegisterInputArgs

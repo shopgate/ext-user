@@ -2,8 +2,8 @@ import joi from 'joi-browser';
 import connect from '@shopgate/pwa-common/components/Router/helpers/connect';
 import { getQueryParam } from '@shopgate/pwa-common/selectors/history';
 import addAddress from './action';
-import { joiToValidationErrors, validationErrorsToMap } from './../../../common/transform';
-import userAddressSchema from './../../../common/userAddressSchema';
+import { joiToValidationErrors, validationErrorsToMap } from './../../common/transform';
+import userAddressSchema from './../../common/userAddressSchema';
 
 /**
  * @param {Object} state state
