@@ -6,27 +6,37 @@
     "type": "git",
     "url": "https://github.com/shopgate/ext-user.git"
   },
+  "license": "Apache-2.0",
   "scripts": {
+    "test": "jest",
+    "test:watch": "npm run test -- --watch",
+    "coverage": "jest --coverage",
+    "coverage:watch": "npm run coverage -- --watch",
     "lint": "eslint --ignore-path ../.gitignore --ext .js --ext .jsx ."
   },
-  "license": "Apache-2.0",
   "dependencies": {
     "joi-browser": "^13.0.1"
   },
   "devDependencies": {
-    "@shopgate/eslint-config": "5.4.1-beta.1",
-    "@shopgate/pwa-core": "5.4.1-beta.1",
-    "@shopgate/pwa-common": "5.4.1-beta.1",
-    "@shopgate/pwa-common-commerce": "5.4.1-beta.1",
-    "@shopgate/pwa-ui-shared": "5.4.1-beta.1",
+    "eslint": "^4.19.1",
+    "@shopgate/eslint-config": "latest",
+    "@shopgate/pwa-core": "latest",
+    "@shopgate/pwa-common": "latest",
+    "@shopgate/pwa-common-commerce": "latest",
+    "@shopgate/pwa-ui-shared": "latest",
+    "@shopgate/react-hammerjs": "latest",
     "babel-plugin-transform-es2015-classes": "^6.14.0",
     "babel-plugin-transform-es2015-modules-commonjs": "^6.2.0",
     "babel-plugin-transform-object-assign": "^6.8.0",
     "babel-plugin-transform-proto-to-assign": "^6.9.0",
     "babel-preset-es2015": "^6.1.18",
+    "glamor": "^2.20.40",
     "react": "^16.3.2",
     "prop-types": "^15.6.0",
-    "react-redux": "^5.0.5",
-    "eslint": "^4.19.1"
+    "react-dom": "^16.2.0",
+    "react-hot-loader": "4.0.1",
+    "react-transform-catch-errors": "^1.0.2",
+    "redbox-react": "^1.5.0",
+    "react-redux": "^5.0.5"
   }
 }

@@ -15,18 +15,12 @@
   "license": "Apache-2.0",
   "dependencies": {
     "uuid": "^3.2.1",
-    "joi": "^13.1.2"
+    "joi": "^13.3.0"
   },
   "devDependencies": {
-    "eslint": "^3.19.0",
-    "eslint-config-standard": "^10.2.1",
-    "eslint-plugin-import": "^2.8.0",
-    "eslint-plugin-node": "^5.2.1",
-    "eslint-plugin-promise": "^3.6.0",
-    "eslint-plugin-standard": "^3.0.1",
+    "standard": "latest",
     "mocha": "^3.2.0",
     "mocha-jenkins-reporter": "^0.3.7",
-    "standard": "^10.0.3",
     "nyc": "latest"
   },
   "standard": {
