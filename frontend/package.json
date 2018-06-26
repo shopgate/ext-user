@@ -18,6 +18,7 @@
     "joi-browser": "^13.0.1"
   },
   "devDependencies": {
+    "eslint": "^4.19.1",
     "@shopgate/pwa-core": "latest",
     "@shopgate/pwa-common": "latest",
     "@shopgate/pwa-common-commerce": "latest",
