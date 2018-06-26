@@ -8,10 +8,6 @@
   },
   "license": "Apache-2.0",
   "scripts": {
-    "test": "jest",
-    "test:watch": "npm run test -- --watch",
-    "coverage": "jest --coverage",
-    "coverage:watch": "npm run coverage -- --watch",
     "lint": "eslint --ignore-path ../.gitignore --ext .js --ext .jsx ."
   },
   "dependencies": {
