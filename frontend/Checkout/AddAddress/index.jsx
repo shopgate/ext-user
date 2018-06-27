@@ -101,7 +101,7 @@ class AddAddress extends Component {
   }
 
   handleMakeBilling = (makeBilling) => {
-    this.updateAddress({ makeBilling });
+    this.setState({ makeBilling });
   }
 
   saveAddress = () => {
