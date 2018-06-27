@@ -63,7 +63,7 @@ class SelectAddress extends Component {
       tags.push(billing);
       this.props.selectAddress(this.state.address, billing);
     }
-    tags.push('shipping');
+    tags.push(this.props.addressType);
     if (this.state.address.tags && Array.isArray(this.state.address.tags)) {
       tags.concat(this.state.address.tags);
     }
