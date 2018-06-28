@@ -36,6 +36,7 @@ class AddAddress extends Component {
         provinceCode: '',
         countryCode: '',
         zipCode: '',
+        tags: [props.addressType],
       },
       errors: {
         firstName: '',
