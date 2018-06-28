@@ -106,6 +106,9 @@ class AddAddress extends Component {
   }
 
   saveAddress = () => {
+    if (this.state.makeBilling) {
+      this.state.address.tags.push('billing');
+    }
     this.setState({ disabled: true });
     this.props.addAddress(this.state.address, this.props.addressType, this.state.makeBilling);
   }
