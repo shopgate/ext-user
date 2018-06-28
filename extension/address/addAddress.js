@@ -20,6 +20,23 @@ module.exports = async (context, input) => {
     id: uuidv4()
   }
 
+  const currentAddressTags = newAddress.tags
+
+  // Normalize tags for addresses
+  if (Array.isArray(currentAddressTags) && currentAddressTags.length > 0) {
+    addresses = addresses.map(address => {
+      // Keep address of the iteration as is, when no tags are to be changed
+      if (!address.tags || !address.tags.length) {
+        return address
+      }
+      // Remove tags from all addresses that have been set for the current address
+      return {
+        ...address,
+        tags: address.tags.filter(tag => !currentAddressTags.includes(tag))
+      }
+    })
+  }
+
   addresses.push(newAddress)
 
   try {
