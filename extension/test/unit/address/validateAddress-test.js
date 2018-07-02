@@ -54,21 +54,45 @@ describe('validateUserAddress', () => {
     }
   })
 
-  describe('Should throw error on occuring address validation errors', async () => {
+  describe('Should not throw address validation errors', async () => {
+    const tests = {
+      'Province code is undefined': {provinceCode: void 0},
+      'Province code is null': {provinceCode: null},
+      'Province code is empty string': {provinceCode: ''},
+      'Street in EU': {street: 'Schlossstrasse 10'},
+      'Street in US/UK': {street: '44 Morningside Road'}
+    }
+
+    Object.keys(tests).forEach((testTitle) => {
+      it(testTitle, async () => {
+        try {
+          // noinspection JSCheckFunctionSignatures
+          await stepExecute({}, {address: {...validAddress, ...tests[testTitle]}})
+        } catch (stepError) {
+          assert.ifError(stepError)
+        }
+      })
+    })
+  })
+
+  describe('Should throw error on occurring address validation errors', async () => {
     const tests = {
       'First name is empty': {firstName: ''},
       'Last name is too long': {lastName: 'Very long last name. More then 255 characters'.repeat(10)},
       'Street is too long': {street: 'Very long street'.repeat(100)},
+      'Street is not valid': {street: 'Castle street'},
+      'Street has special characters': {street: '<script>alert(1)</script>'},
+      'Province is not valid: max 10 length': {provinceCode: '12345678901'},
       'Country is too long': {countryCode: 'Very long countryCode'}
     }
 
-    Object.keys(tests).forEach((testTitle, testDouble) => {
+    Object.keys(tests).forEach((testTitle) => {
       it(testTitle, async () => {
         try {
           // noinspection JSCheckFunctionSignatures
-          await stepExecute({}, {address: {...validAddress, ...testDouble}})
+          await stepExecute({}, {address: {...validAddress, ...tests[testTitle]}})
         } catch (stepError) {
-          assert.ifError(stepError instanceof ValidationError)
+          assert(stepError instanceof ValidationError)
         }
       })
     })
