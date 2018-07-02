@@ -33,7 +33,7 @@ class AddAddress extends Component {
         lastName: '',
         street: '',
         city: '',
-        provinceCode: '',
+        provinceCode: null,
         countryCode: '',
         zipCode: '',
         tags: [props.addressType],
