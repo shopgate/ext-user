@@ -7,15 +7,10 @@ const container = css({
   padding: variables.gap.big,
 }).toString();
 
-const headline = css({
-  fontSize: '2.1875rem',
-  fontWeight: 500,
-}).toString();
-
 const subline = css({
   fontSize: '1.125rem',
   color: colors.shade6,
-  marginBottom: variables.gap.xxbig,
+  marginBottom: variables.gap.xbig,
   marginTop: variables.gap.xsmall,
 }).toString();
 
@@ -30,7 +25,6 @@ const button = css({
 
 export default {
   container,
-  headline,
   subline,
   buttonWrapper,
   button,

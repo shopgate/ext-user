@@ -16,6 +16,10 @@ class Register extends Component {
     validateUser: PropTypes.func.isRequired,
   }
 
+  static contextTypes = {
+    i18n: PropTypes.func,
+  };
+
   /**
    * @param {Object} props props
    */
@@ -35,8 +39,18 @@ class Register extends Component {
         firstName: '',
         lastName: '',
       },
-      disabled: true,
+      disabled: false,
+      inlineValidation: false,
     };
+  }
+
+  /**
+   * Returns the translated view title.
+   * @return {string}
+   */
+  get title() {
+    const { __ } = this.context.i18n();
+    return __('register.title');
   }
 
   updateUser = (user) => {
@@ -45,7 +59,7 @@ class Register extends Component {
         ...this.state.user,
         ...user,
       },
-    }, () => this.validate());
+    }, this.state.inlineValidation ? this.validate : null);
   }
 
   validate = () => {
@@ -71,6 +85,17 @@ class Register extends Component {
 
   handleSubmitForm = (event) => {
     event.preventDefault();
+    this.setState({
+      inlineValidation: true,
+      disabled: true,
+    });
+    const errors = this.props.validateUser(this.state.user);
+    this.setState({
+      errors,
+    });
+    if (Object.keys(errors).length > 0) {
+      return;
+    }
     this.props.register(this.state.user);
   }
 
@@ -81,15 +106,28 @@ class Register extends Component {
     // eslint-disable-next-line react/prop-types
     const { View } = this.props;
     return (
-      <View>
+      <View title={this.title}>
         <section className={styles.container} data-test-id="RegisterPage">
-          <div className={styles.headline}>
-            <I18n.Text string="register.title" />
-          </div>
           <div className={styles.subline}>
             <I18n.Text string="register.subTitle" />
           </div>
           <form onSubmit={this.handleSubmitForm}>
+            <TextField
+              type="text"
+              name="firstName"
+              label="register.firstName"
+              onChange={this.handleFirstNameChange}
+              value={this.state.user.firstName}
+              errorText={this.state.errors.firstName}
+            />
+            <TextField
+              type="text"
+              name="lastName"
+              label="register.lastName"
+              onChange={this.handleLastNameChange}
+              value={this.state.user.lastName}
+              errorText={this.state.errors.lastName}
+            />
             <TextField
               type="email"
               label="register.mail"
@@ -106,22 +144,6 @@ class Register extends Component {
               onChange={this.handlePasswordChange}
               value={this.state.user.password}
               errorText={this.state.errors.password}
-            />
-            <TextField
-              type="text"
-              name="firstName"
-              label="register.firstName"
-              onChange={this.handleFirstNameChange}
-              value={this.state.user.firstName}
-              errorText={this.state.errors.firstName}
-            />
-            <TextField
-              type="text"
-              name="lastName"
-              label="register.lastName"
-              onChange={this.handleLastNameChange}
-              value={this.state.user.lastName}
-              errorText={this.state.errors.lastName}
             />
             <div data-test-id="RegisterButton" className={styles.buttonWrapper}>
               <RippleButton type="secondary" disabled={this.state.disabled} className={styles.button}>
