@@ -85,13 +85,11 @@ class Register extends Component {
 
   handleSubmitForm = (event) => {
     event.preventDefault();
-    this.setState({
-      inlineValidation: true,
-      disabled: true,
-    });
     const errors = this.props.validateUser(this.state.user);
     this.setState({
       errors,
+      inlineValidation: true,
+      disabled: true,
     });
     if (Object.keys(errors).length > 0) {
       return;

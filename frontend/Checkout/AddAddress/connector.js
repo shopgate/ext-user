@@ -6,6 +6,29 @@ import { joiToValidationErrors, validationErrorsToMap } from './../../common/tra
 import userAddressSchema from './../../common/userAddressSchema';
 
 /**
+ * @param {Object} address address
+ * @return {Object}
+ */
+const validateAddress = (address) => {
+  const result = userAddressSchema(joi).validate(address, { abortEarly: false });
+  if (!result.error) {
+    return {};
+  }
+  const validationErrors = joiToValidationErrors(result.error, 'address.add.errors')
+  // Make error message empty when input is empty
+    .map((err) => {
+      if (address[err.path] === '') {
+        return {
+          ...err,
+          message: 'register.errors.blank',
+        };
+      }
+      return err;
+    });
+  return validationErrorsToMap(validationErrors);
+};
+
+/**
  * @param {Object} state state
  * @return {{addressType: (*|string)}}
  */
@@ -18,26 +41,8 @@ const mapStateToProps = state => ({
  * @return {{addAddress: (function(*=): *), validateAddress: validateAddress}}
  */
 const mapDispatchToProps = dispatch => ({
-  addAddress: (address, addressType, makeBilling) =>
-    dispatch(addAddress(address, addressType, makeBilling)),
-  validateAddress: (address) => {
-    const result = userAddressSchema(joi).validate(address, { abortEarly: false });
-    if (!result.error) {
-      return {};
-    }
-    const validationErrors = joiToValidationErrors(result.error, 'address.add.errors')
-      // Make error message empty when input is empty
-      .map((err) => {
-        if (address[err.path] === '') {
-          return {
-            ...err,
-            message: '',
-          };
-        }
-        return err;
-      });
-    return validationErrorsToMap(validationErrors);
-  },
+  addAddress: address => dispatch(addAddress(address)),
+  validateAddress,
 });
 
 export default connect(mapStateToProps, mapDispatchToProps);
