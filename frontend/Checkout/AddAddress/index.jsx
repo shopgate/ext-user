@@ -47,8 +47,9 @@ class AddAddress extends Component {
         countryCode: '',
         zipCode: '',
       },
-      disabled: true,
+      disabled: false,
       makeBilling: false,
+      inlineValidation: false,
     };
   }
 
@@ -58,10 +59,10 @@ class AddAddress extends Component {
         ...this.state.address,
         ...address,
       },
-    }, () => this.validate());
+    }, this.state.inlineValidation ? this.validateInline : null);
   }
 
-  validate = () => {
+  validateInline = () => {
     const errors = this.props.validateAddress(this.state.address);
     this.setState({
       errors,
@@ -97,7 +98,7 @@ class AddAddress extends Component {
     // Force a province code to be selected if there are any available for the selected country
     this.updateAddress({
       [target.name]: target.value,
-      provinceCode: countries[target.value].hideProvince ? null : '',
+      provinceCode: null,
     });
   }
 
@@ -106,11 +107,20 @@ class AddAddress extends Component {
   }
 
   saveAddress = () => {
+    const errors = this.props.validateAddress(this.state.address);
+    this.setState({
+      inlineValidation: true,
+      disabled: true,
+      errors,
+    });
+    if (Object.keys(errors).length > 0) {
+      return;
+    }
+
     if (this.state.makeBilling) {
       this.state.address.tags.push('billing');
     }
-    this.setState({ disabled: true });
-    this.props.addAddress(this.state.address, this.props.addressType, this.state.makeBilling);
+    this.props.addAddress(this.state.address);
   }
 
   /**
