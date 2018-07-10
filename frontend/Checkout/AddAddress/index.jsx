@@ -5,25 +5,10 @@ import Portal from '@shopgate/pwa-common/components/Portal';
 import I18n from '@shopgate/pwa-common/components/I18n';
 import TextField from '@shopgate/pwa-ui-shared/TextField';
 import RippleButton from '@shopgate/pwa-ui-shared/RippleButton';
-import Select from '@shopgate/pwa-ui-shared/Form/Select';
 import MakeBilling from './../components/MakeBilling';
 import connect from './connector';
 import countries from './countries';
 import styles from './style';
-
-/**
- * @return {Object}
- */
-const countriesList = () => Object.keys(countries).reduce((reducer, countryCode) => ({
-  ...reducer,
-  [countryCode]: countries[countryCode].name,
-}), {});
-
-/**
- * @param {string} countryCode country
- * @return {Object}
- */
-const provincesList = countryCode => countries[countryCode].divisions;
 
 // eslint-disable-next-line valid-jsdoc
 /**
@@ -42,18 +27,14 @@ class AddAddress extends Component {
   constructor(props) {
     super(props);
 
-    this.countriesList = countriesList();
-    const countryCode = Object.keys(this.countriesList)[0];
-    const provinceCode = Object.keys(provincesList(countryCode))[0];
-
     this.state = {
       address: {
         firstName: '',
         lastName: '',
         street: '',
         city: '',
-        provinceCode,
-        countryCode,
+        provinceCode: null,
+        countryCode: '',
         zipCode: '',
         tags: [props.addressType],
       },
@@ -109,19 +90,16 @@ class AddAddress extends Component {
     this.updateAddress({ zipCode });
   }
 
-  handleCountryCode = (countryCode) => {
-    let provinceCode = null;
-    if (!countries[countryCode].hideProvince) {
-      [provinceCode] = Object.keys(provincesList(countryCode));
-    }
-    this.updateAddress({
-      countryCode,
-      provinceCode,
-    });
+  handleSelectChange = ({ target }) => {
+    this.updateAddress({ [target.name]: target.value });
   }
 
-  handleProvinceCode = (provinceCode) => {
-    this.updateAddress({ provinceCode });
+  handleCountryCode = ({ target }) => {
+    // Force a province code to be selected if there are any available for the selected country
+    this.updateAddress({
+      [target.name]: target.value,
+      provinceCode: null,
+    });
   }
 
   handleMakeBilling = (makeBilling) => {
@@ -152,7 +130,6 @@ class AddAddress extends Component {
     // eslint-disable-next-line react/prop-types
     const { View } = this.props;
     const isShipping = this.props.addressType === 'shipping';
-
     return (
       <AppContext.Provider value={{ updateAddress: this.updateAddress }}>
         <View>
@@ -188,26 +165,33 @@ class AddAddress extends Component {
               value={this.state.address.city}
               errorText={this.state.errors.city}
             />
-            <Select
-              name="countryCode"
-              placeholder="placeholder"
-              label="address.add.countryCode"
-              options={this.countriesList}
-              value={this.state.address.countryCode}
-              onChange={this.handleCountryCode}
-              errorText={this.state.errors.countryCode}
-            />
+            {/* @TODO add material or native select for country selection */}
+            <select name="countryCode" onChange={this.handleCountryCode} className={styles.select}>
+              <option value="" key="country"><I18n.Text string="address.add.countryCode" /></option>
+              {
+                Object.keys(countries).map(countryCode => (
+                  <option value={countryCode} key={countryCode}>
+                    {countries[countryCode].name}
+                  </option>
+                ))
+              }
+            </select>
+            {/* @TODO add materail or native select for country selection */}
             {this.state.address.countryCode &&
             !countries[this.state.address.countryCode].hideProvince &&
-              <Select
-                name="provinceCode"
-                placeholder="placeholder"
-                label="address.add.provinceCode"
-                options={provincesList(this.state.address.countryCode)}
-                value={this.state.address.provinceCode || ''}
-                onChange={this.handleProvinceCode}
-                errorText={this.state.errors.provinceCode}
-              />
+            <div>
+              <select name="provinceCode" onChange={this.handleSelectChange} className={styles.select}>
+                <option value="" key="province"><I18n.Text string="address.add.provinceCode" /></option>
+                {
+                  Object.keys(countries[this.state.address.countryCode].divisions)
+                    .map(provinceId => (
+                      <option value={provinceId} key={provinceId}>
+                        {countries[this.state.address.countryCode].divisions[provinceId]}
+                      </option>
+                    ))
+                }
+              </select>
+            </div>
             }
             <TextField
               name="zipCode"
