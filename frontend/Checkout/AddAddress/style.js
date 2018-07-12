@@ -8,6 +8,8 @@ const page = css({
 }).toString();
 
 const title = css({
+  paddingTop: variables.gap.big,
+  paddingBottom: variables.gap.big,
   fontWeight: 500,
 }).toString();
 

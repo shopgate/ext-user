@@ -6,6 +6,7 @@ import I18n from '@shopgate/pwa-common/components/I18n';
 import TextField from '@shopgate/pwa-ui-shared/TextField';
 import RippleButton from '@shopgate/pwa-ui-shared/RippleButton';
 import MakeBilling from './../components/MakeBilling';
+import Title from './../components/Title';
 import connect from './connector';
 import countries from './countries';
 import styles from './style';
@@ -134,9 +135,7 @@ class AddAddress extends Component {
       <AppContext.Provider value={{ updateAddress: this.updateAddress }}>
         <View>
           <section className={styles.page} data-test-id="AddAddressPage">
-            <div className={styles.title}>
-              <I18n.Text string="address.add.title" />
-            </div>
+            <Title className={styles.title} title={isShipping ? 'checkout.shipping.address.title' : 'checkout.billing.address.title'} />
             <TextField
               name="firstName"
               label="address.add.firstName"

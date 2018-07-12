@@ -4,7 +4,7 @@ import I18n from '@shopgate/pwa-common/components/I18n';
 import Link from '@shopgate/pwa-common/components/Router/components/Link';
 import RippleButton from '@shopgate/pwa-ui-shared/RippleButton';
 import connect from './connector';
-import Title from './components/Title';
+import Title from './../components/Title';
 import MakeBilling from './../components/MakeBilling';
 import Addresses from './components/Addresses';
 import style from './style';
@@ -93,7 +93,7 @@ class SelectAddress extends Component {
     return (
       <View>
         <section className={style.page} data-test-id="SelectAddressPage">
-          <Title title={isShipping ? 'checkout.shipping.address.title' : 'checkout.billing.address.title'} />
+          <Title className={style.title} title={isShipping ? 'checkout.shipping.address.title' : 'checkout.billing.address.title'} />
           <Addresses
             addresses={addressesWitSelection}
             selectAddress={this.handleAddressSelection}
