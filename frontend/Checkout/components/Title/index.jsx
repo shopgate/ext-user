@@ -6,12 +6,17 @@ import style from './style';
 /**
  * @return {*}
  */
-const Title = ({ title }) => (
-  <div className={style.title}><I18n.Text string={title} /></div>
+const Title = ({ className, title }) => (
+  <div className={className}><I18n.Text string={title} /></div>
 );
 
 Title.propTypes = {
   title: PropTypes.string.isRequired,
+  className: PropTypes.string,
+};
+
+Title.defaultProps = {
+  className: style.title,
 };
 
 export default Title;

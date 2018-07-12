@@ -7,6 +7,12 @@ const page = css({
   padding: variables.gap.bigger,
 }).toString();
 
+const title = css({
+  paddingTop: variables.gap.big,
+  paddingBottom: variables.gap.big,
+  fontWeight: 500,
+}).toString();
+
 const link = css({
   margin: `${variables.gap.big}px 0`,
   color: colors.accent,
@@ -26,6 +32,7 @@ const checkboxLabel = css({
 }).toString();
 
 export default {
+  title,
   page,
   link,
   button,
