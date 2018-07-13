@@ -32,6 +32,7 @@
         "street": "Straße und Hausnummer sind erforderlich",
         "city": "Nur Buchstaben und Leerzeichen sind erlaubt",
         "countryCode": "Wähle ein Land aus",
+        "provinceCode": "Wähle ein Bundesland aus",
         "zipCode": "Höchstens 10 Zeichen sind erlaubt"
       }
     }

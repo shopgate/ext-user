@@ -32,6 +32,7 @@
         "street": "Street and number are required",
         "city": "Only letters and spaces are allowed",
         "countryCode": "Choose a country",
+        "Bundesland": "Choose a State",
         "zipCode": "A max. of 10 characters are allowed"
       }
     }
