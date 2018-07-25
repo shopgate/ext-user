@@ -31,8 +31,8 @@ module.exports = async (context, { address }) => {
 
     // Remove all tags, prefixed as default from all others addresses
     return {
-      ...address,
-      tags: address.tags.filter(tag => !addressDefaultTags.includes(tag))
+      ...addr,
+      tags: addr.tags.filter(tag => !addressDefaultTags.includes(tag))
     }
   })
 
