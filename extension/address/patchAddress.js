@@ -1,22 +1,18 @@
 /**
  * @param {SDKContext} context
- * @param {{originalAddress: ExtUserAddress, address: Object}} input
+ * @param {{originalAddress: ExtUserAddress, updateAddress: Object}} input
  * @return {Promise<{address: Object}>}
  */
-module.exports = async (context, input) => {
+module.exports = async (context, {originalAddress, address: updateAddress}) => {
   const address = {
-    ...input.originalAddress,
-    ...input.address,
-    id: input.originalAddress.id,
-    // Merge tags
-    tags: [
-      ...input.originalAddress.tags || [],
-      ...input.address.tags || []
-    ].filter((tag, index, tags) => (
-      // Remove duplicates
-      tags.indexOf(tag) === index
-    ))
+    ...originalAddress,
+    ...updateAddress
   }
+
+  // Remove duplicates
+  address.tags = address.tags.filter((tag, index, tags) => (
+    tags.indexOf(tag) === index
+  ))
 
   return {address}
 }

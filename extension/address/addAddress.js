@@ -6,7 +6,7 @@ const InternalError = require('./../common/Error/InternalError')
  * @param {{address: ExtUserAddress}} input
  * @return {Promise<{id: string}>}
  */
-module.exports = async (context, input) => {
+module.exports = async (context, { address }) => {
   let addresses
   try {
     addresses = (await context.storage.user.get('addresses')) || []
@@ -16,23 +16,24 @@ module.exports = async (context, input) => {
   }
 
   const newAddress = {
-    ...input.address,
+    ...address,
     id: uuidv4()
   }
 
-  const currentAddressTags = newAddress.tags
+  // Find default tags for address
+  const addressDefaultTags = newAddress.tags.filter(tag => tag.startsWith('default'))
 
   // Normalize tags for addresses
-  if (Array.isArray(currentAddressTags) && currentAddressTags.length > 0) {
+  if (addressDefaultTags.length > 0) {
     addresses = addresses.map(address => {
       // Keep address of the iteration as is, when no tags are to be changed
       if (!address.tags || !address.tags.length) {
         return address
       }
-      // Remove tags from all addresses that have been set for the current address
+      // Remove all tags, prefixed as default from all others addresses
       return {
         ...address,
-        tags: address.tags.filter(tag => !currentAddressTags.includes(tag))
+        tags: address.tags.filter(tag => !addressDefaultTags.includes(tag))
       }
     })
   }
