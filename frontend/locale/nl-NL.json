@@ -1,0 +1,8 @@
+{
+  "navigation": {
+    "my_details": "Mijn Gegevens",
+    "change_password": "Wachtwoord wijzigen",
+    "address_book": "Adresboek",
+    "payment_options": "Betalingsmogelijkheden"
+  }
+}
