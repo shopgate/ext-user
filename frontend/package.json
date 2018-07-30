@@ -25,7 +25,7 @@
     "@shopgate/pwa-ui-shared": "^5.6.0-beta.4",
     "@shopgate/react-hammerjs": "latest",
     "@shopgate/eslint-config": "latest",
-    "eslint": "^4.19.1",
+    "eslint": "^4.17.0",
     "glamor": "^2.20.40",
     "react": "^16.3.2",
     "prop-types": "^15.6.0",

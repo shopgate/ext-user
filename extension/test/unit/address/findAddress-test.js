@@ -6,11 +6,9 @@ describe('findUserAddress', () => {
   const existingAddress = {
     firstName: 'John',
     lastName: 'Doe',
-    street: 'Street 10',
+    street1: 'Street 10',
     city: 'City',
-    provinceCode: 'HS',
-    countryCode: 'DE',
-    zipCode: '35510'
+    country: 'DE'
   }
 
   const id = 'id-123'

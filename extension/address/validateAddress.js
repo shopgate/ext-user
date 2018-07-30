@@ -7,28 +7,13 @@ const ValidationError = require('./../common/Error/ValidationError')
  * @param {{address: ExtUserAddress}} input
  * @return {Promise<{address: Object}>}
  */
-module.exports = async (context, input) => {
-  /** @type {ExtUserAddress} */
-  const address = {
-    firstName: input.address.firstName.trim(),
-    lastName: input.address.lastName.trim(),
-    street: input.address.street.trim(),
-    city: input.address.city.trim(),
-    provinceCode: input.address.provinceCode && input.address.provinceCode.trim(),
-    countryCode: input.address.countryCode.trim(),
-    zipCode: input.address.zipCode.trim(),
-    tags: input.address.tags || []
-  }
-
-  let validationResult = Joi.validate(address, userAddressSchema)
+module.exports = async (context, { address }) => {
+  let validationResult = userAddressSchema.validate(address)
   if (validationResult.error) {
     throw new ValidationError(validationResult.error.details[0].message)
   }
 
   return {
-    address: {
-      ...input.address,
-      ...address
-    }
+    address: validationResult.value
   }
 }
