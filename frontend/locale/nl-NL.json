@@ -1,4 +1,79 @@
 {
+  "register": {
+    "title": "Register",
+    "subTitle": "Create a new account",
+    "mail": "Email",
+    "password": "Password",
+    "firstName": "First name",
+    "lastName": "Last name",
+    "button": "Register",
+    "errors": {
+      "blank": "Please complete this field",
+      "mail": "Please enter a valid e-mail address",
+      "password": "The minimum password length must be 8 characters",
+      "firstName": "Only letters and spaces are allowed",
+      "lastName": "Only letters and spaces are allowed"
+    }
+  },
+  "addresses": {
+    "title": "Adresboek",
+    "headline": "Adresboek",
+    "button": "Voeg een nieuw adres toe",
+    "defaults": {
+      "default": "Standaard adres",
+      "shipping": "Standaard verzendadres",
+      "billing": "Standaard factuuradres"
+    },
+    "setAsDefault": {
+      "default": "Instellen als uw standaard adres",
+      "shipping": "Instellen als uw standaard verzendadres",
+      "billing": "Instellen als uw standaard factuuradres"
+    },
+    "error": {
+      "add": "Toevoegen van adres mislukt, controleer uw velden",
+      "update": "Updaten van adres mislukt, controleer uw velden",
+      "setAsDefault": "Kon adres niet als standaard instellen"
+    }
+  },
+  "address": {
+    "add": {
+      "title": "Add new address",
+      "firstName": "First Name *",
+      "lastName": "Last Name *",
+      "street": "Street & Number *",
+      "city": "City *",
+      "provinceCode": "State *",
+      "countryCode": "Country *",
+      "zipCode": "Zip Code *",
+      "button": "Save address",
+      "errors": {
+        "firstName": "Only letters and spaces are allowed",
+        "lastName": "Only letters and spaces are allowed",
+        "street": "Street and number are required",
+        "city": "Only letters and spaces are allowed",
+        "countryCode": "Choose a country",
+        "Bundesland": "Choose a State",
+        "zipCode": "A max. of 10 characters are allowed"
+      }
+    }
+  },
+  "checkout": {
+    "shipping": {
+      "address": {
+        "title": "Shipping address",
+        "select": "Add shipping address",
+        "change": "Change",
+        "makeBilling": "Make this my billing address"
+      }
+    },
+    "billing": {
+      "address": {
+        "title": "Billing address",
+        "select": "Add billing address",
+        "change": "Change"
+      }
+    }
+  },
   "navigation": {
     "my_details": "Mijn Gegevens",
     "change_password": "Wachtwoord wijzigen",

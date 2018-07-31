@@ -15,6 +15,26 @@
       "lastName": "Nur Buchstaben und Leerzeichen sind erlaubt"
     }
   },
+  "addresses": {
+    "title": "Addressbuch",
+    "headline": "Addressbuch",
+    "button": "Neue Adresse hinzufügen",
+    "defaults": {
+      "default": "Standard-Adresse",
+      "shipping": "Standard-Lieferadresse",
+      "billing": "Standard-Rechnungsadresse"
+    },
+    "setAsDefault": {
+      "default": "Als Standard-Adresse festlegen",
+      "shipping": "Als Standard-Lieferadresse festlegen",
+      "billing": "Als Standard-Rechnungsadresse festlegen"
+    },
+    "error": {
+      "add": "Das Hinzufügen der Adresse ist fehlgeschlagen, bitte überprüfen Sie Ihre Eingaben",
+      "update": "Die Aktualisierung der Adresse ist fehlgeschlagen, bitte überprüfen Sie Ihre Eingaben",
+      "setAsDefault": "Die Adresse konnte nicht als Standard festgelegt werden"
+    }
+  },
   "address": {
     "add": {
       "title": "Adresse hinzufügen",

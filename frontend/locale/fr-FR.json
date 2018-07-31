@@ -1,4 +1,79 @@
 {
+  "register": {
+    "title": "Register",
+    "subTitle": "Create a new account",
+    "mail": "Email",
+    "password": "Password",
+    "firstName": "First name",
+    "lastName": "Last name",
+    "button": "Register",
+    "errors": {
+      "blank": "Please complete this field",
+      "mail": "Please enter a valid e-mail address",
+      "password": "The minimum password length must be 8 characters",
+      "firstName": "Only letters and spaces are allowed",
+      "lastName": "Only letters and spaces are allowed"
+    }
+  },
+  "addresses": {
+    "title": "Carnet d'adresses",
+    "headline": "Carnet d'adresses",
+    "button": "Ajouter une nouvelle adresse",
+    "defaults": {
+      "default": "Adresse par défaut",
+      "shipping": "Adresse d'expédition par défaut",
+      "billing": "Adresse de facturation par défaut"
+    },
+    "setAsDefault": {
+      "default": "Définir comme adresse par défaut",
+      "shipping": "Définir comme adresse de livraison par défaut",
+      "billing": "Définir comme adresse de facturation par défaut"
+    },
+    "error": {
+      "add": "L'ajout de l'adresse a échoué, veuillez vérifier vos champs",
+      "update": "La mise à jour de l'adresse a échoué, veuillez vérifier vos champs",
+      "setAsDefault": "Impossible de définir l'adresse par défaut"
+    }
+  },
+  "address": {
+    "add": {
+      "title": "Add new address",
+      "firstName": "First Name *",
+      "lastName": "Last Name *",
+      "street": "Street & Number *",
+      "city": "City *",
+      "provinceCode": "State *",
+      "countryCode": "Country *",
+      "zipCode": "Zip Code *",
+      "button": "Save address",
+      "errors": {
+        "firstName": "Only letters and spaces are allowed",
+        "lastName": "Only letters and spaces are allowed",
+        "street": "Street and number are required",
+        "city": "Only letters and spaces are allowed",
+        "countryCode": "Choose a country",
+        "Bundesland": "Choose a State",
+        "zipCode": "A max. of 10 characters are allowed"
+      }
+    }
+  },
+  "checkout": {
+    "shipping": {
+      "address": {
+        "title": "Shipping address",
+        "select": "Add shipping address",
+        "change": "Change",
+        "makeBilling": "Make this my billing address"
+      }
+    },
+    "billing": {
+      "address": {
+        "title": "Billing address",
+        "select": "Add billing address",
+        "change": "Change"
+      }
+    }
+  },
   "navigation": {
     "my_details": "Mes Données",
     "change_password": "Changer mot de passe",
