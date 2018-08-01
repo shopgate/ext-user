@@ -11,13 +11,15 @@ export default (subscribe) => {
       return;
     }
 
-    if (!address.tags) {
-      address.tags = [];
+    const addressClone = { ...address };
+
+    if (!addressClone.tags) {
+      addressClone.tags = [];
     }
     // Tag is prefixed with default_ for shipping, billing, etc
     const defTag = tag === 'default' ? tag : `default_${tag}`;
 
-    address.tags.push(defTag);
-    dispatch(updateAddress(address));
+    addressClone.tags.push(defTag);
+    dispatch(updateAddress(addressClone));
   });
 };

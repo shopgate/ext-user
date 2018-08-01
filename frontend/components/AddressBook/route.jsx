@@ -7,7 +7,7 @@ import AddressBook from './index';
 
 /**
  * @param {Object} props props
- * @return {*}
+ * @return {JSX}
  * @constructor
  */
 const AddAddressRoute = props => (

@@ -1,6 +1,6 @@
 import {
-  UPDATE_USER,
-  UPDATE_USER_SUCCESS,
+  UPDATE_USER_ADDRESS_SUCCESS,
+  UPDATE_USER_ADDRESS_FAILED,
   SET_DEFAULT_ADDRESS,
 } from './../constants/ActionTypes';
 
@@ -17,17 +17,19 @@ export const setDefaultAddress = (addressId, tag = 'default') => ({
 });
 
 /**
- * Creates the dispatched UPDATE_USER action object.
+ * Creates the dispatched UPDATE_USER_ADDRESS_SUCCESS action object.
  * @returns {Object} The dispatched action object.
  */
-export const updateUser = () => ({
-  type: UPDATE_USER,
+export const updateUserAddressSuccess = () => ({
+  type: UPDATE_USER_ADDRESS_SUCCESS,
 });
 
 /**
- * Creates the dispatched UPDATE_USER_SUCCESS action object.
+ * Creates the dispatched UPDATE_USER_ADDRESS_SUCCESS action object.
+ * @param {Object} error error
  * @returns {Object} The dispatched action object.
  */
-export const updateUserSuccess = () => ({
-  type: UPDATE_USER_SUCCESS,
+export const updateUserAddressFailed = error => ({
+  type: UPDATE_USER_ADDRESS_FAILED,
+  error,
 });

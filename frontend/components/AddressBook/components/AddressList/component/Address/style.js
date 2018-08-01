@@ -1,10 +1,13 @@
 import { css } from 'glamor';
 import { themeConfig } from '@shopgate/pwa-common/helpers/config';
 
-const { variables } = themeConfig;
+const { variables, colors } = themeConfig;
 
 const address = css({
-  paddingTop: variables.gap.big,
+  marginTop: variables.gap.xsmall / 2,
+  padding: variables.gap.big,
+  paddingBottom: 0,
+  backgroundColor: colors.light,
 }).toString();
 
 export default {
