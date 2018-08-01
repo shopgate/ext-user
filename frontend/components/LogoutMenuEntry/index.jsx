@@ -10,35 +10,6 @@ import {
 } from '@shopgate/pwa-common/constants/Portals';
 
 /**
- * @param {function} Item The Component to be used as address book menu entry
- * @param {function} handleClose Function to be called, when the Item element is clicked
- * @param {function} logout Function to be called, when the Item element is clicked
- * @returns {JSX}
- */
-const LogoutItem = ({ Item, handleClose, logout }) => (
-  <Item
-    title="navigation.logout"
-    icon={LogoutIcon}
-    close={handleClose}
-    onClick={logout}
-    testId="logoutButton"
-  >
-    <I18n.Text string="navigation.logout" />
-  </Item>
-);
-
-LogoutItem.propTypes = {
-  Item: PropTypes.func.isRequired,
-  handleClose: PropTypes.func,
-  logout: PropTypes.func,
-};
-
-LogoutItem.defaultProps = {
-  handleClose: null,
-  logout: null,
-};
-
-/**
  * @param {Object} props component props
  * @returns {Object|null} JSX
  */
@@ -63,7 +34,15 @@ const LogoutMenuEntry = (props) => {
       <Portal name={NAV_MENU_LOGOUT} props={props}>
         {Divider && <Divider close={handleClose} />}
 
-        <LogoutItem Item={Item} logout={logout} />
+        <Item
+          title="navigation.logout"
+          icon={LogoutIcon}
+          close={handleClose}
+          onClick={logout}
+          testId="logoutButton"
+        >
+          <I18n.Text string="navigation.logout" />
+        </Item>
       </Portal>
       <Portal name={NAV_MENU_LOGOUT_AFTER} props={props} />
     </Fragment>
