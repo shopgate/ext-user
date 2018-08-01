@@ -16,24 +16,24 @@
     }
   },
   "addresses": {
-    "title": "Address book",
-    "headline": "Address book",
-    "button": "Add a new address",
-    "noAddresses": "You have no address entries yet. Add a new address in order to receive your order.",
+    "title": "Adresboek",
+    "headline": "Adresboek",
+    "button": "Voeg een nieuw adres toe",
+    "noAddresses": "Je hebt nog geen adresvermeldingen. Voeg een nieuw adres toe om uw bestelling te ontvangen",
     "defaults": {
-      "default": "Default address",
-      "shipping": "Default shipping address",
-      "billing": "Default billing address"
+      "default": "Standaard adres",
+      "shipping": "Standaard verzendadres",
+      "billing": "Standaard factuuradres"
     },
     "setAsDefault": {
-      "default": "Set as your default address",
-      "shipping": "Set as your default shipping address",
-      "billing": "Set as your default billing address"
+      "default": "Instellen als uw standaard adres",
+      "shipping": "Instellen als uw standaard verzendadres",
+      "billing": "Instellen als uw standaard factuuradres"
     },
     "error": {
-      "add": "Adding the address failed, please check your input",
-      "update": "Updating the address failed, please check your input",
-      "setAsDefault": "Could not set the address as default"
+      "add": "Toevoegen van adres mislukt, controleer uw velden",
+      "update": "Updaten van adres mislukt, controleer uw velden",
+      "setAsDefault": "Kon adres niet als standaard instellen"
     }
   },
   "address": {

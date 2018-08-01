@@ -9,9 +9,32 @@
       "params": {
         "value": "DE,AT,FR,GB"
       }
+    },
+    "splitDefaultAddressesByTags": {
+      "type": "static",
+      "destination": "frontend",
+      "params": {
+        "value": ["default"]
+      }
     }
   },
   "components": [
+    {
+      "id": "AddressBookRoute",
+      "path": "frontend/components/AddressBook/route.jsx",
+      "target": "app.routes",
+      "type": "portals"
+    },
+    {
+      "id": "UserSubscribers",
+      "path": "frontend/subscriptions/index.js",
+      "type": "subscribers"
+    },
+    {
+      "id": "UserReducers",
+      "path": "frontend/reducers/index.js",
+      "type": "reducers"
+    },
     {
       "id": "RegisterRoute",
       "path": "frontend/Register/route.jsx",
@@ -60,6 +83,16 @@
     {
       "id": "de-DE",
       "path": "frontend/locale/de-DE.json",
+      "type": "translations"
+    },
+    {
+      "id": "fr-FR",
+      "path": "frontend/locale/fr-FR.json",
+      "type": "translations"
+    },
+    {
+      "id": "nl-NL",
+      "path": "frontend/locale/nl-NL.json",
       "type": "translations"
     }
   ]
