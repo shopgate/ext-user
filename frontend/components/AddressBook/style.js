@@ -1,24 +1,26 @@
 import { css } from 'glamor';
-import { themeConfig } from '@shopgate/pwa-common/helpers/config';
+import { themeConfig, themeName } from '@shopgate/pwa-common/helpers/config';
+
+const isGmd = themeName.includes('gmd');
 
 const { variables, colors } = themeConfig;
 
 const container = css({
-  padding: `${variables.gap.bigger}px ${variables.gap.big}px`,
+  backgroundColor: isGmd ? colors.background : '',
+  width: '100%',
+  height: '100%',
 }).toString();
 
 const headline = css({
-  fontSize: '1.125rem',
+  paddingLeft: variables.gap.bigger,
+  fontSize: '2.1875rem',
   fontWeight: 500,
-}).toString();
-
-const subline = css({
-  color: colors.shade6,
+  margin: 0,
 }).toString();
 
 const buttonWrapper = css({
   position: 'fixed',
-  bottom: variables.gap.bigger,
+  bottom: isGmd ? variables.gap.bigger : variables.gap.bigger + variables.tabBar.height,
   left: variables.gap.big,
   right: variables.gap.big,
 }).toString();
@@ -30,7 +32,6 @@ const button = css({
 export default {
   container,
   headline,
-  subline,
   buttonWrapper,
   button,
 };

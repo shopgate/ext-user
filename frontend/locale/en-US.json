@@ -19,6 +19,7 @@
     "title": "Address book",
     "headline": "Address book",
     "button": "Add a new address",
+    "noAddresses": "You have no address entries yet. Add a new address in order to receive your order.",
     "defaults": {
       "default": "Default address",
       "shipping": "Default shipping address",

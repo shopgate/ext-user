@@ -10,15 +10,14 @@ import connect from './connector';
  */
 const AddressList = ({ addresses, defaults, setDefault }) => (
   <Fragment>
-    {
-      addresses.map(address => (
-        <Fragment key={`address_${address.id}`}>
-          <Address
-            address={address}
-            setDefault={setDefault}
-            defaults={defaults}
-          />
-        </Fragment>
+    {addresses.map(address => (
+      <Fragment key={`address_${address.id}`}>
+        <Address
+          address={address}
+          setDefault={setDefault}
+          defaults={defaults}
+        />
+      </Fragment>
       ))
     }
   </Fragment>

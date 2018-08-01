@@ -6,7 +6,7 @@ import { getUserAddresses } from './../../selectors/addressBook';
  * @return {{hasAddresses: boolean}}
  */
 const mapStateToProps = state => ({
-  hasAddresses: !!getUserAddresses(state),
+  hasAddresses: !!getUserAddresses(state) && getUserAddresses(state).length > 0,
 });
 
 export default connect(mapStateToProps, null, null, { withRef: true });
