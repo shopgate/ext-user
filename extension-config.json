@@ -21,7 +21,13 @@
   "components": [
     {
       "id": "AddressBookRoute",
-      "path": "frontend/components/AddressBook/route.jsx",
+      "path": "frontend/pages/AddressBook/Overview/route.jsx",
+      "target": "app.routes",
+      "type": "portals"
+    },
+    {
+      "id": "AddressBookAddRoute",
+      "path": "frontend/pages/AddressBook/AddAddress/route.jsx",
       "target": "app.routes",
       "type": "portals"
     },
@@ -43,25 +49,25 @@
     },
     {
       "id": "CheckoutAddAddressRoute",
-      "path": "frontend/Checkout/AddAddress/route.jsx",
+      "path": "frontend/pages/Checkout/AddAddress/route.jsx",
       "target": "app.routes",
       "type": "portals"
     },
     {
       "id": "SelectAddressRoute",
-      "path": "frontend/Checkout/SelectAddress/route.jsx",
+      "path": "frontend/pages/Checkout/SelectAddress/route.jsx",
       "target": "app.routes",
       "type": "portals"
     },
     {
       "id": "CheckoutShipping",
-      "path": "frontend/Checkout/ShippingAddress/index.jsx",
+      "path": "frontend/pages/Checkout/ShippingAddress/index.jsx",
       "target": "checkout.shipping_address",
       "type": "portals"
     },
     {
       "id": "CheckoutBilling",
-      "path": "frontend/Checkout/BillingAddress/index.jsx",
+      "path": "frontend/pages/Checkout/BillingAddress/index.jsx",
       "target": "checkout.billing_address",
       "type": "portals"
     },

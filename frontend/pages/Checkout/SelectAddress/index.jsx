@@ -3,9 +3,9 @@ import PropTypes from 'prop-types';
 import I18n from '@shopgate/pwa-common/components/I18n';
 import Link from '@shopgate/pwa-common/components/Router/components/Link';
 import RippleButton from '@shopgate/pwa-ui-shared/RippleButton';
+import Title from '@shopgate/user/components/Title';
+import MakeBilling from '@shopgate/user/components/MakeBilling';
 import connect from './connector';
-import Title from './../components/Title';
-import MakeBilling from './../components/MakeBilling';
 import Addresses from './components/Addresses';
 import style from './style';
 

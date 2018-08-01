@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import { getUserAddresses } from './../../selectors/addressBook';
+import { getUserAddresses } from '@shopgate/user/selectors/addressBook';
 
 /**
  * @param {Object} state state

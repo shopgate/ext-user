@@ -7,6 +7,7 @@ import ChevronIcon from '@shopgate/pwa-ui-shared/icons/ChevronIcon';
 import Portal from '@shopgate/pwa-common/components/Portal';
 import * as portals from '@shopgate/user/constants/Portals';
 import { USER_ADDRESS_PATTERN } from '@shopgate/user/constants/RoutePaths';
+import style from './style';
 
 const pattern = new UrlPattern(USER_ADDRESS_PATTERN);
 
@@ -18,7 +19,7 @@ const Info = ({ address }) => (
   <Fragment>
     <Portal name={portals.USER_ADDRESSES_ADDRESS_BEFORE} />
     <Portal name={portals.USER_ADDRESSES_ADDRESS}>
-      <Link href={pattern.stringify(address)}>
+      <Link href={pattern.stringify(address)} className={style.address}>
         <Grid>
           <Grid.Item grow={1}>
             <div>{`${address.firstName} ${address.lastName}`}</div>

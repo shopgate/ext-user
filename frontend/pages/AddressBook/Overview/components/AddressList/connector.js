@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
-import { getUserAddresses, getUserDefaultAddresses } from './../../../../selectors/addressBook';
-import { setDefaultAddress } from './../../../../action-creators';
+import { getUserAddresses, getUserDefaultAddresses } from '@shopgate/user/selectors/addressBook';
+import { setDefaultAddress } from '@shopgate/user/action-creators';
 
 /**
  * @param {Object} state state

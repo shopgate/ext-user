@@ -41,7 +41,7 @@ const mapStateToProps = state => ({
  * @return {{addAddress: (function(*=): *), validateAddress: validateAddress}}
  */
 const mapDispatchToProps = dispatch => ({
-  addAddress: address => dispatch(addAddress(address)),
+  submit: address => dispatch(addAddress(address)),
   validateAddress,
 });
 

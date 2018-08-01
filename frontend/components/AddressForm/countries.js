@@ -1,6 +1,7 @@
-import iso3166 from './../../common/iso-3166-2';
+import iso3166 from '@shopgate/user/common/iso-3166-2';
+
 /** @type {{countryCodes: string}} */
-import config from './../../config';
+import config from '@shopgate/user/config';
 
 const countries = config.countryCodes.split(',');
 

@@ -2,15 +2,15 @@ import React from 'react';
 import AuthRoutes from '@shopgate/pwa-common/components/Router/components/AuthRoutes';
 import Route from '@shopgate/pwa-common/components/Router/components/Route';
 import { LOGIN_PATH } from '@shopgate/pwa-common/constants/RoutePaths';
-import { USER_ADDRESS_BOOK_PATH } from './../../constants/RoutePaths';
-import AddressBook from './index';
+import { USER_ADDRESS_BOOK_PATH } from '@shopgate/user/constants/RoutePaths';
+import AddressBook from '.';
 
 /**
  * @param {Object} props props
- * @return {JSX}
+ * @return {*}
  * @constructor
  */
-const AddAddressRoute = props => (
+const AddressBookRoute = props => (
   <AuthRoutes to={LOGIN_PATH}>
     <Route
       path={USER_ADDRESS_BOOK_PATH}
@@ -20,4 +20,4 @@ const AddAddressRoute = props => (
   </AuthRoutes>
 );
 
-export default AddAddressRoute;
+export default AddressBookRoute;
