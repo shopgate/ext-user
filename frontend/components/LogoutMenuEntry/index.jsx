@@ -32,7 +32,7 @@ const LogoutMenuEntry = (props) => {
       {/* Logout button */}
       <Portal name={NAV_MENU_LOGOUT_BEFORE} props={props} />
       <Portal name={NAV_MENU_LOGOUT} props={props}>
-        {Divider && <Divider close={handleClose} />}
+        <Divider close={handleClose} />
 
         <Item
           title="navigation.logout"
@@ -58,7 +58,7 @@ LogoutMenuEntry.propTypes = {
 };
 
 LogoutMenuEntry.defaultProps = {
-  Divider: null,
+  Divider: () => (null),
   handleClose: null,
   logout: null,
   user: null,

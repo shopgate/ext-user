@@ -80,6 +80,13 @@
       "type": "portals"
     },
     {
+      "_comment": "Add the new user menu.",
+      "id": "UserMenu",
+      "path": "frontend/components/UserMenu/index.jsx",
+      "target": "nav-menu.store-information.before",
+      "type": "portals"
+    },
+    {
       "type": "subscribers",
       "id": "CheckoutSubscribers",
       "path": "frontend/Checkout/subscribers.js"

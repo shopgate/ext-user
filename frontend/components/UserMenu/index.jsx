@@ -7,63 +7,46 @@ import * as portals from '../../constants/Portals';
 import { USER_ADDRESS_BOOK_PATH } from '../../constants/RoutePaths';
 
 /**
- * @param {function} Item The Component to be used as address book menu entry
- * @param {function} handleClose Function to be called, when the Item element is clicked
- * @returns {JSX}
- */
-const AddressBookItem = ({ Item, handleClose }) => (
-  <Item
-    title="navigation.address_book"
-    href={`${USER_ADDRESS_BOOK_PATH}`}
-    link={`${USER_ADDRESS_BOOK_PATH}`}
-    icon={LocalShippingIcon}
-    close={handleClose}
-    testId="menuAddressBookButton"
-  >
-    <I18n.Text string="navigation.address_book" />
-  </Item>
-);
-
-AddressBookItem.propTypes = {
-  Item: PropTypes.func.isRequired,
-  handleClose: PropTypes.func,
-};
-
-AddressBookItem.defaultProps = {
-  handleClose: null,
-};
-
-/**
  * @param {Object} props component props
  * @returns {JSX}
  */
 const UserMenu = (props) => {
   const {
+    Divider,
     handleClose,
     Headline,
     Item,
     List,
+    SubHeader,
     user,
   } = props;
 
-  // Make sure a user is available, when the other elements are set (otherwise that's not gmd)
-  if (!user && handleClose) {
+  // Make sure a user is available of whom account data could be shown
+  if (!user) {
     return null;
   }
 
   return (
     <Fragment>
+      <Divider close={handleClose} />
       <Headline small text="navigation.your_account" />
+      <SubHeader title="navigation.your_account" />
 
       {/* Address book */}
       <Portal name={portals.NAV_MENU_ADDRESS_BOOK_BEFORE} props={props} />
       <Portal name={portals.NAV_MENU_ADDRESS_BOOK} props={props}>
-        {List &&
-          <List>
-            <AddressBookItem Item={Item} />
-          </List>
-        }
-        {!List && <AddressBookItem Item={Item} />}
+        <List>
+          <Item
+            title="navigation.address_book"
+            href={`${USER_ADDRESS_BOOK_PATH}`}
+            link={`${USER_ADDRESS_BOOK_PATH}`}
+            icon={LocalShippingIcon}
+            close={handleClose}
+            testId="menuAddressBookButton"
+          >
+            <I18n.Text string="navigation.address_book" />
+          </Item>
+        </List>
       </Portal>
       <Portal name={portals.NAV_MENU_ADDRESS_BOOK_AFTER} props={props} />
     </Fragment>
@@ -72,16 +55,21 @@ const UserMenu = (props) => {
 
 UserMenu.propTypes = {
   Item: PropTypes.func.isRequired,
+  Divider: PropTypes.func,
   handleClose: PropTypes.func,
   Headline: PropTypes.func,
   List: PropTypes.func,
+  SubHeader: PropTypes.func,
   user: PropTypes.shape(),
 };
 
 UserMenu.defaultProps = {
   handleClose: null,
-  Headline: null,
-  List: null,
+  Divider: () => (null), // Skip render by default
+  Headline: () => (null), // Skip render by default
+  // eslint-disable-next-line react/prop-types
+  List: ({ children }) => (<Fragment>{children}</Fragment>), // Pass through by default
+  SubHeader: () => (null), // Skip render by default
   user: null,
 };
 
