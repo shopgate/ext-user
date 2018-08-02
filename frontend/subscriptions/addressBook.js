@@ -1,8 +1,35 @@
-import { userSetDefaultAddress$ } from './../streams';
+import replaceHistory from '@shopgate/pwa-common/actions/history/replaceHistory';
+import setViewLoading from '@shopgate/pwa-common/actions/view/setViewLoading';
+import unsetViewLoading from '@shopgate/pwa-common/actions/view/unsetViewLoading';
+import { getHistoryPathname } from '@shopgate/pwa-common/selectors/history';
+import { USER_ADDRESS_BOOK_PATH } from './../constants/RoutePaths';
+import {
+  userAddressAdd$,
+  userAddressUpdate$,
+  userSetDefaultAddress$,
+  userAddressAdded$,
+  userAddressUpdated$,
+} from './../streams';
 import { getUserAddressIdSelector } from './../selectors/addressBook';
 import updateAddress from './../actions/updateAddress';
 
 export default (subscribe) => {
+  const userAddressChanged$ = userAddressAdded$.merge(userAddressUpdated$);
+  const userAddressBusy$ = userAddressAdd$.merge(userAddressUpdate$);
+
+  // Return back to address bok, when address is added/updated
+  subscribe(userAddressBusy$, ({ dispatch, getState }) => {
+    dispatch(setViewLoading(getHistoryPathname(getState())));
+  });
+
+  // Return back to address bok, when address is added/updated
+  subscribe(userAddressChanged$, ({ dispatch, getState }) => {
+    dispatch(unsetViewLoading(getHistoryPathname(getState())));
+
+    // Go back to address book
+    dispatch(replaceHistory({ pathname: USER_ADDRESS_BOOK_PATH }));
+  });
+
   // Dispatch action to backend to sync user selection
   subscribe(userSetDefaultAddress$, ({ dispatch, action, getState }) => {
     const { addressId, tag } = action;

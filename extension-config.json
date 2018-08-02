@@ -10,6 +10,13 @@
         "value": "DE,AT,FR,GB"
       }
     },
+    "addressFields": {
+      "type": "static",
+      "destination": "frontend",
+      "params": {
+        "value": ["firstName", "lastName", "street1", "city", "country", "zipCode"]
+      }
+    },
     "splitDefaultAddressesByTags": {
       "type": "static",
       "destination": "frontend",

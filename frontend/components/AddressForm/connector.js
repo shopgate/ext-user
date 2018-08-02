@@ -1,7 +1,7 @@
+import { connect } from 'react-redux';
 import joi from 'joi-browser';
-import connect from '@shopgate/pwa-common/components/Router/helpers/connect';
-import { getQueryParam } from '@shopgate/pwa-common/selectors/history';
-import addAddress from './action';
+import addAddress from '@shopgate/user/actions/addAddress';
+import updateAddress from '@shopgate/user/actions/updateAddress';
 import { joiToValidationErrors, validationErrorsToMap } from './../../common/transform';
 import userAddressSchema from './../../common/userAddressSchema';
 
@@ -29,20 +29,13 @@ const validateAddress = (address) => {
 };
 
 /**
- * @param {Object} state state
- * @return {{addressType: (*|string)}}
- */
-const mapStateToProps = state => ({
-  addressType: getQueryParam(state, 'type') || 'shipping',
-});
-
-/**
  * @param {function} dispatch dispatch
- * @return {{addAddress: (function(*=): *), validateAddress: validateAddress}}
+ * @return {{addAddress: function, updateAddress: function, validateAddress: function}}
  */
 const mapDispatchToProps = dispatch => ({
-  submit: address => dispatch(addAddress(address)),
+  addAddress: address => dispatch(addAddress(address)),
+  updateAddress: address => dispatch(updateAddress(address)),
   validateAddress,
 });
 
-export default connect(mapStateToProps, mapDispatchToProps);
+export default connect(null, mapDispatchToProps);

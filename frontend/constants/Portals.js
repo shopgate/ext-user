@@ -6,8 +6,10 @@ const ADDRESS_BOOK = 'address-book';
 const USER = 'user';
 const ADDRESSES = 'addresses';
 const ADDRESS = 'address';
+const ADDRESS_FORM = 'address-form';
 const ADD = 'add';
 const DEFAULT = 'default';
+const BUTTON = 'button';
 
 // POSITIONS
 const BEFORE = 'before';
@@ -34,3 +36,10 @@ export const USER_ADDRESSES_ADD_BEFORE = `${USER}.${ADDRESSES}.${ADD}.${BEFORE}`
 export const USER_ADDRESSES_ADD = `${USER}.${ADDRESSES}.${ADD}`;
 export const USER_ADDRESSES_ADD_AFTER = `${USER}.${ADDRESSES}.${ADD}.${AFTER}`;
 
+export const USER_ADDRESS_FORM_BEFORE = `${USER}.${ADDRESS_FORM}.${BEFORE}`;
+export const USER_ADDRESS_FORM = `${USER}.${ADDRESS_FORM}`;
+export const USER_ADDRESS_FORM_AFTER = `${USER}.${ADDRESS_FORM}.${AFTER}`;
+
+export const USER_ADDRESS_FORM_BUTTON_BEFORE = `${USER}.${ADDRESS_FORM}.${BUTTON}.${BEFORE}`;
+export const USER_ADDRESS_FORM_BUTTON = `${USER}.${ADDRESS_FORM}.${BUTTON}`;
+export const USER_ADDRESS_FORM_BUTTON_AFTER = `${USER}.${ADDRESS_FORM}.${BUTTON}.${AFTER}`;

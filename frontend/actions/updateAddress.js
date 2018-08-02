@@ -1,12 +1,14 @@
 import PipelineRequest from '@shopgate/pwa-core/classes/PipelineRequest';
 import { PIPELINE_UPDATE_ADDRESS } from './../constants/Pipelines';
-import { updateUserAddressSuccess, updateUserAddressFailed } from './../action-creators';
+import { updateUserAddress, updateUserAddressSuccess, updateUserAddressFailed } from './../action-creators';
 
 /**
  * @param {Object} address address
  * @return {function(*): *}
  */
-export default address => dispatch =>
+export default address => (dispatch) => {
+  dispatch(updateUserAddress());
+
   new PipelineRequest(PIPELINE_UPDATE_ADDRESS)
     .setTrusted()
     .setInput({ address })
@@ -17,3 +19,4 @@ export default address => dispatch =>
     .catch((error) => {
       dispatch(updateUserAddressFailed(error));
     });
+};

@@ -5,10 +5,13 @@ import I18n from '@shopgate/pwa-common/components/I18n';
 import TextField from '@shopgate/pwa-ui-shared/TextField';
 import RippleButton from '@shopgate/pwa-ui-shared/RippleButton';
 import Select from '@shopgate/pwa-ui-shared/Form/Select';
-import MakeBilling from '@shopgate/user/components/MakeBilling';
+import * as portals from '@shopgate/user/constants/Portals';
+import config from '@shopgate/user/config';
 import connect from './connector';
 import countries from './countries';
 import styles from './style';
+
+const { addressFields = [] } = config;
 
 /**
  * @return {Object}
@@ -30,14 +33,14 @@ const provincesList = countryCode => countries[countryCode].divisions;
  */
 class AddressForm extends Component {
   static propTypes = {
-    addressType: PropTypes.string.isRequired,
-    submit: PropTypes.func.isRequired,
+    addAddress: PropTypes.func.isRequired,
+    updateAddress: PropTypes.func.isRequired,
     validateAddress: PropTypes.func.isRequired,
-    disableBilling: PropTypes.bool,
+    address: PropTypes.shape(),
   }
 
   static defaultProps = {
-    disableBilling: false,
+    address: {},
   }
 
   /**
@@ -53,26 +56,35 @@ class AddressForm extends Component {
 
     this.state = {
       address: {
+        prefix: '',
         firstName: '',
+        middleName: '',
         lastName: '',
+        suffix: '',
+        company: '',
         street1: '',
+        street2: '',
         city: '',
         province,
         country,
         zipCode: '',
-        tags: [props.addressType],
+        ...props.address, // Init edit address form
       },
       errors: {
+        prefix: '',
         firstName: '',
+        middleName: '',
         lastName: '',
+        suffix: '',
+        company: '',
         street1: '',
+        street2: '',
         city: '',
         province: '',
         country: '',
         zipCode: '',
       },
       disabled: false,
-      makeBilling: false,
       inlineValidation: false,
     };
   }
@@ -94,15 +106,32 @@ class AddressForm extends Component {
     });
   }
 
+  handlePrefixChange = (prefix) => {
+    this.updateAddress({ prefix });
+  }
   handleFirstNameChange = (firstName) => {
     this.updateAddress({ firstName });
   }
-
+  handleMiddleNameChange = (middleName) => {
+    this.updateAddress({ middleName });
+  }
   handleLastNameChange = (lastName) => {
     this.updateAddress({ lastName });
   }
+  handleSuffixChange = (suffix) => {
+    this.updateAddress({ suffix });
+  }
+  handleCompanyChange = (company) => {
+    this.updateAddress({ company });
+  }
+  handlePhoneChange = (phone) => {
+    this.updateAddress({ phone });
+  }
 
-  handleStreetChange = (street1) => {
+  handleStreet1Change = (street1) => {
+    this.updateAddress({ street1 });
+  }
+  handleStreet2Change = (street1) => {
     this.updateAddress({ street1 });
   }
 
@@ -114,7 +143,7 @@ class AddressForm extends Component {
     this.updateAddress({ zipCode });
   }
 
-  handleCountryCode = (country) => {
+  handleCountryChange = (country) => {
     let province = null;
     if (!countries[country].hideProvince) {
       [province] = Object.keys(provincesList(country));
@@ -125,12 +154,8 @@ class AddressForm extends Component {
     });
   }
 
-  handleProvinceCode = (province) => {
+  handleProvinceChange = (province) => {
     this.updateAddress({ province });
-  }
-
-  handleMakeBilling = (makeBilling) => {
-    this.setState({ makeBilling });
   }
 
   saveAddress = () => {
@@ -145,87 +170,100 @@ class AddressForm extends Component {
       return;
     }
 
-    if (this.state.makeBilling) {
-      this.state.address.tags.push('billing');
+    if (this.props.address.id) {
+      // Join with origin and update
+      this.props.updateAddress({
+        ...this.props.address,
+        ...this.state.address,
+      });
+    } else {
+      this.props.address(this.state.address);
     }
-    this.props.submit(this.state.address);
+  }
+
+  /**
+   * Render text field of form
+   * @param {string} name field name
+   * @param {function} changeHandler change handler
+   * @return {JSX|null}
+   */
+  renderTextField(name, changeHandler) {
+    if (!addressFields.includes(name)) {
+      return null;
+    }
+    return (
+      <TextField
+        name={name}
+        label={`address.add.${name}`}
+        onChange={changeHandler}
+        value={this.state.address[name]}
+        errorText={this.state.errors[name]}
+      />
+    );
   }
 
   /**
    * @return {*}
    */
   render() {
-    const isShipping = this.props.addressType === 'shipping';
-
     return (
       <Fragment>
-        <TextField
-          name="firstName"
-          label="address.add.firstName"
-          onChange={this.handleFirstNameChange}
-          value={this.state.address.firstName}
-          errorText={this.state.errors.firstName}
-        />
-        <TextField
-          name="lastName"
-          label="address.add.lastName"
-          onChange={this.handleLastNameChange}
-          value={this.state.address.lastName}
-          errorText={this.state.errors.lastName}
-        />
-        <TextField
-          name="street"
-          label="address.add.street"
-          onChange={this.handleStreetChange}
-          value={this.state.address.street1}
-          errorText={this.state.errors.street1}
-        />
-        <TextField
-          name="city"
-          label="address.add.city"
-          onChange={this.handleCityChange}
-          value={this.state.address.city}
-          errorText={this.state.errors.city}
-        />
-        <Select
-          name="countryCode"
-          placeholder="placeholder"
-          label="address.add.countryCode"
-          options={this.countriesList}
-          value={this.state.address.country}
-          onChange={this.handleCountryCode}
-          errorText={this.state.errors.country}
-        />
-        {this.state.address.country &&
-          !countries[this.state.address.country].hideProvince &&
-            <Select
-              name="provinceCode"
-              placeholder="placeholder"
-              label="address.add.provinceCode"
-              options={provincesList(this.state.address.country)}
-              value={this.state.address.province || ''}
-              onChange={this.handleProvinceCode}
-              errorText={this.state.errors.province}
-            />
-        }
-        <TextField
-          name="zipCode"
-          label="address.add.zipCode"
-          onChange={this.handleZipCodeChange}
-          value={this.state.address.zipCode}
-          errorText={this.state.errors.zipCode}
-        />
 
-        <Portal name="user.address.add.after" />
+        <Portal name={portals.USER_ADDRESS_FORM_BEFORE} />
+        <Portal name={portals.USER_ADDRESS_FORM}>
 
-        {isShipping && !this.props.disableBilling &&
-          <MakeBilling handleMakeBilling={this.handleMakeBilling} />}
+          {this.renderTextField('prefix', this.handlePrefixChange)}
+          {this.renderTextField('firstName', this.handleFirstNameChange)}
+          {this.renderTextField('middleName', this.handleMiddleNameChange)}
+          {this.renderTextField('lastName', this.handleLastNameChange)}
+          {this.renderTextField('suffix', this.handleSuffixChange)}
+          {this.renderTextField('phone', this.handlePhoneChange)}
+          {this.renderTextField('company', this.handleCompanyChange)}
+          {this.renderTextField('street1', this.handleStreet1Change)}
+          {this.renderTextField('street2', this.handleStreet2Change)}
+          {this.renderTextField('city', this.handleCityChange)}
 
-        <div data-test-id="AddAddressButton">
-          <RippleButton type="secondary" disabled={this.state.disabled} onClick={this.saveAddress} className={styles.button}>
-            <I18n.Text string="address.add.button" />
-          </RippleButton>
-        </div>
+          {addressFields.includes('country') &&
+            <Fragment>
+              <Select
+                name="country"
+                placeholder="placeholder"
+                label="address.add.country"
+                options={this.countriesList}
+                value={this.state.address.country}
+                onChange={this.handleCountryChange}
+                errorText={this.state.errors.country}
+              />
+              {this.state.address.country &&
+              !countries[this.state.address.country].hideProvince &&
+              <Select
+                name="province"
+                placeholder="placeholder"
+                label="address.add.province"
+                options={provincesList(this.state.address.country)}
+                value={this.state.address.province || ''}
+                onChange={this.handleProvinceChange}
+                errorText={this.state.errors.province}
+              />
+            }
+            </Fragment>
+          }
+
+          {this.renderTextField('zipCode', this.handleZipCodeChange)}
+
+          <Portal name={portals.USER_ADDRESS_FORM_BUTTON_BEFORE} />
+          <Portal name={portals.USER_ADDRESS_FORM_BUTTON}>
+            <div data-test-id="AddAddressButton">
+              <RippleButton type="secondary" disabled={this.state.disabled} onClick={this.saveAddress} className={styles.button}>
+                <I18n.Text string="address.add.button" />
+              </RippleButton>
+            </div>
+          </Portal>
+          <Portal name={portals.USER_ADDRESS_FORM_BUTTON_AFTER} />
+
+        </Portal>
+        <Portal name={portals.USER_ADDRESS_FORM_AFTER} />
+
       </Fragment>
     );
   }

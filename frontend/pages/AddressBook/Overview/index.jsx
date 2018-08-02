@@ -5,7 +5,7 @@ import Link from '@shopgate/pwa-common/components/Router/components/Link';
 import Portal from '@shopgate/pwa-common/components/Portal';
 import RippleButton from '@shopgate/pwa-ui-shared/RippleButton';
 import { themeName } from '@shopgate/pwa-common/helpers/config';
-import { USER_ADDRESS_PATH } from '@shopgate/user/constants/RoutePaths';
+import { userAddressPathPattern } from '@shopgate/user/constants/RoutePaths';
 import * as portals from '@shopgate/user/constants/Portals';
 import AddressList from './components/AddressList';
 import NoAddresses from './components/NoAddresses';
@@ -60,7 +60,7 @@ class AddressBook extends Component {
           <Portal name={portals.USER_ADDRESSES_ADD_BEFORE} />
           <Portal name={portals.USER_ADDRESSES_ADD}>
             <div className={styles.buttonWrapper} data-test-id="AddAddressButton">
-              <Link href={USER_ADDRESS_PATH}>
+              <Link href={userAddressPathPattern.stringify({ id: 0 })}>
                 <RippleButton className={styles.button} type="secondary">
                   <I18n.Text string="addresses.button" />
                 </RippleButton>

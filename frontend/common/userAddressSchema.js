@@ -53,5 +53,5 @@ module.exports = joi => (
     tags: joi.array().items(joi.string().trim()).optional().allow([''])
       .default([]),
     customAttributes: joi.object().default({}),
-  })
+  }).unknown(true)
 );

@@ -39,21 +39,30 @@
   "address": {
     "add": {
       "title": "Add new address",
+      "prefix": "Prefix",
       "firstName": "First Name *",
+      "middleName": "Middle name",
       "lastName": "Last Name *",
-      "street": "Street & Number *",
+      "suffix": "Suffix",
+      "company": "Company",
+      "street1": "Street & Number *",
+      "street2": "Additional address",
       "city": "City *",
-      "provinceCode": "State *",
-      "countryCode": "Country *",
+      "province": "State *",
+      "country": "Country *",
       "zipCode": "Zip Code *",
       "button": "Save address",
       "errors": {
+        "prefix": "Only letters and spaces are allowed",
         "firstName": "Only letters and spaces are allowed",
+        "middleName": "Only letters and spaces are allowed",
         "lastName": "Only letters and spaces are allowed",
-        "street": "Street and number are required",
+        "suffix": "Street and number are required",
+        "street1": "Street and number are required",
+        "street2": "Street and number are required",
         "city": "Only letters and spaces are allowed",
-        "countryCode": "Choose a country",
-        "Bundesland": "Choose a State",
+        "province": "Choose a State",
+        "country": "Choose a country",
         "zipCode": "A max. of 10 characters are allowed"
       }
     }

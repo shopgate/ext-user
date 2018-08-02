@@ -11,6 +11,12 @@ const container = css({
   height: '100%',
 }).toString();
 
+const form = css({
+  marginTop: '2px',
+  backgroundColor: colors.light,
+  padding: variables.gap.big,
+}).toString();
+
 const headline = css({
   paddingLeft: variables.gap.bigger,
   fontSize: '2.1875rem',
@@ -18,20 +24,8 @@ const headline = css({
   margin: 0,
 }).toString();
 
-const buttonWrapper = css({
-  position: 'fixed',
-  bottom: isGmd ? variables.gap.bigger : variables.gap.bigger + variables.tabBar.height,
-  left: variables.gap.big,
-  right: variables.gap.big,
-}).toString();
-
-const button = css({
-  width: '100%',
-}).toString();
-
 export default {
   container,
+  form,
   headline,
-  buttonWrapper,
-  button,
 };

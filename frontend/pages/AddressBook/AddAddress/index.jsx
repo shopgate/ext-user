@@ -1,16 +1,26 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import I18n from '@shopgate/pwa-common/components/I18n';
 import Portal from '@shopgate/pwa-common/components/Portal';
+import { themeName } from '@shopgate/pwa-common/helpers/config';
 import * as portals from '@shopgate/user/constants/Portals';
 import AddressForm from '@shopgate/user/components/AddressForm';
-import styles from './style';
+import connect from './connector';
+import style from './style';
+
+const isIos = themeName.includes('ios');
 
 /**
- * The User AddressBook component.
+ * The Add address component.
  */
-class AddressBook extends Component {
+class AddAddress extends Component {
   static propTypes = {
     View: PropTypes.func.isRequired,
+    address: PropTypes.shape(),
+  }
+
+  static defaultProps = {
+    address: {},
   }
 
   static contextTypes = {
@@ -29,13 +39,22 @@ class AddressBook extends Component {
    * @return {*}
    */
   render() {
-    const { View } = this.props;
+    const { View, address } = this.props;
     return (
       <View title={this.title}>
-        <section className={styles.container} data-test-id="UserAddressBookAddPage">
+        <section className={style.container} data-test-id="UserAddressBookAddPage">
+
+          {isIos &&
+          <h1 className={style.headline}>
+            <I18n.Text string="address.add.title" />
+          </h1>
+          }
+
           <Portal name={portals.USER_ADDRESSES_ADD_BEFORE} />
           <Portal name={portals.USER_ADDRESSES_ADD}>
-            <AddressForm disableBilling />
+            <div className={style.form}>
+              <AddressForm address={address} />
+            </div>
           </Portal>
           <Portal name={portals.USER_ADDRESSES_ADD_AFTER} />
         </section>
@@ -44,4 +63,4 @@ class AddressBook extends Component {
   }
 }
 
-export default AddressBook;
+export default connect(AddAddress);
