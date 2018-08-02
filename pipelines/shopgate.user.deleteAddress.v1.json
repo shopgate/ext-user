@@ -20,7 +20,7 @@
         "id": "@shopgate/user",
         "path": "@shopgate/user/address/deleteAddress.js",
         "input": [
-          {"key": "id", "id": "10"}
+          {"key": "id", "id": "1"}
         ],
         "output": []
       }
