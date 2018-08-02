@@ -74,5 +74,11 @@
         "change": "Change"
       }
     }
+  },
+  "navigation": {
+    "my_details": "My Details",
+    "change_password": "Change Password",
+    "address_book": "Address Book",
+    "payment_options": "Payment Options"
   }
 }

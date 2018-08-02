@@ -66,6 +66,27 @@
       "type": "portals"
     },
     {
+      "_comment": "Remove default 'my account' menu entries from the themes.",
+      "id": "Empty",
+      "path": "frontend/components/Empty.jsx",
+      "target": "nav-menu.my-account",
+      "type": "portals"
+    },
+    {
+      "_comment": "Add a simple Logout entry to the end of the respective menu.",
+      "id": "LogoutMenuEntry",
+      "path": "frontend/components/LogoutMenuEntry/index.jsx",
+      "target": "nav-menu.content.after",
+      "type": "portals"
+    },
+    {
+      "_comment": "Add the new user menu.",
+      "id": "UserMenu",
+      "path": "frontend/components/UserMenu/index.jsx",
+      "target": "nav-menu.store-information.before",
+      "type": "portals"
+    },
+    {
       "type": "subscribers",
       "id": "CheckoutSubscribers",
       "path": "frontend/Checkout/subscribers.js"
