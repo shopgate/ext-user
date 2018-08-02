@@ -5,6 +5,7 @@ import Portal from '@shopgate/pwa-common/components/Portal';
 import LocalShippingIcon from '@shopgate/pwa-ui-shared/icons/LocalShippingIcon';
 import * as portals from '../../constants/Portals';
 import { USER_ADDRESS_BOOK_PATH } from '../../constants/RoutePaths';
+import connect from './connector';
 
 /**
  * @param {Object} props component props
@@ -18,11 +19,11 @@ const UserMenu = (props) => {
     Item,
     List,
     SubHeader,
-    user,
+    isLoggedIn,
   } = props;
 
   // Make sure a user is available of whom account data could be shown
-  if (!user) {
+  if (!isLoggedIn) {
     return null;
   }
 
@@ -54,13 +55,13 @@ const UserMenu = (props) => {
 };
 
 UserMenu.propTypes = {
+  isLoggedIn: PropTypes.bool.isRequired,
   Item: PropTypes.func.isRequired,
   Divider: PropTypes.func,
   handleClose: PropTypes.func,
   Headline: PropTypes.func,
   List: PropTypes.func,
   SubHeader: PropTypes.func,
-  user: PropTypes.shape(),
 };
 
 UserMenu.defaultProps = {
@@ -70,7 +71,6 @@ UserMenu.defaultProps = {
   // eslint-disable-next-line react/prop-types
   List: ({ children }) => (<Fragment>{children}</Fragment>), // Pass through by default
   SubHeader: () => (null), // Skip render by default
-  user: null,
 };
 
-export default UserMenu;
+export default connect(UserMenu);

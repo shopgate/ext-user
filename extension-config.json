@@ -68,7 +68,7 @@
     {
       "_comment": "Remove default 'my account' menu entries from the themes.",
       "id": "Empty",
-      "path": "frontend/components/Empty/index.jsx",
+      "path": "frontend/components/Empty.jsx",
       "target": "nav-menu.my-account",
       "type": "portals"
     },
@@ -76,7 +76,7 @@
       "_comment": "Add a simple Logout entry to the end of the respective menu.",
       "id": "LogoutMenuEntry",
       "path": "frontend/components/LogoutMenuEntry/index.jsx",
-      "target": "nav-menu.imprint.after",
+      "target": "nav-menu.content.after",
       "type": "portals"
     },
     {

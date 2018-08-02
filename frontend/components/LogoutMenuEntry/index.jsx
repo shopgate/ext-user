@@ -8,6 +8,7 @@ import {
   NAV_MENU_LOGOUT,
   NAV_MENU_LOGOUT_AFTER,
 } from '@shopgate/pwa-common/constants/Portals';
+import connect from './connector';
 
 /**
  * @param {Object} props component props
@@ -19,11 +20,12 @@ const LogoutMenuEntry = (props) => {
     handleClose,
     Item,
     logout,
-    user,
+    isLoggedIn,
+    List,
   } = props;
 
   // Make sure a user is available, when the other elements are set (otherwise that's not gmd)
-  if (!user) {
+  if (!isLoggedIn) {
     return null;
   }
 
@@ -33,16 +35,17 @@ const LogoutMenuEntry = (props) => {
       <Portal name={NAV_MENU_LOGOUT_BEFORE} props={props} />
       <Portal name={NAV_MENU_LOGOUT} props={props}>
         <Divider close={handleClose} />
-
-        <Item
-          title="navigation.logout"
-          icon={LogoutIcon}
-          close={handleClose}
-          onClick={logout}
-          testId="logoutButton"
-        >
-          <I18n.Text string="navigation.logout" />
-        </Item>
+        <List>
+          <Item
+            title="navigation.logout"
+            icon={LogoutIcon}
+            close={handleClose}
+            onClick={logout}
+            testId="logoutButton"
+          >
+            <I18n.Text string="navigation.logout" />
+          </Item>
+        </List>
       </Portal>
       <Portal name={NAV_MENU_LOGOUT_AFTER} props={props} />
     </Fragment>
@@ -50,18 +53,19 @@ const LogoutMenuEntry = (props) => {
 };
 
 LogoutMenuEntry.propTypes = {
+  isLoggedIn: PropTypes.bool.isRequired,
   Item: PropTypes.func.isRequired,
+  logout: PropTypes.func.isRequired,
   Divider: PropTypes.func,
   handleClose: PropTypes.func,
-  logout: PropTypes.func,
-  user: PropTypes.shape(),
+  List: PropTypes.func,
 };
 
 LogoutMenuEntry.defaultProps = {
-  Divider: () => (null),
+  Divider: () => null,
+  // eslint-disable-next-line react/prop-types
+  List: ({ children }) => (<Fragment>{children}</Fragment>),
   handleClose: null,
-  logout: null,
-  user: null,
 };
 
-export default LogoutMenuEntry;
+export default connect(LogoutMenuEntry);
