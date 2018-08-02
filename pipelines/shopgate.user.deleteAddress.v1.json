@@ -1,0 +1,29 @@
+{
+  "version": "1",
+  "pipeline": {
+    "id": "shopgate.user.deleteAddress.v1",
+    "public": true,
+    "input": [
+      {"key": "id", "id": "1"}
+    ],
+    "output": [],
+    "steps": [
+      {
+        "type": "extension",
+        "id": "@shopgate/user",
+        "path": "@shopgate/user/user/checkLoginStatus.js",
+        "input": [],
+        "output": []
+      },
+      {
+        "type": "extension",
+        "id": "@shopgate/user",
+        "path": "@shopgate/user/address/deleteAddress.js",
+        "input": [
+          {"key": "id", "id": "10"}
+        ],
+        "output": []
+      }
+    ]
+  }
+}
