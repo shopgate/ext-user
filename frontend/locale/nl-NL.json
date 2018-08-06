@@ -65,7 +65,8 @@
         "country": "Choose a country",
         "zipCode": "A max. of 10 characters are allowed"
       }
-    }
+    },
+    "validationFailedToastMessage": "Controleer uw velden"
   },
   "checkout": {
     "shipping": {

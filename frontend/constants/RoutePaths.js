@@ -1,7 +1,7 @@
 import UrlPattern from 'url-pattern';
 
 export const USER_ADDRESS_BOOK_PATH = '/user/addresses';
-export const USER_ADDRESS_PATH = '/user/address/:id'; // For Route
+export const USER_ADDRESS_PATH = '/user/address/:id'; // For pwa 5 Router
 
 /**
  * Get url pattern for user address

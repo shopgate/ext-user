@@ -34,6 +34,7 @@ export default (subscribe) => {
     dispatch(unsetViewLoading(getHistoryPathname(getState())));
 
     // Go back to address book
+    // TODO later, go to previous page hen defined
     dispatch(replaceHistory({ pathname: USER_ADDRESS_BOOK_PATH }));
   });
 

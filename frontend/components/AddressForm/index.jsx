@@ -177,7 +177,7 @@ class AddressForm extends Component {
         ...this.state.address,
       });
     } else {
-      this.props.address(this.state.address);
+      this.props.addAddress(this.state.address);
     }
   }
 
