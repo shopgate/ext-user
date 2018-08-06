@@ -65,3 +65,13 @@ export const updateUserAddressFailed = error => ({
   type: types.UPDATE_USER_ADDRESS_FAILED,
   error,
 });
+
+/**
+ * Creates the dispatched USER_ADDRESS_VALIDATION_FAILS action object.
+ * @param {Object} errors validation errors
+ * @returns {Object} The dispatched action object.
+ */
+export const userAddressValidationFailed = errors => ({
+  type: types.USER_ADDRESS_VALIDATION_FAILS,
+  errors,
+});

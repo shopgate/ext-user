@@ -1,5 +1,6 @@
 import replaceHistory from '@shopgate/pwa-common/actions/history/replaceHistory';
 import setViewLoading from '@shopgate/pwa-common/actions/view/setViewLoading';
+import createToast from '@shopgate/pwa-common/actions/toast/createToast';
 import unsetViewLoading from '@shopgate/pwa-common/actions/view/unsetViewLoading';
 import { getHistoryPathname } from '@shopgate/pwa-common/selectors/history';
 import { USER_ADDRESS_BOOK_PATH } from './../constants/RoutePaths';
@@ -9,6 +10,7 @@ import {
   userSetDefaultAddress$,
   userAddressAdded$,
   userAddressUpdated$,
+  userAddressValidationFailed$,
 } from './../streams';
 import { getUserAddressIdSelector } from './../selectors/addressBook';
 import updateAddress from './../actions/updateAddress';
@@ -16,6 +18,11 @@ import updateAddress from './../actions/updateAddress';
 export default (subscribe) => {
   const userAddressChanged$ = userAddressAdded$.merge(userAddressUpdated$);
   const userAddressBusy$ = userAddressAdd$.merge(userAddressUpdate$);
+
+  // Show a toast message when validation is failed
+  subscribe(userAddressValidationFailed$, ({ dispatch }) => {
+    dispatch(createToast({ message: 'address.validationFailedToastMessage' }));
+  });
 
   // Return back to address bok, when address is added/updated
   subscribe(userAddressBusy$, ({ dispatch, getState }) => {

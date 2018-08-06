@@ -65,7 +65,8 @@
         "province": "Wähle ein Bundesland aus",
         "zipCode": "Höchstens 10 Zeichen sind erlaubt"
       }
-    }
+    },
+    "validationFailedToastMessage": "Bitte überprüfen Sie Ihre Felder"
   },
   "checkout": {
     "shipping": {

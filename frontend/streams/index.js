@@ -7,8 +7,8 @@ import {
   UPDATE_USER_ADDRESS_SUCCESS,
   UPDATE_USER_ADDRESS_FAILED,
   SET_DEFAULT_ADDRESS,
+  USER_ADDRESS_VALIDATION_FAILS,
 } from './../constants/ActionTypes';
-
 
 /**
  * Gets triggered when user address is going to be added
@@ -62,3 +62,11 @@ export const userAddressUpdateFailed$ = main$.filter(({ action }) => (
  */
 export const userSetDefaultAddress$ = main$
   .filter(({ action }) => action.type === SET_DEFAULT_ADDRESS);
+
+/**
+ * Gets triggered when user address validation is failed
+ * @type {Observable}
+ */
+export const userAddressValidationFailed$ = main$.filter(({ action }) => (
+  action.type === USER_ADDRESS_VALIDATION_FAILS));
+
