@@ -3,6 +3,7 @@ import setViewLoading from '@shopgate/pwa-common/actions/view/setViewLoading';
 import createToast from '@shopgate/pwa-common/actions/toast/createToast';
 import unsetViewLoading from '@shopgate/pwa-common/actions/view/unsetViewLoading';
 import { getHistoryPathname } from '@shopgate/pwa-common/selectors/history';
+import getUser from '@shopgate/pwa-common/actions/user/getUser';
 import { USER_ADDRESS_BOOK_PATH } from './../constants/RoutePaths';
 import {
   userAddressAdd$,
@@ -29,13 +30,16 @@ export default (subscribe) => {
     dispatch(setViewLoading(getHistoryPathname(getState())));
   });
 
-  // Return back to address bok, when address is added/updated
+  // Return back to address book, when address is added/updated
   subscribe(userAddressChanged$, ({ dispatch, getState }) => {
     dispatch(unsetViewLoading(getHistoryPathname(getState())));
 
     // Go back to address book
     // TODO later, go to previous page hen defined
     dispatch(replaceHistory({ pathname: USER_ADDRESS_BOOK_PATH }));
+
+    // Fetch user data with addresses to sync redux store
+    dispatch(getUser());
   });
 
   // Dispatch action to backend to sync user selection
