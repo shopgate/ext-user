@@ -34,13 +34,16 @@ const provincesList = countryCode => countries[countryCode].divisions;
 class AddressForm extends Component {
   static propTypes = {
     addAddress: PropTypes.func.isRequired,
+    disabled: PropTypes.bool.isRequired,
     updateAddress: PropTypes.func.isRequired,
     validateAddress: PropTypes.func.isRequired,
     address: PropTypes.shape(),
+    validationErrors: PropTypes.shape(),
   }
 
   static defaultProps = {
     address: {},
+    validationErrors: {},
   }
 
   /**
@@ -61,6 +64,7 @@ class AddressForm extends Component {
         middleName: '',
         lastName: '',
         suffix: '',
+        phone: '',
         company: '',
         street1: '',
         street2: '',
@@ -76,6 +80,7 @@ class AddressForm extends Component {
         middleName: '',
         lastName: '',
         suffix: '',
+        phone: '',
         company: '',
         street1: '',
         street2: '',
@@ -83,10 +88,20 @@ class AddressForm extends Component {
         province: '',
         country: '',
         zipCode: '',
+        ...props.validationErrors,
       },
-      disabled: false,
       inlineValidation: false,
     };
+  }
+
+  /**
+   * Update state with next props.
+   * @param {Object} nextProps The next props.
+   */
+  componentWillReceiveProps(nextProps) {
+    if (Object.keys(nextProps.validationErrors).length) {
+      this.setState({ errors: nextProps.validationErrors });
+    }
   }
 
   updateAddress = (address) => {
@@ -102,7 +117,6 @@ class AddressForm extends Component {
     const errors = this.props.validateAddress(this.state.address);
     this.setState({
       errors,
-      disabled: !!Object.keys(errors).length,
     });
   }
 
@@ -162,7 +176,6 @@ class AddressForm extends Component {
     const errors = this.props.validateAddress(this.state.address);
     this.setState({
       inlineValidation: true,
-      disabled: true,
       errors,
     });
 
@@ -254,7 +267,7 @@ class AddressForm extends Component {
           <Portal name={portals.USER_ADDRESS_FORM_BUTTON_BEFORE} />
           <Portal name={portals.USER_ADDRESS_FORM_BUTTON}>
             <div data-test-id="AddAddressButton">
-              <RippleButton type="secondary" disabled={this.state.disabled} onClick={this.saveAddress} className={styles.button}>
+              <RippleButton type="secondary" disabled={this.props.disabled} onClick={this.saveAddress} className={styles.button}>
                 <I18n.Text string="address.add.button" />
               </RippleButton>
             </div>

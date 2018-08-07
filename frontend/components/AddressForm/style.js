@@ -5,6 +5,7 @@ const { variables, colors } = themeConfig;
 
 const button = css({
   width: '100%',
+  marginTop: variables.gap.big,
 }).toString();
 
 const select = css({

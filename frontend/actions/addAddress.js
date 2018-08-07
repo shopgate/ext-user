@@ -14,7 +14,10 @@ export default address => (dispatch) => {
     .setInput({ address })
     .dispatch()
     .then(({ addressId }) => {
-      dispatch(addUserAddressSuccess(addressId));
+      dispatch(addUserAddressSuccess({
+        id: addressId,
+        ...address,
+      }));
     })
     .catch((error) => {
       dispatch(addUserAddressFailed(error));

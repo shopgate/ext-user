@@ -22,12 +22,12 @@ export const addUserAddress = () => ({
 
 /**
  * Creates the dispatched ADD_USER_ADDRESS_SUCCESS action object.
- * @param {string} addressId address id
+ * @param {UserAddress} address address id
  * @returns {Object} The dispatched action object.
  */
-export const addUserAddressSuccess = addressId => ({
+export const addUserAddressSuccess = address => ({
   type: types.ADD_USER_ADDRESS_SUCCESS,
-  addressId,
+  address,
 });
 
 /**
@@ -50,10 +50,12 @@ export const updateUserAddress = () => ({
 
 /**
  * Creates the dispatched UPDATE_USER_ADDRESS_SUCCESS action object.
+ * @param {UserAddress} address address id
  * @returns {Object} The dispatched action object.
  */
-export const updateUserAddressSuccess = () => ({
+export const updateUserAddressSuccess = address => ({
   type: types.UPDATE_USER_ADDRESS_SUCCESS,
+  address,
 });
 
 /**
@@ -72,7 +74,7 @@ export const updateUserAddressFailed = error => ({
  * @returns {Object} The dispatched action object.
  */
 export const userAddressValidationFailed = errors => ({
-  type: types.USER_ADDRESS_VALIDATION_FAILS,
+  type: types.USER_ADDRESS_VALIDATION_FAILED,
   errors,
 });
 

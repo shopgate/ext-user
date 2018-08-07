@@ -35,3 +35,19 @@ export const getUserAddressIdSelector = createSelector(
   getUserAddresses,
   addresses => addressId => addresses.find(address => address.id === addressId)
 );
+
+/**
+ * Selector for address book in progress actions
+ * @param {Object} state The application state.
+ * @return {boolean}
+ */
+export const isBusy = state => state.extensions[statePrefix].addressBook.busy || false;
+
+/**
+ * Validation errors
+ * @param {Object} state The application state.
+ * @return {Object[]}
+ */
+export const getValidationErrors = state => (
+  state.extensions[statePrefix].addressBook.validationErrors
+);

@@ -1,5 +1,6 @@
 import { main$ } from '@shopgate/pwa-common/streams/main';
 import { routeDidChange$ } from '@shopgate/pwa-common/streams/history';
+import { EVALIDATION } from '@shopgate/pwa-core/constants/Pipeline';
 import {
   ADD_USER_ADDRESS,
   ADD_USER_ADDRESS_SUCCESS,
@@ -8,7 +9,6 @@ import {
   UPDATE_USER_ADDRESS_SUCCESS,
   UPDATE_USER_ADDRESS_FAILED,
   SET_DEFAULT_ADDRESS,
-  USER_ADDRESS_VALIDATION_FAILS,
 } from './../constants/ActionTypes';
 import {
   USER_ADDRESS_BOOK_PATH,
@@ -92,6 +92,18 @@ export const userSetDefaultAddress$ = main$
  * Gets triggered when user address validation is failed
  * @type {Observable}
  */
-export const userAddressValidationFailed$ = main$.filter(({ action }) => (
-  action.type === USER_ADDRESS_VALIDATION_FAILS));
+export const userAddressValidationFailed$ = userAddressAddFailed$
+  .merge(userAddressUpdateFailed$)
+  .filter(({ action: { error } }) => error.code === EVALIDATION);
+
+/**
+ * Gets triggered when user addresses are changed: new added, existing updated
+ * @type {Observable}
+ */
+export const userAddressChanged$ = userAddressAdded$.merge(userAddressUpdated$);
+/**
+ * Gets triggered when adding/updating address is failed
+ * @type {Observable}
+ */
+export const userAddressFailed$ = userAddressAddFailed$.merge(userAddressUpdateFailed$);
 

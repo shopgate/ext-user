@@ -3,24 +3,24 @@ import setViewLoading from '@shopgate/pwa-common/actions/view/setViewLoading';
 import createToast from '@shopgate/pwa-common/actions/toast/createToast';
 import unsetViewLoading from '@shopgate/pwa-common/actions/view/unsetViewLoading';
 import { getHistoryPathname } from '@shopgate/pwa-common/selectors/history';
-import { USER_ADDRESS_BOOK_PATH } from './../constants/RoutePaths';
+import getUser from '@shopgate/pwa-common/actions/user/getUser';
 import {
   userAddressAdd$,
   userAddressUpdate$,
   userSetDefaultAddress$,
-  userAddressAdded$,
-  userAddressUpdated$,
   userAddressValidationFailed$,
   addressBookDidEnter$,
   addressBookDidLeave$,
+  userAddressChanged$,
+  userAddressFailed$,
 } from './../streams';
 import { toggleNavigatorSearch, toggleNavigatorCart } from '../action-creators';
 import { getUserAddressIdSelector } from './../selectors/addressBook';
 import updateAddress from './../actions/updateAddress';
 
 export default (subscribe) => {
-  const userAddressChanged$ = userAddressAdded$.merge(userAddressUpdated$);
   const userAddressBusy$ = userAddressAdd$.merge(userAddressUpdate$);
+  const userAddressIdle$ = userAddressChanged$.merge(userAddressFailed$);
 
   // Hide search and cart buttons in navigator when address book is opened.
   subscribe(addressBookDidEnter$, ({ dispatch }) => {
@@ -39,7 +39,7 @@ export default (subscribe) => {
     dispatch(createToast({ message: 'address.validationFailedToastMessage' }));
   });
 
-  // Return back to address bok, when address is added/updated
+  // Addresses actions are in progress
   subscribe(userAddressBusy$, ({ dispatch, getState }) => {
     dispatch(setViewLoading(getHistoryPathname(getState())));
   });
@@ -48,6 +48,12 @@ export default (subscribe) => {
   subscribe(userAddressChanged$, ({ dispatch, getState }) => {
     dispatch(unsetViewLoading(getHistoryPathname(getState())));
     dispatch(goBackHistory());
+    dispatch(getUser());
+  });
+
+  // Address actions are released
+  subscribe(userAddressIdle$, ({ dispatch, getState }) => {
+    dispatch(unsetViewLoading(getHistoryPathname(getState())));
   });
 
   // Dispatch action to backend to sync user selection

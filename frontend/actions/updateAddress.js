@@ -14,7 +14,7 @@ export default address => (dispatch) => {
     .setInput({ address })
     .dispatch()
     .then(() => {
-      dispatch(updateUserAddressSuccess());
+      dispatch(updateUserAddressSuccess(address));
     })
     .catch((error) => {
       dispatch(updateUserAddressFailed(error));
