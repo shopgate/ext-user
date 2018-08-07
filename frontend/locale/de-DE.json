@@ -37,34 +37,46 @@
     }
   },
   "address": {
+    "title": "Anrede",
+    "prefix": "Vorname *",
+    "firstName": "Vorname *",
+    "middleName": "Mittelname",
+    "lastName": "Nachname *",
+    "suffix": "Suffix",
+    "company": "Company",
+    "street1": "Straße * Nummer",
+    "street2": "Zusätzliche Adresse",
+    "city": "Stadt *",
+    "province": "Bundesland *",
+    "country": "Land *",
+    "zipCode": "PLZ *",
+    "button": "Neue Addresse speichern",
+    "errors": {
+      "title": "Nur Buchstaben und Leerzeichen sind erlaubt",
+      "prefix": "Nur Buchstaben und Leerzeichen sind erlaubt",
+      "firstName": "Nur Buchstaben und Leerzeichen sind erlaubt",
+      "middleName": "Nur Buchstaben und Leerzeichen sind erlaubt",
+      "lastName": "Nur Buchstaben und Leerzeichen sind erlaubt",
+      "suffix": "Straße und Hausnummer sind erforderlich",
+      "street1": "Straße und Hausnummer sind erforderlich",
+      "street2": "Straße und Hausnummer sind erforderlich",
+      "city": "Nur Buchstaben und Leerzeichen sind erlaubt",
+      "country": "Wähle ein Land aus",
+      "province": "Wähle ein Bundesland aus",
+      "zipCode": "Höchstens 10 Zeichen sind erlaubt"
+    },
     "add": {
       "title": "Adresse hinzufügen",
-      "prefix": "Vorname *",
-      "firstName": "Vorname *",
-      "middleName": "Mittelname",
-      "lastName": "Nachname *",
-      "suffix": "Suffix",
-      "company": "Company",
-      "street1": "Straße * Nummer",
-      "street2": "Zusätzliche Adresse",
-      "city": "Stadt *",
-      "province": "Bundesland *",
-      "country": "Land *",
-      "zipCode": "PLZ *",
-      "button": "Addresse speichern",
-      "errors": {
-        "prefix": "Nur Buchstaben und Leerzeichen sind erlaubt",
-        "firstName": "Nur Buchstaben und Leerzeichen sind erlaubt",
-        "middleName": "Nur Buchstaben und Leerzeichen sind erlaubt",
-        "lastName": "Nur Buchstaben und Leerzeichen sind erlaubt",
-        "suffix": "Straße und Hausnummer sind erforderlich",
-        "street1": "Straße und Hausnummer sind erforderlich",
-        "street2": "Straße und Hausnummer sind erforderlich",
-        "city": "Nur Buchstaben und Leerzeichen sind erlaubt",
-        "country": "Wähle ein Land aus",
-        "province": "Wähle ein Bundesland aus",
-        "zipCode": "Höchstens 10 Zeichen sind erlaubt"
-      }
+      "button": "Neue Addresse speichern"
+    },
+    "update": {
+      "title": "Adresse aktualisieren",
+      "button": "Addresse speichern"
+    },
+    "makeDefault": {
+      "default": "Mach das zu deiner Standard-Adresse",
+      "shipping": "Mach das zu deiner Standard-Lieferadresse",
+      "billing": "Mach das zu deiner Standard-Rechnungsadresse"
     },
     "validationFailedToastMessage": "Bitte überprüfen Sie Ihre Felder"
   },

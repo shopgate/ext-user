@@ -32,7 +32,7 @@ class AddAddress extends Component {
    */
   get title() {
     const { __ } = this.context.i18n();
-    return __('address.add.title');
+    return __(this.props.address.id ? 'address.update.title' : 'address.add.title');
   }
 
   /**
@@ -46,15 +46,13 @@ class AddAddress extends Component {
 
           {isIos &&
           <h1 className={style.headline}>
-            <I18n.Text string="address.add.title" />
+            <I18n.Text string={this.title} />
           </h1>
           }
 
           <Portal name={portals.USER_ADDRESSES_ADD_BEFORE} />
           <Portal name={portals.USER_ADDRESSES_ADD}>
-            <div className={style.form}>
-              <AddressForm address={address} />
-            </div>
+            <AddressForm address={address} />
           </Portal>
           <Portal name={portals.USER_ADDRESSES_ADD_AFTER} />
         </section>
