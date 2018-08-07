@@ -14,7 +14,7 @@
       "type": "static",
       "destination": "frontend",
       "params": {
-        "value": ["firstName", "lastName", "street1", "city", "country", "zipCode"]
+        "value": ["firstName", "lastName", "street1", "street2", "zipCode", "city", "country"]
       }
     },
     "splitDefaultAddressesByTags": {
@@ -34,7 +34,7 @@
     },
     {
       "id": "AddressBookAddRoute",
-      "path": "frontend/pages/AddressBook/AddAddress/route.jsx",
+      "path": "frontend/pages/AddressBook/AddressDetails/route.jsx",
       "target": "app.routes",
       "type": "portals"
     },

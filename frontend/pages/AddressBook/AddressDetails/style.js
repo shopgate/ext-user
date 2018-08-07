@@ -7,14 +7,6 @@ const { variables, colors } = themeConfig;
 
 const container = css({
   backgroundColor: isGmd ? colors.background : '',
-  width: '100%',
-  height: '100%',
-}).toString();
-
-const form = css({
-  marginTop: '2px',
-  backgroundColor: colors.light,
-  padding: variables.gap.big,
 }).toString();
 
 const headline = css({
@@ -26,6 +18,5 @@ const headline = css({
 
 export default {
   container,
-  form,
   headline,
 };

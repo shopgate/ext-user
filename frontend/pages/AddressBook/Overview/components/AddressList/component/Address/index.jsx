@@ -31,8 +31,7 @@ const Address = ({ address, defaults, setDefault }) => (
           key={`${tag}_${address.id}`}
           underline={isIos || (i + 1 < tags.length)}
         />
-      ))
-    }
+      ))}
     </Portal>
     <Portal name={portals.USER_ADDRESSES_ADDRESS_DEFAULT_AFTER} />
   </div>

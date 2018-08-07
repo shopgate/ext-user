@@ -52,6 +52,16 @@ export default (state = {}, action) => {
 
     // Add address to redux immediately after we have success response
     case ADD_USER_ADDRESS_SUCCESS: {
+      // Change default address, if new one was maked as default
+      const defaultAddresses = state.default;
+
+      splitDefaultAddressesByTags.forEach((tag) => {
+        // Tag is prefixed with default_ for shipping, billing, etc
+        const defTag = tag === 'default' ? tag : `default_${tag}`;
+        if (action.address.tags.includes(defTag)) {
+          defaultAddresses[tag] = action.address.id;
+        }
+      });
       return {
         ...state,
         addresses: [
@@ -59,6 +69,7 @@ export default (state = {}, action) => {
           action.address,
         ],
         busy: false,
+        default: defaultAddresses,
       };
     }
 

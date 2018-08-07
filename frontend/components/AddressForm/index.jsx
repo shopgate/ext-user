@@ -5,13 +5,14 @@ import I18n from '@shopgate/pwa-common/components/I18n';
 import TextField from '@shopgate/pwa-ui-shared/TextField';
 import RippleButton from '@shopgate/pwa-ui-shared/RippleButton';
 import Select from '@shopgate/pwa-ui-shared/Form/Select';
+import Checkbox from '@shopgate/pwa-ui-shared/Form/Checkbox';
 import * as portals from '@shopgate/user/constants/Portals';
 import config from '@shopgate/user/config';
 import connect from './connector';
 import countries from './countries';
-import styles from './style';
+import style from './style';
 
-const { addressFields = [] } = config;
+const { splitDefaultAddressesByTags = [], addressFields = [] } = config;
 
 /**
  * @return {Object}
@@ -72,6 +73,7 @@ class AddressForm extends Component {
         province,
         country,
         zipCode: '',
+        tags: [],
         ...props.address, // Init edit address form
       },
       errors: {
@@ -120,6 +122,9 @@ class AddressForm extends Component {
     });
   }
 
+  handleTitleChange = (title) => {
+    this.updateAddress({ title });
+  }
   handlePrefixChange = (prefix) => {
     this.updateAddress({ prefix });
   }
@@ -172,6 +177,17 @@ class AddressForm extends Component {
     this.updateAddress({ province });
   }
 
+  handleMakeDefault = (makeDefault, tag) => {
+    const defaultTag = tag === 'default' ? tag : `default_${tag}`;
+    if (makeDefault) {
+      this.updateAddress({ tags: [...this.state.address.tags, defaultTag] });
+    } else {
+      this.updateAddress({
+        tags: this.state.address.tags.filter(t => t !== defaultTag),
+      });
+    }
+  }
+
   saveAddress = () => {
     const errors = this.props.validateAddress(this.state.address);
     this.setState({
@@ -207,7 +223,7 @@ class AddressForm extends Component {
     return (
       <TextField
         name={name}
-        label={`address.add.${name}`}
+        label={`address.${name}`}
         onChange={changeHandler}
         value={this.state.address[name]}
         errorText={this.state.errors[name]}
@@ -225,23 +241,27 @@ class AddressForm extends Component {
         <Portal name={portals.USER_ADDRESS_FORM_BEFORE} />
         <Portal name={portals.USER_ADDRESS_FORM}>
 
-          {this.renderTextField('prefix', this.handlePrefixChange)}
-          {this.renderTextField('firstName', this.handleFirstNameChange)}
-          {this.renderTextField('middleName', this.handleMiddleNameChange)}
-          {this.renderTextField('lastName', this.handleLastNameChange)}
-          {this.renderTextField('suffix', this.handleSuffixChange)}
-          {this.renderTextField('phone', this.handlePhoneChange)}
-          {this.renderTextField('company', this.handleCompanyChange)}
-          {this.renderTextField('street1', this.handleStreet1Change)}
-          {this.renderTextField('street2', this.handleStreet2Change)}
-          {this.renderTextField('city', this.handleCityChange)}
+          <div className={style.fields}>
 
-          {addressFields.includes('country') &&
+            {this.renderTextField('title', this.handleTitleChange)}
+            {this.renderTextField('prefix', this.handlePrefixChange)}
+            {this.renderTextField('firstName', this.handleFirstNameChange)}
+            {this.renderTextField('middleName', this.handleMiddleNameChange)}
+            {this.renderTextField('lastName', this.handleLastNameChange)}
+            {this.renderTextField('suffix', this.handleSuffixChange)}
+            {this.renderTextField('phone', this.handlePhoneChange)}
+            {this.renderTextField('company', this.handleCompanyChange)}
+            {this.renderTextField('street1', this.handleStreet1Change)}
+            {this.renderTextField('street2', this.handleStreet2Change)}
+            {this.renderTextField('zipCode', this.handleZipCodeChange)}
+            {this.renderTextField('city', this.handleCityChange)}
+
+            {addressFields.includes('country') &&
             <Fragment>
               <Select
                 name="country"
                 placeholder="placeholder"
-                label="address.add.country"
+                label="address.country"
                 options={this.countriesList}
                 value={this.state.address.country}
                 onChange={this.handleCountryChange}
@@ -252,7 +272,7 @@ class AddressForm extends Component {
               <Select
                 name="province"
                 placeholder="placeholder"
-                label="address.add.province"
+                label="address.province"
                 options={provincesList(this.state.address.country)}
                 value={this.state.address.province || ''}
                 onChange={this.handleProvinceChange}
@@ -262,17 +282,38 @@ class AddressForm extends Component {
             </Fragment>
           }
 
-          {this.renderTextField('zipCode', this.handleZipCodeChange)}
+          </div>
 
-          <Portal name={portals.USER_ADDRESS_FORM_BUTTON_BEFORE} />
-          <Portal name={portals.USER_ADDRESS_FORM_BUTTON}>
-            <div data-test-id="AddAddressButton">
-              <RippleButton type="secondary" disabled={this.props.disabled} onClick={this.saveAddress} className={styles.button}>
-                <I18n.Text string="address.add.button" />
+          <div className={style.options}>
+
+            {/* Make default for new address only */}
+            {!this.props.address.id &&
+              <div className={style.defaults}>
+                {splitDefaultAddressesByTags.map(tag => (
+                  <Checkbox
+                    key={tag}
+                    name={`default_${tag}`}
+                    label={`address.makeDefault.${tag}`}
+                    onChange={makeDefault => this.handleMakeDefault(makeDefault, tag)}
+                  />
+                ))}
+              </div>
+            }
+
+            <Portal name={portals.USER_ADDRESS_FORM_BUTTON_BEFORE} />
+            <Portal name={portals.USER_ADDRESS_FORM_BUTTON}>
+              <RippleButton
+                type="secondary"
+                disabled={this.props.disabled}
+                onClick={this.saveAddress}
+                className={style.button}
+                data-test-id="AddAddressButton"
+              >
+                <I18n.Text string={this.props.address.id ? 'address.update.button' : 'address.add.button'} />
               </RippleButton>
-            </div>
-          </Portal>
-          <Portal name={portals.USER_ADDRESS_FORM_BUTTON_AFTER} />
+            </Portal>
+            <Portal name={portals.USER_ADDRESS_FORM_BUTTON_AFTER} />
+          </div>
 
         </Portal>
         <Portal name={portals.USER_ADDRESS_FORM_AFTER} />
