@@ -4,7 +4,7 @@ import { addUserAddress, addUserAddressSuccess, addUserAddressFailed } from './.
 
 /**
  * @param {Object} address address
- * @return {function(*): *}
+ * @returns {function(*): *}
  */
 export default address => (dispatch) => {
   dispatch(addUserAddress());

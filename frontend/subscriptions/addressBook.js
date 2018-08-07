@@ -45,10 +45,13 @@ export default (subscribe) => {
   });
 
   // Return back to address book, when address is added/updated
-  subscribe(userAddressChanged$, ({ dispatch, getState }) => {
+  subscribe(userAddressChanged$, ({ dispatch, getState, action }) => {
     dispatch(unsetViewLoading(getHistoryPathname(getState())));
-    dispatch(goBackHistory());
     dispatch(getUser());
+
+    if (!action.silent) {
+      dispatch(goBackHistory());
+    }
   });
 
   // Address actions are released
@@ -73,6 +76,6 @@ export default (subscribe) => {
     const defTag = tag === 'default' ? tag : `default_${tag}`;
 
     addressClone.tags.push(defTag);
-    dispatch(updateAddress(addressClone));
+    dispatch(updateAddress(addressClone, true));
   });
 };
