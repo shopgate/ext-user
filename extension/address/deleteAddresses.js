@@ -20,7 +20,7 @@ module.exports = async (context, { ids }) => {
   ids.forEach(id => {
     const address = addresses.find(addr => addr.id === id)
     if (!address) {
-      context.log.warn(`The address id "${id}" was not found.`)
+      context.log.error(`The address id "${id}" was not found.`)
       throw new NotFoundError()
     }
   })
