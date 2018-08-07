@@ -42,20 +42,24 @@ export const addUserAddressFailed = error => ({
 
 /**
  * Creates the dispatched UPDATE_USER_ADDRESS action object.
+ * @param {bool} silent Updates without notifying the user (route changes, loading, ..)
  * @returns {Object} The dispatched action object.
  */
-export const updateUserAddress = () => ({
+export const updateUserAddress = (silent = false) => ({
   type: types.UPDATE_USER_ADDRESS,
+  silent,
 });
 
 /**
  * Creates the dispatched UPDATE_USER_ADDRESS_SUCCESS action object.
  * @param {UserAddress} address address id
+ * @param {bool} silent Updates without notifying the user (route changes, loading, ..)
  * @returns {Object} The dispatched action object.
  */
-export const updateUserAddressSuccess = address => ({
+export const updateUserAddressSuccess = (address, silent) => ({
   type: types.UPDATE_USER_ADDRESS_SUCCESS,
   address,
+  silent,
 });
 
 /**
@@ -76,4 +80,23 @@ export const updateUserAddressFailed = error => ({
 export const userAddressValidationFailed = errors => ({
   type: types.USER_ADDRESS_VALIDATION_FAILED,
   errors,
+});
+
+/**
+ * Toggles the cart icon in the gmd theme.
+ * @param {bool} active Whether hidden or visible.
+ * @returns {Object}
+ */
+export const toggleNavigatorCart = active => ({
+  type: 'TOGGLE_NAVIGATOR_CART_ICON',
+  active,
+});
+
+/**
+ * Toggles the search icon in the gmd theme.
+ * @param {bool} value Whether hidden or visible.
+ * @returns {Object}
+ */
+export const toggleNavigatorSearch = value => ({
+  type: value ? 'SET_SEARCH_ENABLED' : 'SET_SEARCH_DISABLED',
 });

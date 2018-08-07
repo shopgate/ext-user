@@ -1,24 +1,38 @@
-import replaceHistory from '@shopgate/pwa-common/actions/history/replaceHistory';
+import goBackHistory from '@shopgate/pwa-common/actions/history/goBackHistory';
 import setViewLoading from '@shopgate/pwa-common/actions/view/setViewLoading';
 import createToast from '@shopgate/pwa-common/actions/toast/createToast';
 import unsetViewLoading from '@shopgate/pwa-common/actions/view/unsetViewLoading';
 import { getHistoryPathname } from '@shopgate/pwa-common/selectors/history';
 import getUser from '@shopgate/pwa-common/actions/user/getUser';
-import { USER_ADDRESS_BOOK_PATH } from './../constants/RoutePaths';
 import {
   userAddressAdd$,
   userAddressUpdate$,
   userSetDefaultAddress$,
   userAddressValidationFailed$,
+  addressBookDidEnter$,
+  addressBookDidLeave$,
   userAddressChanged$,
   userAddressFailed$,
 } from './../streams';
+import { toggleNavigatorSearch, toggleNavigatorCart } from '../action-creators';
 import { getUserAddressIdSelector } from './../selectors/addressBook';
 import updateAddress from './../actions/updateAddress';
 
 export default (subscribe) => {
   const userAddressBusy$ = userAddressAdd$.merge(userAddressUpdate$);
   const userAddressIdle$ = userAddressChanged$.merge(userAddressFailed$);
+
+  // Hide search and cart buttons in navigator when address book is opened.
+  subscribe(addressBookDidEnter$, ({ dispatch }) => {
+    dispatch(toggleNavigatorCart(false));
+    dispatch(toggleNavigatorSearch(false));
+  });
+
+  // SHow search and cart buttons in navigator again after address book is closed.
+  subscribe(addressBookDidLeave$, ({ dispatch }) => {
+    dispatch(toggleNavigatorCart(true));
+    dispatch(toggleNavigatorSearch(true));
+  });
 
   // Show a toast message when validation is failed
   subscribe(userAddressValidationFailed$, ({ dispatch }) => {
@@ -30,19 +44,19 @@ export default (subscribe) => {
     dispatch(setViewLoading(getHistoryPathname(getState())));
   });
 
+  // Return back to address book, when address is added/updated
+  subscribe(userAddressChanged$, ({ dispatch, getState, action }) => {
+    dispatch(unsetViewLoading(getHistoryPathname(getState())));
+    dispatch(getUser());
+
+    if (!action.silent) {
+      dispatch(goBackHistory());
+    }
+  });
+
   // Address actions are released
   subscribe(userAddressIdle$, ({ dispatch, getState }) => {
     dispatch(unsetViewLoading(getHistoryPathname(getState())));
-  });
-
-  // User addresses are changed
-  subscribe(userAddressChanged$, ({ dispatch }) => {
-    // Go back to address book
-    // TODO later, go to previous page hen defined
-    dispatch(replaceHistory({ pathname: USER_ADDRESS_BOOK_PATH }));
-
-    // Fetch user data with addresses to sync redux store
-    dispatch(getUser());
   });
 
   // Dispatch action to backend to sync user selection
@@ -62,6 +76,6 @@ export default (subscribe) => {
     const defTag = tag === 'default' ? tag : `default_${tag}`;
 
     addressClone.tags.push(defTag);
-    dispatch(updateAddress(addressClone));
+    dispatch(updateAddress(addressClone, true));
   });
 };

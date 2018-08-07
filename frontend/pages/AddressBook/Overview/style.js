@@ -6,6 +6,8 @@ const isGmd = themeName.includes('gmd');
 const { variables, colors } = themeConfig;
 
 const container = css({
+  display: 'flex',
+  flexDirection: 'column',
   backgroundColor: isGmd ? colors.background : '',
   width: '100%',
   height: '100%',
@@ -19,14 +21,18 @@ const headline = css({
 }).toString();
 
 const buttonWrapper = css({
-  position: 'fixed',
-  bottom: isGmd ? variables.gap.bigger : variables.gap.bigger + variables.tabBar.height,
-  left: variables.gap.big,
-  right: variables.gap.big,
+  minHeight: 42,
+  margin: variables.gap.big,
+  flex: 1,
+  display: 'flex',
 }).toString();
 
 const button = css({
   width: '100%',
+}).toString();
+
+const link = css({
+  alignSelf: 'flex-end',
 }).toString();
 
 export default {
@@ -34,4 +40,5 @@ export default {
   headline,
   buttonWrapper,
   button,
+  link,
 };
