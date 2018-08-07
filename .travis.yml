@@ -14,5 +14,6 @@ after_script: cat ./frontend/coverage/lcov.info | ./frontend/node_modules/covera
 branches:
   only:
   - develop
+  - PWA-708-unit-test-integration
 notifications:
   email: false
