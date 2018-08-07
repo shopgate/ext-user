@@ -3,10 +3,10 @@ const NotFoundError = require('./../common/Error/NotFoundError')
 
 /**
  * @param {SDKContext} context
- * @param {{id: number}} input
+ * @param {{ids: number[]}} input
  * @return {Promise<>}
  */
-module.exports = async (context, { id }) => {
+module.exports = async (context, { ids }) => {
   // Read all addresses from user storage
   let addresses
   try {
@@ -17,14 +17,16 @@ module.exports = async (context, { id }) => {
   }
 
   // Check for existence
-  const address = addresses.find(addr => addr.id === id)
-  if (!address) {
-    context.log.warn('The given address id was not found.')
-    throw new NotFoundError()
-  }
+  ids.forEach(id => {
+    const address = addresses.find(addr => addr.id === id)
+    if (!address) {
+      context.log.warn(`The address id "${id}" was not found.`)
+      throw new NotFoundError()
+    }
+  })
 
-  // Remove address from list
-  addresses = addresses.filter(addr => addr.id !== address.id)
+  // Remove given addresses from list
+  addresses = addresses.filter(addr => !(ids && ids.find(id => id === addr.id)))
 
   // Save back to user storage
   try {

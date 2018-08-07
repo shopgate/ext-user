@@ -1,10 +1,10 @@
 {
   "version": "1",
   "pipeline": {
-    "id": "shopgate.user.deleteAddress.v1",
+    "id": "shopgate.user.deleteAddresses.v1",
     "public": true,
     "input": [
-      {"key": "id", "id": "1"}
+      {"key": "ids", "id": "1"}
     ],
     "output": [],
     "steps": [
@@ -18,9 +18,9 @@
       {
         "type": "extension",
         "id": "@shopgate/user",
-        "path": "@shopgate/user/address/deleteAddress.js",
+        "path": "@shopgate/user/address/deleteAddresses.js",
         "input": [
-          {"key": "id", "id": "1"}
+          {"key": "ids", "id": "1"}
         ],
         "output": []
       }
