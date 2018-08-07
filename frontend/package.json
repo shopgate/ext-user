@@ -8,6 +8,7 @@
   },
   "license": "Apache-2.0",
   "scripts": {
+    "cover": "jest --coverage",
     "lint": "./node_modules/.bin/eslint --ignore-path ../.gitignore --ext .js --ext .jsx ."
   },
   "dependencies": {
@@ -20,20 +21,23 @@
     "url-pattern": "^1.0.3"
   },
   "devDependencies": {
-    "@shopgate/pwa-core": "5.6.0-beta.7",
+    "@shopgate/eslint-config": "5.6.0-beta.7",
     "@shopgate/pwa-common": "5.6.0-beta.7",
     "@shopgate/pwa-common-commerce": "5.6.0-beta.7",
+    "@shopgate/pwa-core": "5.6.0-beta.7",
     "@shopgate/pwa-ui-shared": "5.6.0-beta.7",
+    "@shopgate/pwa-unit-test": "5.6.0-beta.10",
     "@shopgate/react-hammerjs": "^0.5.3",
-    "@shopgate/eslint-config": "5.6.0-beta.7",
+    "enzyme": "^3.3.0",
     "eslint": "^4.19.1",
     "glamor": "^2.20.40",
-    "react": "^16.3.2",
+    "jest": "22.4.2",
     "prop-types": "^15.6.0",
+    "react": "^16.3.2",
     "react-dom": "^16.3.2",
     "react-hot-loader": "4.0.1",
+    "react-redux": "^5.0.5",
     "react-transform-catch-errors": "^1.0.2",
-    "redbox-react": "^1.5.0",
-    "react-redux": "^5.0.5"
+    "redbox-react": "^1.5.0"
   }
 }
