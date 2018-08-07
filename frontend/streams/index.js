@@ -28,12 +28,10 @@ export const addressBookDidEnter$ = routeDidChange$
  * Gets triggered when the address book route was left.
  * @type {Observable}
  */
-export const addressBookDidLeave$ = addressBookDidEnter$
-  .concatMap(() =>
-    routeDidChange$
-      .filter(({ pathname }) =>
-        pathname !== USER_ADDRESS_BOOK_PATH &&
-        !userAddressPathPattern.match(pathname)));
+export const addressBookDidLeave$ = routeDidChange$
+  .filter(({ pathname, prevPathname }) =>
+    (pathname !== USER_ADDRESS_BOOK_PATH && !userAddressPathPattern.match(pathname)) &&
+    (prevPathname === USER_ADDRESS_BOOK_PATH || userAddressPathPattern.match(pathname)));
 
 /**
  * Gets triggered when user address is going to be added
