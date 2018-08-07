@@ -9,8 +9,8 @@ install:
   - cd ./frontend
   - yarn install
   - yarn add coveralls
-script: cd ./frontend && yarn run cover --maxWorkers=4 --ci
-after_script: cat ./frontend/coverage/lcov.info | ./frontend/node_modules/coveralls/bin/coveralls.js
+script: yarn run cover --maxWorkers=4 --ci
+after_script: cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js
 branches:
   only:
   - develop
