@@ -60,7 +60,7 @@ class AddressBook extends Component {
           <Portal name={portals.USER_ADDRESSES_ADD_BEFORE} />
           <Portal name={portals.USER_ADDRESSES_ADD}>
             <div className={styles.buttonWrapper} data-test-id="AddAddressButton">
-              <Link href={userAddressPathPattern.stringify({ id: 0 })}>
+              <Link className={styles.link} href={userAddressPathPattern.stringify({ id: 0 })}>
                 <RippleButton className={styles.button} type="secondary">
                   <I18n.Text string="addresses.button" />
                 </RippleButton>

@@ -1,4 +1,4 @@
-import replaceHistory from '@shopgate/pwa-common/actions/history/replaceHistory';
+import goBackHistory from '@shopgate/pwa-common/actions/history/goBackHistory';
 import setViewLoading from '@shopgate/pwa-common/actions/view/setViewLoading';
 import createToast from '@shopgate/pwa-common/actions/toast/createToast';
 import unsetViewLoading from '@shopgate/pwa-common/actions/view/unsetViewLoading';
@@ -11,13 +11,28 @@ import {
   userAddressAdded$,
   userAddressUpdated$,
   userAddressValidationFailed$,
+  addressBookDidEnter$,
+  addressBookDidLeave$,
 } from './../streams';
+import { toggleNavigatorSearch, toggleNavigatorCart } from '../action-creators';
 import { getUserAddressIdSelector } from './../selectors/addressBook';
 import updateAddress from './../actions/updateAddress';
 
 export default (subscribe) => {
   const userAddressChanged$ = userAddressAdded$.merge(userAddressUpdated$);
   const userAddressBusy$ = userAddressAdd$.merge(userAddressUpdate$);
+
+  // Hide search and cart buttons in navigator when address book is opened.
+  subscribe(addressBookDidEnter$, ({ dispatch }) => {
+    dispatch(toggleNavigatorCart(false));
+    dispatch(toggleNavigatorSearch(false));
+  });
+
+  // SHow search and cart buttons in navigator again after address book is closed.
+  subscribe(addressBookDidLeave$, ({ dispatch }) => {
+    dispatch(toggleNavigatorCart(true));
+    dispatch(toggleNavigatorSearch(true));
+  });
 
   // Show a toast message when validation is failed
   subscribe(userAddressValidationFailed$, ({ dispatch }) => {
@@ -29,13 +44,10 @@ export default (subscribe) => {
     dispatch(setViewLoading(getHistoryPathname(getState())));
   });
 
-  // Return back to address bok, when address is added/updated
+  // Return back to address book, when address is added/updated
   subscribe(userAddressChanged$, ({ dispatch, getState }) => {
     dispatch(unsetViewLoading(getHistoryPathname(getState())));
-
-    // Go back to address book
-    // TODO later, go to previous page hen defined
-    dispatch(replaceHistory({ pathname: USER_ADDRESS_BOOK_PATH }));
+    dispatch(goBackHistory());
   });
 
   // Dispatch action to backend to sync user selection

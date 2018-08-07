@@ -75,3 +75,22 @@ export const userAddressValidationFailed = errors => ({
   type: types.USER_ADDRESS_VALIDATION_FAILS,
   errors,
 });
+
+/**
+ * Toggles the cart icon in the gmd theme.
+ * @param {bool} value Whether hidden or visible.
+ * @returns {Object}
+ */
+export const toggleNavigatorCart = value => ({
+  type: 'TOGGLE_NAVIGATOR_CART_ICON',
+  value,
+});
+
+/**
+ * Toggles the search icon in the gmd theme.
+ * @param {bool} value Whether hidden or visible.
+ * @returns {Object}
+ */
+export const toggleNavigatorSearch = value => ({
+  type: value ? 'SET_SEARCH_ENABLED' : 'SET_SEARCH_DISABLED',
+});
