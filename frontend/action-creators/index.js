@@ -74,6 +74,6 @@ export const updateUserAddressFailed = error => ({
  * @returns {Object} The dispatched action object.
  */
 export const userAddressValidationFailed = errors => ({
-  type: types.USER_ADDRESS_VALIDATION_FAILS,
+  type: types.USER_ADDRESS_VALIDATION_FAILED,
   errors,
 });

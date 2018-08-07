@@ -2,6 +2,7 @@ import { connect } from 'react-redux';
 import joi from 'joi-browser';
 import addAddress from '@shopgate/user/actions/addAddress';
 import updateAddress from '@shopgate/user/actions/updateAddress';
+import { isBusy, getValidationErrors } from '@shopgate/user/selectors/addressBook';
 import { joiToValidationErrors, validationErrorsToMap } from './../../common/transform';
 import userAddressSchema from './../../common/userAddressSchema';
 
@@ -29,6 +30,15 @@ const validateAddress = (address) => {
 };
 
 /**
+ * @param {Object} state state
+ * @return {{addressType: (*|string)}}
+ */
+const mapStateToProps = state => ({
+  disabled: isBusy(state),
+  validationErrors: validationErrorsToMap(getValidationErrors(state)),
+});
+
+/**
  * @param {function} dispatch dispatch
  * @return {{addAddress: function, updateAddress: function, validateAddress: function}}
  */
@@ -38,4 +48,4 @@ const mapDispatchToProps = dispatch => ({
   validateAddress,
 });
 
-export default connect(null, mapDispatchToProps);
+export default connect(mapStateToProps, mapDispatchToProps);

@@ -1,5 +1,14 @@
 import { RECEIVE_USER, SUCCESS_LOGOUT } from '@shopgate/pwa-common/constants/ActionTypes';
-import { SET_DEFAULT_ADDRESS, ADD_USER_ADDRESS_SUCCESS, UPDATE_USER_ADDRESS_SUCCESS } from './../constants/ActionTypes';
+import {
+  SET_DEFAULT_ADDRESS,
+  ADD_USER_ADDRESS_SUCCESS,
+  UPDATE_USER_ADDRESS_SUCCESS,
+  ADD_USER_ADDRESS,
+  UPDATE_USER_ADDRESS,
+  ADD_USER_ADDRESS_FAILED,
+  UPDATE_USER_ADDRESS_FAILED,
+  USER_ADDRESS_VALIDATION_FAILED,
+} from './../constants/ActionTypes';
 import config from './../config';
 
 const { splitDefaultAddressesByTags = [] } = config;
@@ -49,6 +58,7 @@ export default (state = {}, action) => {
           ...state.addresses,
           action.address,
         ],
+        busy: false,
       };
     }
 
@@ -60,8 +70,26 @@ export default (state = {}, action) => {
           // Replace with updated address
           address.id === action.address.id ? action.address : address
         )),
+        busy: false,
       };
     }
+
+    case ADD_USER_ADDRESS:
+    case UPDATE_USER_ADDRESS:
+      return {
+        ...state,
+        busy: true,
+        validationErrors: [],
+      };
+
+    case ADD_USER_ADDRESS_FAILED:
+    case UPDATE_USER_ADDRESS_FAILED:
+    case USER_ADDRESS_VALIDATION_FAILED:
+      return {
+        ...state,
+        busy: false,
+        validationErrors: action.error.validationErrors,
+      };
 
     case SUCCESS_LOGOUT:
       return {};

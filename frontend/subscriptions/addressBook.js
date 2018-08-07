@@ -9,31 +9,34 @@ import {
   userAddressAdd$,
   userAddressUpdate$,
   userSetDefaultAddress$,
-  userAddressAdded$,
-  userAddressUpdated$,
   userAddressValidationFailed$,
+  userAddressChanged$,
+  userAddressFailed$,
 } from './../streams';
 import { getUserAddressIdSelector } from './../selectors/addressBook';
 import updateAddress from './../actions/updateAddress';
 
 export default (subscribe) => {
-  const userAddressChanged$ = userAddressAdded$.merge(userAddressUpdated$);
   const userAddressBusy$ = userAddressAdd$.merge(userAddressUpdate$);
+  const userAddressIdle$ = userAddressChanged$.merge(userAddressFailed$);
 
   // Show a toast message when validation is failed
   subscribe(userAddressValidationFailed$, ({ dispatch }) => {
     dispatch(createToast({ message: 'address.validationFailedToastMessage' }));
   });
 
-  // Return back to address bok, when address is added/updated
+  // Addresses actions are in progress
   subscribe(userAddressBusy$, ({ dispatch, getState }) => {
     dispatch(setViewLoading(getHistoryPathname(getState())));
   });
 
-  // Return back to address book, when address is added/updated
-  subscribe(userAddressChanged$, ({ dispatch, getState }) => {
+  // Address actions are released
+  subscribe(userAddressIdle$, ({ dispatch, getState }) => {
     dispatch(unsetViewLoading(getHistoryPathname(getState())));
+  });
 
+  // User addresses are changed
+  subscribe(userAddressChanged$, ({ dispatch }) => {
     // Go back to address book
     // TODO later, go to previous page hen defined
     dispatch(replaceHistory({ pathname: USER_ADDRESS_BOOK_PATH }));
