@@ -7,6 +7,7 @@ node_js:
   - node 
 install:
   - cd ./frontend
+  - echo {} >> config.json
   - yarn install
   - yarn add coveralls
 script: yarn run cover --maxWorkers=4 --ci --debug
