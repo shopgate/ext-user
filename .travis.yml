@@ -7,10 +7,10 @@ node_js:
   - node 
 install:
   - cd ./frontend
-  - echo {} >> config.json
+  - echo "{}" > config.json
   - yarn install
   - yarn add coveralls
-script: yarn run cover --maxWorkers=4 --ci --debug
+script: yarn run cover --maxWorkers=4 --ci
 after_script: cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js
 branches:
   only:
