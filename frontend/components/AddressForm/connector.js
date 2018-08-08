@@ -15,7 +15,7 @@ const validateAddress = (address) => {
   if (!result.error) {
     return {};
   }
-  const validationErrors = joiToValidationErrors(result.error, 'address.add.errors')
+  const validationErrors = joiToValidationErrors(result.error, 'address.errors')
   // Make error message empty when input is empty
     .map((err) => {
       if (address[err.path] === '') {
