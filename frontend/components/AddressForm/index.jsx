@@ -32,7 +32,7 @@ const provincesList = countryCode => countries[countryCode].divisions;
 /**
  * Address form component
  */
-class AddressForm extends Component {
+export class AddressForm extends Component {
   static propTypes = {
     addAddress: PropTypes.func.isRequired,
     disabled: PropTypes.bool.isRequired,
