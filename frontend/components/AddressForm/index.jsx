@@ -288,16 +288,17 @@ class AddressForm extends Component {
 
             {/* Make default for new address only */}
             {!this.props.address.id &&
-              <div className={style.defaults}>
+              <Fragment>
                 {splitDefaultAddressesByTags.map(tag => (
                   <Checkbox
+                    className={style.defaults}
                     key={tag}
                     name={`default_${tag}`}
                     label={`address.makeDefault.${tag}`}
                     onChange={makeDefault => this.handleMakeDefault(makeDefault, tag)}
                   />
                 ))}
-              </div>
+              </Fragment>
             }
 
             <Portal name={portals.USER_ADDRESS_FORM_BUTTON_BEFORE} />

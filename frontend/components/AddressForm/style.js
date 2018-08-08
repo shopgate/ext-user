@@ -1,6 +1,7 @@
 import { css } from 'glamor';
-import { themeConfig } from '@shopgate/pwa-common/helpers/config';
+import { themeConfig, themeName } from '@shopgate/pwa-common/helpers/config';
 
+const isIos = themeName.includes('ios');
 const { variables, colors } = themeConfig;
 
 const fields = css({
@@ -16,6 +17,11 @@ const options = css({
 
 const defaults = css({
   color: colors.primary,
+  fontWeight: !isIos ? 'bold' : 'normal',
+  '& svg': {
+    color: colors.primary,
+    float: 'left',
+  },
 }).toString();
 
 const button = css({
