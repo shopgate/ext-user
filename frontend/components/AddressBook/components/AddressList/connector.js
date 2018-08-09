@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import { getUserAddresses, getUserDefaultAddresses } from './../../../../selectors/addressBook';
-import { setDefaultAddress } from './../../../../action-creators';
+import { deleteAddresses, setDefaultAddress } from './../../../../action-creators';
 
 /**
  * @param {Object} state state
@@ -17,6 +17,7 @@ const mapStateToProps = state => ({
  * @return {Object} The extended component props.
  */
 const mapDispatchToProps = dispatch => ({
+  deleteAddresses: addressIds => dispatch(deleteAddresses(addressIds)),
   setDefault: (addressId, tag) => dispatch(setDefaultAddress(addressId, tag)),
 });
 

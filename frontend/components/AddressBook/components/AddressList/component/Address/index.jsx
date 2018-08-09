@@ -7,6 +7,8 @@ import * as portals from '@shopgate/user/constants/Portals';
 import Info from './components/Info';
 import DefaultCard from './components/DefaultCard';
 import style from './style';
+import Button from '../../../../../../../../../libraries/ui-shared/Button';
+import styles from '../../../../../../../../../libraries/ui-shared/TaxDisclaimer/style';
 
 const { splitDefaultAddressesByTags = [] } = config;
 const isIos = themeName.includes('ios');
@@ -17,7 +19,12 @@ const isIos = themeName.includes('ios');
  * @param {function} setDefault set as default handler
  * @constructor
  */
-const Address = ({ address, defaults, setDefault }) => (
+const Address = ({
+  address,
+  defaults,
+  deleteAddresses,
+  setDefault,
+}) => (
   <div className={style.address}>
     <Info address={address} />
 
@@ -35,12 +42,17 @@ const Address = ({ address, defaults, setDefault }) => (
     }
     </Portal>
     <Portal name={portals.USER_ADDRESSES_ADDRESS_DEFAULT_AFTER} />
+
+    <Button className={styles.button} type="regular" flat onClick={() => deleteAddresses([address.id])}>
+      DELETE
+    </Button>
   </div>
 );
 
 Address.propTypes = {
   address: PropTypes.shape().isRequired,
   defaults: PropTypes.shape().isRequired,
+  deleteAddresses: PropTypes.func.isRequired,
   setDefault: PropTypes.func.isRequired,
 };
 
