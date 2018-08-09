@@ -42,7 +42,7 @@ export const addUserAddressFailed = error => ({
 
 /**
  * Creates the dispatched UPDATE_USER_ADDRESS action object.
- * @param {bool} silent Updates without notifying the user (route changes, loading, ..)
+ * @param {boolean} silent Updates without notifying the user (route changes, loading, ..)
  * @returns {Object} The dispatched action object.
  */
 export const updateUserAddress = (silent = false) => ({
@@ -53,7 +53,7 @@ export const updateUserAddress = (silent = false) => ({
 /**
  * Creates the dispatched UPDATE_USER_ADDRESS_SUCCESS action object.
  * @param {UserAddress} address address id
- * @param {bool} silent Updates without notifying the user (route changes, loading, ..)
+ * @param {boolean} silent Updates without notifying the user (route changes, loading, ..)
  * @returns {Object} The dispatched action object.
  */
 export const updateUserAddressSuccess = (address, silent) => ({
@@ -65,11 +65,13 @@ export const updateUserAddressSuccess = (address, silent) => ({
 /**
  * Creates the dispatched UPDATE_USER_ADDRESS_SUCCESS action object.
  * @param {Object} error error
+ * @param {boolean} silent
  * @returns {Object} The dispatched action object.
  */
-export const updateUserAddressFailed = error => ({
+export const updateUserAddressFailed = (error, silent = false) => ({
   type: types.UPDATE_USER_ADDRESS_FAILED,
   error,
+  silent,
 });
 
 /**

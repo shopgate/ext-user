@@ -1,5 +1,4 @@
 import { createSelector } from 'reselect';
-import { getUserData } from '@shopgate/pwa-common/selectors/user';
 
 const statePrefix = '@shopgate/user/UserReducers';
 
@@ -9,8 +8,8 @@ const statePrefix = '@shopgate/user/UserReducers';
  * @return {UserAddress[]|null}
  */
 export const getUserAddresses = createSelector(
-  getUserData,
-  ({ addresses }) => addresses
+  state => state.extensions[statePrefix].addressBook.addresses,
+  addresses => addresses
 );
 
 /**
