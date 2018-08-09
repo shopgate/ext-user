@@ -1,9 +1,68 @@
 import { main$ } from '@shopgate/pwa-common/streams/main';
+import { routeDidChange$ } from '@shopgate/pwa-common/streams/history';
+import { EVALIDATION } from '@shopgate/pwa-core/constants/Pipeline';
 import {
+  ADD_USER_ADDRESS,
+  ADD_USER_ADDRESS_SUCCESS,
+  ADD_USER_ADDRESS_FAILED,
+  UPDATE_USER_ADDRESS,
   UPDATE_USER_ADDRESS_SUCCESS,
   UPDATE_USER_ADDRESS_FAILED,
   SET_DEFAULT_ADDRESS,
 } from './../constants/ActionTypes';
+import {
+  USER_ADDRESS_BOOK_PATH,
+  userAddressPathPattern,
+} from './../constants/RoutePaths';
+
+/**
+ * Get triggered when the address book route is entered.
+ * @type {Observable}
+ */
+export const addressBookDidEnter$ = routeDidChange$
+  .filter(({ pathname, prevPathname }) =>
+    pathname === USER_ADDRESS_BOOK_PATH &&
+    prevPathname !== USER_ADDRESS_BOOK_PATH);
+
+/**
+ * Gets triggered when the address book route was left.
+ * @type {Observable}
+ */
+export const addressBookDidLeave$ = routeDidChange$
+  .filter(({ pathname, prevPathname }) =>
+    (pathname !== USER_ADDRESS_BOOK_PATH && !userAddressPathPattern.match(pathname)) &&
+    (prevPathname === USER_ADDRESS_BOOK_PATH || userAddressPathPattern.match(pathname)));
+
+/**
+ * Gets triggered when user address is going to be added
+ * @type {Observable}
+ */
+export const userAddressAdd$ = main$.filter(({ action }) => (
+  action.type === ADD_USER_ADDRESS
+));
+
+/**
+ * Gets triggered when user address is going to be updated
+ * @type {Observable}
+ */
+export const userAddressUpdate$ = main$.filter(({ action }) => (
+  action.type === UPDATE_USER_ADDRESS
+));
+
+/**
+ * Gets triggered when user address is added
+ * @type {Observable}
+ */
+export const userAddressAdded$ = main$.filter(({ action }) => (
+  action.type === ADD_USER_ADDRESS_SUCCESS
+));
+
+/**
+ * Gets triggered when user address adding failed
+ * @type {Observable}
+ */
+export const userAddressAddFailed$ = main$.filter(({ action }) => (
+  action.type === ADD_USER_ADDRESS_FAILED));
 
 /**
  * Gets triggered when we updated user address
@@ -26,3 +85,23 @@ export const userAddressUpdateFailed$ = main$.filter(({ action }) => (
  */
 export const userSetDefaultAddress$ = main$
   .filter(({ action }) => action.type === SET_DEFAULT_ADDRESS);
+
+/**
+ * Gets triggered when user address validation is failed
+ * @type {Observable}
+ */
+export const userAddressValidationFailed$ = userAddressAddFailed$
+  .merge(userAddressUpdateFailed$)
+  .filter(({ action: { error } }) => error.code === EVALIDATION);
+
+/**
+ * Gets triggered when user addresses are changed: new added, existing updated
+ * @type {Observable}
+ */
+export const userAddressChanged$ = userAddressAdded$.merge(userAddressUpdated$);
+/**
+ * Gets triggered when adding/updating address is failed
+ * @type {Observable}
+ */
+export const userAddressFailed$ = userAddressAddFailed$.merge(userAddressUpdateFailed$);
+
