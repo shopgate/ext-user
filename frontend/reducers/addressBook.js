@@ -1,4 +1,5 @@
 import { RECEIVE_USER, SUCCESS_LOGOUT } from '@shopgate/pwa-common/constants/ActionTypes';
+import config from '@shopgate/user/config';
 import {
   SET_DEFAULT_ADDRESS,
   ADD_USER_ADDRESS_SUCCESS,
@@ -9,7 +10,6 @@ import {
   UPDATE_USER_ADDRESS_FAILED,
   USER_ADDRESS_VALIDATION_FAILED,
 } from './../constants/ActionTypes';
-import config from './../config';
 
 const { splitDefaultAddressesByTags = [] } = config;
 

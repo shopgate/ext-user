@@ -4,10 +4,10 @@ import { updateUserAddress, updateUserAddressSuccess, updateUserAddressFailed } 
 
 /**
  * @param {Object} address address
- * @param {bool} silent Updates without notifying the user (route changes, loading, ..)
+ * @param {boolean} silent Updates without notifying the user (route changes, loading, ..)
  * @return {function(*): *}
  */
-export default (address, silent) => (dispatch) => {
+export default (address, silent = false) => (dispatch) => {
   dispatch(updateUserAddress(silent));
 
   new PipelineRequest(PIPELINE_UPDATE_ADDRESS)

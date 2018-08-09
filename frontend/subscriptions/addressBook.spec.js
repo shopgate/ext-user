@@ -38,11 +38,13 @@ describe('AddressBook subscriptions', () => {
 
   it('should add tags when marked as default', () => {
     const state = {
-      user: {
-        data: {
-          addresses: [
-            { id: 1, tags: [], firstName: 'foo' },
-          ],
+      extensions: {
+        '@shopgate/user/UserReducers': {
+          addressBook: {
+            addresses: [
+              { id: 1, tags: [], firstName: 'foo' },
+            ],
+          },
         },
       },
     };
