@@ -4,11 +4,11 @@ import config from '@shopgate/user/config';
 import { themeName } from '@shopgate/pwa-common/helpers/config';
 import Portal from '@shopgate/pwa-common/components/Portal';
 import * as portals from '@shopgate/user/constants/Portals';
+import Button from '@shopgate/pwa-ui-shared/Button';
+import styles from '@shopgate/pwa-ui-shared/Button/style';
 import Info from './components/Info';
 import DefaultCard from './components/DefaultCard';
 import style from './style';
-import Button from '../../../../../../../../../libraries/ui-shared/Button';
-import styles from '../../../../../../../../../libraries/ui-shared/TaxDisclaimer/style';
 
 const { splitDefaultAddressesByTags = [] } = config;
 const isIos = themeName.includes('ios');
@@ -16,6 +16,7 @@ const isIos = themeName.includes('ios');
 /**
  * @param {UserAddress} address address
  * @param {Object} defaults is default
+ * @param {function} deleteAddresses event handler for the delete button
  * @param {function} setDefault set as default handler
  * @constructor
  */

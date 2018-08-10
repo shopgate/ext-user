@@ -7,8 +7,7 @@ import getUser from '@shopgate/pwa-common/actions/user/getUser';
 import {
   userAddressAdd$,
   userAddressUpdate$,
-  userDeleteAddresses$,
-  userAddressesDeleted$,
+  userAddressesDelete$,
   userSetDefaultAddress$,
   userAddressValidationFailed$,
   addressBookDidEnter$,
@@ -83,13 +82,8 @@ export default (subscribe) => {
   });
 
   // Dispatch action to backend to delete the given addresses
-  subscribe(userDeleteAddresses$, ({ dispatch, action }) => {
+  subscribe(userAddressesDelete$, ({ dispatch, action }) => {
     const { addressIds } = action;
     dispatch(deleteAddresses(addressIds));
-  });
-
-  // Dispatch action to fetch the user data again after deletion is done
-  subscribe(userAddressesDeleted$, ({ dispatch }) => {
-    dispatch(getUser());
   });
 };
