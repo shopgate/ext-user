@@ -30,6 +30,7 @@ const button = css({
 }).toString();
 
 const deleteButton = css({
+  marginLeft: '-17px',
   ...variables.buttonBase,
 }).toString();
 

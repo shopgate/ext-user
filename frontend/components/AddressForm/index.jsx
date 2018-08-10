@@ -310,6 +310,7 @@ export class AddressForm extends Component {
               <Button
                 className={style.deleteButton}
                 onClick={this.deleteAddress}
+                flat
               >
                 <I18n.Text string="address.deleteButton" />
               </Button>
