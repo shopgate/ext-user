@@ -73,6 +73,7 @@
       "title": "Update address",
       "button": "Save address"
     },
+    "deleteButton": "Verwijderen",
     "makeDefault": {
       "default": "Maak dit uw standaard adres",
       "shipping": "Maak dit uw standaard verzendadres",

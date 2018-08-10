@@ -29,9 +29,14 @@ const button = css({
   marginTop: variables.gap.big,
 }).toString();
 
+const deleteButton = css({
+  ...variables.buttonBase,
+}).toString();
+
 export default {
   fields,
   defaults,
   options,
   button,
+  deleteButton,
 };

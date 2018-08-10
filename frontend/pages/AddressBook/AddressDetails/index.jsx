@@ -15,6 +15,7 @@ const isIos = themeName.includes('ios');
  */
 class AddAddress extends Component {
   static propTypes = {
+    deleteAddresses: PropTypes.func.isRequired,
     View: PropTypes.func.isRequired,
     address: PropTypes.shape(),
   }
@@ -36,6 +37,13 @@ class AddAddress extends Component {
   }
 
   /**
+   * @param {string} addressId The id of the address to be deleted
+   */
+  deleteAddress(addressId) {
+    this.props.deleteAddresses([addressId]);
+  }
+
+  /**
    * @return {*}
    */
   render() {
@@ -52,7 +60,7 @@ class AddAddress extends Component {
 
           <Portal name={portals.USER_ADDRESSES_ADD_BEFORE} />
           <Portal name={portals.USER_ADDRESSES_ADD}>
-            <AddressForm address={address} />
+            <AddressForm address={address} deleteAddress={this.deleteAddress} />
           </Portal>
           <Portal name={portals.USER_ADDRESSES_ADD_AFTER} />
         </section>

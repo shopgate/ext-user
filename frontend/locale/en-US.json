@@ -73,6 +73,7 @@
       "title": "Update address",
       "button": "Save address"
     },
+    "deleteButton": "Delete",
     "makeDefault": {
       "default": "Make this your default address",
       "shipping": "Make this your default shipping address",

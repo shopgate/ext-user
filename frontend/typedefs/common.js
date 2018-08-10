@@ -1,3 +1,3 @@
 /**
- * @typedef {Object[]} Observable
+ * @typedef {Object} JSX
  */

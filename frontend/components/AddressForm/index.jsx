@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import Portal from '@shopgate/pwa-common/components/Portal';
 import I18n from '@shopgate/pwa-common/components/I18n';
 import TextField from '@shopgate/pwa-ui-shared/TextField';
+import Button from '@shopgate/pwa-ui-shared/Button';
 import RippleButton from '@shopgate/pwa-ui-shared/RippleButton';
 import Select from '@shopgate/pwa-ui-shared/Form/Select';
 import Checkbox from '@shopgate/pwa-ui-shared/Form/Checkbox';
@@ -39,11 +40,13 @@ export class AddressForm extends Component {
     updateAddress: PropTypes.func.isRequired,
     validateAddress: PropTypes.func.isRequired,
     address: PropTypes.shape(),
+    deleteAddress: PropTypes.func,
     validationErrors: PropTypes.shape(),
   }
 
   static defaultProps = {
     address: {},
+    deleteAddress: null,
     validationErrors: {},
   }
 
@@ -210,6 +213,8 @@ export class AddressForm extends Component {
     }
   }
 
+  deleteAddress = () => this.props.deleteAddress(this.props.address.id)
+
   /**
    * Render text field of form
    * @param {string} name field name
@@ -299,6 +304,15 @@ export class AddressForm extends Component {
                   />
                 ))}
               </Fragment>
+            }
+
+            {this.props.address.id &&
+              <Button
+                className={style.deleteButton}
+                onClick={this.deleteAddress}
+              >
+                <I18n.Text string="address.deleteButton" />
+              </Button>
             }
 
             <Portal name={portals.USER_ADDRESS_FORM_BUTTON_BEFORE} />

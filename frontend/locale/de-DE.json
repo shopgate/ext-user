@@ -44,7 +44,7 @@
     "lastName": "Nachname *",
     "suffix": "Suffix",
     "company": "Firma",
-    "street1": "Straße + Hausnummer *",
+    "street1": "Straße und Hausnummer *",
     "street2": "Adresszusatz",
     "city": "Stadt *",
     "province": "Bundesland *",
@@ -73,8 +73,9 @@
       "title": "Adresse aktualisieren",
       "button": "Addresse speichern"
     },
+    "deleteButton": "Löschen",
     "makeDefault": {
-      "default": "Aas Standard-Adresse festlegen",
+      "default": "Als Standard-Adresse festlegen",
       "shipping": "Als Standard-Lieferadresse festlegen",
       "billing": "Als Standard-Rechnungsadresse festlegen"
     },
