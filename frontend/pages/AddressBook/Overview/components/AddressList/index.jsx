@@ -8,19 +8,13 @@ import connect from './connector';
  * @param {Object} props props
  * @constructor
  */
-const AddressList = ({
-  addresses,
-  defaults,
-  deleteAddresses,
-  setDefault,
-}) => (
+const AddressList = ({ addresses, defaults, setDefault }) => (
   <Fragment>
     {addresses.map(address => (
       <Fragment key={`address_${address.id}`}>
         <Address
           address={address}
           setDefault={setDefault}
-          deleteAddresses={deleteAddresses}
           defaults={defaults}
         />
       </Fragment>
@@ -32,7 +26,6 @@ const AddressList = ({
 AddressList.propTypes = {
   addresses: PropTypes.arrayOf(PropTypes.shape()).isRequired,
   defaults: PropTypes.shape().isRequired,
-  deleteAddresses: PropTypes.func.isRequired,
   setDefault: PropTypes.func.isRequired,
 };
 

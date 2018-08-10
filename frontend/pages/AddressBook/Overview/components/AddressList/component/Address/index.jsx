@@ -4,8 +4,6 @@ import config from '@shopgate/user/config';
 import { themeName } from '@shopgate/pwa-common/helpers/config';
 import Portal from '@shopgate/pwa-common/components/Portal';
 import * as portals from '@shopgate/user/constants/Portals';
-import Button from '@shopgate/pwa-ui-shared/Button';
-import styles from '@shopgate/pwa-ui-shared/Button/style';
 import Info from './components/Info';
 import DefaultCard from './components/DefaultCard';
 import style from './style';
@@ -16,16 +14,10 @@ const isIos = themeName.includes('ios');
 /**
  * @param {UserAddress} address address
  * @param {Object} defaults is default
- * @param {function} deleteAddresses event handler for the delete button
  * @param {function} setDefault set as default handler
  * @constructor
  */
-const Address = ({
-  address,
-  defaults,
-  deleteAddresses,
-  setDefault,
-}) => (
+const Address = ({ address, defaults, setDefault }) => (
   <div className={style.address}>
     <Info address={address} />
 
@@ -42,17 +34,12 @@ const Address = ({
       ))}
     </Portal>
     <Portal name={portals.USER_ADDRESSES_ADDRESS_DEFAULT_AFTER} />
-
-    <Button className={styles.button} type="regular" flat onClick={() => deleteAddresses([address.id])}>
-      DELETE
-    </Button>
   </div>
 );
 
 Address.propTypes = {
   address: PropTypes.shape().isRequired,
   defaults: PropTypes.shape().isRequired,
-  deleteAddresses: PropTypes.func.isRequired,
   setDefault: PropTypes.func.isRequired,
 };
 
