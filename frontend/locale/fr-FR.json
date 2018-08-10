@@ -71,14 +71,15 @@
     },
     "update": {
       "title": "Update address",
-      "button": "Save address"
+      "button": "Save"
     },
     "makeDefault": {
       "default": "Faites-en votre adresse par défaut",
       "shipping": "Faites-en votre adresse de livraison par défaut",
       "billing": "Faites-en votre adresse de facturation par défaut"
     },
-    "validationFailedToastMessage": "Veuillez vérifier vos champs"
+    "validationFailedToastMessage": "Veuillez vérifier vos champs",
+    "delete": "Supprimer l'adresse"
   },
   "checkout": {
     "shipping": {

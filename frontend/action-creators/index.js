@@ -65,7 +65,7 @@ export const updateUserAddressSuccess = (address, silent) => ({
 /**
  * Creates the dispatched UPDATE_USER_ADDRESS_SUCCESS action object.
  * @param {Object} error error
- * @param {boolean} silent
+ * @param {boolean} silent silent
  * @returns {Object} The dispatched action object.
  */
 export const updateUserAddressFailed = (error, silent = false) => ({
@@ -86,7 +86,7 @@ export const userAddressValidationFailed = errors => ({
 
 /**
  * Toggles the cart icon in the gmd theme.
- * @param {bool} active Whether hidden or visible.
+ * @param {boolean} active Whether hidden or visible.
  * @returns {Object}
  */
 export const toggleNavigatorCart = active => ({
@@ -96,7 +96,7 @@ export const toggleNavigatorCart = active => ({
 
 /**
  * Toggles the search icon in the gmd theme.
- * @param {bool} value Whether hidden or visible.
+ * @param {boolean} value Whether hidden or visible.
  * @returns {Object}
  */
 export const toggleNavigatorSearch = value => ({

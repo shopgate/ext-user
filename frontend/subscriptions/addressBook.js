@@ -17,6 +17,8 @@ import {
 import { toggleNavigatorSearch, toggleNavigatorCart } from '../action-creators';
 import { getUserAddressIdSelector } from './../selectors/addressBook';
 import updateAddress from './../actions/updateAddress';
+import EventEmitter from './../events/emitter';
+import { NAVIGATOR_USER_ADDRESS_BUTTON_HIDE } from './../constants/EventTypes';
 
 export default (subscribe) => {
   const userAddressBusy$ = userAddressAdd$.merge(userAddressUpdate$);
@@ -51,6 +53,8 @@ export default (subscribe) => {
 
     if (!action.silent) {
       dispatch(goBackHistory());
+
+      EventEmitter.emit(NAVIGATOR_USER_ADDRESS_BUTTON_HIDE);
     }
   });
 

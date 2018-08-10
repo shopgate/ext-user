@@ -17,11 +17,17 @@ const options = css({
 
 const defaults = css({
   color: colors.primary,
-  fontWeight: !isIos ? 'bold' : 'normal',
+  fontWeight: !isIos ? 500 : 'normal',
   '& svg': {
     color: colors.primary,
     float: 'left',
   },
+}).toString();
+
+const deleteAddress = css({
+  color: colors.accent,
+  textTransform: !isIos ? 'uppercase' : 'inherit',
+  fontWeight: !isIos ? 500 : 'normal',
 }).toString();
 
 const button = css({
@@ -34,4 +40,5 @@ export default {
   defaults,
   options,
   button,
+  deleteAddress,
 };

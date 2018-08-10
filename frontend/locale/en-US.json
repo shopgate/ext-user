@@ -71,14 +71,15 @@
     },
     "update": {
       "title": "Update address",
-      "button": "Save address"
+      "button": "Save"
     },
     "makeDefault": {
       "default": "Make this your default address",
       "shipping": "Make this your default shipping address",
       "billing": "Make this your default billing address"
     },
-    "validationFailedToastMessage": "Please check your fields"
+    "validationFailedToastMessage": "Please check your fields",
+    "delete": "Delete address"
   },
   "checkout": {
     "shipping": {
