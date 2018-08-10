@@ -40,12 +40,12 @@
     "title": "Anrede",
     "prefix": "Vorname *",
     "firstName": "Vorname *",
-    "middleName": "Mittelname",
+    "middleName": "Zweiter Vorname",
     "lastName": "Nachname *",
     "suffix": "Suffix",
-    "company": "Company",
-    "street1": "Straße * Nummer",
-    "street2": "Zusätzliche Adresse",
+    "company": "Firma",
+    "street1": "Straße + Hausnummer *",
+    "street2": "Adresszusatz",
     "city": "Stadt *",
     "province": "Bundesland *",
     "country": "Land *",
@@ -74,9 +74,9 @@
       "button": "Addresse speichern"
     },
     "makeDefault": {
-      "default": "Mach das zu deiner Standard-Adresse",
-      "shipping": "Mach das zu deiner Standard-Lieferadresse",
-      "billing": "Mach das zu deiner Standard-Rechnungsadresse"
+      "default": "Aas Standard-Adresse festlegen",
+      "shipping": "Als Standard-Lieferadresse festlegen",
+      "billing": "Als Standard-Rechnungsadresse festlegen"
     },
     "validationFailedToastMessage": "Bitte überprüfen Sie Ihre Felder"
   },
