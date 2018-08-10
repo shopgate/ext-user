@@ -1,7 +1,9 @@
 import addressBook from './addressBook';
+import checkout from './checkout';
 
 const subscriptions = [
   addressBook,
+  checkout,
 ];
 
 /**

@@ -1,11 +1,4 @@
-import {
-  UPDATE_USER_ADDRESS_SUCCESS,
-  UPDATE_USER_ADDRESS_FAILED,
-  DELETE_USER_ADDRESS_SUCCESS,
-  DELETE_USER_ADDRESS_FAILED,
-  SET_DEFAULT_ADDRESS,
-  DELETE_ADDRESSES,
-} from './../constants/ActionTypes';
+import * as types from './../constants/ActionTypes';
 
 /**
  * Creates the dispatched SET_DEFAULT_ADDRESS action object.
@@ -14,7 +7,7 @@ import {
  * @return {{type: string, addressId: string, tag: string}}
  */
 export const setDefaultAddress = (addressId, tag = 'default') => ({
-  type: SET_DEFAULT_ADDRESS,
+  type: types.SET_DEFAULT_ADDRESS,
   addressId,
   tag,
 });
@@ -30,21 +23,94 @@ export const deleteAddresses = addressIds => ({
 });
 
 /**
- * Creates the dispatched UPDATE_USER_ADDRESS_SUCCESS action object.
+ * Creates the dispatched ADD_USER_ADDRESS action object.
  * @returns {Object} The dispatched action object.
  */
-export const updateUserAddressSuccess = () => ({
-  type: UPDATE_USER_ADDRESS_SUCCESS,
+export const addUserAddress = () => ({
+  type: types.ADD_USER_ADDRESS,
+});
+
+/**
+ * Creates the dispatched ADD_USER_ADDRESS_SUCCESS action object.
+ * @param {UserAddress} address address id
+ * @returns {Object} The dispatched action object.
+ */
+export const addUserAddressSuccess = address => ({
+  type: types.ADD_USER_ADDRESS_SUCCESS,
+  address,
+});
+
+/**
+ * Creates the dispatched ADD_USER_ADDRESS_FAILED action object.
+ * @param {Object} error error
+ * @returns {Object} The dispatched action object.
+ */
+export const addUserAddressFailed = error => ({
+  type: types.ADD_USER_ADDRESS_FAILED,
+  error,
+});
+
+/**
+ * Creates the dispatched UPDATE_USER_ADDRESS action object.
+ * @param {boolean} silent Updates without notifying the user (route changes, loading, ..)
+ * @returns {Object} The dispatched action object.
+ */
+export const updateUserAddress = (silent = false) => ({
+  type: types.UPDATE_USER_ADDRESS,
+  silent,
+});
+
+/**
+ * Creates the dispatched UPDATE_USER_ADDRESS_SUCCESS action object.
+ * @param {UserAddress} address address id
+ * @param {boolean} silent Updates without notifying the user (route changes, loading, ..)
+ * @returns {Object} The dispatched action object.
+ */
+export const updateUserAddressSuccess = (address, silent) => ({
+  type: types.UPDATE_USER_ADDRESS_SUCCESS,
+  address,
+  silent,
 });
 
 /**
  * Creates the dispatched UPDATE_USER_ADDRESS_SUCCESS action object.
  * @param {Object} error error
+ * @param {boolean} silent
  * @returns {Object} The dispatched action object.
  */
-export const updateUserAddressFailed = error => ({
-  type: UPDATE_USER_ADDRESS_FAILED,
+export const updateUserAddressFailed = (error, silent = false) => ({
+  type: types.UPDATE_USER_ADDRESS_FAILED,
   error,
+  silent,
+});
+
+/**
+ * Creates the dispatched USER_ADDRESS_VALIDATION_FAILS action object.
+ * @param {Object} errors validation errors
+ * @returns {Object} The dispatched action object.
+ */
+export const userAddressValidationFailed = errors => ({
+  type: types.USER_ADDRESS_VALIDATION_FAILED,
+  errors,
+});
+
+/**
+ * Toggles the cart icon in the gmd theme.
+ * @param {bool} active Whether hidden or visible.
+ * @returns {Object}
+ */
+export const toggleNavigatorCart = active => ({
+  type: 'TOGGLE_NAVIGATOR_CART_ICON',
+  active,
+});
+
+/**
+ * Toggles the search icon in the gmd theme.
+ * @param {bool} value Whether hidden or visible.
+ * @returns {Object}
+ */
+export const toggleNavigatorSearch = value => ({
+  type: value ? 'SET_SEARCH_ENABLED' : 'SET_SEARCH_DISABLED',
 });
 
 /**
