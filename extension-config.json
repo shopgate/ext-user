@@ -39,6 +39,12 @@
       "type": "portals"
     },
     {
+      "id": "NavigatorButton",
+      "path": "frontend/components/NavigatorSaveButton/index.jsx",
+      "target": "nav-bar.navigator.icons.after",
+      "type": "portals"
+    },
+    {
       "id": "UserSubscribers",
       "path": "frontend/subscriptions/index.js",
       "type": "subscribers"

@@ -1,5 +1,6 @@
 const defaultAlphaExpr = /^[^[0-9!<>,;?=+()@#"°{}_$%:]*$/;
 const defaultSpecCharExpr = /^[^!<>;?=#"$%]*$/;
+const defaultFreeText = /^[!<>;?=#.,:"$%\w ]+$/;
 const streetExpr = /^\d+(\s|\w{1,3}\s)|(\s\d+($|.{1,6}))/;
 const phoneExpr = /^[0-9+()\s]+$/;
 
@@ -34,7 +35,7 @@ module.exports = joi => (
       .required()
       .min(1)
       .max(255),
-    street2: joi.string().trim().regex(defaultSpecCharExpr).regex(streetExpr)
+    street2: joi.string().trim().regex(defaultFreeText)
       .optional()
       .allow([''])
       .max(255),

@@ -71,14 +71,15 @@
     },
     "update": {
       "title": "Adresse aktualisieren",
-      "button": "Addresse speichern"
+      "button": "Speichern"
     },
     "makeDefault": {
       "default": "Mach das zu deiner Standard-Adresse",
       "shipping": "Mach das zu deiner Standard-Lieferadresse",
       "billing": "Mach das zu deiner Standard-Rechnungsadresse"
     },
-    "validationFailedToastMessage": "Bitte überprüfen Sie Ihre Felder"
+    "validationFailedToastMessage": "Bitte überprüfen Sie Ihre Felder",
+    "delete": "Adresse löschen"
   },
   "checkout": {
     "shipping": {
