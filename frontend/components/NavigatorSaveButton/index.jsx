@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import classnames from 'classnames';
 import EventEmitter from '@shopgate/user/events/emitter';
 import I18n from '@shopgate/pwa-common/components/I18n';
-import Button from '@shopgate/pwa-ui-shared/Button';
+import ActionButton from '@shopgate/pwa-ui-shared/ActionButton';
 import {
   NAVIGATOR_USER_ADDRESS_BUTTON_CLICK,
   NAVIGATOR_USER_ADDRESS_BUTTON_ENABLE,
@@ -91,14 +91,13 @@ export class NavigatorSaveButton extends Component {
     }
 
     return (
-      <Button
-        type="plain"
-        className={classnames(style.button, disabled ? style.disabled : style.active)}
+      <ActionButton
         onClick={this.handleClick}
         disabled={disabled}
+        testId="saveAddressButton"
       >
         <I18n.Text string="address.update.button" />
-      </Button>
+      </ActionButton>
     );
   }
 }
