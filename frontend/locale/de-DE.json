@@ -73,14 +73,19 @@
       "title": "Adresse aktualisieren",
       "button": "Speichern"
     },
-    "deleteButton": "Löschen",
+    "delete": {
+      "button": "Löschen",
+      "confirmationDialog": {
+        "title": "Adresse löschen",
+        "message": "Möchtest du diese Adresse wirklich löschen?"
+      }
+    },
     "makeDefault": {
       "default": "Als Standard-Adresse festlegen",
       "shipping": "Als Standard-Lieferadresse festlegen",
       "billing": "Als Standard-Rechnungsadresse festlegen"
     },
-    "validationFailedToastMessage": "Bitte überprüfen Sie Ihre Felder",
-    "delete": "Adresse löschen"
+    "validationFailedToastMessage": "Bitte überprüfen Sie Ihre Felder"
   },
   "checkout": {
     "shipping": {

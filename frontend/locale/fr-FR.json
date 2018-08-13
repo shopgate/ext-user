@@ -73,14 +73,19 @@
       "title": "Update address",
       "button": "Save"
     },
-    "deleteButton": "Supprimer",
+    "delete": {
+      "button": "Supprimer",
+      "confirmationDialog": {
+        "title": "Supprimer l'adresse",
+        "message": "Voulez-vous vraiment supprimer cette adresse?"
+      }
+    },
     "makeDefault": {
       "default": "Faites-en votre adresse par défaut",
       "shipping": "Faites-en votre adresse de livraison par défaut",
       "billing": "Faites-en votre adresse de facturation par défaut"
     },
-    "validationFailedToastMessage": "Veuillez vérifier vos champs",
-    "delete": "Supprimer l'adresse"
+    "validationFailedToastMessage": "Veuillez vérifier vos champs"
   },
   "checkout": {
     "shipping": {

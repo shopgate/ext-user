@@ -73,14 +73,19 @@
       "title": "Update address",
       "button": "Save"
     },
-    "deleteButton": "Verwijderen",
+    "delete": {
+      "button": "Verwijderen",
+      "confirmationDialog": {
+        "title": "Verwijder adres",
+        "message": "Wilt u dit adres echt verwijderen?"
+      }
+    },
     "makeDefault": {
       "default": "Maak dit uw standaard adres",
       "shipping": "Maak dit uw standaard verzendadres",
       "billing": "Maak dit uw standaard factuuradres"
     },
-    "validationFailedToastMessage": "Controleer uw velden",
-    "delete": "Verwijder adres"
+    "validationFailedToastMessage": "Controleer uw velden"
   },
   "checkout": {
     "shipping": {

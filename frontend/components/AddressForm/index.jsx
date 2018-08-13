@@ -44,17 +44,16 @@ const provincesList = countryCode => countries[countryCode].divisions;
 export class AddressForm extends Component {
   static propTypes = {
     addAddress: PropTypes.func.isRequired,
+    deleteAddress: PropTypes.func.isRequired,
     disabled: PropTypes.bool.isRequired,
     updateAddress: PropTypes.func.isRequired,
     validateAddress: PropTypes.func.isRequired,
     address: PropTypes.shape(),
-    deleteAddress: PropTypes.func,
     validationErrors: PropTypes.shape(),
   }
 
   static defaultProps = {
     address: {},
-    deleteAddress: null,
     validationErrors: {},
   }
 
@@ -148,6 +147,8 @@ export class AddressForm extends Component {
       },
     }, this.state.inlineValidation ? this.validateInline : null);
   }
+
+  deleteAddress = () => this.props.deleteAddress(this.props.address.id)
 
   validateInline = () => {
     const errors = this.props.validateAddress(this.state.address);
@@ -248,8 +249,6 @@ export class AddressForm extends Component {
     }
   }
 
-  deleteAddress = () => this.props.deleteAddress(this.props.address.id)
-
   /**
    * Render text field of form
    * @param {string} name field name
@@ -333,7 +332,7 @@ export class AddressForm extends Component {
                 flat
                 wrapContent={false}
               >
-                <I18n.Text string="address.deleteButton" />
+                <I18n.Text string="address.delete.button" />
               </Button>
             }
 

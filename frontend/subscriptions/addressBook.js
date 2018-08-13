@@ -1,5 +1,6 @@
 import goBackHistory from '@shopgate/pwa-common/actions/history/goBackHistory';
 import setViewLoading from '@shopgate/pwa-common/actions/view/setViewLoading';
+import showModal from '@shopgate/pwa-common/actions/modal/showModal';
 import createToast from '@shopgate/pwa-common/actions/toast/createToast';
 import unsetViewLoading from '@shopgate/pwa-common/actions/view/unsetViewLoading';
 import { getHistoryPathname } from '@shopgate/pwa-common/selectors/history';
@@ -85,9 +86,15 @@ export default (subscribe) => {
     dispatch(updateAddress(addressClone, true));
   });
 
-  // Dispatch action to backend to delete the given addresses
+  // Dispatch action to backend to delete the given addresses after successful confirmation
   subscribe(userAddressesDelete$, ({ dispatch, action }) => {
     const { addressIds } = action;
-    dispatch(deleteAddresses(addressIds));
+
+    dispatch(showModal({
+      confirm: 'address.delete.button',
+      dismiss: 'modal.dismiss',
+      title: 'address.delete.confirmationDialog.title',
+      message: 'address.delete.confirmationDialog.message',
+    })).then(confirmed => confirmed && dispatch(deleteAddresses(addressIds)));
   });
 };
