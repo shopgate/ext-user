@@ -35,6 +35,13 @@ module.exports = async (context, { address }) => {
       tags: addr.tags.filter(tag => !addressDefaultTags.includes(tag))
     }
   })
+  // Default addresses are always shown on top of the address book
+    .sort(({ tags: tagsA }, {tags: tagsB}) => {
+      if (hasDefault(tagsA) && hasDefault(tagsB)) {
+        return 0
+      }
+      return hasDefault(tagsA) ? -1 : (hasDefault(tagsB) ? 1 : 0)
+    })
 
   try {
     await context.storage.user.set('addresses', addresses)
@@ -42,4 +49,8 @@ module.exports = async (context, { address }) => {
     context.log.warn(err, 'User storage error: Failed to save the user\'s addresses.')
     throw new InternalError()
   }
+}
+
+function hasDefault (tags) {
+  return tags.filter(tag => tag.startsWith('default')).length > 0
 }

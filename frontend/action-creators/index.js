@@ -65,7 +65,7 @@ export const updateUserAddressSuccess = (address, silent) => ({
 /**
  * Creates the dispatched UPDATE_USER_ADDRESS_SUCCESS action object.
  * @param {Object} error error
- * @param {boolean} silent
+ * @param {boolean} silent silent
  * @returns {Object} The dispatched action object.
  */
 export const updateUserAddressFailed = (error, silent = false) => ({
