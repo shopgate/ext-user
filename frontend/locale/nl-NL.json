@@ -71,7 +71,7 @@
     },
     "update": {
       "title": "Update address",
-      "button": "Save address"
+      "button": "Save"
     },
     "deleteButton": "Verwijderen",
     "makeDefault": {
@@ -79,7 +79,8 @@
       "shipping": "Maak dit uw standaard verzendadres",
       "billing": "Maak dit uw standaard factuuradres"
     },
-    "validationFailedToastMessage": "Controleer uw velden"
+    "validationFailedToastMessage": "Controleer uw velden",
+    "delete": "Verwijder adres"
   },
   "checkout": {
     "shipping": {

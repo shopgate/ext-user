@@ -71,7 +71,7 @@
     },
     "update": {
       "title": "Adresse aktualisieren",
-      "button": "Addresse speichern"
+      "button": "Speichern"
     },
     "deleteButton": "Löschen",
     "makeDefault": {
@@ -79,7 +79,8 @@
       "shipping": "Als Standard-Lieferadresse festlegen",
       "billing": "Als Standard-Rechnungsadresse festlegen"
     },
-    "validationFailedToastMessage": "Bitte überprüfen Sie Ihre Felder"
+    "validationFailedToastMessage": "Bitte überprüfen Sie Ihre Felder",
+    "delete": "Adresse löschen"
   },
   "checkout": {
     "shipping": {

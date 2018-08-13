@@ -8,6 +8,14 @@ import RippleButton from '@shopgate/pwa-ui-shared/RippleButton';
 import Select from '@shopgate/pwa-ui-shared/Form/Select';
 import Checkbox from '@shopgate/pwa-ui-shared/Form/Checkbox';
 import * as portals from '@shopgate/user/constants/Portals';
+import EventEmitter from '@shopgate/user/events/emitter';
+import {
+  NAVIGATOR_USER_ADDRESS_BUTTON_CLICK,
+  NAVIGATOR_USER_ADDRESS_BUTTON_SHOW,
+  NAVIGATOR_USER_ADDRESS_BUTTON_HIDE,
+  NAVIGATOR_USER_ADDRESS_BUTTON_ENABLE,
+  NAVIGATOR_USER_ADDRESS_BUTTON_DISABLE,
+} from '@shopgate/user/constants/EventTypes';
 import config from '@shopgate/user/config';
 import connect from './connector';
 import countries from './countries';
@@ -100,6 +108,13 @@ export class AddressForm extends Component {
   }
 
   /**
+   * Did mount
+   */
+  componentDidMount() {
+    EventEmitter.on(NAVIGATOR_USER_ADDRESS_BUTTON_CLICK, this.saveAddress);
+  }
+
+  /**
    * Update state with next props.
    * @param {Object} nextProps The next props.
    */
@@ -107,6 +122,22 @@ export class AddressForm extends Component {
     if (Object.keys(nextProps.validationErrors).length) {
       this.setState({ errors: nextProps.validationErrors });
     }
+
+    EventEmitter.emit(nextProps.address.id ?
+      NAVIGATOR_USER_ADDRESS_BUTTON_SHOW :
+      NAVIGATOR_USER_ADDRESS_BUTTON_HIDE);
+
+    EventEmitter.emit(nextProps.disabled ?
+      NAVIGATOR_USER_ADDRESS_BUTTON_DISABLE :
+      NAVIGATOR_USER_ADDRESS_BUTTON_ENABLE);
+  }
+
+  /**
+   * Will unmount
+   */
+  componentWillUnmount() {
+    EventEmitter.off(NAVIGATOR_USER_ADDRESS_BUTTON_CLICK, this.saveAddress);
+    EventEmitter.emit(NAVIGATOR_USER_ADDRESS_BUTTON_HIDE);
   }
 
   updateAddress = (address) => {
@@ -123,6 +154,9 @@ export class AddressForm extends Component {
     this.setState({
       errors,
     });
+    EventEmitter.emit(Object.keys(errors).length ?
+      NAVIGATOR_USER_ADDRESS_BUTTON_DISABLE :
+      NAVIGATOR_USER_ADDRESS_BUTTON_ENABLE);
   }
 
   handleTitleChange = (title) => {
@@ -199,6 +233,7 @@ export class AddressForm extends Component {
     });
 
     if (Object.keys(errors).length > 0) {
+      EventEmitter.emit(NAVIGATOR_USER_ADDRESS_BUTTON_DISABLE);
       return;
     }
 
@@ -290,8 +325,10 @@ export class AddressForm extends Component {
           </div>
 
           <div className={style.options}>
+            {/* Delete address button */}
+            {this.props.address.id && null}
 
-            {/* Make default for new address only */}
+            {/* Default address and submit button for new address */}
             {!this.props.address.id &&
               <Fragment>
                 {splitDefaultAddressesByTags.map(tag => (
@@ -303,32 +340,32 @@ export class AddressForm extends Component {
                     onChange={makeDefault => this.handleMakeDefault(makeDefault, tag)}
                   />
                 ))}
+
+                {this.props.address.id &&
+                <Button
+                  className={style.deleteButton}
+                  onClick={this.deleteAddress}
+                  flat
+                >
+                  <I18n.Text string="address.deleteButton" />
+                </Button>
+                }
+
+                <Portal name={portals.USER_ADDRESS_FORM_BUTTON_BEFORE} />
+                <Portal name={portals.USER_ADDRESS_FORM_BUTTON}>
+                  <RippleButton
+                    type="secondary"
+                    disabled={this.props.disabled}
+                    onClick={this.saveAddress}
+                    className={style.button}
+                    data-test-id="AddAddressButton"
+                  >
+                    <I18n.Text string="address.add.button" />
+                  </RippleButton>
+                </Portal>
+                <Portal name={portals.USER_ADDRESS_FORM_BUTTON_AFTER} />
               </Fragment>
             }
-
-            {this.props.address.id &&
-              <Button
-                className={style.deleteButton}
-                onClick={this.deleteAddress}
-                flat
-              >
-                <I18n.Text string="address.deleteButton" />
-              </Button>
-            }
-
-            <Portal name={portals.USER_ADDRESS_FORM_BUTTON_BEFORE} />
-            <Portal name={portals.USER_ADDRESS_FORM_BUTTON}>
-              <RippleButton
-                type="secondary"
-                disabled={this.props.disabled}
-                onClick={this.saveAddress}
-                className={style.button}
-                data-test-id="AddAddressButton"
-              >
-                <I18n.Text string={this.props.address.id ? 'address.update.button' : 'address.add.button'} />
-              </RippleButton>
-            </Portal>
-            <Portal name={portals.USER_ADDRESS_FORM_BUTTON_AFTER} />
           </div>
 
         </Portal>

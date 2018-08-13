@@ -7,6 +7,7 @@ const { variables, colors } = themeConfig;
 
 const container = css({
   backgroundColor: isGmd ? colors.background : '',
+  flexGrow: 1,
 }).toString();
 
 const headline = css({
