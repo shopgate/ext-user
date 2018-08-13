@@ -30,7 +30,7 @@ const deleteAddressButton = css({
   ...variables.buttonBase,
 }).toString();
 
-const button = css({
+const saveAddressButton = css({
   width: '100%',
   marginTop: variables.gap.big,
 }).toString();
@@ -39,6 +39,6 @@ export default {
   fields,
   defaults,
   options,
-  button,
+  saveAddressButton,
   deleteAddressButton,
 };

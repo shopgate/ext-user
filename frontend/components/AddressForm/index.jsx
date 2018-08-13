@@ -356,7 +356,7 @@ export class AddressForm extends Component {
                     type="secondary"
                     disabled={this.props.disabled}
                     onClick={this.saveAddress}
-                    className={style.button}
+                    className={style.saveAddressButton}
                     data-test-id="AddAddressButton"
                   >
                     <I18n.Text string="address.add.button" />
