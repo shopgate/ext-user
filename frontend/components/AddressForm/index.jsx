@@ -326,7 +326,16 @@ export class AddressForm extends Component {
 
           <div className={style.options}>
             {/* Delete address button */}
-            {this.props.address.id && null}
+            {this.props.address.id &&
+              <Button
+                className={style.deleteAddressButton}
+                onClick={this.deleteAddress}
+                flat
+                wrapContent={false}
+              >
+                <I18n.Text string="address.deleteButton" />
+              </Button>
+            }
 
             {/* Default address and submit button for new address */}
             {!this.props.address.id &&
@@ -340,16 +349,6 @@ export class AddressForm extends Component {
                     onChange={makeDefault => this.handleMakeDefault(makeDefault, tag)}
                   />
                 ))}
-
-                {this.props.address.id &&
-                <Button
-                  className={style.deleteButton}
-                  onClick={this.deleteAddress}
-                  flat
-                >
-                  <I18n.Text string="address.deleteButton" />
-                </Button>
-                }
 
                 <Portal name={portals.USER_ADDRESS_FORM_BUTTON_BEFORE} />
                 <Portal name={portals.USER_ADDRESS_FORM_BUTTON}>
