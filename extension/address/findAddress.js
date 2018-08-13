@@ -51,7 +51,7 @@ function prepareAddress (address) {
  */
 function matchAddress (addressA, addressB) {
   try {
-    assert.deepEqual(prepareAddress(addressA), prepareAddress(addressB))
+    assert.strict.deepEqual(prepareAddress(addressA), prepareAddress(addressB))
     return true
   } catch (assertionErrIgnore) {}
 }
