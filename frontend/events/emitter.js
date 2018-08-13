@@ -28,7 +28,7 @@ class UserEventEmitter extends EventEmitter {
    * @inheritDoc
    */
   emit(event, ...args) {
-    logger.log(`event %c${event} to ${this.listenerCount(event)} listeners`, 'font-weight: bold');
+    logger.log(`event %c${event} dispatched to ${this.listenerCount(event)} listeners`, 'font-weight: bold');
     return super.emit(event, args);
   }
 }
