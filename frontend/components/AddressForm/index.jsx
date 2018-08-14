@@ -69,6 +69,7 @@ export class AddressForm extends Component {
     const province = Object.keys(provincesList(country))[0];
 
     this.state = {
+      hasChanges: false,
       address: {
         prefix: '',
         firstName: '',
@@ -122,13 +123,18 @@ export class AddressForm extends Component {
       this.setState({ errors: nextProps.validationErrors });
     }
 
-    EventEmitter.emit(nextProps.address.id ?
-      NAVIGATOR_USER_ADDRESS_BUTTON_SHOW :
-      NAVIGATOR_USER_ADDRESS_BUTTON_HIDE);
+    // Show navigation button when we're updating.
+    if (nextProps.address.id) {
+      EventEmitter.emit(NAVIGATOR_USER_ADDRESS_BUTTON_SHOW);
+      EventEmitter.emit(NAVIGATOR_USER_ADDRESS_BUTTON_DISABLE);
+    }
 
-    EventEmitter.emit(nextProps.disabled ?
-      NAVIGATOR_USER_ADDRESS_BUTTON_DISABLE :
-      NAVIGATOR_USER_ADDRESS_BUTTON_ENABLE);
+    // Enable / Disable navigation button based on disabled prop.
+    if (nextProps.disabled && !this.props.disabled) {
+      EventEmitter.emit(NAVIGATOR_USER_ADDRESS_BUTTON_DISABLE);
+    } else if (!nextProps.disabled && this.props.disabled) {
+      EventEmitter.emit(NAVIGATOR_USER_ADDRESS_BUTTON_ENABLE);
+    }
   }
 
   /**
@@ -145,7 +151,21 @@ export class AddressForm extends Component {
         ...this.state.address,
         ...address,
       },
-    }, this.state.inlineValidation ? this.validateInline : null);
+    }, this.state.inlineValidation ? this.validateInline : () => {
+      if (!this.state.hasChanges) {
+        // Show navigtion button when first time updating address.
+        const hasChanges = !Object.keys(address)
+          .every(key => address[key] === this.props.address[key]);
+
+        if (hasChanges) {
+          EventEmitter.emit(NAVIGATOR_USER_ADDRESS_BUTTON_ENABLE);
+
+          this.setState({
+            hasChanges,
+          });
+        }
+      }
+    });
   }
 
   deleteAddress = () => this.props.deleteAddress(this.props.address.id)
