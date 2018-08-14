@@ -18,10 +18,19 @@
       }
     },
     "splitDefaultAddressesByTags": {
-      "type": "static",
+      "type": "admin",
       "destination": "frontend",
+      "default": ["shipping", "billing"],
       "params": {
-        "value": ["default"]
+        "type": "json",
+        "label": {
+          "en": "Default addresses",
+          "de": "Standard-Adressen"
+        },
+        "required": true,
+        "options": {
+          "placeholder": "[\"shipping\", \"billing\"]"
+        }
       }
     }
   },

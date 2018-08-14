@@ -188,8 +188,8 @@ export class AddressForm extends Component {
   handleStreet1Change = (street1) => {
     this.updateAddress({ street1 });
   }
-  handleStreet2Change = (street1) => {
-    this.updateAddress({ street1 });
+  handleStreet2Change = (street2) => {
+    this.updateAddress({ street2 });
   }
 
   handleCityChange = (city) => {
