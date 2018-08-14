@@ -78,7 +78,8 @@
       "confirmationDialog": {
         "title": "Adresse löschen",
         "message": "Möchtest du diese Adresse wirklich löschen?"
-      }
+      },
+      "successMessage": "Die Adresse wurde gelöscht"
     },
     "makeDefault": {
       "default": "Als Standard-Adresse festlegen",

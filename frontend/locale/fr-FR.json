@@ -78,7 +78,8 @@
       "confirmationDialog": {
         "title": "Supprimer l'adresse",
         "message": "Voulez-vous vraiment supprimer cette adresse?"
-      }
+      },
+      "successMessage": "L'adresse a été supprimée"
     },
     "makeDefault": {
       "default": "Faites-en votre adresse par défaut",

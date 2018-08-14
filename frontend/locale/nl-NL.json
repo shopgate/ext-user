@@ -78,7 +78,8 @@
       "confirmationDialog": {
         "title": "Verwijder adres",
         "message": "Wilt u dit adres echt verwijderen?"
-      }
+      },
+      "successMessage": "Het adres is verwijderd"
     },
     "makeDefault": {
       "default": "Maak dit uw standaard adres",

@@ -4,9 +4,9 @@ import { deleteUserAddressesSuccess, deleteUserAddressesFailed } from './../acti
 
 /**
  * @param {Object[]} addressIds list of address ids
- * @return {function(*): *}
+ * @returns {function(*): *}
  */
-export default addressIds => dispatch =>
+export default addressIds => (dispatch) => {
   new PipelineRequest(PIPELINE_DELETE_ADDRESSES)
     .setTrusted()
     .setInput({ ids: addressIds })
@@ -17,3 +17,4 @@ export default addressIds => dispatch =>
     .catch((error) => {
       dispatch(deleteUserAddressesFailed(error));
     });
+};

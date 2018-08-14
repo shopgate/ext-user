@@ -9,6 +9,7 @@ import {
   UPDATE_USER_ADDRESS_SUCCESS,
   UPDATE_USER_ADDRESS_FAILED,
   DELETE_USER_ADDRESSES,
+  DELETE_USER_ADDRESSES_CONFIRMED,
   DELETE_USER_ADDRESSES_SUCCESS,
   DELETE_USER_ADDRESSES_FAILED,
   SET_DEFAULT_ADDRESS,
@@ -90,6 +91,13 @@ export const userAddressesDelete$ = main$
   .filter(({ action }) => action.type === DELETE_USER_ADDRESSES);
 
 /**
+ * Gets triggered when user requested to delete addresses
+ * @type {Observable}
+ */
+export const userAddressesDeleteConfirmed$ = main$
+  .filter(({ action }) => action.type === DELETE_USER_ADDRESSES_CONFIRMED);
+
+/**
  * Gets triggered when the given user addresses were deleted
  * @type {Observable}
  */
@@ -120,7 +128,7 @@ export const userAddressValidationFailed$ = userAddressAddFailed$
   .filter(({ action: { error } }) => error.code === EVALIDATION);
 
 /**
- * Gets triggered when user addresses are changed: new added, existing updated
+ * Gets triggered when user addresses are changed: new added, existing updated or deleted
  * @type {Observable}
  */
 export const userAddressChanged$ = userAddressAdded$
@@ -128,7 +136,7 @@ export const userAddressChanged$ = userAddressAdded$
   .merge(userAddressesDeleted$);
 
 /**
- * Gets triggered when adding/updating address is failed
+ * Gets triggered when adding/updating or deleting address is failed
  * @type {Observable}
  */
 export const userAddressFailed$ = userAddressAddFailed$

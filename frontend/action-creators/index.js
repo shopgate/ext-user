@@ -114,6 +114,14 @@ export const toggleNavigatorSearch = value => ({
 });
 
 /**
+ * Creates the dispatched DELETE_USER_ADDRESSES_CONFIRMED action object.
+ * @returns {Object} The dispatched action object.
+ */
+export const deleteUserAddressesConfirmed = () => ({
+  type: types.DELETE_USER_ADDRESSES_CONFIRMED,
+});
+
+/**
  * Creates the dispatched DELETE_USER_ADDRESS_SUCCESS action object.
  * @returns {Object} The dispatched action object.
  */
