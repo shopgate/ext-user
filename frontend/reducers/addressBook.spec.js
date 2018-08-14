@@ -1,5 +1,6 @@
-import { RECEIVE_USER, SUCCESS_LOGOUT } from '@shopgate/pwa-common/constants/ActionTypes';
+import { SUCCESS_LOGOUT } from '@shopgate/pwa-common/constants/ActionTypes';
 import {
+  USER_ADDRESSES_RECEIVED,
   SET_DEFAULT_ADDRESS,
   ADD_USER_ADDRESS_SUCCESS,
   UPDATE_USER_ADDRESS_SUCCESS,
@@ -12,21 +13,24 @@ import {
 import reducer from './addressBook';
 
 jest.mock('@shopgate/user/config', () => ({
-  splitDefaultAddressesByTags: ['default'],
+  splitDefaultAddressesByTags: ['shipping', 'billing'],
   addressFields: ['firstName', 'lastName', 'phone'],
   countryCodes: 'DE',
 }));
 
 describe('AddressBook reducers', () => {
-  it('Should reduce RECEIVE_USER', () => {
+  it('Should reduce USER_ADDRESSES_RECEIVED', () => {
     const action = {
-      type: RECEIVE_USER,
-      user: { addresses: [{ id: 123, tags: ['default'] }] },
+      type: USER_ADDRESSES_RECEIVED,
+      // eslint-disable-next-line extra-rules/no-single-line-objects
+      addresses: [{ id: 123, tags: ['default_shipping'] }],
     };
     const expectedState = {
-      addresses: [{ id: 123, tags: ['default'] }],
+      // eslint-disable-next-line extra-rules/no-single-line-objects
+      addresses: [{ id: 123, tags: ['default_shipping'] }],
       default: {
-        default: 123,
+        billing: null,
+        shipping: 123,
       },
     };
     expect(reducer({}, action)).toEqual(expectedState);
@@ -36,11 +40,11 @@ describe('AddressBook reducers', () => {
     const action = {
       type: SET_DEFAULT_ADDRESS,
       addressId: 123,
-      tag: 'default',
+      tag: 'shipping',
     };
     const expectedState = {
       default: {
-        default: 123,
+        shipping: 123,
       },
     };
     expect(reducer({}, action)).toEqual(expectedState);
@@ -48,9 +52,10 @@ describe('AddressBook reducers', () => {
 
   it('Should reduce ADD_USER_ADDRESS_SUCCESS', () => {
     const state = {
+      // eslint-disable-next-line extra-rules/no-single-line-objects
       addresses: [{ id: 321, name: 'Address 321' }],
       default: {
-        default: 321,
+        shipping: 321,
       },
     };
     const action = {
@@ -58,13 +63,14 @@ describe('AddressBook reducers', () => {
       address: {
         id: 123,
         name: 'Address 123',
-        tags: ['default'],
+        tags: ['default_shipping'],
       },
     };
     const expectedState = {
-      addresses: [{ id: 321, name: 'Address 321' }, { id: 123, name: 'Address 123', tags: ['default'] }],
+      // eslint-disable-next-line extra-rules/no-single-line-objects
+      addresses: [{ id: 321, name: 'Address 321' }, { id: 123, name: 'Address 123', tags: ['default_shipping'] }],
       default: {
-        default: 123,
+        shipping: 123,
       },
       busy: false,
     };
@@ -73,6 +79,7 @@ describe('AddressBook reducers', () => {
 
   it('Should reduce UPDATE_USER_ADDRESS_SUCCESS', () => {
     const state = {
+      // eslint-disable-next-line extra-rules/no-single-line-objects
       addresses: [{ id: 123, name: 'Address 123' }, { id: 321, name: 'Address 321' }],
     };
     const action = {
@@ -84,6 +91,7 @@ describe('AddressBook reducers', () => {
     };
     const expectedState = {
       busy: false,
+      // eslint-disable-next-line extra-rules/no-single-line-objects
       addresses: [{ id: 123, name: 'New Address 123' }, { id: 321, name: 'Address 321' }],
     };
     expect(reducer(state, action)).toEqual(expectedState);
@@ -98,6 +106,7 @@ describe('AddressBook reducers', () => {
       validationErrors: [],
     };
     expect(reducer({}, action)).toEqual(expectedState);
+    // eslint-disable-next-line extra-rules/no-single-line-objects
     expect(reducer({}, { type: UPDATE_USER_ADDRESS, ...action })).toEqual(expectedState);
   });
 
@@ -105,15 +114,19 @@ describe('AddressBook reducers', () => {
     const action = {
       type: ADD_USER_ADDRESS_FAILED,
       error: {
+        // eslint-disable-next-line extra-rules/no-single-line-objects
         validationErrors: [{ path: 'path', message: 'message' }],
       },
     };
     const expectedState = {
       busy: false,
+      // eslint-disable-next-line extra-rules/no-single-line-objects
       validationErrors: [{ path: 'path', message: 'message' }],
     };
     expect(reducer({}, action)).toEqual(expectedState);
+    // eslint-disable-next-line extra-rules/no-single-line-objects
     expect(reducer({}, { type: UPDATE_USER_ADDRESS_FAILED, ...action })).toEqual(expectedState);
+    // eslint-disable-next-line extra-rules/no-single-line-objects
     expect(reducer({}, { type: USER_ADDRESS_VALIDATION_FAILED, ...action })).toEqual(expectedState);
   });
 
@@ -121,6 +134,7 @@ describe('AddressBook reducers', () => {
     const action = {
       type: SUCCESS_LOGOUT,
     };
+    // eslint-disable-next-line extra-rules/no-single-line-objects
     expect(reducer({ addresses: [], default: {} }, action)).toEqual({});
   });
 });

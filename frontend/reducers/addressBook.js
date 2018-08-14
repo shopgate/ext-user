@@ -1,6 +1,7 @@
-import { RECEIVE_USER, SUCCESS_LOGOUT } from '@shopgate/pwa-common/constants/ActionTypes';
+import { SUCCESS_LOGOUT } from '@shopgate/pwa-common/constants/ActionTypes';
 import config from '@shopgate/user/config';
 import {
+  USER_ADDRESSES_RECEIVED,
   SET_DEFAULT_ADDRESS,
   ADD_USER_ADDRESS_SUCCESS,
   UPDATE_USER_ADDRESS_SUCCESS,
@@ -21,8 +22,8 @@ const { splitDefaultAddressesByTags = [] } = config;
  */
 export default (state = {}, action) => {
   switch (action.type) {
-    case RECEIVE_USER: {
-      const { addresses } = action.user;
+    case USER_ADDRESSES_RECEIVED: {
+      const { addresses } = action;
 
       const defaultAddresses = {};
       splitDefaultAddressesByTags.forEach((tag) => {

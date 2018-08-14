@@ -3,7 +3,8 @@ import setViewLoading from '@shopgate/pwa-common/actions/view/setViewLoading';
 import createToast from '@shopgate/pwa-common/actions/toast/createToast';
 import unsetViewLoading from '@shopgate/pwa-common/actions/view/unsetViewLoading';
 import { getHistoryPathname } from '@shopgate/pwa-common/selectors/history';
-import getUser from '@shopgate/pwa-common/actions/user/getUser';
+import { userDidLogin$ } from '@shopgate/pwa-common/streams/user';
+import getAddresses from './../actions/getAddresses';
 import {
   userAddressAdd$,
   userAddressUpdate$,
@@ -49,7 +50,7 @@ export default (subscribe) => {
   // Return back to address book, when address is added/updated
   subscribe(userAddressChanged$, ({ dispatch, getState, action }) => {
     dispatch(unsetViewLoading(getHistoryPathname(getState())));
-    dispatch(getUser());
+    dispatch(getAddresses());
 
     if (!action.silent) {
       dispatch(goBackHistory());
@@ -61,6 +62,11 @@ export default (subscribe) => {
   // Address actions are released
   subscribe(userAddressIdle$, ({ dispatch, getState }) => {
     dispatch(unsetViewLoading(getHistoryPathname(getState())));
+  });
+
+  // Fetch user addresses after login
+  subscribe(userDidLogin$, ({ dispatch }) => {
+    dispatch(getAddresses());
   });
 
   // Dispatch action to backend to sync user selection

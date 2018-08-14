@@ -535,37 +535,37 @@ exports[`<AddressForm> should print validation errors inline 1`] = `
       className="css-1xnhj1e"
     >
       <Checkbox
-        className="css-ylsa3p"
+        className="css-1wg9tr1"
         errorText=""
-        key="default"
-        label="address.makeDefault.default"
-        name="default_default"
+        key="shipping"
+        label="address.makeDefault.shipping"
+        name="default_shipping"
         onChange={[Function]}
       >
         <FormElement
-          className="css-ylsa3p"
+          className="css-1wg9tr1"
           errorText=""
           hasPlaceholder={false}
           hasUnderline={false}
           hasValue={false}
-          htmlFor="default_default"
+          htmlFor="default_shipping"
           isFocused={false}
           label=""
           placeholder=""
         >
           <div
-            className="css-1vjh8yv css-ylsa3p"
+            className="css-1vjh8yv css-1wg9tr1"
           >
             <Label
               hasErrorMessage={false}
-              htmlFor="default_default"
+              htmlFor="default_shipping"
               isFloating={false}
               isFocused={false}
               label=""
             >
               <label
                 className="css-u7lqu6 css-1fekhao"
-                htmlFor="default_default"
+                htmlFor="default_shipping"
               >
                 <Translate
                   className=""
@@ -579,24 +579,24 @@ exports[`<AddressForm> should print validation errors inline 1`] = `
               </label>
             </Label>
             <Checkbox
-              checkedClassName="css-ylsa3p"
+              checkedClassName="css-1wg9tr1"
               defaultChecked={true}
               label={
                 <Translate
                   className="css-1lte32s"
                   params={Object {}}
-                  string="address.makeDefault.default"
+                  string="address.makeDefault.shipping"
                 />
               }
               labelPosition="right"
-              name="default_default"
+              name="default_shipping"
               onCheck={[Function]}
-              unCheckedClassName="css-ylsa3p"
+              unCheckedClassName="css-1wg9tr1"
             >
               <Checkbox
                 checkedIcon={
                   <Checked
-                    className="css-37nc4w css-ylsa3p"
+                    className="css-37nc4w css-1wg9tr1"
                   />
                 }
                 defaultChecked={true}
@@ -604,15 +604,15 @@ exports[`<AddressForm> should print validation errors inline 1`] = `
                   <Translate
                     className="css-1lte32s"
                     params={Object {}}
-                    string="address.makeDefault.default"
+                    string="address.makeDefault.shipping"
                   />
                 }
                 labelPosition="right"
-                name="default_default"
+                name="default_shipping"
                 onCheck={[Function]}
                 uncheckedIcon={
                   <Unchecked
-                    className="css-37nc4w css-ylsa3p"
+                    className="css-37nc4w css-1wg9tr1"
                   />
                 }
               >
@@ -620,22 +620,22 @@ exports[`<AddressForm> should print validation errors inline 1`] = `
                   onClick={[Function]}
                 >
                   <input
-                    name="default_default"
+                    name="default_shipping"
                     type="hidden"
                     value={0}
                   />
                   <Unchecked
-                    className="css-37nc4w css-ylsa3p"
+                    className="css-37nc4w css-1wg9tr1"
                   >
                     <Icon
-                      className="css-37nc4w css-ylsa3p"
+                      className="css-37nc4w css-1wg9tr1"
                       color={null}
                       content="<path d=\\"M19 5v14H5V5h14m0-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2z\\"/>"
                       size="inherit"
                       viewBox="0 0 24 24"
                     >
                       <svg
-                        className="css-yys9hb css-37nc4w css-ylsa3p"
+                        className="css-yys9hb css-37nc4w css-1wg9tr1"
                         dangerouslySetInnerHTML={
                           Object {
                             "__html": "<path d=\\"M19 5v14H5V5h14m0-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2z\\"/>",
@@ -655,12 +655,165 @@ exports[`<AddressForm> should print validation errors inline 1`] = `
                   <Translate
                     className="css-1lte32s"
                     params={Object {}}
-                    string="address.makeDefault.default"
+                    string="address.makeDefault.shipping"
                   >
                     <span
                       className="css-1lte32s"
                     >
-                      address.makeDefault.default
+                      address.makeDefault.shipping
+                    </span>
+                  </Translate>
+                </div>
+              </Checkbox>
+            </Checkbox>
+            <ErrorText
+              className={null}
+              errorText=""
+            >
+              <div
+                className=""
+              >
+                <Translate
+                  className=""
+                  params={Object {}}
+                  string=""
+                >
+                  <span
+                    className=""
+                  />
+                </Translate>
+              </div>
+            </ErrorText>
+          </div>
+        </FormElement>
+      </Checkbox>
+      <Checkbox
+        className="css-1wg9tr1"
+        errorText=""
+        key="billing"
+        label="address.makeDefault.billing"
+        name="default_billing"
+        onChange={[Function]}
+      >
+        <FormElement
+          className="css-1wg9tr1"
+          errorText=""
+          hasPlaceholder={false}
+          hasUnderline={false}
+          hasValue={false}
+          htmlFor="default_billing"
+          isFocused={false}
+          label=""
+          placeholder=""
+        >
+          <div
+            className="css-1vjh8yv css-1wg9tr1"
+          >
+            <Label
+              hasErrorMessage={false}
+              htmlFor="default_billing"
+              isFloating={false}
+              isFocused={false}
+              label=""
+            >
+              <label
+                className="css-u7lqu6 css-1fekhao"
+                htmlFor="default_billing"
+              >
+                <Translate
+                  className=""
+                  params={Object {}}
+                  string=""
+                >
+                  <span
+                    className=""
+                  />
+                </Translate>
+              </label>
+            </Label>
+            <Checkbox
+              checkedClassName="css-1wg9tr1"
+              defaultChecked={true}
+              label={
+                <Translate
+                  className="css-1lte32s"
+                  params={Object {}}
+                  string="address.makeDefault.billing"
+                />
+              }
+              labelPosition="right"
+              name="default_billing"
+              onCheck={[Function]}
+              unCheckedClassName="css-1wg9tr1"
+            >
+              <Checkbox
+                checkedIcon={
+                  <Checked
+                    className="css-37nc4w css-1wg9tr1"
+                  />
+                }
+                defaultChecked={true}
+                label={
+                  <Translate
+                    className="css-1lte32s"
+                    params={Object {}}
+                    string="address.makeDefault.billing"
+                  />
+                }
+                labelPosition="right"
+                name="default_billing"
+                onCheck={[Function]}
+                uncheckedIcon={
+                  <Unchecked
+                    className="css-37nc4w css-1wg9tr1"
+                  />
+                }
+              >
+                <div
+                  onClick={[Function]}
+                >
+                  <input
+                    name="default_billing"
+                    type="hidden"
+                    value={0}
+                  />
+                  <Unchecked
+                    className="css-37nc4w css-1wg9tr1"
+                  >
+                    <Icon
+                      className="css-37nc4w css-1wg9tr1"
+                      color={null}
+                      content="<path d=\\"M19 5v14H5V5h14m0-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2z\\"/>"
+                      size="inherit"
+                      viewBox="0 0 24 24"
+                    >
+                      <svg
+                        className="css-yys9hb css-37nc4w css-1wg9tr1"
+                        dangerouslySetInnerHTML={
+                          Object {
+                            "__html": "<path d=\\"M19 5v14H5V5h14m0-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2z\\"/>",
+                          }
+                        }
+                        style={
+                          Object {
+                            "fill": null,
+                            "fontSize": "inherit",
+                          }
+                        }
+                        viewBox="0 0 24 24"
+                        xmlns="http://www.w3.org/2000/svg"
+                      />
+                    </Icon>
+                  </Unchecked>
+                  <Translate
+                    className="css-1lte32s"
+                    params={Object {}}
+                    string="address.makeDefault.billing"
+                  >
+                    <span
+                      className="css-1lte32s"
+                    >
+                      address.makeDefault.billing
                     </span>
                   </Translate>
                 </div>
@@ -1291,37 +1444,37 @@ exports[`<AddressForm> should render only configured address fields 1`] = `
       className="css-1xnhj1e"
     >
       <Checkbox
-        className="css-ylsa3p"
+        className="css-1wg9tr1"
         errorText=""
-        key="default"
-        label="address.makeDefault.default"
-        name="default_default"
+        key="shipping"
+        label="address.makeDefault.shipping"
+        name="default_shipping"
         onChange={[Function]}
       >
         <FormElement
-          className="css-ylsa3p"
+          className="css-1wg9tr1"
           errorText=""
           hasPlaceholder={false}
           hasUnderline={false}
           hasValue={false}
-          htmlFor="default_default"
+          htmlFor="default_shipping"
           isFocused={false}
           label=""
           placeholder=""
         >
           <div
-            className="css-1vjh8yv css-ylsa3p"
+            className="css-1vjh8yv css-1wg9tr1"
           >
             <Label
               hasErrorMessage={false}
-              htmlFor="default_default"
+              htmlFor="default_shipping"
               isFloating={false}
               isFocused={false}
               label=""
             >
               <label
                 className="css-u7lqu6 css-1fekhao"
-                htmlFor="default_default"
+                htmlFor="default_shipping"
               >
                 <Translate
                   className=""
@@ -1335,24 +1488,24 @@ exports[`<AddressForm> should render only configured address fields 1`] = `
               </label>
             </Label>
             <Checkbox
-              checkedClassName="css-ylsa3p"
+              checkedClassName="css-1wg9tr1"
               defaultChecked={true}
               label={
                 <Translate
                   className="css-1lte32s"
                   params={Object {}}
-                  string="address.makeDefault.default"
+                  string="address.makeDefault.shipping"
                 />
               }
               labelPosition="right"
-              name="default_default"
+              name="default_shipping"
               onCheck={[Function]}
-              unCheckedClassName="css-ylsa3p"
+              unCheckedClassName="css-1wg9tr1"
             >
               <Checkbox
                 checkedIcon={
                   <Checked
-                    className="css-37nc4w css-ylsa3p"
+                    className="css-37nc4w css-1wg9tr1"
                   />
                 }
                 defaultChecked={true}
@@ -1360,15 +1513,15 @@ exports[`<AddressForm> should render only configured address fields 1`] = `
                   <Translate
                     className="css-1lte32s"
                     params={Object {}}
-                    string="address.makeDefault.default"
+                    string="address.makeDefault.shipping"
                   />
                 }
                 labelPosition="right"
-                name="default_default"
+                name="default_shipping"
                 onCheck={[Function]}
                 uncheckedIcon={
                   <Unchecked
-                    className="css-37nc4w css-ylsa3p"
+                    className="css-37nc4w css-1wg9tr1"
                   />
                 }
               >
@@ -1376,22 +1529,22 @@ exports[`<AddressForm> should render only configured address fields 1`] = `
                   onClick={[Function]}
                 >
                   <input
-                    name="default_default"
+                    name="default_shipping"
                     type="hidden"
                     value={0}
                   />
                   <Unchecked
-                    className="css-37nc4w css-ylsa3p"
+                    className="css-37nc4w css-1wg9tr1"
                   >
                     <Icon
-                      className="css-37nc4w css-ylsa3p"
+                      className="css-37nc4w css-1wg9tr1"
                       color={null}
                       content="<path d=\\"M19 5v14H5V5h14m0-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2z\\"/>"
                       size="inherit"
                       viewBox="0 0 24 24"
                     >
                       <svg
-                        className="css-yys9hb css-37nc4w css-ylsa3p"
+                        className="css-yys9hb css-37nc4w css-1wg9tr1"
                         dangerouslySetInnerHTML={
                           Object {
                             "__html": "<path d=\\"M19 5v14H5V5h14m0-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2z\\"/>",
@@ -1411,12 +1564,165 @@ exports[`<AddressForm> should render only configured address fields 1`] = `
                   <Translate
                     className="css-1lte32s"
                     params={Object {}}
-                    string="address.makeDefault.default"
+                    string="address.makeDefault.shipping"
                   >
                     <span
                       className="css-1lte32s"
                     >
-                      address.makeDefault.default
+                      address.makeDefault.shipping
+                    </span>
+                  </Translate>
+                </div>
+              </Checkbox>
+            </Checkbox>
+            <ErrorText
+              className={null}
+              errorText=""
+            >
+              <div
+                className=""
+              >
+                <Translate
+                  className=""
+                  params={Object {}}
+                  string=""
+                >
+                  <span
+                    className=""
+                  />
+                </Translate>
+              </div>
+            </ErrorText>
+          </div>
+        </FormElement>
+      </Checkbox>
+      <Checkbox
+        className="css-1wg9tr1"
+        errorText=""
+        key="billing"
+        label="address.makeDefault.billing"
+        name="default_billing"
+        onChange={[Function]}
+      >
+        <FormElement
+          className="css-1wg9tr1"
+          errorText=""
+          hasPlaceholder={false}
+          hasUnderline={false}
+          hasValue={false}
+          htmlFor="default_billing"
+          isFocused={false}
+          label=""
+          placeholder=""
+        >
+          <div
+            className="css-1vjh8yv css-1wg9tr1"
+          >
+            <Label
+              hasErrorMessage={false}
+              htmlFor="default_billing"
+              isFloating={false}
+              isFocused={false}
+              label=""
+            >
+              <label
+                className="css-u7lqu6 css-1fekhao"
+                htmlFor="default_billing"
+              >
+                <Translate
+                  className=""
+                  params={Object {}}
+                  string=""
+                >
+                  <span
+                    className=""
+                  />
+                </Translate>
+              </label>
+            </Label>
+            <Checkbox
+              checkedClassName="css-1wg9tr1"
+              defaultChecked={true}
+              label={
+                <Translate
+                  className="css-1lte32s"
+                  params={Object {}}
+                  string="address.makeDefault.billing"
+                />
+              }
+              labelPosition="right"
+              name="default_billing"
+              onCheck={[Function]}
+              unCheckedClassName="css-1wg9tr1"
+            >
+              <Checkbox
+                checkedIcon={
+                  <Checked
+                    className="css-37nc4w css-1wg9tr1"
+                  />
+                }
+                defaultChecked={true}
+                label={
+                  <Translate
+                    className="css-1lte32s"
+                    params={Object {}}
+                    string="address.makeDefault.billing"
+                  />
+                }
+                labelPosition="right"
+                name="default_billing"
+                onCheck={[Function]}
+                uncheckedIcon={
+                  <Unchecked
+                    className="css-37nc4w css-1wg9tr1"
+                  />
+                }
+              >
+                <div
+                  onClick={[Function]}
+                >
+                  <input
+                    name="default_billing"
+                    type="hidden"
+                    value={0}
+                  />
+                  <Unchecked
+                    className="css-37nc4w css-1wg9tr1"
+                  >
+                    <Icon
+                      className="css-37nc4w css-1wg9tr1"
+                      color={null}
+                      content="<path d=\\"M19 5v14H5V5h14m0-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2z\\"/>"
+                      size="inherit"
+                      viewBox="0 0 24 24"
+                    >
+                      <svg
+                        className="css-yys9hb css-37nc4w css-1wg9tr1"
+                        dangerouslySetInnerHTML={
+                          Object {
+                            "__html": "<path d=\\"M19 5v14H5V5h14m0-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2z\\"/>",
+                          }
+                        }
+                        style={
+                          Object {
+                            "fill": null,
+                            "fontSize": "inherit",
+                          }
+                        }
+                        viewBox="0 0 24 24"
+                        xmlns="http://www.w3.org/2000/svg"
+                      />
+                    </Icon>
+                  </Unchecked>
+                  <Translate
+                    className="css-1lte32s"
+                    params={Object {}}
+                    string="address.makeDefault.billing"
+                  >
+                    <span
+                      className="css-1lte32s"
+                    >
+                      address.makeDefault.billing
                     </span>
                   </Translate>
                 </div>

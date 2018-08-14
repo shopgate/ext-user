@@ -1,68 +1,61 @@
 const uuidv4 = require('uuid/v4')
-const {EACCESS, EINTERNAL, EEXISTS, createCustomError} = require('./../error')
+const UnauthorizedError = require('../common/Error/UnauthorizedError')
+const InternalError = require('./../common/Error/InternalError')
+const UserExistError = require('./../common/Error/UserExistError')
 const Password = require('./Password')
-/**
- * @typedef {Object} RegisterInputArgs
- * @property {string} mail
- * @property {string} password
- * @property {string} firstName
- * @property {string} lastName
- * @property {?string} gender
- * @property {?string} birthday
- * @property {?string} phone
- */
 
 /**
  * Validation and sanitation is done at previous step
  * @param {SDKContext} context
- * @param {RegisterInputArgs} input
- * @param {function} cb
+ * @param {ExtUser} input
+ * @return {Promise<{userId: string}>}
  */
-module.exports = (context, input, cb) => {
+module.exports = async (context, input) => {
   // forbid for logged in user
   if (context.meta.userId) {
-    return cb(createCustomError(EACCESS, 'User is logged in'))
+    throw new UnauthorizedError('User is logged in')
   }
 
-  context.storage.extension.get(input.mail, (errUserId, userId) => {
-    if (errUserId) {
-      context.log.warn(errUserId, 'Extension storage error')
-      return cb(createCustomError(EINTERNAL, 'Internal error'))
-    }
+  let existingUserId
+  try {
+    existingUserId = await context.storage.extension.get(input.mail)
+  } catch (err) {
+    context.log.warn(err, 'Extension storage error')
+    throw new InternalError()
+  }
 
-    // Already exists
-    if (userId) {
-      return cb(createCustomError(EEXISTS, 'User already exists'))
-    }
+  if (existingUserId) {
+    context.log.info(`User already exists with given email [${input.mail}]`)
+    throw new UserExistError()
+  }
 
-    const password = new Password(input.password)
-    const user = {
-      id: uuidv4(),
-      mail: input.mail,
-      password: password.password,
-      firstName: input.firstName,
-      lastName: input.lastName,
-      gender: input.gender || null, // optional
-      birthday: input.birthday || null,
-      phone: input.phone || null
-    }
+  const password = new Password(input.password)
+  const userId = uuidv4()
+  const user = {
+    id: userId,
+    mail: input.mail,
+    password: password.password,
+    firstName: input.firstName,
+    lastName: input.lastName
+  }
 
-    context.storage.extension.set(user.id, user, (err) => {
-      if (err) {
-        context.log.warn(err, 'Extension storage error')
-        return cb(createCustomError(EINTERNAL, 'Internal error'))
-      }
-      // Store meta key, pointing to our user via email for login process
-      context.storage.extension.set(input.mail, user.id, (err) => {
-        if (err) {
-          context.log.warn(err, 'Extension storage error')
-          return cb(createCustomError(EINTERNAL, 'Internal error'))
-        }
+  // Save user under id
+  try {
+    await context.storage.extension.set(user.id, user)
+  } catch (err) {
+    context.log.warn(err, 'Extension storage error')
+    throw new InternalError()
+  }
 
-        cb(null, {
-          userId: user.id
-        })
-      })
-    })
-  })
+  // Save reference email > user id
+  try {
+    await context.storage.extension.set(input.mail, user.id)
+  } catch (err) {
+    context.log.warn(err, 'Extension storage error')
+    throw new InternalError()
+  }
+
+  return {
+    userId
+  }
 }

@@ -7,11 +7,16 @@
       {"key": "sgxsMeta", "id": "100"},
       {"key": "mail", "id": "1001"},
       {"key": "password", "id": "1002"},
-      {"key": "firstName", "id": "1003"},
-      {"key": "lastName", "id": "1004"},
-      {"key": "gender", "id": "1005", "optional": true},
-      {"key": "birthday", "id": "1006", "optional": true},
-      {"key": "phone", "id": "1007", "optional": true}
+      {"key": "title", "id": "1003", "optional": true},
+      {"key": "prefix", "id": "1004", "optional": true},
+      {"key": "firstName", "id": "1005"},
+      {"key": "middleName", "id": "1006", "optional": true},
+      {"key": "lastName", "id": "1007"},
+      {"key": "suffix", "id": "1008", "optional": true},
+      {"key": "gender", "id": "1009", "optional": true},
+      {"key": "birthday", "id": "1010", "optional": true},
+      {"key": "phone", "id": "1011", "optional": true},
+      {"key": "customAttributes", "id": "1012", "optional": true}
     ],
     "output": [
       {"key": "userId", "id": "1000"}
@@ -24,20 +29,30 @@
         "input": [
           {"key": "mail", "id": "1001"},
           {"key": "password", "id": "1002"},
-          {"key": "firstName", "id": "1003"},
-          {"key": "lastName", "id": "1004"},
-          {"key": "gender", "id": "1005", "optional": true},
-          {"key": "birthday", "id": "1006", "optional": true},
-          {"key": "phone", "id": "1007", "optional": true}
+          {"key": "title", "id": "1003", "optional": true},
+          {"key": "prefix", "id": "1004", "optional": true},
+          {"key": "firstName", "id": "1005"},
+          {"key": "middleName", "id": "1006", "optional": true},
+          {"key": "lastName", "id": "1007"},
+          {"key": "suffix", "id": "1008", "optional": true},
+          {"key": "gender", "id": "1009", "optional": true},
+          {"key": "birthday", "id": "1010", "optional": true},
+          {"key": "phone", "id": "1011", "optional": true},
+          {"key": "customAttributes", "id": "1012", "optional": true}
         ],
         "output": [
           {"key": "mail", "id": "1001"},
           {"key": "password", "id": "1002"},
-          {"key": "firstName", "id": "1003"},
-          {"key": "lastName", "id": "1004"},
-          {"key": "gender", "id": "1005", "optional": true},
-          {"key": "birthday", "id": "1006", "optional": true},
-          {"key": "phone", "id": "1007", "optional": true}
+          {"key": "title", "id": "1003", "optional": true},
+          {"key": "prefix", "id": "1004", "optional": true},
+          {"key": "firstName", "id": "1005"},
+          {"key": "middleName", "id": "1006", "optional": true},
+          {"key": "lastName", "id": "1007"},
+          {"key": "suffix", "id": "1008", "optional": true},
+          {"key": "gender", "id": "1009", "optional": true},
+          {"key": "birthday", "id": "1010", "optional": true},
+          {"key": "phone", "id": "1011", "optional": true},
+          {"key": "customAttributes", "id": "1012", "optional": true}
         ]
       },
       {
@@ -47,11 +62,16 @@
         "input": [
           {"key": "mail", "id": "1001"},
           {"key": "password", "id": "1002"},
-          {"key": "firstName", "id": "1003"},
-          {"key": "lastName", "id": "1004"},
-          {"key": "gender", "id": "1005", "optional": true},
-          {"key": "birthday", "id": "1006", "optional": true},
-          {"key": "phone", "id": "1007", "optional": true}
+          {"key": "title", "id": "1003", "optional": true},
+          {"key": "prefix", "id": "1004", "optional": true},
+          {"key": "firstName", "id": "1005"},
+          {"key": "middleName", "id": "1006", "optional": true},
+          {"key": "lastName", "id": "1007"},
+          {"key": "suffix", "id": "1008", "optional": true},
+          {"key": "gender", "id": "1009", "optional": true},
+          {"key": "birthday", "id": "1010", "optional": true},
+          {"key": "phone", "id": "1011", "optional": true},
+          {"key": "customAttributes", "id": "1012", "optional": true}
         ],
         "output": [
           {"key": "userId", "id": "1000"}

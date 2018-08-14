@@ -1,12 +1,12 @@
 /**
  * @param {SDKContext} context
- * @param {{originalAddress: ExtUserAddress, updateAddress: Object}} input
+ * @param {{oldAddress: ExtUserAddress, newAddress: Object}} input
  * @return {Promise<{address: Object}>}
  */
-module.exports = async (context, {originalAddress, address: updateAddress}) => {
+module.exports = async (context, {oldAddress, ...newAddress}) => {
   const address = {
-    ...originalAddress,
-    ...updateAddress
+    ...oldAddress,
+    ...newAddress
   }
 
   // Remove duplicates
@@ -14,5 +14,5 @@ module.exports = async (context, {originalAddress, address: updateAddress}) => {
     tags.indexOf(tag) === index
   ))
 
-  return {address}
+  return address
 }

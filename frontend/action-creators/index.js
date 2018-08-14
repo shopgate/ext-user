@@ -1,6 +1,26 @@
 import * as types from './../constants/ActionTypes';
 
 /**
+ * Creates the dispatched USER_ADDRESSES_RECEIVED action object.
+ * @param {UserAddress[]} addresses address id
+ * @return {{type: string, addresses: UserAddress[]}}
+ */
+export const getUserAddressesSuccess = addresses => ({
+  type: types.USER_ADDRESSES_RECEIVED,
+  addresses,
+});
+
+/**
+ * Creates the dispatched USER_ADDRESSES_FAILED action object.
+ * @param {Object} error error
+ * @return {{type: string, error: Object}}
+ */
+export const getUserAddressesFailed = error => ({
+  type: types.USER_ADDRESSES_FAILED,
+  error,
+});
+
+/**
  * Creates the dispatched SET_DEFAULT_ADDRESS action object.
  * @param {string} addressId address id
  * @param {string} tag tag of address

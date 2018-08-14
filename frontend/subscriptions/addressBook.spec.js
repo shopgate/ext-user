@@ -23,7 +23,7 @@ describe('AddressBook subscriptions', () => {
   const userSetDefaultAddress$ = subscribe.mock.calls.pop();
 
   it('should subscribe to the streams', () => {
-    expect(subscribe.mock.calls.length).toEqual(6);
+    expect(subscribe.mock.calls.length).toEqual(7);
   });
 
   it('should toggle navigator controls when route is entered', () => {

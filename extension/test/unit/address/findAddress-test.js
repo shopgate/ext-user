@@ -29,7 +29,7 @@ describe('findUserAddress', () => {
     context.storage.user.get = () => [{...existingAddress, id}]
     try {
       // noinspection JSCheckFunctionSignatures
-      const actualAddress = await stepExecute(context, {address: {...existingAddress}})
+      const actualAddress = await stepExecute(context, {...existingAddress})
       assert.deepEqual(actualAddress, expectedAddress)
     } catch (stepError) {
       assert.ifError(stepError)
@@ -43,7 +43,7 @@ describe('findUserAddress', () => {
     context.storage.user.get = () => [{...existingAddress, id}]
     try {
       // noinspection JSCheckFunctionSignatures
-      const actualAddress = await stepExecute(context, {address: {...existingAddress, firstName: 'Johanna'}}) // a wife of John
+      const actualAddress = await stepExecute(context, {...existingAddress, firstName: 'Johanna'})
       assert.deepEqual(actualAddress, expectedAddress)
     } catch (stepError) {
       assert.ifError(stepError)

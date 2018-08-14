@@ -5,16 +5,14 @@ const joiErrorToValidationErrors = require('./../common/joiErrorToValidationErro
 
 /**
  * @param {SDKContext} context
- * @param {{address: ExtUserAddress}} input
+ * @param {ExtUserAddress} address
  * @return {Promise<{address: Object}>}
  */
-module.exports = async (context, { address }) => {
+module.exports = async (context, address) => {
   let validationResult = userAddressSchema.validate(address)
   if (validationResult.error) {
     throw new ValidationError(joiErrorToValidationErrors(validationResult.error))
   }
 
-  return {
-    address: validationResult.value
-  }
+  return validationResult.value
 }

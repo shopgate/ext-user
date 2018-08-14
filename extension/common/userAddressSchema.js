@@ -10,6 +10,7 @@ const phoneExpr = /^[0-9+()\s]+$/
  */
 module.exports = joi => (
   joi.object().keys({
+    title: joi.string().trim().regex(defaultAlphaExpr).optional().allow(['']).max(20),
     prefix: joi.string().trim().regex(defaultAlphaExpr).optional().allow(['']).max(20),
     firstName: joi.string().trim().regex(defaultAlphaExpr).required().min(1).max(100),
     middleName: joi.string().trim().regex(defaultAlphaExpr).optional().allow(['']).max(100),
