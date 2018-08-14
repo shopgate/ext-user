@@ -8,10 +8,10 @@ const NotFoundError = require('./../common/Error/NotFoundError')
  * @return {Promise<>}
  */
 module.exports = async (context, input) => {
-  if (!input.ids) {
-    context.log.error('Mandatory property "ids" is not set!')
+  if (!Array.isArray(input.ids) || input.ids.length <= 0) {
+    context.log.error('The "ids" property should be a non empty array!')
     throw new InvalidCallError(
-      'Invalid pipeline call: The mandatory property "ids" was not provided!'
+      'Invalid pipeline call: The property "ids" should be a non empty array!'
     )
   }
 
