@@ -2,7 +2,7 @@ import { connect } from 'react-redux';
 import joi from 'joi-browser';
 import addAddress from '@shopgate/user/actions/addAddress';
 import updateAddress from '@shopgate/user/actions/updateAddress';
-import { deleteAddresses } from '@shopgate/user/action-creators';
+import { deleteUserAddresses } from '@shopgate/user/action-creators';
 import { isBusy, getValidationErrors } from '@shopgate/user/selectors/addressBook';
 import { joiToValidationErrors, validationErrorsToMap } from './../../common/transform';
 import userAddressSchema from './../../common/userAddressSchema';
@@ -46,7 +46,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   addAddress: address => dispatch(addAddress(address)),
   updateAddress: address => dispatch(updateAddress(address)),
-  deleteAddress: addressId => dispatch(deleteAddresses([addressId])),
+  deleteAddress: addressId => dispatch(deleteUserAddresses([addressId])),
   validateAddress,
 });
 

@@ -17,7 +17,7 @@ export const setDefaultAddress = (addressId, tag = 'default') => ({
  * @param {string[]} addressIds list of address ids
  * @return {{type: string, addressIds: string[]}}
  */
-export const deleteAddresses = addressIds => ({
+export const deleteUserAddresses = addressIds => ({
   type: types.DELETE_USER_ADDRESSES,
   addressIds,
 });

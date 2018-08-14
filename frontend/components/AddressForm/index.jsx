@@ -110,7 +110,7 @@ export class AddressForm extends Component {
    * Did mount
    */
   componentDidMount() {
-    EventEmitter.on(NAVIGATOR_USER_ADDRESS_BUTTON_CLICK, this.saveAddress);
+    EventEmitter.on(NAVIGATOR_USER_ADDRESS_BUTTON_CLICK, this.addAddress);
   }
 
   /**
@@ -135,7 +135,7 @@ export class AddressForm extends Component {
    * Will unmount
    */
   componentWillUnmount() {
-    EventEmitter.off(NAVIGATOR_USER_ADDRESS_BUTTON_CLICK, this.saveAddress);
+    EventEmitter.off(NAVIGATOR_USER_ADDRESS_BUTTON_CLICK, this.addAddress);
     EventEmitter.emit(NAVIGATOR_USER_ADDRESS_BUTTON_HIDE);
   }
 
@@ -226,7 +226,7 @@ export class AddressForm extends Component {
     }
   }
 
-  saveAddress = () => {
+  addAddress = () => {
     const errors = this.props.validateAddress(this.state.address);
     this.setState({
       inlineValidation: true,
@@ -331,6 +331,7 @@ export class AddressForm extends Component {
                 onClick={this.deleteAddress}
                 flat
                 wrapContent={false}
+                data-test-id="deleteAddressButton"
               >
                 <I18n.Text string="address.delete.button" />
               </Button>
@@ -354,8 +355,8 @@ export class AddressForm extends Component {
                   <RippleButton
                     type="secondary"
                     disabled={this.props.disabled}
-                    onClick={this.saveAddress}
-                    className={style.saveAddressButton}
+                    onClick={this.addAddress}
+                    className={style.addAddressButton}
                     data-test-id="AddAddressButton"
                   >
                     <I18n.Text string="address.add.button" />
