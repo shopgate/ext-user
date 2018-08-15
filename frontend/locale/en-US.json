@@ -73,13 +73,20 @@
       "title": "Update address",
       "button": "Save"
     },
+    "delete": {
+      "button": "Delete",
+      "confirmationDialog": {
+        "title": "Delete address",
+        "message": "Do you really want to delete this address?"
+      },
+      "successMessage": "The address has been removed"
+    },
     "makeDefault": {
       "default": "Make this your default address",
       "shipping": "Make this your default shipping address",
       "billing": "Make this your default billing address"
     },
-    "validationFailedToastMessage": "Please check your fields",
-    "delete": "Delete address"
+    "validationFailedToastMessage": "Please check your fields"
   },
   "checkout": {
     "shipping": {

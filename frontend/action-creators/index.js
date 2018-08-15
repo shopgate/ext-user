@@ -13,6 +13,16 @@ export const setDefaultAddress = (addressId, tag = 'default') => ({
 });
 
 /**
+ * Creates the dispatched DELETE_ADDRESSES action object.
+ * @param {string[]} addressIds list of address ids
+ * @return {{type: string, addressIds: string[]}}
+ */
+export const deleteUserAddresses = addressIds => ({
+  type: types.DELETE_USER_ADDRESSES,
+  addressIds,
+});
+
+/**
  * Creates the dispatched ADD_USER_ADDRESS action object.
  * @returns {Object} The dispatched action object.
  */
@@ -65,7 +75,7 @@ export const updateUserAddressSuccess = (address, silent) => ({
 /**
  * Creates the dispatched UPDATE_USER_ADDRESS_SUCCESS action object.
  * @param {Object} error error
- * @param {boolean} silent silent
+ * @param {boolean} silent suppresses the info when true
  * @returns {Object} The dispatched action object.
  */
 export const updateUserAddressFailed = (error, silent = false) => ({
@@ -101,4 +111,30 @@ export const toggleNavigatorCart = active => ({
  */
 export const toggleNavigatorSearch = value => ({
   type: value ? 'SET_SEARCH_ENABLED' : 'SET_SEARCH_DISABLED',
+});
+
+/**
+ * Creates the dispatched DELETE_USER_ADDRESSES_CONFIRMED action object.
+ * @returns {Object} The dispatched action object.
+ */
+export const deleteUserAddressesConfirmed = () => ({
+  type: types.DELETE_USER_ADDRESSES_CONFIRMED,
+});
+
+/**
+ * Creates the dispatched DELETE_USER_ADDRESS_SUCCESS action object.
+ * @returns {Object} The dispatched action object.
+ */
+export const deleteUserAddressesSuccess = () => ({
+  type: types.DELETE_USER_ADDRESSES_SUCCESS,
+});
+
+/**
+ * Creates the dispatched DELETE_USER_ADDRESS_FAILED action object.
+ * @param {Object} error error
+ * @returns {Object} The dispatched action object.
+ */
+export const deleteUserAddressesFailed = error => ({
+  type: types.DELETE_USER_ADDRESSES_FAILED,
+  error,
 });

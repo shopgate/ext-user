@@ -24,13 +24,13 @@ const defaults = css({
   },
 }).toString();
 
-const deleteAddress = css({
-  color: colors.accent,
+const deleteAddressButton = css({
   textTransform: !isIos ? 'uppercase' : 'inherit',
   fontWeight: !isIos ? 500 : 'normal',
+  ...variables.buttonBase,
 }).toString();
 
-const button = css({
+const addAddressButton = css({
   width: '100%',
   marginTop: variables.gap.big,
 }).toString();
@@ -39,6 +39,6 @@ export default {
   fields,
   defaults,
   options,
-  button,
-  deleteAddress,
+  addAddressButton,
+  deleteAddressButton,
 };

@@ -1,5 +1,6 @@
 import goBackHistory from '@shopgate/pwa-common/actions/history/goBackHistory';
 import setViewLoading from '@shopgate/pwa-common/actions/view/setViewLoading';
+import showModal from '@shopgate/pwa-common/actions/modal/showModal';
 import createToast from '@shopgate/pwa-common/actions/toast/createToast';
 import unsetViewLoading from '@shopgate/pwa-common/actions/view/unsetViewLoading';
 import { getHistoryPathname } from '@shopgate/pwa-common/selectors/history';
@@ -7,6 +8,9 @@ import getUser from '@shopgate/pwa-common/actions/user/getUser';
 import {
   userAddressAdd$,
   userAddressUpdate$,
+  userAddressesDelete$,
+  userAddressesDeleteConfirmed$,
+  userAddressesDeleted$,
   userSetDefaultAddress$,
   userAddressValidationFailed$,
   addressBookDidEnter$,
@@ -14,14 +18,17 @@ import {
   userAddressChanged$,
   userAddressFailed$,
 } from './../streams';
-import { toggleNavigatorSearch, toggleNavigatorCart } from '../action-creators';
+import { deleteUserAddressesConfirmed, toggleNavigatorSearch, toggleNavigatorCart } from '../action-creators';
 import { getUserAddressIdSelector } from './../selectors/addressBook';
 import updateAddress from './../actions/updateAddress';
+import deleteAddresses from './../actions/deleteAddresses';
 import EventEmitter from './../events/emitter';
 import { NAVIGATOR_USER_ADDRESS_BUTTON_HIDE } from './../constants/EventTypes';
 
 export default (subscribe) => {
-  const userAddressBusy$ = userAddressAdd$.merge(userAddressUpdate$);
+  const userAddressBusy$ = userAddressAdd$
+    .merge(userAddressUpdate$)
+    .merge(userAddressesDeleteConfirmed$);
   const userAddressIdle$ = userAddressChanged$.merge(userAddressFailed$);
 
   // Hide search and cart buttons in navigator when address book is opened.
@@ -49,13 +56,15 @@ export default (subscribe) => {
   // Return back to address book, when address is added/updated
   subscribe(userAddressChanged$, ({ dispatch, getState, action }) => {
     dispatch(unsetViewLoading(getHistoryPathname(getState())));
-    dispatch(getUser());
 
-    if (!action.silent) {
-      dispatch(goBackHistory());
+    // Wait for getUser action to finish before continuing to avoid changing view
+    dispatch(getUser()).then(() => {
+      if (!action.silent) {
+        dispatch(goBackHistory());
 
-      EventEmitter.emit(NAVIGATOR_USER_ADDRESS_BUTTON_HIDE);
-    }
+        EventEmitter.emit(NAVIGATOR_USER_ADDRESS_BUTTON_HIDE);
+      }
+    });
   });
 
   // Address actions are released
@@ -81,5 +90,27 @@ export default (subscribe) => {
 
     addressClone.tags.push(defTag);
     dispatch(updateAddress(addressClone, true));
+  });
+
+  // Dispatch action to backend to delete the given addresses after successful confirmation
+  subscribe(userAddressesDelete$, ({ dispatch, action }) => {
+    const { addressIds } = action;
+
+    dispatch(showModal({
+      confirm: 'address.delete.button',
+      dismiss: 'modal.dismiss',
+      title: 'address.delete.confirmationDialog.title',
+      message: 'address.delete.confirmationDialog.message',
+    })).then((confirmed) => {
+      if (confirmed) {
+        dispatch(deleteUserAddressesConfirmed());
+        dispatch(deleteAddresses(addressIds));
+      }
+    });
+  });
+
+  // Dispatch action to show a toast message after the deletion was successfully performed
+  subscribe(userAddressesDeleted$, ({ dispatch }) => {
+    dispatch(createToast({ message: 'address.delete.successMessage' }));
   });
 };
