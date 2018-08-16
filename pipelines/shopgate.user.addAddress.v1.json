@@ -4,14 +4,22 @@
     "id": "shopgate.user.addAddress.v1",
     "public": true,
     "input": [
-      {"key": "address", "id": "1"}
+      {"key": "firstName", "id": "102"},
+      {"key": "lastName", "id": "104"},
+      {"key": "street1", "id": "108"},
+      {"key": "street2", "id": "109", "optional": true},
+      {"key": "zipCode", "id": "110"},
+      {"key": "city", "id": "111"},
+      {"key": "province", "id": "112", "optional": true},
+      {"key": "country", "id": "113"},
+      {"key": "tags", "id": "114", "optional": true},
+      {"key": "customAttributes", "id": "115", "optional": true}
     ],
     "output": [
-      {"key": "id", "id": "20"}
+      {"key": "addressId", "id": "200"}
     ],
     "steps": [
       {
-        "_comment": "Only logged in users can have saved addresses.",
         "type": "extension",
         "id": "@shopgate/user",
         "path": "@shopgate/user/user/checkLoginStatus.js",
@@ -23,10 +31,28 @@
         "id": "@shopgate/user",
         "path": "@shopgate/user/address/validateAddress.js",
         "input": [
-          {"key": "address", "id": "1"}
+          {"key": "firstName", "id": "102"},
+          {"key": "lastName", "id": "104"},
+          {"key": "street1", "id": "108"},
+          {"key": "street2", "id": "109", "optional": true},
+          {"key": "zipCode", "id": "110"},
+          {"key": "city", "id": "111"},
+          {"key": "province", "id": "112", "optional": true},
+          {"key": "country", "id": "113"},
+          {"key": "tags", "id": "114", "optional": true},
+          {"key": "customAttributes", "id": "115", "optional": true}
         ],
         "output": [
-          {"key": "address", "id": "10"}
+          {"key": "firstName", "id": "102"},
+          {"key": "lastName", "id": "104"},
+          {"key": "street1", "id": "108"},
+          {"key": "street2", "id": "109", "optional": true},
+          {"key": "zipCode", "id": "110"},
+          {"key": "city", "id": "111"},
+          {"key": "province", "id": "112", "optional": true},
+          {"key": "country", "id": "113"},
+          {"key": "tags", "id": "114", "optional": true},
+          {"key": "customAttributes", "id": "115", "optional": true}
         ]
       },
       {
@@ -34,27 +60,40 @@
         "id": "@shopgate/user",
         "path": "@shopgate/user/address/findAddress.js",
         "input": [
-          {"key": "address", "id": "10"}
+          {"key": "firstName", "id": "102"},
+          {"key": "lastName", "id": "104"},
+          {"key": "street1", "id": "108"},
+          {"key": "city", "id": "111"},
+          {"key": "country", "id": "113"}
         ],
         "output": [
-          {"key": "id", "id": "20"}
+          {"key": "id", "id": "200"}
         ]
       },
       {
         "type": "conditional",
         "input": [
-          {"key": "id", "id": "20"}
+          {"key": "addressId", "id": "200"}
         ],
-        "expression": {"null": [{"name": "id"}]},
+        "expression": {"null": [{"name": "addressId"}]},
         "then": {
           "type": "extension",
           "id": "@shopgate/user",
           "path": "@shopgate/user/address/addAddress.js",
           "input": [
-            {"key": "address", "id": "10"}
+            {"key": "firstName", "id": "102"},
+            {"key": "lastName", "id": "104"},
+            {"key": "street1", "id": "108"},
+            {"key": "street2", "id": "109", "optional": true},
+            {"key": "zipCode", "id": "110"},
+            {"key": "city", "id": "111"},
+            {"key": "province", "id": "112", "optional": true},
+            {"key": "country", "id": "113"},
+            {"key": "tags", "id": "114", "optional": true},
+            {"key": "customAttributes", "id": "115", "optional": true}
           ],
           "output": [
-            {"key": "id", "id": "20"}
+            {"key": "id", "id": "200"}
           ]
         }
       }

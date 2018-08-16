@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react';
 import { App } from '@shopgate/pwa-common/context';
-import Title from '../Title';
-import Address from '../Address';
+import Title from './../../../components/Title';
+import Address from './../../../components/Address';
 import style from './style';
 
 /**

@@ -12,7 +12,7 @@ export default (address, silent = false) => (dispatch) => {
 
   new PipelineRequest(PIPELINE_UPDATE_ADDRESS)
     .setTrusted()
-    .setInput({ address })
+    .setInput(address)
     .dispatch()
     .then(() => {
       dispatch(updateUserAddressSuccess(address, silent));

@@ -3,7 +3,7 @@ import { mount } from 'enzyme';
 import { AddressForm } from './';
 
 jest.mock('@shopgate/user/config', () => ({
-  splitDefaultAddressesByTags: ['default'],
+  splitDefaultAddressesByTags: ['shipping', 'billing'],
   addressFields: ['firstName', 'lastName', 'phone'],
   countryCodes: 'DE',
 }));

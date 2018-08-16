@@ -3,10 +3,10 @@ const NotFoundError = require('./../common/Error/NotFoundError')
 
 /**
  * @param {SDKContext} context
- * @param {{updateAddress: {id: string}}} input address id
+ * @param {{id: string}} input address id
  * @return {Promise<{address: ExtUserAddress}>}
  */
-module.exports = async (context, { updateAddress: { id: addressId } }) => {
+module.exports = async (context, { id: addressId }) => {
   let addresses
   try {
     addresses = (await context.storage.user.get('addresses')) || []

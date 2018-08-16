@@ -24,6 +24,7 @@
 /**
  * @typedef {Object} UserAddress
  * @property {string} id
+ * @property {string} title
  * @property {string} prefix
  * @property {string} firstName
  * @property {string} middleName

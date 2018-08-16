@@ -11,7 +11,7 @@ export default address => (dispatch) => {
 
   new PipelineRequest(PIPELINE_ADD_ADDRESS)
     .setTrusted()
-    .setInput({ address })
+    .setInput(address)
     .dispatch()
     .then(({ addressId }) => {
       dispatch(addUserAddressSuccess({

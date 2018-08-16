@@ -1,38 +1,17 @@
 const Joi = require('joi')
 const ValidationError = require('./../common/Error/ValidationError')
 const userSchema = require('./../common/userSchema')(Joi)
-
-/**
- * @typedef {Object} RegisterInputArgs
- * @property {string} mail
- * @property {string} password
- * @property {string} firstName
- * @property {string} lastName
- * @property {?string} gender
- * @property {?string} birthday
- * @property {?string} phone
- */
+const joiErrorToValidationErrors = require('./../common/joiErrorToValidationErrors')
 
 /**
  * @param {SDKContext} context
- * @param {RegisterInputArgs} input
+ * @param {Object} user
  * @return {Promise<Object>}
  */
-module.exports = async (context, input) => {
-  const user = {
-    mail: input.mail.trim(),
-    password: input.password.trim(),
-    firstName: input.firstName.trim(),
-    lastName: input.lastName.trim(),
-    gender: input.gender,
-    birthday: input.birthday,
-    phone: input.phone ? input.phone.trim() : input.phone
-  }
-
-  // Validation
-  let validationResult = Joi.validate(user, userSchema)
+module.exports = async (context, user) => {
+  let validationResult = userSchema.validate(user)
   if (validationResult.error) {
-    throw new ValidationError(validationResult.error.details[0].message)
+    throw new ValidationError(joiErrorToValidationErrors(validationResult.error))
   }
-  return user
+  return validationResult.value
 }

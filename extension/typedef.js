@@ -46,17 +46,18 @@
 /**
  * @typedef {Object} ExtUser
  * @property {string} id
- * @property {string} prefix
+ * @property {string|undefined} title
+ * @property {string|undefined} prefix
  * @property {string} firstName
- * @property {string} middleName
+ * @property {string|undefined} middleName
  * @property {string} lastName
- * @property {string} suffix
+ * @property {string|undefined} suffix
  * @property {string} mail
- * @property {string} gender male|female
- * @property {string} phone
- * @property {string} birthday YYYY-MM-DD
+ * @property {string} password
+ * @property {string|undefined} gender male|female
+ * @property {string|undefined} phone
+ * @property {string|undefined} birthday YYYY-MM-DD
  * @property {ExtUserGroup[]} userGroups
- * @property {ExtUserAddress[]} addresses
  * @property {Object} customAttributes key value attributes
  */
 
@@ -69,12 +70,13 @@
 /**
  * @typedef {Object} ExtUserAddress
  * @property {string} id
- * @property {string} prefix
+ * @property {string|undefined} title
+ * @property {string|undefined} prefix
  * @property {string} firstName
- * @property {string} middleName
+ * @property {string|undefined} middleName
  * @property {string} lastName
- * @property {string} suffix
- * @property {string} phone
+ * @property {string|undefined} suffix
+ * @property {string|undefined} phone
  * @property {string} company
  * @property {string} street1
  * @property {string} street2

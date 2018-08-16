@@ -3,10 +3,10 @@ const InternalError = require('./../common/Error/InternalError')
 
 /**
  * @param {SDKContext} context
- * @param {{address: ExtUserAddress}} input
+ * @param {ExtUserAddress} address
  * @return {Promise<{id: ?string}>}
  */
-module.exports = async (context, { address }) => {
+module.exports = async (context, address) => {
   let addresses
   try {
     addresses = (await context.storage.user.get('addresses')) || []

@@ -7,10 +7,7 @@ describe('validateUser', () => {
     mail: 'john@doe.com ', // with whitespaces
     password: 'qwerty88 ',
     firstName: 'John ',
-    lastName: 'Doe ',
-    gender: 'male',
-    birthday: '01-01-1970',
-    phone: '+11230000001 '
+    lastName: 'Doe '
   }
 
   it('Should normalize, validate and return normalized user data', async () => {
@@ -19,9 +16,7 @@ describe('validateUser', () => {
       password: 'qwerty88',
       firstName: 'John',
       lastName: 'Doe',
-      gender: 'male',
-      birthday: '01-01-1970',
-      phone: '+11230000001'
+      customAttributes: {}
     }
     try {
       // noinspection JSCheckFunctionSignatures
@@ -33,9 +28,10 @@ describe('validateUser', () => {
   })
 
   it('Should throw error on user email validation', async () => {
-    const invalidUser = Object.assign(validUser, {
+    const invalidUser = {
+      ...validUser,
       mail: 'not email string'
-    })
+    }
     try {
       // noinspection JSCheckFunctionSignatures
       await executeStep({}, {...invalidUser})

@@ -1,81 +1,82 @@
 const assert = require('assert')
-const registerUser = require('../../../user/registerUser')
-const {EACCESS, EEXISTS} = require('../../../error')
+const executeStep = require('../../../user/registerUser')
+const UserExistError = require('../../../common/Error/UserExistError')
+const UnauthorizedError = require('../../../common/Error/UnauthorizedError')
 
 describe('registerUser', () => {
-  const context = {
-    meta: {
-      userId: null
-    },
-    storage: {
-      extension: {
-        set: (key, cb) => cb() // noop
-      }
-    }
-  }
-
   const user = {
     mail: 'john@doe.com',
     password: 'qwerty88',
     firstName: 'John',
-    lastName: 'Doe',
-    gender: 'male',
-    birthday: '01-01-19710',
-    phone: '+11230000001'
+    lastName: 'Doe'
   }
 
-  it('Should register user', (done) => {
-    let userId = null
-    context.storage.extension.get = (keyEmail, cb) => {
-      cb()
+  let context
+
+  beforeEach(() => {
+    context = {
+      log: {
+        warn: () => null,
+        info: () => null
+      },
+      meta: {
+        userId: null
+      },
+      storage: {
+        extension: {
+          get: () => null,
+          set: () => null
+        }
+      }
     }
-    context.storage.extension.set = (keyUserId, userInfo, cb) => {
+  })
+
+  it('Should register user', async () => {
+    let userId = null
+    context.storage.extension.set = (keyUserId, userInfo) => {
       assert(keyUserId) // UUID
       assert.equal(userInfo.id, keyUserId)
       userId = keyUserId
-
-      context.storage.extension.set = (keyEmail, argUserId, cb) => {
+      context.storage.extension.set = (keyEmail, argUserId) => {
         assert.equal(keyEmail, user.mail)
         assert.equal(argUserId, userId)
-        cb(null, {
-          userId: userId
-        })
+        return userId
       }
-
-      cb()
     }
-
-    // noinspection JSCheckFunctionSignatures
-    registerUser(context, user, (err, result) => {
-      assert.ifError(err)
+    try {
+      // noinspection JSCheckFunctionSignatures
+      const result = await executeStep(context, {...user})
       assert.equal(result.userId, userId)
-      done()
-    })
+    } catch (stepError) {
+      assert.ifError(stepError)
+    }
   })
 
-  it('Should return error when user already exists', (done) => {
-    context.storage.extension.get = (keyEmail, cb) => {
-      cb(null, 'iuib-sjdbsjd-0knskd')
-    }
+  it('Should return error when user already exists', async () => {
+    context.storage.extension.get = () => 'iuib-sjdbsjd-0knskd'
     context.storage.extension.set = () => {
       // should not be called
       assert.fail()
     }
-
-    // noinspection JSCheckFunctionSignatures
-    registerUser(context, user, (err) => {
-      assert.equal(err.code, EEXISTS)
-      done()
-    })
+    let stepError
+    try {
+      // noinspection JSCheckFunctionSignatures
+      await executeStep(context, {...user})
+    } catch (err) {
+      stepError = err
+    }
+    assert(stepError instanceof UserExistError)
   })
 
-  it('Should return error when user is logged in', (done) => {
+  it('Should return error when user is logged in', async () => {
     context.meta.userId = 'iuib-sjdbsjd-0knskd'
-
-    // noinspection JSCheckFunctionSignatures
-    registerUser(context, user, (err) => {
-      assert.equal(err.code, EACCESS)
-      done()
-    })
+    let stepError
+    try {
+      // noinspection JSCheckFunctionSignatures
+      await executeStep(context, {...user})
+    } catch (err) {
+      stepError = err
+    }
+    assert(stepError instanceof UnauthorizedError)
   })
 })

@@ -4,7 +4,17 @@
     "id": "shopgate.user.updateAddress.v1",
     "public": true,
     "input": [
-      {"key": "address", "id": "1"}
+      {"key": "id", "id": "10"},
+      {"key": "firstName", "id": "102"},
+      {"key": "lastName", "id": "104"},
+      {"key": "street1", "id": "108"},
+      {"key": "street2", "id": "109", "optional": true},
+      {"key": "zipCode", "id": "110"},
+      {"key": "city", "id": "111"},
+      {"key": "province", "id": "112", "optional": true},
+      {"key": "country", "id": "113"},
+      {"key": "tags", "id": "114", "optional": true},
+      {"key": "customAttributes", "id": "115", "optional": true}
     ],
     "output": [],
     "steps": [
@@ -20,7 +30,7 @@
         "id": "@shopgate/user",
         "path": "@shopgate/user/address/getAddress.js",
         "input": [
-          {"key": "updateAddress", "id": "1"}
+          {"key": "id", "id": "10"}
         ],
         "output": [
           {"key": "address", "id": "20"}
@@ -31,11 +41,29 @@
         "id": "@shopgate/user",
         "path": "@shopgate/user/address/patchAddress.js",
         "input": [
-          {"key": "originalAddress", "id": "20"},
-          {"key": "address", "id": "1"}
+          {"key": "firstName", "id": "102"},
+          {"key": "lastName", "id": "104"},
+          {"key": "street1", "id": "108"},
+          {"key": "street2", "id": "109", "optional": true},
+          {"key": "zipCode", "id": "110"},
+          {"key": "city", "id": "111"},
+          {"key": "province", "id": "112", "optional": true},
+          {"key": "country", "id": "113"},
+          {"key": "tags", "id": "114", "optional": true},
+          {"key": "customAttributes", "id": "115", "optional": true},
+          {"key": "oldAddress", "id": "20"}
         ],
         "output": [
-          {"key": "address", "id": "30"}
+          {"key": "firstName", "id": "102"},
+          {"key": "lastName", "id": "104"},
+          {"key": "street1", "id": "108"},
+          {"key": "street2", "id": "109", "optional": true},
+          {"key": "zipCode", "id": "110"},
+          {"key": "city", "id": "111"},
+          {"key": "province", "id": "112", "optional": true},
+          {"key": "country", "id": "113"},
+          {"key": "tags", "id": "114", "optional": true},
+          {"key": "customAttributes", "id": "115", "optional": true}
         ]
       },
       {
@@ -43,10 +71,28 @@
         "id": "@shopgate/user",
         "path": "@shopgate/user/address/validateAddress.js",
         "input": [
-          {"key": "address", "id": "30"}
+          {"key": "firstName", "id": "102"},
+          {"key": "lastName", "id": "104"},
+          {"key": "street1", "id": "108"},
+          {"key": "street2", "id": "109", "optional": true},
+          {"key": "zipCode", "id": "110"},
+          {"key": "city", "id": "111"},
+          {"key": "province", "id": "112", "optional": true},
+          {"key": "country", "id": "113"},
+          {"key": "tags", "id": "114", "optional": true},
+          {"key": "customAttributes", "id": "115", "optional": true}
         ],
         "output": [
-          {"key": "address", "id": "30"}
+          {"key": "firstName", "id": "102"},
+          {"key": "lastName", "id": "104"},
+          {"key": "street1", "id": "108"},
+          {"key": "street2", "id": "109", "optional": true},
+          {"key": "zipCode", "id": "110"},
+          {"key": "city", "id": "111"},
+          {"key": "province", "id": "112", "optional": true},
+          {"key": "country", "id": "113"},
+          {"key": "tags", "id": "114", "optional": true},
+          {"key": "customAttributes", "id": "115", "optional": true}
         ]
       },
       {
@@ -54,7 +100,17 @@
         "id": "@shopgate/user",
         "path": "@shopgate/user/address/updateAddress.js",
         "input": [
-          {"key": "address", "id": "30"}
+          {"key": "id", "id": "10"},
+          {"key": "firstName", "id": "102"},
+          {"key": "lastName", "id": "104"},
+          {"key": "street1", "id": "108"},
+          {"key": "street2", "id": "109", "optional": true},
+          {"key": "zipCode", "id": "110"},
+          {"key": "city", "id": "111"},
+          {"key": "province", "id": "112", "optional": true},
+          {"key": "country", "id": "113"},
+          {"key": "tags", "id": "114", "optional": true},
+          {"key": "customAttributes", "id": "115", "optional": true}
         ],
         "output": []
       }

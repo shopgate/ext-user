@@ -13,8 +13,8 @@
         "input": [],
         "output": [
           {"key": "mail", "id": "1"},
-          {"key": "gender", "id": "2"},
-          {"key": "birthday", "id": "3"}
+          {"key": "gender", "id": "2", "optional": true},
+          {"key": "birthday", "id": "3", "optional": true}
         ]
       },
       {
@@ -23,8 +23,8 @@
         "path": "@shopgate/user/event/getEventData.js",
         "input": [
           {"key": "mail", "id": "1"},
-          {"key": "gender", "id": "2"},
-          {"key": "birthday", "id": "3"}
+          {"key": "gender", "id": "2", "optional": true},
+          {"key": "birthday", "id": "3", "optional": true}
         ],
         "output": [
           {"key": "eventData", "id": "4"}
