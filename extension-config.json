@@ -23,10 +23,7 @@
       "default": ["shipping", "billing"],
       "params": {
         "type": "json",
-        "label": {
-          "en": "Default addresses",
-          "de": "Standard-Adressen"
-        },
+        "label": "Default addresses",
         "required": true,
         "options": {
           "placeholder": "[\"shipping\", \"billing\"]"

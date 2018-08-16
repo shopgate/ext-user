@@ -12,8 +12,5 @@ module.exports = joi => (
       .max(100),
     lastName: joi.string().regex(/^[^[0-9!<>,;?=+()@#"°{}_$%:]*$/).required().min(1)
       .max(100),
-    gender: joi.string().valid(['female', 'male']),
-    birthday: joi.date(),
-    phone: joi.string(),
   })
 );

@@ -71,13 +71,8 @@ export class AddressForm extends Component {
     this.state = {
       hasChanges: false,
       address: {
-        prefix: '',
         firstName: '',
-        middleName: '',
         lastName: '',
-        suffix: '',
-        phone: '',
-        company: '',
         street1: '',
         street2: '',
         city: '',
@@ -88,13 +83,8 @@ export class AddressForm extends Component {
         ...props.address, // Init edit address form
       },
       errors: {
-        prefix: '',
         firstName: '',
-        middleName: '',
         lastName: '',
-        suffix: '',
-        phone: '',
-        company: '',
         street1: '',
         street2: '',
         city: '',
@@ -180,34 +170,18 @@ export class AddressForm extends Component {
       NAVIGATOR_USER_ADDRESS_BUTTON_ENABLE);
   }
 
-  handleTitleChange = (title) => {
-    this.updateAddress({ title });
-  }
-  handlePrefixChange = (prefix) => {
-    this.updateAddress({ prefix });
-  }
   handleFirstNameChange = (firstName) => {
     this.updateAddress({ firstName });
   }
-  handleMiddleNameChange = (middleName) => {
-    this.updateAddress({ middleName });
-  }
+
   handleLastNameChange = (lastName) => {
     this.updateAddress({ lastName });
-  }
-  handleSuffixChange = (suffix) => {
-    this.updateAddress({ suffix });
-  }
-  handleCompanyChange = (company) => {
-    this.updateAddress({ company });
-  }
-  handlePhoneChange = (phone) => {
-    this.updateAddress({ phone });
   }
 
   handleStreet1Change = (street1) => {
     this.updateAddress({ street1 });
   }
+
   handleStreet2Change = (street2) => {
     this.updateAddress({ street2 });
   }
@@ -302,14 +276,8 @@ export class AddressForm extends Component {
 
           <div className={style.fields}>
 
-            {this.renderTextField('title', this.handleTitleChange)}
-            {this.renderTextField('prefix', this.handlePrefixChange)}
             {this.renderTextField('firstName', this.handleFirstNameChange)}
-            {this.renderTextField('middleName', this.handleMiddleNameChange)}
             {this.renderTextField('lastName', this.handleLastNameChange)}
-            {this.renderTextField('suffix', this.handleSuffixChange)}
-            {this.renderTextField('phone', this.handlePhoneChange)}
-            {this.renderTextField('company', this.handleCompanyChange)}
             {this.renderTextField('street1', this.handleStreet1Change)}
             {this.renderTextField('street2', this.handleStreet2Change)}
             {this.renderTextField('zipCode', this.handleZipCodeChange)}
