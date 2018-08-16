@@ -8,6 +8,10 @@ import {
   UPDATE_USER_ADDRESS,
   UPDATE_USER_ADDRESS_SUCCESS,
   UPDATE_USER_ADDRESS_FAILED,
+  DELETE_USER_ADDRESSES,
+  DELETE_USER_ADDRESSES_CONFIRMED,
+  DELETE_USER_ADDRESSES_SUCCESS,
+  DELETE_USER_ADDRESSES_FAILED,
   SET_DEFAULT_ADDRESS,
 } from './../constants/ActionTypes';
 import {
@@ -42,14 +46,6 @@ export const userAddressAdd$ = main$.filter(({ action }) => (
 ));
 
 /**
- * Gets triggered when user address is going to be updated
- * @type {Observable}
- */
-export const userAddressUpdate$ = main$.filter(({ action }) => (
-  action.type === UPDATE_USER_ADDRESS
-));
-
-/**
  * Gets triggered when user address is added
  * @type {Observable}
  */
@@ -65,7 +61,15 @@ export const userAddressAddFailed$ = main$.filter(({ action }) => (
   action.type === ADD_USER_ADDRESS_FAILED));
 
 /**
- * Gets triggered when we updated user address
+ * Gets triggered when user address is going to be updated
+ * @type {Observable}
+ */
+export const userAddressUpdate$ = main$.filter(({ action }) => (
+  action.type === UPDATE_USER_ADDRESS
+));
+
+/**
+ * Gets triggered when the user address is updated
  * @type {Observable}
  */
 export const userAddressUpdated$ = main$.filter(({ action }) => (
@@ -73,11 +77,40 @@ export const userAddressUpdated$ = main$.filter(({ action }) => (
 ));
 
 /**
- * Gets triggered when we updated user address
+ * Gets triggered when the user address update fails
  * @type {Observable}
  */
 export const userAddressUpdateFailed$ = main$.filter(({ action }) => (
   action.type === UPDATE_USER_ADDRESS_FAILED));
+
+/**
+ * Gets triggered when user requested to delete addresses
+ * @type {Observable}
+ */
+export const userAddressesDelete$ = main$
+  .filter(({ action }) => action.type === DELETE_USER_ADDRESSES);
+
+/**
+ * Gets triggered when user requested to delete addresses
+ * @type {Observable}
+ */
+export const userAddressesDeleteConfirmed$ = main$
+  .filter(({ action }) => action.type === DELETE_USER_ADDRESSES_CONFIRMED);
+
+/**
+ * Gets triggered when the given user addresses were deleted
+ * @type {Observable}
+ */
+export const userAddressesDeleted$ = main$.filter(({ action }) => (
+  action.type === DELETE_USER_ADDRESSES_SUCCESS
+));
+
+/**
+ * Gets triggered when the user address deletion failed
+ * @type {Observable}
+ */
+export const userAddressesDeleteFailed$ = main$.filter(({ action }) => (
+  action.type === DELETE_USER_ADDRESSES_FAILED));
 
 /**
  * Gets triggered when user requested to set address as default
@@ -95,13 +128,17 @@ export const userAddressValidationFailed$ = userAddressAddFailed$
   .filter(({ action: { error } }) => error.code === EVALIDATION);
 
 /**
- * Gets triggered when user addresses are changed: new added, existing updated
+ * Gets triggered when user addresses are changed: new added, existing updated or deleted
  * @type {Observable}
  */
-export const userAddressChanged$ = userAddressAdded$.merge(userAddressUpdated$);
-/**
- * Gets triggered when adding/updating address is failed
- * @type {Observable}
- */
-export const userAddressFailed$ = userAddressAddFailed$.merge(userAddressUpdateFailed$);
+export const userAddressChanged$ = userAddressAdded$
+  .merge(userAddressUpdated$)
+  .merge(userAddressesDeleted$);
 
+/**
+ * Gets triggered when adding/updating or deleting address is failed
+ * @type {Observable}
+ */
+export const userAddressFailed$ = userAddressAddFailed$
+  .merge(userAddressUpdateFailed$)
+  .merge(userAddressesDeleteFailed$);

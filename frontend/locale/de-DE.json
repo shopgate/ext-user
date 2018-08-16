@@ -40,12 +40,12 @@
     "title": "Anrede",
     "prefix": "Vorname *",
     "firstName": "Vorname *",
-    "middleName": "Mittelname",
+    "middleName": "Zweiter Vorname",
     "lastName": "Nachname *",
     "suffix": "Suffix",
-    "company": "Company",
-    "street1": "Straße * Nummer",
-    "street2": "Zusätzliche Adresse",
+    "company": "Firma",
+    "street1": "Straße und Hausnummer *",
+    "street2": "Adresszusatz",
     "city": "Stadt *",
     "province": "Bundesland *",
     "country": "Land *",
@@ -73,13 +73,20 @@
       "title": "Adresse aktualisieren",
       "button": "Speichern"
     },
-    "makeDefault": {
-      "default": "Mach das zu deiner Standard-Adresse",
-      "shipping": "Mach das zu deiner Standard-Lieferadresse",
-      "billing": "Mach das zu deiner Standard-Rechnungsadresse"
+    "delete": {
+      "button": "Löschen",
+      "confirmationDialog": {
+        "title": "Adresse löschen",
+        "message": "Möchtest du diese Adresse wirklich löschen?"
+      },
+      "successMessage": "Die Adresse wurde gelöscht"
     },
-    "validationFailedToastMessage": "Bitte überprüfen Sie Ihre Felder",
-    "delete": "Adresse löschen"
+    "makeDefault": {
+      "default": "Als Standard-Adresse festlegen",
+      "shipping": "Als Standard-Lieferadresse festlegen",
+      "billing": "Als Standard-Rechnungsadresse festlegen"
+    },
+    "validationFailedToastMessage": "Bitte überprüfen Sie Ihre Felder"
   },
   "checkout": {
     "shipping": {

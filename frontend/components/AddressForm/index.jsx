@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import Portal from '@shopgate/pwa-common/components/Portal';
 import I18n from '@shopgate/pwa-common/components/I18n';
 import TextField from '@shopgate/pwa-ui-shared/TextField';
+import Button from '@shopgate/pwa-ui-shared/Button';
 import RippleButton from '@shopgate/pwa-ui-shared/RippleButton';
 import Select from '@shopgate/pwa-ui-shared/Form/Select';
 import Checkbox from '@shopgate/pwa-ui-shared/Form/Checkbox';
@@ -43,6 +44,7 @@ const provincesList = countryCode => countries[countryCode].divisions;
 export class AddressForm extends Component {
   static propTypes = {
     addAddress: PropTypes.func.isRequired,
+    deleteAddress: PropTypes.func.isRequired,
     disabled: PropTypes.bool.isRequired,
     updateAddress: PropTypes.func.isRequired,
     validateAddress: PropTypes.func.isRequired,
@@ -67,6 +69,7 @@ export class AddressForm extends Component {
     const province = Object.keys(provincesList(country))[0];
 
     this.state = {
+      hasChanges: false,
       address: {
         prefix: '',
         firstName: '',
@@ -108,7 +111,7 @@ export class AddressForm extends Component {
    * Did mount
    */
   componentDidMount() {
-    EventEmitter.on(NAVIGATOR_USER_ADDRESS_BUTTON_CLICK, this.saveAddress);
+    EventEmitter.on(NAVIGATOR_USER_ADDRESS_BUTTON_CLICK, this.addAddress);
   }
 
   /**
@@ -120,20 +123,25 @@ export class AddressForm extends Component {
       this.setState({ errors: nextProps.validationErrors });
     }
 
-    EventEmitter.emit(nextProps.address.id ?
-      NAVIGATOR_USER_ADDRESS_BUTTON_SHOW :
-      NAVIGATOR_USER_ADDRESS_BUTTON_HIDE);
+    // Show navigation button when we're updating.
+    if (nextProps.address.id) {
+      EventEmitter.emit(NAVIGATOR_USER_ADDRESS_BUTTON_SHOW);
+      EventEmitter.emit(NAVIGATOR_USER_ADDRESS_BUTTON_DISABLE);
+    }
 
-    EventEmitter.emit(nextProps.disabled ?
-      NAVIGATOR_USER_ADDRESS_BUTTON_DISABLE :
-      NAVIGATOR_USER_ADDRESS_BUTTON_ENABLE);
+    // Enable / Disable navigation button based on disabled prop.
+    if (nextProps.disabled && !this.props.disabled) {
+      EventEmitter.emit(NAVIGATOR_USER_ADDRESS_BUTTON_DISABLE);
+    } else if (!nextProps.disabled && this.props.disabled) {
+      EventEmitter.emit(NAVIGATOR_USER_ADDRESS_BUTTON_ENABLE);
+    }
   }
 
   /**
    * Will unmount
    */
   componentWillUnmount() {
-    EventEmitter.off(NAVIGATOR_USER_ADDRESS_BUTTON_CLICK, this.saveAddress);
+    EventEmitter.off(NAVIGATOR_USER_ADDRESS_BUTTON_CLICK, this.addAddress);
     EventEmitter.emit(NAVIGATOR_USER_ADDRESS_BUTTON_HIDE);
   }
 
@@ -143,8 +151,24 @@ export class AddressForm extends Component {
         ...this.state.address,
         ...address,
       },
-    }, this.state.inlineValidation ? this.validateInline : null);
+    }, this.state.inlineValidation ? this.validateInline : () => {
+      if (!this.state.hasChanges) {
+        // Show navigtion button when first time updating address.
+        const hasChanges = !Object.keys(address)
+          .every(key => address[key] === this.props.address[key]);
+
+        if (hasChanges) {
+          EventEmitter.emit(NAVIGATOR_USER_ADDRESS_BUTTON_ENABLE);
+
+          this.setState({
+            hasChanges,
+          });
+        }
+      }
+    });
   }
+
+  deleteAddress = () => this.props.deleteAddress(this.props.address.id)
 
   validateInline = () => {
     const errors = this.props.validateAddress(this.state.address);
@@ -222,7 +246,7 @@ export class AddressForm extends Component {
     }
   }
 
-  saveAddress = () => {
+  addAddress = () => {
     const errors = this.props.validateAddress(this.state.address);
     this.setState({
       inlineValidation: true,
@@ -321,7 +345,17 @@ export class AddressForm extends Component {
 
           <div className={style.options}>
             {/* Delete address button */}
-            {this.props.address.id && null}
+            {this.props.address.id &&
+              <Button
+                className={style.deleteAddressButton}
+                onClick={this.deleteAddress}
+                flat
+                wrapContent={false}
+                data-test-id="deleteAddressButton"
+              >
+                <I18n.Text string="address.delete.button" />
+              </Button>
+            }
 
             {/* Default address and submit button for new address */}
             {!this.props.address.id &&
@@ -341,8 +375,8 @@ export class AddressForm extends Component {
                   <RippleButton
                     type="secondary"
                     disabled={this.props.disabled}
-                    onClick={this.saveAddress}
-                    className={style.button}
+                    onClick={this.addAddress}
+                    className={style.addAddressButton}
                     data-test-id="AddAddressButton"
                   >
                     <I18n.Text string="address.add.button" />
