@@ -1,7 +1,7 @@
 const assert = require('assert')
-const executeStep = require('../../../user/registerUser')
-const UserExistError = require('../../../common/Error/UserExistError')
-const UnauthorizedError = require('../../../common/Error/UnauthorizedError')
+const executeStep = require('../../../../user/register/registerUser')
+const UserExistError = require('../../../../common/Error/UserExistError')
+const UnauthorizedError = require('../../../../common/Error/UnauthorizedError')
 
 describe('registerUser', () => {
   const user = {

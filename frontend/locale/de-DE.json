@@ -2,11 +2,17 @@
   "register": {
     "title": "Registrieren",
     "subTitle": "Einen neuen Account erstellen",
-    "mail": "E-Mail",
-    "password": "Passwort",
+    "button": "Registrieren"
+  },
+  "profile": {
+    "title": "Meine Angaben",
+    "updated": "Ihre Daten wurden gespeichert"
+  },
+  "user": {
     "firstName": "Vorname",
     "lastName": "Nachname",
-    "button": "Registrieren",
+    "mail": "E-Mail",
+    "password": "Passwort",
     "errors": {
       "blank": "Bitte vervollständigen Sie dieses Feld",
       "mail": "Geben Sie bitte eine gültige E-Mail-Adresse ein",
@@ -70,8 +76,7 @@
       "button": "Neue Addresse speichern"
     },
     "update": {
-      "title": "Adresse aktualisieren",
-      "button": "Speichern"
+      "title": "Adresse aktualisieren"
     },
     "delete": {
       "button": "Löschen",
@@ -106,9 +111,12 @@
     }
   },
   "navigation": {
-    "my_details": "Meine Daten",
+    "profile": "Meine Angaben",
     "change_password": "Passwort ändern",
     "address_book": "Adressbuch",
     "payment_options": "Zahlungsoptionen"
+  },
+  "navigator": {
+    "save": "Speichern"
   }
 }

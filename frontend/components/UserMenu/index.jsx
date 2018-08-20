@@ -2,9 +2,10 @@ import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import I18n from '@shopgate/pwa-common/components/I18n';
 import Portal from '@shopgate/pwa-common/components/Portal';
+import AccountBoxIcon from '@shopgate/pwa-ui-shared/icons/AccountBoxIcon';
 import LocalShippingIcon from '@shopgate/pwa-ui-shared/icons/LocalShippingIcon';
 import * as portals from '../../constants/Portals';
-import { USER_ADDRESS_BOOK_PATH } from '../../constants/RoutePaths';
+import * as path from '../../constants/RoutePaths';
 import connect from './connector';
 
 /**
@@ -38,9 +39,19 @@ const UserMenu = (props) => {
       <Portal name={portals.NAV_MENU_ADDRESS_BOOK} props={props}>
         <List>
           <Item
+            title="navigation.profile"
+            href={path.USER_PROFILE_PATH}
+            link={path.USER_PROFILE_PATH}
+            icon={AccountBoxIcon}
+            close={handleClose}
+            testId="menuProfileButton"
+          >
+            <I18n.Text string="navigation.profile" />
+          </Item>
+          <Item
             title="navigation.address_book"
-            href={`${USER_ADDRESS_BOOK_PATH}`}
-            link={`${USER_ADDRESS_BOOK_PATH}`}
+            href={path.USER_ADDRESS_BOOK_PATH}
+            link={path.USER_ADDRESS_BOOK_PATH}
             icon={LocalShippingIcon}
             close={handleClose}
             testId="menuAddressBookButton"

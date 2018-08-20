@@ -1,6 +1,6 @@
 const assert = require('assert')
-const executeStep = require('../../../user/validateUser')
-const ValidationError = require('../../../common/Error/ValidationError')
+const executeStep = require('../../../../user/register/validateUser')
+const ValidationError = require('../../../../common/Error/ValidationError')
 
 describe('validateUser', () => {
   const validUser = {

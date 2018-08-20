@@ -23,7 +23,7 @@ describe('AddressBook subscriptions', () => {
   const userSetDefaultAddress$ = subscribe.mock.calls.pop();
 
   it('should subscribe to the streams', () => {
-    expect(subscribe.mock.calls.length).toEqual(7);
+    expect(subscribe.mock.calls.length).toEqual(9);
   });
 
   it('should toggle navigator controls when route is entered', () => {
@@ -48,9 +48,9 @@ describe('AddressBook subscriptions', () => {
         },
       },
     };
-    const action = { addressId: 1, tag: 'default' };
+    const action = { addressId: 1, tag: 'shipping' };
     userSetDefaultAddress$[1]({ dispatch, action, getState: () => state });
 
-    expect(mockUpdateAddress).toHaveBeenCalledWith({ id: 1, firstName: 'foo', tags: ['default'] }, true);
+    expect(mockUpdateAddress).toHaveBeenCalledWith({ id: 1, firstName: 'foo', tags: ['default_shipping'] }, true);
   });
 });

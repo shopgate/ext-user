@@ -24,7 +24,7 @@ import { getUserAddressIdSelector } from './../selectors/addressBook';
 import updateAddress from './../actions/updateAddress';
 import deleteAddresses from './../actions/deleteAddresses';
 import EventEmitter from './../events/emitter';
-import { NAVIGATOR_USER_ADDRESS_BUTTON_HIDE } from './../constants/EventTypes';
+import { NAVIGATOR_SAVE_BUTTON_HIDE } from './../constants/EventTypes';
 
 export default (subscribe) => {
   const userAddressBusy$ = userAddressAdd$
@@ -42,6 +42,8 @@ export default (subscribe) => {
   subscribe(addressBookDidLeave$, ({ dispatch }) => {
     dispatch(toggleNavigatorCart(true));
     dispatch(toggleNavigatorSearch(true));
+
+    EventEmitter.emit(NAVIGATOR_SAVE_BUTTON_HIDE);
   });
 
   // Show a toast message when validation is failed
@@ -62,8 +64,6 @@ export default (subscribe) => {
     dispatch(getAddresses()).then(() => {
       if (!action.silent) {
         dispatch(goBackHistory());
-
-        EventEmitter.emit(NAVIGATOR_USER_ADDRESS_BUTTON_HIDE);
       }
     });
   });
@@ -76,26 +76,6 @@ export default (subscribe) => {
   // Fetch user addresses after login
   subscribe(userDidLogin$, ({ dispatch }) => {
     dispatch(getAddresses());
-  });
-
-  // Dispatch action to backend to sync user selection
-  subscribe(userSetDefaultAddress$, ({ dispatch, action, getState }) => {
-    const { addressId, tag } = action;
-    const address = getUserAddressIdSelector(getState())(addressId);
-    if (!address) {
-      return;
-    }
-
-    const addressClone = { ...address };
-
-    if (!addressClone.tags) {
-      addressClone.tags = [];
-    }
-    // Tag is prefixed with default_ for shipping, billing, etc
-    const defTag = tag === 'default' ? tag : `default_${tag}`;
-
-    addressClone.tags.push(defTag);
-    dispatch(updateAddress(addressClone, true));
   });
 
   // Dispatch action to backend to delete the given addresses after successful confirmation
@@ -118,5 +98,25 @@ export default (subscribe) => {
   // Dispatch action to show a toast message after the deletion was successfully performed
   subscribe(userAddressesDeleted$, ({ dispatch }) => {
     dispatch(createToast({ message: 'address.delete.successMessage' }));
+  });
+
+  // Dispatch action to backend to sync user selection
+  subscribe(userSetDefaultAddress$, ({ dispatch, action, getState }) => {
+    const { addressId, tag } = action;
+    const address = getUserAddressIdSelector(getState())(addressId);
+    if (!address) {
+      return;
+    }
+
+    const addressClone = { ...address };
+
+    if (!addressClone.tags) {
+      addressClone.tags = [];
+    }
+    // Tag is prefixed with default_ for shipping, billing, etc
+    const defTag = tag === 'default' ? tag : `default_${tag}`;
+
+    addressClone.tags.push(defTag);
+    dispatch(updateAddress(addressClone, true));
   });
 };

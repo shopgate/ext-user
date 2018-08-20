@@ -2,11 +2,17 @@
   "register": {
     "title": "Register",
     "subTitle": "Create a new account",
-    "mail": "Email",
-    "password": "Password",
+    "button": "Register"
+  },
+  "profile": {
+    "title": "Mon profil",
+    "updated": "vos données ont été enregistrées"
+  },
+  "user": {
     "firstName": "First name",
     "lastName": "Last name",
-    "button": "Register",
+    "mail": "Email",
+    "password": "Password",
     "errors": {
       "blank": "Please complete this field",
       "mail": "Please enter a valid e-mail address",
@@ -70,8 +76,7 @@
       "button": "Save new address"
     },
     "update": {
-      "title": "Update address",
-      "button": "Save"
+      "title": "Update address"
     },
     "delete": {
       "button": "Supprimer",
@@ -106,9 +111,12 @@
     }
   },
   "navigation": {
-    "my_details": "Mes Données",
+    "profile": "Mes Données",
     "change_password": "Changer mot de passe",
     "address_book": "Carnet d'adresses",
     "payment_options": "Options de paiement"
+  },
+  "navigator": {
+    "save": "Save"
   }
 }
