@@ -11,10 +11,159 @@
       }
     },
     "addressFields": {
-      "type": "static",
-      "destination": "frontend",
+      "type": "admin",
+      "destination": "backend",
+      "default": {
+        "locales": {
+          "default": {
+            "firstName.label": "First name",
+            "firstName.placeholder": "Please enter your first name",
+            "lastName.label": "Last name",
+            "lastName.placeholder": "Please enter your last name",
+            "street1.label": "Street and number",
+            "street1.placeholder": "",
+            "street2.label": "",
+            "zipCode.label": "",
+            "zipCode.placeholder": "",
+            "city.label": "City",
+            "city.placeholder": "",
+            "note.validationRules.max_length_10": "You entered to many characters!!!",
+            "note.validationRules.no_numbers": "You should not add any numbers!!!"
+          },
+          "de-DE": {
+            "firstName.label": "Vorname",
+            "firstName.placeholder": "Bitte trage deinen Vorname ein",
+            "lastName.label": "Nachname",
+            "lastName.placeholder": "Bitte trage deinen Nachnamen ein",
+            "street1.label": "Straße und Hausnummer",
+            "street1.placeholder": "",
+            "street2.label": "",
+            "zipCode.label": "",
+            "zipCode.placeholder": "",
+            "city.label": "Stadt"
+          }
+        },
+        "fields": {
+          "firstName": {
+            "sortOrder": 1,
+            "label": "locales",
+            "type": "text",
+            "default": "",
+            "placeholder": "locales",
+            "required": true,
+            "visible": {
+              "expression": "true"
+            }
+          },
+          "lastName": {
+            "sortOrder": 3,
+            "label": "locales",
+            "type": "text",
+            "default": "",
+            "placeholder": "locales",
+            "required": true,
+            "visible": {
+              "expression": "true"
+            }
+          },
+          "street1": {
+            "sortOrder": 4,
+            "label": "locales",
+            "type": "text",
+            "default": "",
+            "placeholder": "locales",
+            "required": true,
+            "visible": {
+              "expression": "true"
+            }
+          },
+          "street2": {
+            "sortOrder": 5,
+            "label": "locales.street2",
+            "type": "text",
+            "default": "",
+            "placeholder": "",
+            "required": false,
+            "visible": {
+              "expression": "true"
+            }
+          },
+          "zipCode": {
+            "sortOrder": 6,
+            "label": "locales",
+            "type": "text",
+            "default": "",
+            "placeholder": "locales",
+            "required": true,
+            "visible": {
+              "expression": "true"
+            }
+          },
+          "city": {
+            "sortOrder": 7,
+            "label": "locales.city",
+            "type": "text",
+            "default": "",
+            "placeholder": "locales",
+            "required": true,
+            "visible": {
+              "expression": "true"
+            }
+          },
+          "country": {
+            "sortOrder": 8,
+            "label": "locales",
+            "type": "country",
+            "default": "",
+            "placeholder": "locales",
+            "required": true,
+            "countries": ["DE", "US"],
+            "visible": {
+              "expression": "true"
+            }
+          },
+          "province": {
+            "sortOrder": 9,
+            "label": "locales",
+            "type": "province",
+            "default": "",
+            "placeholder": "locales",
+            "required": true,
+            "visible": {
+              "expression": "country not in ['DE']"
+            }
+          },
+          "customAttributes": {
+            "additionalNote": {
+              "sortOrder": 14,
+              "label": "Note",
+              "type": "textarea",
+              "default": "",
+              "placeholder": "Enter a custom note for this address here",
+              "required": false,
+              "visible": {
+                "expression": "true"
+              },
+              "validationRules": [
+                {
+                  "id": "max_length_10",
+                  "regex": "^.{0,10}$",
+                  "message": "locales"
+                },
+                {
+                  "id": "no_numbers",
+                  "regex": "^\\D+$",
+                  "message": "locales"
+                }
+              ]
+            }
+          }
+        }
+      },
       "params": {
-        "value": ["firstName", "lastName", "street1", "street2", "zipCode", "city", "country"]
+        "type": "json",
+        "label": "Address fields",
+        "required": true
       }
     },
     "splitDefaultAddressesByTags": {
