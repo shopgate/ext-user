@@ -250,7 +250,7 @@ export class AddressForm extends Component {
    * @return {JSX|null}
    */
   renderTextField(name, changeHandler) {
-    if (!addressFields.includes(name)) {
+    if (!addressFields.fields || typeof addressFields.fields[name] !== 'object') {
       return null;
     }
     return (
@@ -276,7 +276,7 @@ export class AddressForm extends Component {
 
           <div className={style.fields}>
 
-            {this.renderTextField('firstName', this.handleFirstNameChange)}
+            {this.renderTextField('firstName', this.handleChange)}
             {this.renderTextField('lastName', this.handleLastNameChange)}
             {this.renderTextField('street1', this.handleStreet1Change)}
             {this.renderTextField('street2', this.handleStreet2Change)}
@@ -284,30 +284,30 @@ export class AddressForm extends Component {
             {this.renderTextField('city', this.handleCityChange)}
 
             {addressFields.includes('country') &&
-            <Fragment>
-              <Select
-                name="country"
-                placeholder="placeholder"
-                label="address.country"
-                options={this.countriesList}
-                value={this.state.address.country}
-                onChange={this.handleCountryChange}
-                errorText={this.state.errors.country}
-              />
-              {this.state.address.country &&
-              !countries[this.state.address.country].hideProvince &&
-              <Select
-                name="province"
-                placeholder="placeholder"
-                label="address.province"
-                options={provincesList(this.state.address.country)}
-                value={this.state.address.province || ''}
-                onChange={this.handleProvinceChange}
-                errorText={this.state.errors.province}
-              />
+              <Fragment>
+                <Select
+                  name="country"
+                  placeholder="placeholder"
+                  label="address.country"
+                  options={this.countriesList}
+                  value={this.state.address.country}
+                  onChange={this.handleCountryChange}
+                  errorText={this.state.errors.country}
+                />
+                {this.state.address.country &&
+                !countries[this.state.address.country].hideProvince &&
+                  <Select
+                    name="province"
+                    placeholder="placeholder"
+                    label="address.province"
+                    options={provincesList(this.state.address.country)}
+                    value={this.state.address.province || ''}
+                    onChange={this.handleProvinceChange}
+                    errorText={this.state.errors.province}
+                  />
+                }
+              </Fragment>
             }
-            </Fragment>
-          }
 
           </div>
 

@@ -14,7 +14,7 @@ import reducer from './addressBook';
 
 jest.mock('@shopgate/user/config', () => ({
   splitDefaultAddressesByTags: ['shipping', 'billing'],
-  addressFields: ['firstName', 'lastName', 'phone'],
+  addressFields: ['firstName', 'lastName', 'phone'], // TODO: update the test to match the new config
   countryCodes: 'DE',
 }));
 
