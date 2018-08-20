@@ -94,9 +94,6 @@ export default (subscribe) => {
         data: restAddress,
       });
     }
-
-    // Go back to checkout
-    dispatch(replaceHistory({ pathname: '/checkout' }));
   });
 
   /**

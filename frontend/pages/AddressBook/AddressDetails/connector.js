@@ -9,7 +9,7 @@ import { userAddressPathPattern } from '@shopgate/user/constants/RoutePaths';
  * @return {UserAddress}
  */
 const getAddressByRoute = (state) => {
-  const { id: addressId = 0 } = userAddressPathPattern.match(getHistoryPathname(state));
+  const { id: addressId = 0 } = userAddressPathPattern.match(getHistoryPathname(state)) || {};
   return getUserAddressIdSelector(state)(addressId);
 };
 
