@@ -1,8 +1,10 @@
 import addressBook from './addressBook';
 import checkout from './checkout';
+import addressForm from './addressForm';
 
 const subscriptions = [
   addressBook,
+  addressForm,
   checkout,
 ];
 
