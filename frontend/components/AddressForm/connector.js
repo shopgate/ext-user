@@ -8,7 +8,8 @@ import { joiToValidationErrors, validationErrorsToMap } from './../../common/tra
 import userAddressSchema from './../../common/userAddressSchema';
 
 /**
- * @param {Object} address address
+ * Takes an address and validates it agains a default joi validation schema
+ * @param {Object} address The address to be validated using the default joi schema
  * @return {Object}
  */
 const validateAddress = (address) => {

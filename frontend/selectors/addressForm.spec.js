@@ -7,9 +7,9 @@ describe('AddressForm selectors', () => {
     expect(selectors.isFetching({
       extensions: {
         [statePrefix]: {
-          addressForm: { isFetching: true }
-        }
-      }
+          addressForm: { isFetching: true },
+        },
+      },
     })).toEqual(true);
   });
 
@@ -17,9 +17,9 @@ describe('AddressForm selectors', () => {
     const state = {
       extensions: {
         [statePrefix]: {
-          addressForm: { error: 'fooo' }
-        }
-      }
+          addressForm: { error: 'fooo' },
+        },
+      },
     };
 
     expect(selectors.hasErrors(state)).toEqual(true);
@@ -28,7 +28,7 @@ describe('AddressForm selectors', () => {
     const stateB = {
       extensions: {
         [statePrefix]: {
-          addressForm: { error: null }
+          addressForm: { error: null },
         }
       }
     };
@@ -40,9 +40,9 @@ describe('AddressForm selectors', () => {
     const state = {
       extensions: {
         [statePrefix]: {
-          addressForm: { isFetching: false, error: null, config: 'foo' }
-        }
-      }
+          addressForm: { isFetching: false, error: null, config: 'foo' },
+        },
+      },
     };
 
     expect(selectors.getAddressFields(state)).toEqual('foo');
@@ -50,9 +50,9 @@ describe('AddressForm selectors', () => {
     const stateB = {
       extensions: {
         [statePrefix]: {
-          addressForm: { isFetching: false, error: 'foo', config: 'foo' }
-        }
-      }
+          addressForm: { isFetching: false, error: 'foo', config: 'foo' },
+        },
+      },
     };
 
     expect(selectors.getAddressFields(stateB)).toEqual(null);
