@@ -8,18 +8,18 @@
     "lastName": "Nachname",
     "button": "Registrieren",
     "errors": {
-      "blank": "Bitte vervollständigen Sie dieses Feld",
-      "mail": "Geben Sie bitte eine gültige E-Mail-Adresse ein",
-      "password": "Das Passwort muss mindestens 8 Stellen haben",
-      "firstName": "Nur Buchstaben und Leerzeichen sind erlaubt",
-      "lastName": "Nur Buchstaben und Leerzeichen sind erlaubt"
+      "blank": "Bitte vervollständige dieses Feld",
+      "mail": "Bitte gib eine gültige E-Mail-Adresse ein",
+      "password": "Das Passwort muss mindestens 8 Stellen lang sein",
+      "firstName": "Nur Buchstaben und Leerzeichen sind hier erlaubt",
+      "lastName": "Nur Buchstaben und Leerzeichen sind hier erlaubt"
     }
   },
   "addresses": {
     "title": "Addressbuch",
     "headline": "Addressbuch",
     "button": "Neue Adresse hinzufügen",
-    "noAddresses": "Sie haben noch keine Adresse hinterlegt. Fügen Sie eine neue Adresse hinzu, um Ihre Bestellung zu erhalten.",
+    "noAddresses": "Du hast noch keine Adresse hinterlegt. Füge eine neue Adresse hinzu, um deine Bestellung zu abzuschließen.",
     "defaults": {
       "default": "Standard-Adresse",
       "shipping": "Standard-Lieferadresse",
@@ -31,8 +31,8 @@
       "billing": "Als Standard-Rechnungsadresse festlegen"
     },
     "error": {
-      "add": "Das Hinzufügen der Adresse ist fehlgeschlagen, bitte überprüfen Sie Ihre Eingaben",
-      "update": "Die Aktualisierung der Adresse ist fehlgeschlagen, bitte überprüfen Sie Ihre Eingaben",
+      "add": "Das Hinzufügen der Adresse ist fehlgeschlagen, bitte überprüfe deine Eingaben",
+      "update": "Die Aktualisierung der Adresse ist fehlgeschlagen, bitte überprüfe deine Eingaben",
       "setAsDefault": "Die Adresse konnte nicht als Standard festgelegt werden"
     }
   },
@@ -57,9 +57,9 @@
       "firstName": "Nur Buchstaben und Leerzeichen sind erlaubt",
       "middleName": "Nur Buchstaben und Leerzeichen sind erlaubt",
       "lastName": "Nur Buchstaben und Leerzeichen sind erlaubt",
-      "suffix": "Straße und Hausnummer sind erforderlich",
+      "suffix": "Nur Buchstaben und Leerzeichen sind erlaubt",
       "street1": "Straße und Hausnummer sind erforderlich",
-      "street2": "Straße und Hausnummer sind erforderlich",
+      "street2": "Die Eingabe enthält unerlaubte Sonderzeichen",
       "city": "Nur Buchstaben und Leerzeichen sind erlaubt",
       "country": "Wähle ein Land aus",
       "province": "Wähle ein Bundesland aus",
@@ -89,7 +89,7 @@
       "shipping": "Als Standard-Lieferadresse festlegen",
       "billing": "Als Standard-Rechnungsadresse festlegen"
     },
-    "validationFailedToastMessage": "Bitte überprüfen Sie Ihre Felder"
+    "validationFailedToastMessage": "Bitte überprüfe die markierten Felder"
   },
   "checkout": {
     "shipping": {
