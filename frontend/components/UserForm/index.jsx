@@ -17,6 +17,7 @@ import styles from './style';
 export class UserForm extends Component {
   static propTypes = {
     registerUser: PropTypes.func.isRequired,
+    updateMail: PropTypes.func.isRequired,
     updateUser: PropTypes.func.isRequired,
     user: PropTypes.shape().isRequired,
     validateUser: PropTypes.func.isRequired,
@@ -134,6 +135,9 @@ export class UserForm extends Component {
 
     if (this.props.user.id) {
       this.props.updateUser(this.state.user);
+      if (this.props.user.mail !== this.state.user.mail) {
+        this.props.updateMail(this.state.user.mail);
+      }
     } else {
       this.props.registerUser(this.state.user);
     }

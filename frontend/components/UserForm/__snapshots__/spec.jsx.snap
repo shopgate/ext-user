@@ -524,6 +524,7 @@ exports[`<UserForm> should render user register form 1`] = `
 <UserForm
   disabled={false}
   registerUser={[Function]}
+  updateMail={[Function]}
   updateUser={[Function]}
   user={Object {}}
   validateUser={[Function]}

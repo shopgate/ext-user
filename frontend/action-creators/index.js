@@ -55,6 +55,26 @@ export const updateUserFailed = error => ({
 });
 
 /**
+ * Creates the dispatched UPDATE_USER_MAIL_SUCCESS action object.
+ * @param {Object[]} messages messages
+ * @return {{type: string}}
+ */
+export const updateUserMailSuccess = messages => ({
+  type: types.UPDATE_USER_MAIL_SUCCESS,
+  messages,
+});
+
+/**
+ * Creates the dispatched UPDATE_USER_MAIL_FAILED action object.
+ * @param {Object} error error
+ * @return {{type: string, error: Object}}
+ */
+export const updateUserMailFailed = error => ({
+  type: types.UPDATE_USER_MAIL_FAILED,
+  error,
+});
+
+/**
  * Creates the dispatched USER_ADDRESSES_RECEIVED action object.
  * @param {UserAddress[]} addresses address id
  * @return {{type: string, addresses: UserAddress[]}}
