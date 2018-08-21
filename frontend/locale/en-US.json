@@ -65,6 +65,9 @@
       "country": "Choose a country",
       "zipCode": "A max. of 10 characters are allowed"
     },
+    "select": {
+      "button": "Choose address"
+    },
     "add": {
       "title": "Add new address",
       "button": "Save new address"

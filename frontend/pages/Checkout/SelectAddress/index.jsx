@@ -110,7 +110,7 @@ class SelectAddress extends Component {
 
           <div data-test-id="SelectAddressButton">
             <RippleButton type="secondary" disabled={!this.state.address.id} onClick={this.submitAddress} className={style.button}>
-              <I18n.Text string="address.add.button" />
+              <I18n.Text string="address.select.button" />
             </RippleButton>
           </div>
         </section>

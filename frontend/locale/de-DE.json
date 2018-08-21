@@ -50,7 +50,7 @@
     "province": "Bundesland *",
     "country": "Land *",
     "zipCode": "PLZ *",
-    "button": "Neue Addresse speichern",
+    "button": "Neue Adresse speichern",
     "errors": {
       "title": "Nur Buchstaben und Leerzeichen sind erlaubt",
       "prefix": "Nur Buchstaben und Leerzeichen sind erlaubt",
@@ -65,9 +65,12 @@
       "province": "Wähle ein Bundesland aus",
       "zipCode": "Höchstens 10 Zeichen sind erlaubt"
     },
+    "select": {
+      "button": "Adresse auswählen"
+    },
     "add": {
       "title": "Adresse hinzufügen",
-      "button": "Neue Addresse speichern"
+      "button": "Neue Adresse speichern"
     },
     "update": {
       "title": "Adresse aktualisieren",
