@@ -1,18 +1,38 @@
+const Joi = require('joi')
+
 const defaultAlphaExpr = /^[^[0-9!<>,;?=+()@#"°{}_$%:]*$/
+
+const mailSchema = Joi.string().trim().email({minDomainAtoms: 2}).required()
 
 /**
  * User register schema
  *
- * @param {joi} joi DI fro BE|FE
+ * @param {Joi} Joi DI fro BE|FE
  * @param {boolean} isUpdate is update user
  * @return {{validate: function}}
  */
-module.exports = (joi, isUpdate = false) => (
-  joi.object().keys({
-    mail: isUpdate ? joi.string().optional().allow([null, '']) : joi.string().trim().email({minDomainAtoms: 2}).required(),
-    password: isUpdate ? joi.string().optional().allow([null, '']) : joi.string().trim().min(8).required(),
-    firstName: joi.string().trim().regex(defaultAlphaExpr).required().min(1).max(100),
-    lastName: joi.string().trim().regex(defaultAlphaExpr).required().min(1).max(100),
-    customAttributes: joi.object().default({})
+module.exports = {
+  mailSchema,
+
+  /**
+   * User register schema
+   * @return {{validate: function}}
+   */
+  userRegisterSchema: Joi.object().keys({
+    mail: mailSchema,
+    password: Joi.string().trim().min(8).required(),
+    firstName: Joi.string().trim().regex(defaultAlphaExpr).required().min(1).max(100),
+    lastName: Joi.string().trim().regex(defaultAlphaExpr).required().min(1).max(100),
+    customAttributes: Joi.object().default({})
+  }).unknown(true),
+
+  /**
+   * User register schema
+   * @return {{validate: function}}
+   */
+  userUpdateSchema: Joi.object().keys({
+    firstName: Joi.string().trim().regex(defaultAlphaExpr).required().min(1).max(100),
+    lastName: Joi.string().trim().regex(defaultAlphaExpr).required().min(1).max(100),
+    customAttributes: Joi.object().default({})
   }).unknown(true)
-)
+}
