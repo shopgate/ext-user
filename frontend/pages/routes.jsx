@@ -7,6 +7,8 @@ import Register from './Register';
 import AddressBook from './AddressBook/Overview';
 import AddressDetails from './AddressBook/AddressDetails';
 import MyProfile from './MyProfile';
+import AddAddress from './Checkout/AddAddress';
+import SelectAddress from './Checkout/SelectAddress';
 
 /**
  * @param {Object} props props
@@ -19,6 +21,8 @@ const UserRoutes = props => (
       <Route path={path.USER_ADDRESS_BOOK_PATH} component={AddressBook} {...props} />
       <Route path={path.USER_ADDRESS_PATH} component={AddressDetails} {...props} />
       <Route path={path.USER_PROFILE_PATH} component={MyProfile} {...props} />
+      <Route path="/checkout/addAddress" component={AddAddress} {...props} />
+      <Route path="/checkout/selectAddress" component={SelectAddress} {...props} />
     </AuthRoutes>
     <Route path={path.USER_REGISTER_PATH} component={Register} {...props} />
   </Fragment>

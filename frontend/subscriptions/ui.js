@@ -8,29 +8,56 @@ import {
   NAVIGATOR_SAVE_BUTTON_HIDE,
 } from '@shopgate/user/constants/EventTypes';
 import { toggleNavigatorCart, toggleNavigatorSearch } from '../action-creators';
-import { USER_PROFILE_PATH, USER_REGISTER_PATH } from '../constants/RoutePaths';
 import {
-  userUpdateSuccess$,
+  USER_PROFILE_PATH,
+  USER_REGISTER_PATH,
+  USER_ADDRESS_BOOK_PATH,
+  USER_ADDRESS_PATH,
+} from '../constants/RoutePaths';
+import {
   userWillRegister$,
   userWillUpdate$,
+  userUpdateSuccess$,
+  userAddressAdd$,
+  userAddressUpdate$,
+  userAddressChanged$,
+  userAddressFailed$,
+  userAddressesDeleteConfirmed$,
 } from '../streams';
 
 export default (subscribe) => {
-  const profileEnter$ = routeDidEnter(USER_REGISTER_PATH)
-    .merge(routeDidEnter(USER_PROFILE_PATH));
-  const profileLeave$ = routeDidLeave(USER_REGISTER_PATH)
-    .merge(routeDidLeave(USER_PROFILE_PATH));
+  const fullPageViewEnter$ = routeDidEnter(USER_REGISTER_PATH)
+    .merge(
+      routeDidEnter(USER_PROFILE_PATH),
+      routeDidEnter(USER_ADDRESS_BOOK_PATH),
+      routeDidEnter(USER_ADDRESS_PATH)
+    );
+  const fullPageViewLeave$ = routeDidLeave(USER_REGISTER_PATH)
+    .merge(
+      routeDidLeave(USER_PROFILE_PATH),
+      routeDidLeave(USER_ADDRESS_BOOK_PATH),
+      routeDidLeave(USER_ADDRESS_PATH)
+    );
 
-  const userFormIsBusy$ = userWillRegister$.merge(userWillUpdate$);
+  const viewIsLoading$ = userWillRegister$.merge(
+    userWillUpdate$,
+    userAddressAdd$,
+    userAddressUpdate$,
+    userAddressesDeleteConfirmed$
+  );
+  const viewIsIdle$ = userUpdateSuccess$.merge(
+    userAddressChanged$,
+    userAddressFailed$
+  );
 
   // Hide search and cart buttons in navigator when address book is opened.
-  subscribe(profileEnter$, ({ dispatch }) => {
+  subscribe(fullPageViewEnter$, ({ dispatch }) => {
     dispatch(toggleNavigatorCart(false));
     dispatch(toggleNavigatorSearch(false));
   });
 
   // Show search and cart buttons in navigator again after address book is closed.
-  subscribe(profileLeave$, ({ dispatch }) => {
+  subscribe(fullPageViewLeave$, ({ dispatch }) => {
     dispatch(toggleNavigatorCart(true));
     dispatch(toggleNavigatorSearch(true));
 
@@ -39,12 +66,12 @@ export default (subscribe) => {
   });
 
   // View is loading
-  subscribe(userFormIsBusy$, ({ dispatch, getState }) => {
+  subscribe(viewIsLoading$, ({ dispatch, getState }) => {
     dispatch(setViewLoading(getHistoryPathname(getState())));
   });
 
   // View is idle
-  subscribe(userUpdateSuccess$, ({ dispatch, getState }) => {
+  subscribe(viewIsIdle$, ({ dispatch, getState }) => {
     dispatch(unsetViewLoading(getHistoryPathname(getState())));
   });
 };

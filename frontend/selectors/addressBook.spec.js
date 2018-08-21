@@ -8,11 +8,13 @@ describe('AddressBook selectors', () => {
       extensions: {
         [statePrefix]: {
           addressBook: {
+            // eslint-disable-next-line extra-rules/no-single-line-objects
             addresses: [{ id: 123, tags: ['default'] }],
           },
         },
       },
     };
+    // eslint-disable-next-line extra-rules/no-single-line-objects
     const expected = [{ id: 123, tags: ['default'] }];
     expect(selectors.getUserAddresses(state)).toEqual(expected);
   });
@@ -40,11 +42,13 @@ describe('AddressBook selectors', () => {
       extensions: {
         [statePrefix]: {
           addressBook: {
+            // eslint-disable-next-line extra-rules/no-single-line-objects
             addresses: [{ id: 123, tags: ['default'] }],
           },
         },
       },
     };
+    // eslint-disable-next-line extra-rules/no-single-line-objects
     const expected = { id: 123, tags: ['default'] };
     const selectAddress = selectors.getUserAddressIdSelector(state);
     expect(selectAddress(123)).toEqual(expected);
@@ -68,11 +72,13 @@ describe('AddressBook selectors', () => {
       extensions: {
         [statePrefix]: {
           addressBook: {
+            // eslint-disable-next-line extra-rules/no-single-line-objects
             validationErrors: [{ path: 'path', message: 'message' }],
           },
         },
       },
     };
+    // eslint-disable-next-line extra-rules/no-single-line-objects
     expect(selectors.getValidationErrors(state)).toEqual([{ path: 'path', message: 'message' }]);
   });
 });

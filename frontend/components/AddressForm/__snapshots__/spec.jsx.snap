@@ -771,6 +771,7 @@ exports[`<AddressForm> should render only configured address fields 1`] = `
 <AddressForm
   addAddress={[Function]}
   address={Object {}}
+  deleteAddress={[Function]}
   disabled={false}
   updateAddress={[Function]}
   validateAddress={[Function]}

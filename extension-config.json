@@ -55,18 +55,6 @@
       "type": "reducers"
     },
     {
-      "id": "CheckoutAddAddressRoute",
-      "path": "frontend/pages/Checkout/AddAddress/route.jsx",
-      "target": "app.routes",
-      "type": "portals"
-    },
-    {
-      "id": "SelectAddressRoute",
-      "path": "frontend/pages/Checkout/SelectAddress/route.jsx",
-      "target": "app.routes",
-      "type": "portals"
-    },
-    {
       "id": "CheckoutShipping",
       "path": "frontend/pages/Checkout/ShippingAddress/index.jsx",
       "target": "checkout.shipping_address",
