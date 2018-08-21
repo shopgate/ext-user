@@ -17,14 +17,14 @@ export default (state = initialState, action) => {
         ...state,
         isFetching: true,
       };
-    
+
     case GET_ADDRESS_FIELDS_FAILED:
       return {
         ...state,
         isFetching: false,
         error: action.error,
       };
-    
+
     case GET_ADDRESS_FIELDS_SUCCESS:
       return {
         ...state,
@@ -32,7 +32,7 @@ export default (state = initialState, action) => {
         error: null,
         config: action.config,
       };
-      
+
     default:
       return state;
   }

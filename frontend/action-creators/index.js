@@ -161,6 +161,7 @@ export const deleteUserAddressesFailed = error => ({
 
 /**
  * Initiates the fetching for address field configuration.
+ * @returns {Object} The dispatched action object.
  */
 export const getAddressFields = () => ({
   type: types.GET_ADDRESS_FIELDS,
@@ -169,8 +170,9 @@ export const getAddressFields = () => ({
 /**
  * Signals the successful fetching of address field configuration.
  * @param {Object} config The address field configuration.
+ * @returns {Object} The dispatched action object.
  */
-export const getAddressFieldsSuccess = (config) => ({
+export const getAddressFieldsSuccess = config => ({
   type: types.GET_ADDRESS_FIELDS_SUCCESS,
   config,
 });
@@ -178,8 +180,9 @@ export const getAddressFieldsSuccess = (config) => ({
 /**
  * Signals that the address fetching failed with an error.
  * @param {Object} error Error response.
+ * @returns {Object} The dispatched action object.
  */
-export const getAddressFieldsFailed = (error) => ({
+export const getAddressFieldsFailed = error => ({
   type: types.GET_ADDRESS_FIELDS_FAILED,
   error,
 });

@@ -3,7 +3,7 @@ import { PIPELINE_GET_ADDRESS_FIELDS } from '@shopgate/user/constants/Pipelines'
 import {
   getAddressFields,
   getAddressFieldsSuccess,
-  getAddressFieldsFailed
+  getAddressFieldsFailed,
 } from '@shopgate/user/action-creators';
 
 export default () => async (dispatch) => {
@@ -14,8 +14,8 @@ export default () => async (dispatch) => {
       .setTrusted()
       .dispatch();
 
-    dispatch(getAddressFieldsSuccess(addressFields))
+    dispatch(getAddressFieldsSuccess(addressFields));
   } catch (err) {
-    dispatch(getAddressFieldsFailed(err))
+    dispatch(getAddressFieldsFailed(err));
   }
 };

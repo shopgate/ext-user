@@ -16,7 +16,9 @@ export default (subscribe) => {
 
       try {
         await dispatch(getAddressFields());
-      } catch (_) {}
+      } catch (_) {
+        // Catch error to avoid the log in the console, because the pipeline error was already shown
+      }
 
       dispatch(unsetViewLoading(getHistoryPathname(state)));
     }
