@@ -1,5 +1,5 @@
 // FEATURES
-const NAV_MENU = 'nav-menu';
+export const NAV_MENU = 'nav-menu';
 
 // CONTENTS
 const ADDRESS_BOOK = 'address-book';
@@ -12,8 +12,8 @@ const DEFAULT = 'default';
 const BUTTON = 'button';
 
 // POSITIONS
-const BEFORE = 'before';
-const AFTER = 'after';
+export const BEFORE = 'before';
+export const AFTER = 'after';
 
 // PORTAL COMPOSITIONS
 export const NAV_MENU_ADDRESS_BOOK_BEFORE = `${NAV_MENU}.${ADDRESS_BOOK}.${BEFORE}`;
