@@ -102,6 +102,11 @@ export class AddressForm extends Component {
    */
   componentDidMount() {
     EventEmitter.on(NAVIGATOR_USER_ADDRESS_BUTTON_CLICK, this.addAddress);
+
+    if (this.props.address.id) {
+      EventEmitter.emit(NAVIGATOR_USER_ADDRESS_BUTTON_SHOW);
+      EventEmitter.emit(NAVIGATOR_USER_ADDRESS_BUTTON_DISABLE);
+    }
   }
 
   /**
@@ -111,12 +116,6 @@ export class AddressForm extends Component {
   componentWillReceiveProps(nextProps) {
     if (Object.keys(nextProps.validationErrors).length) {
       this.setState({ errors: nextProps.validationErrors });
-    }
-
-    // Show navigation button when we're updating.
-    if (nextProps.address.id) {
-      EventEmitter.emit(NAVIGATOR_USER_ADDRESS_BUTTON_SHOW);
-      EventEmitter.emit(NAVIGATOR_USER_ADDRESS_BUTTON_DISABLE);
     }
 
     // Enable / Disable navigation button based on disabled prop.

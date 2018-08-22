@@ -42,7 +42,7 @@ class AddressBook extends Component {
   render() {
     const { hasAddresses, View, isFetching } = this.props;
     return (
-      <View title={this.title}>
+      <View title={!isIos ? this.title : ''}>
         <section className={styles.container} data-test-id="UserAddressBookPage">
 
           {isIos &&
