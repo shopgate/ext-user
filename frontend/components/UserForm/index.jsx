@@ -181,7 +181,7 @@ export class UserForm extends Component {
 
           {isRegister && this.renderTextField('password', 'password')}
 
-          {!isRegister && <div>Password: TODO PWA-755</div>}
+          {!isRegister && null}
 
           {isRegister &&
             <div data-test-id="RegisterButton" className={styles.buttonWrapper}>

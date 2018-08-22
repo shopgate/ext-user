@@ -3,12 +3,12 @@
 exports[`<UserForm> should render user profile form 1`] = `
 <UserForm
   disabled={false}
+  isRegister={false}
   registerUser={[Function]}
   updateUser={[Function]}
   user={
     Object {
       "firstName": "John",
-      "id": "qwerty",
       "lastName": "Doe",
     }
   }
@@ -509,9 +509,6 @@ exports[`<UserForm> should render user profile form 1`] = `
         </ErrorText>
       </div>
     </TextField>
-    <div>
-      Password: TODO PWA-755
-    </div>
   </Portal>
   <Portal
     name="user.form.after"
@@ -523,6 +520,7 @@ exports[`<UserForm> should render user profile form 1`] = `
 exports[`<UserForm> should render user register form 1`] = `
 <UserForm
   disabled={false}
+  isRegister={true}
   registerUser={[Function]}
   updateUser={[Function]}
   user={Object {}}

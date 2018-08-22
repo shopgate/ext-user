@@ -1,15 +1,18 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { themeName } from '@shopgate/pwa-common/helpers/config';
 import I18n from '@shopgate/pwa-common/components/I18n';
 import Portal from '@shopgate/pwa-common/components/Portal';
 import * as portals from '@shopgate/user/constants/Portals';
 import UserForm from '@shopgate/user/components/UserForm';
 import styles from './style';
 
+const isIos = themeName.includes('ios');
+
 /**
  * The User Profile component.
  */
-export class MyProfile extends Component {
+class MyProfile extends Component {
   static contextTypes = {
     i18n: PropTypes.func,
   };
@@ -29,7 +32,7 @@ export class MyProfile extends Component {
     // eslint-disable-next-line react/prop-types
     const { View } = this.props;
     return (
-      <View title={this.title}>
+      <View title={isIos ? '' : this.title}>
         <section className={styles.container} data-test-id="UserProfilePage">
 
           <h1 className={styles.headline}>

@@ -1,9 +1,12 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import I18n from '@shopgate/pwa-common/components/I18n';
+import { themeName } from '@shopgate/pwa-common/helpers/config';
 import UserForm from '@shopgate/user/components/UserForm';
 import connect from './connector';
 import styles from './style';
+
+const isIos = themeName.includes('ios');
 
 /**
  * Register component
@@ -33,7 +36,7 @@ class Register extends Component {
     // eslint-disable-next-line react/prop-types
     const { View, isLoggedIn } = this.props;
     return (
-      <View title={this.title}>
+      <View title={isIos ? undefined : this.title}>
         <section className={styles.container} data-test-id="RegisterPage">
           <div className={styles.subline}>
             <I18n.Text string="register.subTitle" />
