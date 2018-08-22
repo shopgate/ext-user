@@ -7,7 +7,7 @@ import {
   NAVIGATOR_SAVE_BUTTON_CLICK,
   NAVIGATOR_SAVE_BUTTON_HIDE,
 } from '@shopgate/user/constants/EventTypes';
-import { toggleNavigatorCart, toggleNavigatorSearch } from '../action-creators';
+import { toggleNavigatorCart, toggleNavigatorSearch } from '../action-creators/ui';
 import {
   USER_PROFILE_PATH,
   USER_REGISTER_PATH,
@@ -18,12 +18,16 @@ import {
   userWillRegister$,
   userWillUpdate$,
   userUpdateSuccess$,
+  userUpdateFailed$,
+  userRegisterFailed$,
+} from '../streams/user';
+import {
   userAddressAdd$,
   userAddressUpdate$,
   userAddressChanged$,
   userAddressFailed$,
   userAddressesDeleteConfirmed$,
-} from '../streams';
+} from '../streams/addressBook';
 
 export default (subscribe) => {
   const fullPageViewEnter$ = routeDidEnter(USER_REGISTER_PATH)
@@ -46,6 +50,8 @@ export default (subscribe) => {
     userAddressesDeleteConfirmed$
   );
   const viewIsIdle$ = userUpdateSuccess$.merge(
+    userUpdateFailed$,
+    userRegisterFailed$,
     userAddressChanged$,
     userAddressFailed$
   );

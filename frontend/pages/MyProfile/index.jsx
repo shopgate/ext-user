@@ -9,11 +9,7 @@ import styles from './style';
 /**
  * The User Profile component.
  */
-class MyProfile extends Component {
-  static propTypes = {
-    View: PropTypes.func.isRequired,
-  }
-
+export class MyProfile extends Component {
   static contextTypes = {
     i18n: PropTypes.func,
   };
@@ -30,6 +26,7 @@ class MyProfile extends Component {
    * @return {*}
    */
   render() {
+    // eslint-disable-next-line react/prop-types
     const { View } = this.props;
     return (
       <View title={this.title}>

@@ -5,7 +5,7 @@ let mockToggleNavigatorCart;
 let mockToggleNavigatorSearch;
 let mockSetViewLoading;
 let mockUnsetViewLoading;
-jest.mock('../action-creators', () => ({
+jest.mock('../action-creators/addressBook', () => ({
   toggleNavigatorCart: (...args) => mockToggleNavigatorCart(...args),
   toggleNavigatorSearch: (...args) => mockToggleNavigatorSearch(...args),
 }));

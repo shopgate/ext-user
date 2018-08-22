@@ -9,8 +9,8 @@ import {
   userAddressesDeleted$,
   userAddressValidationFailed$,
   userSetDefaultAddress$,
-} from './../streams';
-import { deleteUserAddressesConfirmed } from '../action-creators';
+} from './../streams/addressBook';
+import { deleteUserAddressesConfirmed } from '../action-creators/addressBook';
 import { getUserAddressIdSelector } from './../selectors/addressBook';
 import updateAddress from './../actions/updateAddress';
 import deleteAddresses from './../actions/deleteAddresses';

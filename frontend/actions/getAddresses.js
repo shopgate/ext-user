@@ -1,6 +1,6 @@
 import PipelineRequest from '@shopgate/pwa-core/classes/PipelineRequest';
 import { PIPELINE_GET_ADDRESSES } from './../constants/Pipelines';
-import { getUserAddressesSuccess, getUserAddressesFailed } from './../action-creators';
+import { getUserAddressesSuccess, getUserAddressesFailed } from './../action-creators/addressBook';
 
 /**
  * @returns {function(*): *}

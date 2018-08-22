@@ -1,13 +1,13 @@
 import PipelineRequest from '@shopgate/pwa-core/classes/PipelineRequest';
 import { PIPELINE_UPDATE_USER } from './../constants/Pipelines';
-import { updateUser, updateUserSuccess, updateUserFailed } from './../action-creators';
+import { updateUser, updateUserSuccess, updateUserFailed } from './../action-creators/user';
 
-export default ({ mail: ignore, password: ignore2, ...restUser }) => (dispatch) => {
+export default user => (dispatch) => {
   dispatch(updateUser());
 
   new PipelineRequest(PIPELINE_UPDATE_USER)
     .setTrusted()
-    .setInput(restUser)
+    .setInput(user)
     .dispatch()
     .then(() => dispatch(updateUserSuccess()))
     .catch(error => dispatch(updateUserFailed(error)));

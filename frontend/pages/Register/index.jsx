@@ -2,12 +2,17 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import I18n from '@shopgate/pwa-common/components/I18n';
 import UserForm from '@shopgate/user/components/UserForm';
+import connect from './connector';
 import styles from './style';
 
 /**
  * Register component
  */
 class Register extends Component {
+  static propTypes = {
+    isLoggedIn: PropTypes.bool.isRequired,
+  }
+
   static contextTypes = {
     i18n: PropTypes.func,
   };
@@ -26,18 +31,19 @@ class Register extends Component {
    */
   render() {
     // eslint-disable-next-line react/prop-types
-    const { View } = this.props;
+    const { View, isLoggedIn } = this.props;
     return (
       <View title={this.title}>
         <section className={styles.container} data-test-id="RegisterPage">
           <div className={styles.subline}>
             <I18n.Text string="register.subTitle" />
           </div>
-          <UserForm />
+          {/* Kick of user form immediately after register */}
+          {!isLoggedIn && <UserForm />}
         </section>
       </View>
     );
   }
 }
 
-export default Register;
+export default connect(Register);
