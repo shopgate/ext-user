@@ -41,7 +41,7 @@ class AddAddress extends Component {
   render() {
     const { View, address } = this.props;
     return (
-      <View title={this.title}>
+      <View title={!isIos ? this.title : ''}>
         <section className={style.container} data-test-id="UserAddressBookAddPage">
 
           {isIos &&
