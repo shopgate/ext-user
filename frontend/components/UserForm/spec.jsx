@@ -10,7 +10,6 @@ const noop = () => {};
 describe('<UserForm>', () => {
   const props = {
     registerUser: noop,
-    updateMail: noop,
     updateUser: noop,
     user: {},
     validateUser: noop,

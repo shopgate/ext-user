@@ -3,7 +3,6 @@ import joi from 'joi-browser';
 import { getUserData } from '@shopgate/pwa-common/selectors/user';
 import registerUser from '@shopgate/user/actions/registerUser';
 import updateUser from '@shopgate/user/actions/updateUser';
-import updateMail from '@shopgate/user/actions/updateMail';
 import userSchema from '@shopgate/user/common/userSchema';
 import { joiToValidationErrors, validationErrorsToMap } from '@shopgate/user/common/transform';
 
@@ -46,7 +45,6 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   registerUser: user => dispatch(registerUser(user)),
   updateUser: user => dispatch(updateUser(user)),
-  updateMail: mail => dispatch(updateMail(mail)),
   validateUser,
 });
 

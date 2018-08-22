@@ -38,10 +38,12 @@ export const updateUser = () => ({
 
 /**
  * Creates the dispatched UPDATE_USER_SUCCESS action object.
+ * @param {Object[]} messages messages to confirm mail, etc
  * @return {{type: string}}
  */
-export const updateUserSuccess = () => ({
+export const updateUserSuccess = (messages = []) => ({
   type: types.UPDATE_USER_SUCCESS,
+  messages,
 });
 
 /**
@@ -51,26 +53,6 @@ export const updateUserSuccess = () => ({
  */
 export const updateUserFailed = error => ({
   type: types.UPDATE_USER_FAILED,
-  error,
-});
-
-/**
- * Creates the dispatched UPDATE_USER_MAIL_SUCCESS action object.
- * @param {Object[]} messages messages
- * @return {{type: string}}
- */
-export const updateUserMailSuccess = messages => ({
-  type: types.UPDATE_USER_MAIL_SUCCESS,
-  messages,
-});
-
-/**
- * Creates the dispatched UPDATE_USER_MAIL_FAILED action object.
- * @param {Object} error error
- * @return {{type: string, error: Object}}
- */
-export const updateUserMailFailed = error => ({
-  type: types.UPDATE_USER_MAIL_FAILED,
   error,
 });
 

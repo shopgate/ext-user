@@ -18,6 +18,7 @@ import {
   userWillRegister$,
   userWillUpdate$,
   userUpdateSuccess$,
+  userUpdateFailed$,
   userAddressAdd$,
   userAddressUpdate$,
   userAddressChanged$,
@@ -46,6 +47,7 @@ export default (subscribe) => {
     userAddressesDeleteConfirmed$
   );
   const viewIsIdle$ = userUpdateSuccess$.merge(
+    userUpdateFailed$,
     userAddressChanged$,
     userAddressFailed$
   );
