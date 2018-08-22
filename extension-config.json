@@ -46,7 +46,7 @@
         "fields": {
           "firstName": {
             "sortOrder": 1,
-            "label": "locales",
+            "label": "First name / Nachname",
             "type": "text",
             "default": "",
             "placeholder": "locales",
@@ -57,9 +57,9 @@
           },
           "lastName": {
             "sortOrder": 3,
-            "label": "locales",
+            "label": "Last name / Nachname",
             "type": "text",
-            "default": "",
+            "default": "DEFAULT :: test",
             "placeholder": "locales",
             "required": true,
             "visible": {
@@ -68,7 +68,7 @@
           },
           "street1": {
             "sortOrder": 4,
-            "label": "locales",
+            "label": "Street and number / Straße und Hausnummer",
             "type": "text",
             "default": "",
             "placeholder": "locales",
@@ -79,7 +79,7 @@
           },
           "street2": {
             "sortOrder": 5,
-            "label": "locales.street2",
+            "label": "Street 2 / Adresszusatz",
             "type": "text",
             "default": "",
             "placeholder": "",
@@ -90,7 +90,7 @@
           },
           "zipCode": {
             "sortOrder": 6,
-            "label": "locales",
+            "label": "ZIP / PLZ",
             "type": "text",
             "default": "",
             "placeholder": "locales",
@@ -101,7 +101,7 @@
           },
           "city": {
             "sortOrder": 7,
-            "label": "locales.city",
+            "label": "City / Stadt",
             "type": "text",
             "default": "",
             "placeholder": "locales",
@@ -112,7 +112,7 @@
           },
           "country": {
             "sortOrder": 8,
-            "label": "locales",
+            "label": "Land / Country",
             "type": "country",
             "default": "",
             "placeholder": "locales",
@@ -124,7 +124,7 @@
           },
           "province": {
             "sortOrder": 9,
-            "label": "locales",
+            "label": "Province / Bundesland",
             "type": "province",
             "default": "",
             "placeholder": "locales",
@@ -136,7 +136,7 @@
           "customAttributes": {
             "additionalNote": {
               "sortOrder": 14,
-              "label": "Note",
+              "label": "Note / Notiz",
               "type": "textarea",
               "default": "",
               "placeholder": "Enter a custom note for this address here",
