@@ -46,9 +46,9 @@
         "fields": {
           "firstName": {
             "sortOrder": 1,
-            "label": "First name / Nachname",
+            "label": "First name / Vorname",
             "type": "text",
-            "default": "",
+            "default": "DEFAULT :: test-firstname",
             "placeholder": "locales",
             "required": true,
             "visible": {
@@ -59,7 +59,7 @@
             "sortOrder": 3,
             "label": "Last name / Nachname",
             "type": "text",
-            "default": "DEFAULT :: test",
+            "default": "DEFAULT :: test-lastname",
             "placeholder": "locales",
             "required": true,
             "visible": {
@@ -70,7 +70,7 @@
             "sortOrder": 4,
             "label": "Street and number / Straße und Hausnummer",
             "type": "text",
-            "default": "",
+            "default": "DEFAULT :: test-street1",
             "placeholder": "locales",
             "required": true,
             "visible": {
@@ -81,7 +81,7 @@
             "sortOrder": 5,
             "label": "Street 2 / Adresszusatz",
             "type": "text",
-            "default": "",
+            "default": "DEFAULT :: test-street2",
             "placeholder": "",
             "required": false,
             "visible": {
@@ -92,7 +92,7 @@
             "sortOrder": 6,
             "label": "ZIP / PLZ",
             "type": "text",
-            "default": "",
+            "default": "DEFAULT :: test-zipCode",
             "placeholder": "locales",
             "required": true,
             "visible": {
@@ -103,7 +103,7 @@
             "sortOrder": 7,
             "label": "City / Stadt",
             "type": "text",
-            "default": "",
+            "default": "DEFAULT :: test-city",
             "placeholder": "locales",
             "required": true,
             "visible": {
@@ -114,7 +114,7 @@
             "sortOrder": 8,
             "label": "Land / Country",
             "type": "country",
-            "default": "",
+            "default": "US",
             "placeholder": "locales",
             "required": true,
             "countries": ["DE", "US"],
@@ -126,7 +126,7 @@
             "sortOrder": 9,
             "label": "Province / Bundesland",
             "type": "province",
-            "default": "",
+            "default": "US-AZ",
             "placeholder": "locales",
             "required": true,
             "visible": {
@@ -138,8 +138,8 @@
               "sortOrder": 14,
               "label": "Note / Notiz",
               "type": "textarea",
-              "default": "",
-              "placeholder": "Enter a custom note for this address here",
+              "default": "DEFAULT :: test-note",
+              "placeholder": "Enter a custom note for the address here",
               "required": false,
               "visible": {
                 "expression": "true"
