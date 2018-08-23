@@ -20,8 +20,8 @@ describe('UI subscriptions', () => {
   subscription(subscribe);
 
   const [
-    fullPageViewEnter$,
     fullPageViewLeave$,
+    fullPageViewEnter$,
     viewIsLoading$,
     viewIsIdle$,
   ] = subscribe.mock.calls;

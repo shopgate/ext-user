@@ -28,6 +28,21 @@ class AddAddress extends Component {
   };
 
   /**
+   * Don't update if addressId changed.
+   * This only happens when the address was deleted and
+   * therefore no longer has an id, and when the address was added
+   * and therefore got a new id.
+   * @param {Object} nextProps The next props.
+   * @returns {boolean}
+   */
+  shouldComponentUpdate(nextProps) {
+    if (this.props.address.id !== nextProps.address.id) {
+      return false;
+    }
+    return true;
+  }
+
+  /**
    * @return {string}
    */
   get title() {
