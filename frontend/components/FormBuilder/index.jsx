@@ -88,12 +88,6 @@ class FormBuilder extends Component {
       [countryCode]: countries[countryCode].name,
     }), {});
 
-    /**
-     * @param {string} countryCode country
-     * @return {Object}
-     */
-    this.getProvincesList = countryCode => countries[countryCode].divisions;
-
     // Init form element visibility
     // TODO: Replace by real visibility evaluation, based on given state object
     this.formElements.forEach((element) => {
@@ -236,6 +230,13 @@ class FormBuilder extends Component {
 
     return elementList.sort(sortFunc);
   }
+
+  /**
+   * Takes returns a list of provinces nased on
+   * @param {string} countryCode Country code of the country to fetch provinces from
+   * @return {Object}
+   */
+  getProvincesList = countryCode => countries[countryCode].divisions;
 
   /**
    * Takes an element of any type and renders it depending on type.
