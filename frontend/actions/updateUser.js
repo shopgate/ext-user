@@ -1,7 +1,7 @@
 import PipelineRequest from '@shopgate/pwa-core/classes/PipelineRequest';
 import { getUserData } from '@shopgate/pwa-common/selectors/user';
 import { PIPELINE_UPDATE_USER, PIPELINE_UPDATE_MAIL } from './../constants/Pipelines';
-import { updateUser, updateUserSuccess, updateUserFailed } from './../action-creators';
+import { updateUser, updateUserSuccess, updateUserFailed } from './../action-creators/user';
 
 /**
  * Update mail pipeline action
