@@ -10,11 +10,11 @@ import Checkbox from '@shopgate/pwa-ui-shared/Form/Checkbox';
 import * as portals from '@shopgate/user/constants/Portals';
 import EventEmitter from '@shopgate/user/events/emitter';
 import {
-  NAVIGATOR_USER_ADDRESS_BUTTON_CLICK,
-  NAVIGATOR_USER_ADDRESS_BUTTON_SHOW,
-  NAVIGATOR_USER_ADDRESS_BUTTON_HIDE,
-  NAVIGATOR_USER_ADDRESS_BUTTON_ENABLE,
-  NAVIGATOR_USER_ADDRESS_BUTTON_DISABLE,
+  NAVIGATOR_SAVE_BUTTON_CLICK,
+  NAVIGATOR_SAVE_BUTTON_SHOW,
+  NAVIGATOR_SAVE_BUTTON_HIDE,
+  NAVIGATOR_SAVE_BUTTON_ENABLE,
+  NAVIGATOR_SAVE_BUTTON_DISABLE,
 } from '@shopgate/user/constants/EventTypes';
 import config from '@shopgate/user/config';
 import connect from './connector';
@@ -101,11 +101,10 @@ export class AddressForm extends Component {
    * Did mount
    */
   componentDidMount() {
-    EventEmitter.on(NAVIGATOR_USER_ADDRESS_BUTTON_CLICK, this.addAddress);
-
+    EventEmitter.on(NAVIGATOR_SAVE_BUTTON_CLICK, this.addAddress);
     if (this.props.address.id) {
-      EventEmitter.emit(NAVIGATOR_USER_ADDRESS_BUTTON_SHOW);
-      EventEmitter.emit(NAVIGATOR_USER_ADDRESS_BUTTON_DISABLE);
+      EventEmitter.emit(NAVIGATOR_SAVE_BUTTON_SHOW);
+      EventEmitter.emit(NAVIGATOR_SAVE_BUTTON_DISABLE);
     }
   }
 
@@ -120,9 +119,9 @@ export class AddressForm extends Component {
 
     // Enable / Disable navigation button based on disabled prop.
     if (nextProps.disabled && !this.props.disabled) {
-      EventEmitter.emit(NAVIGATOR_USER_ADDRESS_BUTTON_DISABLE);
+      EventEmitter.emit(NAVIGATOR_SAVE_BUTTON_DISABLE);
     } else if (!nextProps.disabled && this.props.disabled) {
-      EventEmitter.emit(NAVIGATOR_USER_ADDRESS_BUTTON_ENABLE);
+      EventEmitter.emit(NAVIGATOR_SAVE_BUTTON_ENABLE);
     }
   }
 
@@ -130,8 +129,8 @@ export class AddressForm extends Component {
    * Will unmount
    */
   componentWillUnmount() {
-    EventEmitter.off(NAVIGATOR_USER_ADDRESS_BUTTON_CLICK, this.addAddress);
-    EventEmitter.emit(NAVIGATOR_USER_ADDRESS_BUTTON_HIDE);
+    EventEmitter.off(NAVIGATOR_SAVE_BUTTON_CLICK, this.addAddress);
+    EventEmitter.emit(NAVIGATOR_SAVE_BUTTON_HIDE);
   }
 
   updateAddress = (address) => {
@@ -147,7 +146,7 @@ export class AddressForm extends Component {
           .every(key => address[key] === this.props.address[key]);
 
         if (hasChanges) {
-          EventEmitter.emit(NAVIGATOR_USER_ADDRESS_BUTTON_ENABLE);
+          EventEmitter.emit(NAVIGATOR_SAVE_BUTTON_ENABLE);
 
           this.setState({
             hasChanges,
@@ -165,8 +164,8 @@ export class AddressForm extends Component {
       errors,
     });
     EventEmitter.emit(Object.keys(errors).length ?
-      NAVIGATOR_USER_ADDRESS_BUTTON_DISABLE :
-      NAVIGATOR_USER_ADDRESS_BUTTON_ENABLE);
+      NAVIGATOR_SAVE_BUTTON_DISABLE :
+      NAVIGATOR_SAVE_BUTTON_ENABLE);
   }
 
   handleFirstNameChange = (firstName) => {
@@ -227,7 +226,7 @@ export class AddressForm extends Component {
     });
 
     if (Object.keys(errors).length > 0) {
-      EventEmitter.emit(NAVIGATOR_USER_ADDRESS_BUTTON_DISABLE);
+      EventEmitter.emit(NAVIGATOR_SAVE_BUTTON_DISABLE);
       return;
     }
 

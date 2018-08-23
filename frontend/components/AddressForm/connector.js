@@ -2,7 +2,7 @@ import { connect } from 'react-redux';
 import joi from 'joi-browser';
 import addAddress from '@shopgate/user/actions/addAddress';
 import updateAddress from '@shopgate/user/actions/updateAddress';
-import { deleteUserAddresses } from '@shopgate/user/action-creators';
+import { deleteUserAddresses } from '@shopgate/user/action-creators/addressBook';
 import { isBusy, getValidationErrors } from '@shopgate/user/selectors/addressBook';
 import { joiToValidationErrors, validationErrorsToMap } from './../../common/transform';
 import userAddressSchema from './../../common/userAddressSchema';

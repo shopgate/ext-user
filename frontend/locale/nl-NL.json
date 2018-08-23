@@ -2,11 +2,17 @@
   "register": {
     "title": "Register",
     "subTitle": "Create a new account",
-    "mail": "Email",
-    "password": "Password",
+    "button": "Register"
+  },
+  "profile": {
+    "title": "Mijn profiel",
+    "updated": "Uw gegevens zijn opgeslagen"
+  },
+  "user": {
     "firstName": "First name",
     "lastName": "Last name",
-    "button": "Register",
+    "mail": "Email",
+    "password": "Password",
     "errors": {
       "blank": "Please complete this field",
       "mail": "Please enter a valid e-mail address",
@@ -73,8 +79,7 @@
       "button": "Choose address"
     },
     "update": {
-      "title": "Update address",
-      "button": "Save"
+      "title": "Update address"
     },
     "delete": {
       "button": "Verwijderen",
@@ -109,9 +114,12 @@
     }
   },
   "navigation": {
-    "my_details": "Mijn Gegevens",
+    "profile": "Mijn Gegevens",
     "change_password": "Wachtwoord wijzigen",
     "address_book": "Adresboek",
     "payment_options": "Betalingsmogelijkheden"
+  },
+  "navigator": {
+    "save": "Save"
   }
 }

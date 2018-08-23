@@ -1,5 +1,4 @@
 import { main$ } from '@shopgate/pwa-common/streams/main';
-import { routeDidChange$ } from '@shopgate/pwa-common/streams/history';
 import { EVALIDATION } from '@shopgate/pwa-core/constants/Pipeline';
 import {
   ADD_USER_ADDRESS,
@@ -14,28 +13,6 @@ import {
   DELETE_USER_ADDRESSES_FAILED,
   SET_DEFAULT_ADDRESS,
 } from './../constants/ActionTypes';
-import {
-  USER_ADDRESS_BOOK_PATH,
-  userAddressPathPattern,
-} from './../constants/RoutePaths';
-
-/**
- * Get triggered when the address book route is entered.
- * @type {Observable}
- */
-export const addressBookDidEnter$ = routeDidChange$
-  .filter(({ pathname, prevPathname }) =>
-    pathname === USER_ADDRESS_BOOK_PATH &&
-    prevPathname !== USER_ADDRESS_BOOK_PATH);
-
-/**
- * Gets triggered when the address book route was left.
- * @type {Observable}
- */
-export const addressBookDidLeave$ = routeDidChange$
-  .filter(({ pathname, prevPathname }) =>
-    (pathname !== USER_ADDRESS_BOOK_PATH && !userAddressPathPattern.match(pathname)) &&
-    (prevPathname === USER_ADDRESS_BOOK_PATH || userAddressPathPattern.match(pathname)));
 
 /**
  * Gets triggered when user address is going to be added

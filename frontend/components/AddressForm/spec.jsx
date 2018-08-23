@@ -8,21 +8,24 @@ jest.mock('@shopgate/user/config', () => ({
   countryCodes: 'DE',
 }));
 
+/**
+ * Noop function
+ */
+const noop = () => {};
+
 describe('<AddressForm>', () => {
   it('should render only configured address fields', () => {
     const wrapper = mount(<AddressForm
-      addAddress={() => {}}
-      updateAddress={() => {}}
-      validateAddress={() => {}}
+      addAddress={noop}
+      updateAddress={noop}
+      validateAddress={noop}
+      deleteAddress={noop}
       disabled={false}
     />);
     expect(wrapper).toMatchSnapshot();
 
     expect(wrapper.find('[label="address.firstName"]').length).toEqual(2);
     expect(wrapper.find('[label="address.lastName"]').length).toEqual(2);
-    expect(wrapper.find('[label="address.phone"]').length).toEqual(2);
-
-    expect(wrapper.find('[label="address.middleName"]').length).toEqual(0);
     expect(wrapper.find('[label="address.countryCode"]').length).toEqual(0);
   });
 
@@ -33,6 +36,7 @@ describe('<AddressForm>', () => {
       addAddress={updateFn}
       updateAddress={updateFn}
       validateAddress={validateFn}
+      deleteAddress={noop}
       disabled={false}
     />);
 
@@ -46,9 +50,10 @@ describe('<AddressForm>', () => {
   it('should print validation errors inline', () => {
     const validateFn = jest.fn(() => ({ firstName: 'foo' }));
     const wrapper = mount(<AddressForm
-      addAddress={() => {}}
-      updateAddress={() => {}}
+      addAddress={noop}
+      updateAddress={noop}
       validateAddress={validateFn}
+      deleteAddress={noop}
       disabled={false}
     />);
 
@@ -65,6 +70,7 @@ describe('<AddressForm>', () => {
       addAddress={updateFn}
       updateAddress={updateFn}
       validateAddress={() => ({})}
+      deleteAddress={noop}
       disabled={false}
     />);
 

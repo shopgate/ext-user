@@ -18,7 +18,7 @@
       {
         "type": "extension",
         "id": "@shopgate/user",
-        "path": "@shopgate/user/user/validateUser.js",
+        "path": "@shopgate/user/user/register/validateUser.js",
         "input": [
           {"key": "mail", "id": "1001"},
           {"key": "password", "id": "1002"},
@@ -37,7 +37,7 @@
       {
         "type": "extension",
         "id": "@shopgate/user",
-        "path": "@shopgate/user/user/registerUser.js",
+        "path": "@shopgate/user/user/register/registerUser.js",
         "input": [
           {"key": "mail", "id": "1001"},
           {"key": "password", "id": "1002"},

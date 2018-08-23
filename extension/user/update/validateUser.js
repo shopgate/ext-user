@@ -1,7 +1,7 @@
 const Joi = require('joi')
-const ValidationError = require('./../common/Error/ValidationError')
-const userSchema = require('./../common/userSchema')(Joi)
-const joiErrorToValidationErrors = require('./../common/joiErrorToValidationErrors')
+const ValidationError = require('./../../common/Error/ValidationError')
+const userSchema = require('./../../common/userSchema')(Joi, true)
+const joiErrorToValidationErrors = require('./../../common/joiErrorToValidationErrors')
 
 /**
  * @param {SDKContext} context
