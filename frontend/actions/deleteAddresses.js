@@ -1,6 +1,6 @@
 import PipelineRequest from '@shopgate/pwa-core/classes/PipelineRequest';
 import { PIPELINE_DELETE_ADDRESSES } from './../constants/Pipelines';
-import { deleteUserAddressesSuccess, deleteUserAddressesFailed } from './../action-creators';
+import { deleteUserAddressesSuccess, deleteUserAddressesFailed } from './../action-creators/addressBook';
 
 /**
  * @param {Object[]} addressIds list of address ids

@@ -104,6 +104,7 @@ export class AddressForm extends Component {
     EventEmitter.on(NAVIGATOR_SAVE_BUTTON_CLICK, this.addAddress);
     if (this.props.address.id) {
       EventEmitter.emit(NAVIGATOR_SAVE_BUTTON_SHOW);
+      EventEmitter.emit(NAVIGATOR_SAVE_BUTTON_DISABLE);
     }
   }
 

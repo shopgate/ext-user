@@ -75,6 +75,9 @@
       "title": "Add address",
       "button": "Save new address"
     },
+    "select": {
+      "button": "Choose address"
+    },
     "update": {
       "title": "Update address"
     },

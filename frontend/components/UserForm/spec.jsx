@@ -9,6 +9,7 @@ const noop = () => {};
 
 describe('<UserForm>', () => {
   const props = {
+    isRegister: true,
     registerUser: noop,
     updateUser: noop,
     user: {},
@@ -34,8 +35,8 @@ describe('<UserForm>', () => {
   it('should render user profile form', () => {
     const profileProps = {
       ...props,
+      isRegister: false,
       user: {
-        id: 'qwerty',
         firstName: 'John',
         lastName: 'Doe',
       },

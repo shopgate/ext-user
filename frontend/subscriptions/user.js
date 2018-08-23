@@ -11,7 +11,7 @@ import createToast from '@shopgate/pwa-common/actions/toast/createToast';
 import {
   userRegisterSuccess$,
   userUpdateSuccess$,
-} from './../streams';
+} from './../streams/user';
 
 /**
  * Register subscriptions.

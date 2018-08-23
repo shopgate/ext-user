@@ -16,6 +16,7 @@ import styles from './style';
  */
 export class UserForm extends Component {
   static propTypes = {
+    isRegister: PropTypes.bool.isRequired,
     registerUser: PropTypes.func.isRequired,
     updateUser: PropTypes.func.isRequired,
     user: PropTypes.shape().isRequired,
@@ -37,6 +38,7 @@ export class UserForm extends Component {
     super(props);
 
     this.state = {
+      disabled: props.disabled,
       hasChanges: false,
       user: {
         firstName: props.user.firstName,
@@ -56,7 +58,7 @@ export class UserForm extends Component {
    */
   componentDidMount() {
     EventEmitter.on(events.NAVIGATOR_SAVE_BUTTON_CLICK, this.saveUser);
-    if (this.props.user.id) {
+    if (!this.props.isRegister) {
       EventEmitter.emit(events.NAVIGATOR_SAVE_BUTTON_SHOW);
     }
   }
@@ -70,7 +72,7 @@ export class UserForm extends Component {
       this.setState({ errors: nextProps.validationErrors });
     }
 
-    if (this.props.user.id) {
+    if (!this.props.isRegister) {
       EventEmitter.emit(events.NAVIGATOR_SAVE_BUTTON_DISABLE);
     }
 
@@ -80,6 +82,8 @@ export class UserForm extends Component {
     } else if (!nextProps.disabled && this.props.disabled) {
       EventEmitter.emit(events.NAVIGATOR_SAVE_BUTTON_ENABLE);
     }
+
+    this.setState({ disabled: nextProps.disabled });
   }
 
   updateUser = (user) => {
@@ -105,11 +109,12 @@ export class UserForm extends Component {
   }
 
   validateInline = () => {
-    const errors = this.props.validateUser(this.state.user, !!this.props.user.id);
+    const errors = this.props.validateUser(this.state.user, !this.props.isRegister);
     this.setState({
       errors,
+      disabled: Object.keys(errors).length > 0,
     });
-    if (this.props.user.id) {
+    if (!this.props.isRegister) {
       EventEmitter.emit(Object.keys(errors).length ?
         events.NAVIGATOR_SAVE_BUTTON_DISABLE :
         events.NAVIGATOR_SAVE_BUTTON_ENABLE);
@@ -121,10 +126,11 @@ export class UserForm extends Component {
   }
 
   saveUser = () => {
-    const errors = this.props.validateUser(this.state.user, !!this.props.user.id);
+    const errors = this.props.validateUser(this.state.user, !this.props.isRegister);
     this.setState({
       inlineValidation: true,
       errors,
+      disabled: Object.keys(errors).length > 0,
     });
 
     if (Object.keys(errors).length > 0) {
@@ -132,10 +138,11 @@ export class UserForm extends Component {
       return;
     }
 
-    if (this.props.user.id) {
-      this.props.updateUser(this.state.user);
-    } else {
+    if (this.props.isRegister) {
       this.props.registerUser(this.state.user);
+    } else {
+      const { mail: ignoreCON756, password: ignoreCON755, ...restUser } = this.state.user;
+      this.props.updateUser(restUser);
     }
   }
 
@@ -162,7 +169,7 @@ export class UserForm extends Component {
    * @return {*}
    */
   render() {
-    const { user: { id: userId = null } } = this.props;
+    const { isRegister } = this.props;
     return (
       <Fragment>
         <Portal name={portals.USER_FORM_BEFORE} />
@@ -172,11 +179,11 @@ export class UserForm extends Component {
           {this.renderTextField('lastName')}
           {this.renderTextField('mail')}
 
-          {!userId && this.renderTextField('password', 'password')}
+          {isRegister && this.renderTextField('password', 'password')}
 
-          {userId && <div>Password: TODO PWA-755</div>}
+          {!isRegister && null}
 
-          {!userId &&
+          {isRegister &&
             <div data-test-id="RegisterButton" className={styles.buttonWrapper}>
               <RippleButton type="secondary" disabled={this.state.disabled} className={styles.button} onClick={this.saveUser}>
                 <I18n.Text string="register.button" />
