@@ -1,7 +1,6 @@
 export const ELEMENT_TYPE_EMAIL = 'email';
 export const ELEMENT_TYPE_PASSWORD = 'password';
 export const ELEMENT_TYPE_TEXT = 'text';
-export const ELEMENT_TYPE_TEXTAREA = 'textarea';
 export const ELEMENT_TYPE_NUMBER = 'number';
 export const ELEMENT_TYPE_SELECT = 'select';
 export const ELEMENT_TYPE_COUNTRY = 'country';

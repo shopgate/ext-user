@@ -2,16 +2,11 @@ import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import Portal from '@shopgate/pwa-common/components/Portal';
 import * as portals from '@shopgate/user/constants/Portals';
-import TextField from '@shopgate/pwa-ui-shared/TextField';
-import Select from '@shopgate/pwa-ui-shared/Form/Select';
 import Checkbox from '@shopgate/pwa-ui-shared/Form/Checkbox';
 import {
   ELEMENT_TYPE_EMAIL,
   ELEMENT_TYPE_PASSWORD,
-  ELEMENT_TYPE_TEXT,
-  ELEMENT_TYPE_TEXTAREA,
   ELEMENT_TYPE_NUMBER,
-  ELEMENT_TYPE_SELECT,
   ELEMENT_TYPE_COUNTRY,
   ELEMENT_TYPE_PROVINCE,
   ELEMENT_TYPE_CHECKBOX,
@@ -19,17 +14,16 @@ import {
   ELEMENT_TYPE_DATE,
   ELEMENT_TYPE_PHONE,
 } from './elementTypes';
+import TextElement from './components/TextElement';
+import SelectElement from './components/SelectElement';
+import CountryElement from './components/CountryElement';
+import ProvinceElement from './components/ProvinceElement';
 import countries from './countries';
 import style from './style';
 
 /**
- * @param {string} countryCode country
- * @return {Object}
- */
-const provincesList = countryCode => countries[countryCode].divisions;
-
-/**
- * Takes a form configuration and handles rendering and updates of the form fields
+ * Takes a form configuration and handles rendering and updates of the form fields.
+ * Note: Only one country and one province element is supported per FormBuilder instance.
  */
 class FormBuilder extends Component {
   static propTypes = {
@@ -88,11 +82,17 @@ class FormBuilder extends Component {
       }
     });
 
-    // Build country element
-    this.countriesList = Object.keys(countries).reduce((reducer, countryCode) => ({
+    // Build country list
+    this.countryList = Object.keys(countries).reduce((reducer, countryCode) => ({
       ...reducer,
       [countryCode]: countries[countryCode].name,
     }), {});
+
+    /**
+     * @param {string} countryCode country
+     * @return {Object}
+     */
+    this.getProvincesList = countryCode => countries[countryCode].divisions;
 
     // Init form element visibility
     // TODO: Replace by real visibility evaluation, based on given state object
@@ -175,7 +175,7 @@ class FormBuilder extends Component {
               // Update province to first or no selection, based on "required" attribute
               newFormData[provinceElement.id] = !provinceElement.required
                 ? ''
-                : Object.keys(provincesList(value))[0];
+                : Object.keys(this.getProvincesList(value))[0];
             }
           }
         }
@@ -238,57 +238,81 @@ class FormBuilder extends Component {
   }
 
   /**
-   * Takes an element of any type and renders it without regards of the type.
+   * Takes an element of any type and renders it depending on type.
    * Also puts portals around the element.
-   * @param {Object} element The data of the element to be rendered
+   * @param {Object} elementData The data of the element to be rendered
    * @returns {JSX}
    */
-  renderElement = (element) => {
+  renderElement = (elementData) => {
     /**
-     * Creates a portal name from the given strings
-     * @param {string} prefix A formId in this context
-     * @param {string} id The id of the element to be surrounded by the portals
-     * @param {string} suffix Set to "before", "after" or empty depending on the context
+     * Takes a string and converts it to a part to be used in a portal name
+     * @param {string} s The string to be sanitized
      * @return {string}
      */
-    const portalName = (prefix, id, suffix = null) => {
-      /**
-       * Takes a string and converts it to a part of a portal name
-       * @param {string} s The string to be sanitized
-       * @return {string}
-       */
-      function sanitize(s) {
-        return s.replace(/[\\._]/, '-');
-      }
+    function sanitize(s) {
+      return s.replace(/[\\._]/, '-');
+    }
 
-      let name = `${portals.NAV_MENU}.${sanitize(prefix)}.${sanitize(id)}`;
-      if (suffix) {
-        name += `.${sanitize(suffix)}`;
-      }
+    const elementKey = `${this.props.id}.${elementData.id}`;
+    const portalName = `${portals.NAV_MENU}.${sanitize(this.props.id)}.${sanitize(elementData.id)}`;
+    const elementName = `${this.props.id}.${elementData.id}`;
+    const elementErrorText = this.state.errors[elementData.id] || '';
+    const elementValue = this.state.formData[elementData.id] || '';
+    const elementVisible = this.state.elementVisibility[elementData.id] || false;
+    const countryElement = this.formElements.find(el => el.type === ELEMENT_TYPE_COUNTRY);
 
-      return name;
-    };
-
-    const elementKey = `${this.props.id}.${element.id}`;
     return (
       <Fragment key={elementKey}>
-        <Portal name={portalName(this.props.id, element.id, portals.BEFORE)} />
-        <Portal name={portalName(this.props.id, element.id)}>
-          {/* Each element renders itself, if the type matches */}
-          {this.renderEmailElement(element)}
-          {this.renderPasswordElement(element)}
-          {this.renderTextElement(element)}
-          {this.renderTextareaElement(element)}
-          {this.renderNumberElement(element)}
-          {this.renderSelectElement(element)}
-          {this.renderCountryElement(element)}
-          {this.renderProvinceElement(element)}
-          {this.renderCheckboxElement(element)}
-          {this.renderRadioElement(element)}
-          {this.renderDateElement(element)}
-          {this.renderPhoneElement(element)}
+        <Portal name={`${portalName}.${portals.BEFORE}`} />
+        <Portal name={portalName}>
+          {/* Each element renders itself, only if the type matches */}
+          {this.renderEmailElement(elementData)}
+          {this.renderPasswordElement(elementData)}
+          <TextElement
+            name={elementName}
+            style={style.fields}
+            element={elementData}
+            errorText={elementErrorText}
+            value={elementValue}
+            visible={elementVisible}
+          />
+          {/* TODO:. this.renderNumberElement(elementData) */}
+          <SelectElement
+            name={elementName}
+            style={style.fields}
+            element={elementData}
+            errorText={elementErrorText}
+            value={elementValue}
+            visible={elementVisible}
+          />
+          <CountryElement
+            name={elementName}
+            style={style.fields}
+            element={elementData}
+            errorText={elementErrorText}
+            value={elementValue}
+            visible={elementVisible}
+            countryList={this.countryList}
+          />
+          <ProvinceElement
+            name={elementName}
+            style={style.fields}
+            element={elementData}
+            errorText={elementErrorText}
+            value={elementValue}
+            visible={elementVisible}
+            provincesList={
+              countryElement &&
+              this.state.formData[countryElement.id] &&
+              this.getProvincesList(this.state.formData[countryElement.id])
+            }
+          />
+          {this.renderCheckboxElement(elementData)}
+          {/* TODO:. this.renderRadioElement(elementData) */}
+          {/* TODO:. this.renderDateElement(elementData) */}
+          {/* TODO:. this.renderPhoneElement(elementData) */}
         </Portal>
-        <Portal name={portalName(this.props.id, element.id, portals.AFTER)} />
+        <Portal name={`${portalName}.${portals.AFTER}`} />
       </Fragment>
     );
   };
@@ -332,46 +356,6 @@ class FormBuilder extends Component {
    * @param {Object} element The data of the element to be rendered
    * @returns {JSX}
    */
-  renderTextElement = (element) => {
-    // Don't render element if type doesn't match or if the element is not visible
-    if (element.type !== ELEMENT_TYPE_TEXT || !this.state.elementVisibility[element.id]) {
-      return null;
-    }
-
-    return (
-      <TextField
-        name={`${this.props.id}.${element.id}`}
-        className={style.fields}
-        label={element.label}
-        onChange={element.handleChange}
-        value={this.state.formData[element.id]}
-        errorText={this.state.errors[element.id]}
-      />
-    );
-  };
-
-  /**
-   * Takes an element and renders it, if the type matches
-   * @param {Object} element The data of the element to be rendered
-   * @returns {JSX}
-   */
-  renderTextareaElement = (element) => {
-    // Don't render element if type doesn't match or if the element is not visible
-    if (element.type !== ELEMENT_TYPE_TEXTAREA || !this.state.elementVisibility[element.id]) {
-      return null;
-    }
-
-    // TODO: Implement TEXTAREA element
-    return (
-      <div>--- TEXTAREA element ---</div>
-    );
-  };
-
-  /**
-   * Takes an element and renders it, if the type matches
-   * @param {Object} element The data of the element to be rendered
-   * @returns {JSX}
-   */
   renderNumberElement = (element) => {
     // Don't render element if type doesn't match or if the element is not visible
     if (element.type !== ELEMENT_TYPE_NUMBER || !this.state.elementVisibility[element.id]) {
@@ -381,91 +365,6 @@ class FormBuilder extends Component {
     // TODO: Implement NUMBER element
     return (
       <div>--- NUMBER element ---</div>
-    );
-  };
-
-  /**
-   * Takes an element and renders it, if the type matches
-   * @param {Object} element The data of the element to be rendered
-   * @returns {JSX}
-   */
-  renderSelectElement = (element) => {
-    // Don't render element if type doesn't match or if the element is not visible
-    if (element.type !== ELEMENT_TYPE_SELECT || !this.state.elementVisibility[element.id]) {
-      return null;
-    }
-
-    return (
-      <Select
-        name={`${this.props.id}.${element.id}`}
-        className={style.fields}
-        label={element.label}
-        placeholder={`${this.props.id}.${element.placeholder}`}
-        options={element.options}
-        value={this.state.formData[element.id]}
-        onChange={element.handleChange}
-        errorText={this.state.errors[element.id]}
-      />
-    );
-  };
-
-  /**
-   * Takes an element and renders it, if the type matches
-   * @param {Object} element The data of the element to be rendered
-   * @returns {JSX}
-   */
-  renderCountryElement = (element) => {
-    // Don't render element if type doesn't match or if the element is not visible
-    if (element.type !== ELEMENT_TYPE_COUNTRY || !this.state.elementVisibility[element.id]) {
-      return null;
-    }
-
-    return (
-      <Select
-        name={`${this.props.id}.${element.id}`}
-        className={style.fields}
-        label={element.label}
-        placeholder={element.placeholder}
-        options={this.countriesList}
-        value={this.state.formData[element.id] || ''}
-        onChange={element.handleChange}
-        errorText={this.state.errors[element.id]}
-      />
-    );
-  };
-
-  /**
-   * Takes an element and renders it, if the type matches
-   * @param {Object} element The data of the element to be rendered
-   * @returns {JSX}
-   */
-  renderProvinceElement = (element) => {
-    // Province element can't be rendered if no country element is available
-    const countryElement = this.formElements.find(el => el.type === ELEMENT_TYPE_COUNTRY);
-    if (!countryElement) {
-      return null;
-    }
-
-    // Don't render element if type doesn't match or if the element is not visible
-    if (element.type !== ELEMENT_TYPE_PROVINCE || !this.state.elementVisibility[element.id]) {
-      return null;
-    }
-
-    return (
-      <Select
-        key={`${this.props.id}.${element.id}`}
-        name={`${this.props.id}.${element.id}`}
-        className={style.fields}
-        label={element.label}
-        placeholder={element.placeholder}
-        options={
-          this.state.formData[countryElement.id] &&
-          provincesList(this.state.formData[countryElement.id])
-        }
-        value={this.state.formData[element.id] || ''}
-        onChange={element.handleChange}
-        errorText={this.state.errors[element.id]}
-      />
     );
   };
 
@@ -485,7 +384,6 @@ class FormBuilder extends Component {
         name={`${this.props.id}.${element.id}`}
         className={style.fields}
         label={element.label}
-        key={this.state.formData[element.id]}
         onChange={element.handleChange}
       />
     );
