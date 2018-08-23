@@ -7,7 +7,7 @@
       "type": "static",
       "destination": "frontend",
       "params": {
-        "value": "DE,AT,FR,GB"
+        "value": "DE,US,AT,FR,GB"
       }
     },
     "addressFields": {
@@ -110,7 +110,7 @@
               "expression": "true"
             }
           },
-          "country": {
+          "countryX": {
             "sortOrder": 8,
             "label": "Land / Country",
             "type": "country",
@@ -122,7 +122,7 @@
               "expression": "true"
             }
           },
-          "province": {
+          "provinceX": {
             "sortOrder": 9,
             "label": "Province / Bundesland",
             "type": "province",

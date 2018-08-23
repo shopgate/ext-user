@@ -2,11 +2,10 @@ import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import Portal from '@shopgate/pwa-common/components/Portal';
 import I18n from '@shopgate/pwa-common/components/I18n';
-import TextField from '@shopgate/pwa-ui-shared/TextField';
 import Button from '@shopgate/pwa-ui-shared/Button';
 import RippleButton from '@shopgate/pwa-ui-shared/RippleButton';
-import Select from '@shopgate/pwa-ui-shared/Form/Select';
 import Checkbox from '@shopgate/pwa-ui-shared/Form/Checkbox';
+import FormBuilder from '@shopgate/user/components/FormBuilder';
 import * as portals from '@shopgate/user/constants/Portals';
 import EventEmitter from '@shopgate/user/events/emitter';
 import {
@@ -17,44 +16,29 @@ import {
   NAVIGATOR_USER_ADDRESS_BUTTON_DISABLE,
 } from '@shopgate/user/constants/EventTypes';
 import config from '@shopgate/user/config';
-import connect from './connector';
-import countries from './countries';
+import connect from './connector'; // TODO: Check connector; Validation possibly not needed anymore!
 import style from './style';
 
-const { splitDefaultAddressesByTags = [], addressFields = [] } = config;
+const { splitDefaultAddressesByTags = [] } = config;
 
-/**
- * @return {Object}
- */
-const countriesList = () => Object.keys(countries).reduce((reducer, countryCode) => ({
-  ...reducer,
-  [countryCode]: countries[countryCode].name,
-}), {});
-
-/**
- * @param {string} countryCode country
- * @return {Object}
- */
-const provincesList = countryCode => countries[countryCode].divisions;
-
-// eslint-disable-next-line valid-jsdoc
 /**
  * Address form component
  */
 export class AddressForm extends Component {
   static propTypes = {
     addAddress: PropTypes.func.isRequired,
+    addressFields: PropTypes.shape().isRequired,
     deleteAddress: PropTypes.func.isRequired,
     disabled: PropTypes.bool.isRequired,
     updateAddress: PropTypes.func.isRequired,
-    validateAddress: PropTypes.func.isRequired,
+    // TODO: possibly not needed =====>     validateAddress: PropTypes.func.isRequired,
     address: PropTypes.shape(),
-    validationErrors: PropTypes.shape(),
+    // TODO: possibly not needed =====>     validationErrors: PropTypes.shape(),
   }
 
   static defaultProps = {
     address: {},
-    validationErrors: {},
+    // TODO: possibly not needed =====>     validationErrors: {},
   }
 
   /**
@@ -64,44 +48,15 @@ export class AddressForm extends Component {
   constructor(props) {
     super(props);
 
-    this.countriesList = countriesList();
-    const country = Object.keys(this.countriesList)[0];
-    const province = Object.keys(provincesList(country))[0];
-
-    this.state = {
-      hasChanges: false,
-      address: {
-        firstName: '',
-        lastName: '',
-        street1: '',
-        street2: '',
-        city: '',
-        province,
-        country,
-        zipCode: '',
-        tags: [],
-        ...props.address, // Init edit address form
-      },
-      errors: {
-        firstName: '',
-        lastName: '',
-        street1: '',
-        street2: '',
-        city: '',
-        province: '',
-        country: '',
-        zipCode: '',
-        ...props.validationErrors,
-      },
-      inlineValidation: false,
-    };
+    this.address = props.address;
   }
 
   /**
    * Did mount
    */
   componentDidMount() {
-    EventEmitter.on(NAVIGATOR_USER_ADDRESS_BUTTON_CLICK, this.addAddress);
+    // Attach event handler for updating an address to the "save" button of the theme
+    EventEmitter.on(NAVIGATOR_USER_ADDRESS_BUTTON_CLICK, this.addOrUpdateAddress);
 
     if (this.props.address.id) {
       EventEmitter.emit(NAVIGATOR_USER_ADDRESS_BUTTON_SHOW);
@@ -114,6 +69,7 @@ export class AddressForm extends Component {
    * @param {Object} nextProps The next props.
    */
   componentWillReceiveProps(nextProps) {
+    // TODO: Do proper validation error handling
     if (Object.keys(nextProps.validationErrors).length) {
       this.setState({ errors: nextProps.validationErrors });
     }
@@ -130,106 +86,88 @@ export class AddressForm extends Component {
    * Will unmount
    */
   componentWillUnmount() {
-    EventEmitter.off(NAVIGATOR_USER_ADDRESS_BUTTON_CLICK, this.addAddress);
+    EventEmitter.off(NAVIGATOR_USER_ADDRESS_BUTTON_CLICK, this.addOrUpdateAddress);
     EventEmitter.emit(NAVIGATOR_USER_ADDRESS_BUTTON_HIDE);
   }
 
+  /**
+   * Takes the data from the FormBuilder, checks the latest changes and updates the component values
+   * @param {Object} address The new (or changed) address properties
+   */
   updateAddress = (address) => {
-    this.setState({
-      address: {
-        ...this.state.address,
-        ...address,
-      },
-    }, this.state.inlineValidation ? this.validateInline : () => {
-      if (!this.state.hasChanges) {
-        // Show navigtion button when first time updating address.
-        const hasChanges = !Object.keys(address)
-          .every(key => address[key] === this.props.address[key]);
+    // Fill up the current data with the latest form changes
+    this.address = {
+      ...this.address,
+      ...address,
+    };
 
-        if (hasChanges) {
-          EventEmitter.emit(NAVIGATOR_USER_ADDRESS_BUTTON_ENABLE);
-
-          this.setState({
-            hasChanges,
-          });
-        }
-      }
-    });
+    // TODO: Check if anything has changed and enable save button if if validation passed
+    // ---------------------------------------------------------------------------------------------
+    // TODO:. this.setState({
+    // TODO:.   address: {
+    // TODO:.     ...this.state.address,
+    // TODO:.     ...address,
+    // TODO:.   },
+    // TODO:. }, this.state.inlineValidation ? this.validateInline : () => {
+    // TODO:.   if (!this.state.hasChanges) {
+    // TODO:.     // Show navigtion button when first time updating address.
+    // TODO:.     const hasChanges = !Object.keys(address)
+    // TODO:.       .every(key => address[key] === this.props.address[key]);
+    // TODO:
+    // TODO:.     if (hasChanges) {
+    // TODO:.       EventEmitter.emit(NAVIGATOR_USER_ADDRESS_BUTTON_ENABLE);
+    // TODO:
+    // TODO:.       this.setState({
+    // TODO:.         hasChanges,
+    // TODO:.       });
+    // TODO:.     }
+    // TODO:.   }
+    // TODO:. });
   }
 
-  deleteAddress = () => this.props.deleteAddress(this.props.address.id)
+  /**
+   * Handles the click on the "delete address" button
+   */
+  deleteAddress = () => { this.props.deleteAddress(this.props.address.id); }
 
-  validateInline = () => {
-    const errors = this.props.validateAddress(this.state.address);
-    this.setState({
-      errors,
-    });
-    EventEmitter.emit(Object.keys(errors).length ?
-      NAVIGATOR_USER_ADDRESS_BUTTON_DISABLE :
-      NAVIGATOR_USER_ADDRESS_BUTTON_ENABLE);
-  }
+  // TODO: Take care of validation errors coming from the form builder
+  // -----------------------------------------------------------------------------------------------
+  // TODO:. validateInline = () => {
+  // TODO:.   const errors = this.props.validateAddress(this.state.address);
+  // TODO:.   this.setState({
+  // TODO:.     errors,
+  // TODO:.   });
+  // TODO:.   EventEmitter.emit(Object.keys(errors).length ?
+  // TODO:.     NAVIGATOR_USER_ADDRESS_BUTTON_DISABLE :
+  // TODO:.     NAVIGATOR_USER_ADDRESS_BUTTON_ENABLE);
+  // TODO:. }
 
-  handleFirstNameChange = (firstName) => {
-    this.updateAddress({ firstName });
-  }
-
-  handleLastNameChange = (lastName) => {
-    this.updateAddress({ lastName });
-  }
-
-  handleStreet1Change = (street1) => {
-    this.updateAddress({ street1 });
-  }
-
-  handleStreet2Change = (street2) => {
-    this.updateAddress({ street2 });
-  }
-
-  handleCityChange = (city) => {
-    this.updateAddress({ city });
-  }
-
-  handleZipCodeChange = (zipCode) => {
-    this.updateAddress({ zipCode });
-  }
-
-  handleCountryChange = (country) => {
-    let province = null;
-    if (!countries[country].hideProvince) {
-      [province] = Object.keys(provincesList(country));
-    }
-    this.updateAddress({
-      country,
-      province,
-    });
-  }
-
-  handleProvinceChange = (province) => {
-    this.updateAddress({ province });
-  }
-
+  /**
+   * Update handler to modify address tags based on the user selection
+   * @param {boolean} makeDefault Determines if the tag is supposed to be set or removed
+   * @param {string} tag The tag name to work with
+   */
   handleMakeDefault = (makeDefault, tag) => {
     const defaultTag = tag === 'default' ? tag : `default_${tag}`;
     if (makeDefault) {
-      this.updateAddress({ tags: [...this.state.address.tags, defaultTag] });
+      this.updateAddress({ tags: [...this.address.tags, defaultTag] });
     } else {
       this.updateAddress({
-        tags: this.state.address.tags.filter(t => t !== defaultTag),
+        tags: this.address.tags.filter(t => t !== defaultTag),
       });
     }
   }
 
-  addAddress = () => {
-    const errors = this.props.validateAddress(this.state.address);
-    this.setState({
-      inlineValidation: true,
-      errors,
-    });
-
-    if (Object.keys(errors).length > 0) {
-      EventEmitter.emit(NAVIGATOR_USER_ADDRESS_BUTTON_DISABLE);
-      return;
-    }
+  /**
+   * Checks if the address may be created or updated and performs the desired action
+   */
+  addOrUpdateAddress = () => {
+    // TODO: Move the following code to a different place
+    // ---------------------------------------------------------------------------------------------
+    // TODO:. if (Object.keys(errors).length > 0) {
+    // TODO:.   EventEmitter.emit(NAVIGATOR_USER_ADDRESS_BUTTON_DISABLE);
+    // TODO:.   return;
+    // TODO:. }
 
     if (this.props.address.id) {
       // Join with origin and update
@@ -238,29 +176,8 @@ export class AddressForm extends Component {
         ...this.state.address,
       });
     } else {
-      this.props.addAddress(this.state.address);
+      this.props.addAddress(this.address);
     }
-  }
-
-  /**
-   * Render text field of form
-   * @param {string} name field name
-   * @param {function} changeHandler change handler
-   * @return {JSX|null}
-   */
-  renderTextField(name, changeHandler) {
-    if (!addressFields.fields || typeof addressFields.fields[name] !== 'object') {
-      return null;
-    }
-    return (
-      <TextField
-        name={name}
-        label={`address.${name}`}
-        onChange={changeHandler}
-        value={this.state.address[name]}
-        errorText={this.state.errors[name]}
-      />
-    );
   }
 
   /**
@@ -273,42 +190,14 @@ export class AddressForm extends Component {
         <Portal name={portals.USER_ADDRESS_FORM_BEFORE} />
         <Portal name={portals.USER_ADDRESS_FORM}>
 
-          <div className={style.fields}>
-
-            {this.renderTextField('firstName', this.handleChange)}
-            {this.renderTextField('lastName', this.handleLastNameChange)}
-            {this.renderTextField('street1', this.handleStreet1Change)}
-            {this.renderTextField('street2', this.handleStreet2Change)}
-            {this.renderTextField('zipCode', this.handleZipCodeChange)}
-            {this.renderTextField('city', this.handleCityChange)}
-
-            {addressFields.includes('country') &&
-              <Fragment>
-                <Select
-                  name="country"
-                  placeholder="placeholder"
-                  label="address.country"
-                  options={this.countriesList}
-                  value={this.state.address.country}
-                  onChange={this.handleCountryChange}
-                  errorText={this.state.errors.country}
-                />
-                {this.state.address.country &&
-                !countries[this.state.address.country].hideProvince &&
-                  <Select
-                    name="province"
-                    placeholder="placeholder"
-                    label="address.province"
-                    options={provincesList(this.state.address.country)}
-                    value={this.state.address.province || ''}
-                    onChange={this.handleProvinceChange}
-                    errorText={this.state.errors.province}
-                  />
-                }
-              </Fragment>
-            }
-
-          </div>
+          <FormBuilder
+            id="address"
+            className={style.fields}
+            locale="en-US" // TODO: exchange with current locale
+            config={this.props.addressFields}
+            defaults={this.address}
+            handleUpdate={this.updateAddress}
+          />
 
           <div className={style.options}>
             {/* Delete address button */}
@@ -339,10 +228,14 @@ export class AddressForm extends Component {
 
                 <Portal name={portals.USER_ADDRESS_FORM_BUTTON_BEFORE} />
                 <Portal name={portals.USER_ADDRESS_FORM_BUTTON}>
+                  {
+                    /* TODO: Inconsistent form behaviour, possibly undesired!
+                     * Should the save and update buttons really be that different??? */
+                  }
                   <RippleButton
                     type="secondary"
                     disabled={this.props.disabled}
-                    onClick={this.addAddress}
+                    onClick={this.addOrUpdateAddress}
                     className={style.addAddressButton}
                     data-test-id="AddAddressButton"
                   >

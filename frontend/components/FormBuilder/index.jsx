@@ -20,6 +20,7 @@ import {
   ELEMENT_TYPE_PHONE,
 } from './elementTypes';
 import countries from './countries';
+import style from './style';
 
 /**
  * @param {string} countryCode country
@@ -51,15 +52,61 @@ class FormBuilder extends Component {
   constructor(props) {
     super(props);
 
-    this.state.formData = this.props.defaults;
+    // Prepare internal state
+    this.state = {
+      elementVisibility: {},
+      formData: {},
+      errors: {},
+    };
 
+    // Reorganize form elements into a strucure that can be easily rendered
     this.formElements = this.buildFormElements(this.props.config, this.props.locale);
+
+    // Take only those defaults, that are actually represented by an element
+    this.formDefaults = {};
+    this.formElements.forEach((element) => {
+      let defaultState = null;
+
+      // Use default from element config as a base
+      if (element.default !== undefined) {
+        defaultState = element.default;
+      }
+
+      // Take defaults from "customAttributes" or from the higher level, depending on element config
+      if (element.custom && this.props.defaults.customAttributes !== undefined) {
+        if (this.props.defaults.customAttributes[element.id] !== undefined) {
+          defaultState = this.props.defaults.customAttributes[element.id];
+        }
+      } else if (!element.custom && this.props.defaults[element.id] !== undefined) {
+        defaultState = this.props.defaults[element.id];
+      }
+
+      // Save default into the form state and into defaults property if one was set
+      if (defaultState !== undefined) {
+        this.state.formData[element.id] = defaultState;
+        this.formDefaults[element.id] = defaultState;
+      }
+    });
 
     // Build country element
     this.countriesList = Object.keys(countries).reduce((reducer, countryCode) => ({
       ...reducer,
       [countryCode]: countries[countryCode].name,
     }), {});
+
+    // Init form element visibility
+    // TODO: Replace by real visibility evaluation, based on given state object
+    this.formElements.forEach((element) => {
+      if (element.visible && element.visible.expression !== 'false') {
+        this.state.elementVisibility[element.id] = true;
+      }
+
+      // Remove invisible elements from "formData" state
+      if (!this.state.elementVisibility[element.id]
+      && this.state.formData[element.id] !== undefined) {
+        delete this.state.formData[element.id];
+      }
+    });
   }
 
   /**
@@ -69,7 +116,7 @@ class FormBuilder extends Component {
    * @return {Object[]}
    */
   buildFormElements(formConfig, locale) {
-    const elementList = [];
+    let elementList = [];
 
     // Add all non-custom attributes and mark them as such
     Object.getOwnPropertyNames(formConfig.fields).forEach((id) => {
@@ -96,14 +143,66 @@ class FormBuilder extends Component {
     }
 
     // Generate handler functions for each element
-    elementList.map(element => ({
+    elementList = elementList.map(element => ({
       ...element,
       handleChange: (value) => {
-        const newState = { ...this.state.formData };
-        newState[element.id] = value;
-        this.setState(newState);
+        const newFormData = { ...this.state.formData };
 
-        this.props.handleUpdate(this.state.formData);
+        const newElementVisibility = { ...this.state.elementVisibility };
+        // TODO: Re-evaluate element visibility // The following snippet is just prototype code
+        if (element.type === ELEMENT_TYPE_COUNTRY) {
+          const provinceElement = this.formElements.find(el => el.type === ELEMENT_TYPE_PROVINCE);
+          newElementVisibility[provinceElement.id] = value !== 'DE';
+        }
+
+        // Remove state of elements that have become invisible
+        Object.getOwnPropertyNames(newFormData).forEach((elementId) => {
+          if (!this.state.elementVisibility[elementId]) {
+            delete newFormData[elementId];
+          }
+        });
+
+        // Handle province update when country changes
+        if (element.type === ELEMENT_TYPE_COUNTRY && this.state.formData[element.type] !== value) {
+          // Check if province element is even in the form config
+          const provinceElement = this.formElements.find(el => el.type === ELEMENT_TYPE_PROVINCE);
+          const countryElement = this.formElements.find(el => el.type === ELEMENT_TYPE_COUNTRY);
+          if (provinceElement && newElementVisibility[provinceElement.id]) {
+            // Overwrite province with the form's default, if country matches the default as well
+            if (countryElement && value === this.formDefaults[countryElement.id]) {
+              newFormData[provinceElement.id] = this.formDefaults[provinceElement.id];
+            } else {
+              // Update province to first or no selection, based on "required" attribute
+              newFormData[provinceElement.id] = !provinceElement.required
+                ? ''
+                : Object.keys(provincesList(value))[0];
+            }
+          }
+        }
+
+        // Handle state internally
+        newFormData[element.id] = value;
+        this.setState({
+          ...this.state,
+          formData: newFormData,
+          elementVisibility: newElementVisibility,
+        });
+
+        // Transform to external structure
+        const updateData = {};
+        this.formElements.forEach((el) => {
+          if (el.custom) {
+            if (updateData.customAttributes === undefined) {
+              updateData.customAttributes = {};
+            }
+            updateData.customAttributes[el.id] = this.state.formData[el.id];
+          } else {
+            updateData[el.id] = this.state.formData[el.id];
+          }
+        });
+
+        // Trigger the given update action
+        this.props.handleUpdate(updateData);
       },
     }));
 
@@ -113,8 +212,17 @@ class FormBuilder extends Component {
       // TODO: Make sure to fall back to defaults if possible
     }
 
-    // Sort the fields by sortOrder property and return the full list
-    return elementList.sort((element1, element2) => {
+    /**
+     * Sorts the elements by "sortOrder" property
+     *
+     * @typedef {Object} FormElement
+     * @property {number} sortOrder
+     *
+     * @param {FormElement} element1 First element
+     * @param {FormElement} element2 Second element
+     * @returns {number}
+     */
+    const sortFunc = (element1, element2) => {
       // Keep relative sort order when no specific sort order was set for both
       if (element2.sortOrder === undefined) {
         return -1;
@@ -124,17 +232,18 @@ class FormBuilder extends Component {
 
       // Sort in ascending order of sortOrder otherwise
       return element1.sortOrder - element2.sortOrder;
-    });
+    };
+
+    return elementList.sort(sortFunc);
   }
 
   /**
-   * Takes the form and element ids of the element to be surrounded with portals
-   * @param {string} formId The id of the form to be rendered
-   * @param {string} elementId The id of the jsx element
-   * @param {JSX} jsxElement The jsx element to place
-   * @return {JSX}
+   * Takes an element of any type and renders it without regards of the type.
+   * Also puts portals around the element.
+   * @param {Object} element The data of the element to be rendered
+   * @returns {JSX}
    */
-  surroundWithPortal = (formId, elementId, jsxElement) => {
+  renderElement = (element) => {
     /**
      * Creates a portal name from the given strings
      * @param {string} prefix A formId in this context
@@ -152,7 +261,7 @@ class FormBuilder extends Component {
         return s.replace(/[\\._]/, '-');
       }
 
-      let name = `${portals.NAV_MENU}.${sanitize(formId)}.${sanitize(elementId)}`;
+      let name = `${portals.NAV_MENU}.${sanitize(prefix)}.${sanitize(id)}`;
       if (suffix) {
         name += `.${sanitize(suffix)}`;
       }
@@ -160,250 +269,278 @@ class FormBuilder extends Component {
       return name;
     };
 
+    const elementKey = `${this.props.id}.${element.id}`;
     return (
-      <Fragment>
-        <Portal name={portalName(formId, elementId, portals.BEFORE)} />
-        <Portal name={portalName(formId, elementId)}>
-          {jsxElement}
+      <Fragment key={elementKey}>
+        <Portal name={portalName(this.props.id, element.id, portals.BEFORE)} />
+        <Portal name={portalName(this.props.id, element.id)}>
+          {/* Each element renders itself, if the type matches */}
+          {this.renderEmailElement(element)}
+          {this.renderPasswordElement(element)}
+          {this.renderTextElement(element)}
+          {this.renderTextareaElement(element)}
+          {this.renderNumberElement(element)}
+          {this.renderSelectElement(element)}
+          {this.renderCountryElement(element)}
+          {this.renderProvinceElement(element)}
+          {this.renderCheckboxElement(element)}
+          {this.renderRadioElement(element)}
+          {this.renderDateElement(element)}
+          {this.renderPhoneElement(element)}
         </Portal>
-        <Portal name={portalName(formId, elementId, portals.AFTER)} />
+        <Portal name={portalName(this.props.id, element.id, portals.AFTER)} />
       </Fragment>
     );
   };
 
   /**
-   * Takes an element of any type and renders it, if the defined type is supported
-   * @param {Object} e The data of the element to be rendered
+   * Takes an element and renders it, if the type matches
+   * @param {Object} element The data of the element to be rendered
    * @returns {JSX}
    */
-  renderElement = e => (
-    <Fragment>
-      { /* Each element renders itself, if the type matches */ }
-      {this.renderEmailElement(e)}
-      {this.renderPasswordElement(e)}
-      {this.renderTextElement(e)}
-      {this.renderTextareaElement(e)}
-      {this.renderNumberElement(e)}
-      {this.renderSelectElement(e)}
-      {this.renderCountryElement(e)}
-      {this.renderProvinceElement(e)}
-      {this.renderCheckboxElement(e)}
-      {this.renderRadioElement(e)}
-      {this.renderDateElement(e)}
-      {this.renderPhoneElement(e)}
-    </Fragment>
-  );
+  renderEmailElement = (element) => {
+    // Don't render element if type doesn't match or if the element is not visible
+    if (element.type !== ELEMENT_TYPE_EMAIL || !this.state.elementVisibility[element.id]) {
+      return null;
+    }
+
+    // TODO: Implement EMAIL element
+    return (
+      <div>--- EMAIL element ---</div>
+    );
+  };
 
   /**
    * Takes an element and renders it, if the type matches
-   * @param {Object} e The data of the element to be rendered
+   * @param {Object} element The data of the element to be rendered
    * @returns {JSX}
    */
-  renderEmailElement = e => (
-    (e.type === ELEMENT_TYPE_EMAIL && this.surroundWithPortal(
-      this.props.id,
-      e.id,
-      { /* TODO */ }
-    ))
-    || null
-  );
+  renderPasswordElement = (element) => {
+    // Don't render element if type doesn't match or if the element is not visible
+    if (element.type !== ELEMENT_TYPE_PASSWORD || !this.state.elementVisibility[element.id]) {
+      return null;
+    }
+
+    // TODO: Implement PASSWORD element
+    return (
+      <div>--- PASSWORD element ---</div>
+    );
+  };
 
   /**
    * Takes an element and renders it, if the type matches
-   * @param {Object} e The data of the element to be rendered
+   * @param {Object} element The data of the element to be rendered
    * @returns {JSX}
    */
-  renderPasswordElement = e => (
-    (e.type === ELEMENT_TYPE_PASSWORD && this.surroundWithPortal(
-      this.props.id,
-      e.id,
-      { /* TODO */ }
-    ))
-    || null
-  );
+  renderTextElement = (element) => {
+    // Don't render element if type doesn't match or if the element is not visible
+    if (element.type !== ELEMENT_TYPE_TEXT || !this.state.elementVisibility[element.id]) {
+      return null;
+    }
 
-  /**
-   * Takes an element and renders it, if the type matches
-   * @param {Object} e The data of the element to be rendered
-   * @returns {JSX}
-   */
-  renderTextElement = e => (
-    (e.type === ELEMENT_TYPE_TEXT && this.surroundWithPortal(
-      this.props.id,
-      e.id,
+    return (
       <TextField
-        name={`${this.props.id}.${e.id}`}
-        className={this.props.className}
-        label={e.label}
-        onChange={e.handleChange}
-        value={this.state.formData[e.id]}
-        errorText={this.state.errors[e.id]}
+        name={`${this.props.id}.${element.id}`}
+        className={style.fields}
+        label={element.label}
+        onChange={element.handleChange}
+        value={this.state.formData[element.id]}
+        errorText={this.state.errors[element.id]}
       />
-    ))
-    || null
-  );
+    );
+  };
 
   /**
    * Takes an element and renders it, if the type matches
-   * @param {Object} e The data of the element to be rendered
+   * @param {Object} element The data of the element to be rendered
    * @returns {JSX}
    */
-  renderTextareaElement = e => (
-    (e.type === ELEMENT_TYPE_TEXTAREA && this.surroundWithPortal(
-      this.props.id,
-      e.id,
-      { /* TODO */ }
-    ))
-    || null
-  );
+  renderTextareaElement = (element) => {
+    // Don't render element if type doesn't match or if the element is not visible
+    if (element.type !== ELEMENT_TYPE_TEXTAREA || !this.state.elementVisibility[element.id]) {
+      return null;
+    }
+
+    // TODO: Implement TEXTAREA element
+    return (
+      <div>--- TEXTAREA element ---</div>
+    );
+  };
 
   /**
    * Takes an element and renders it, if the type matches
-   * @param {Object} e The data of the element to be rendered
+   * @param {Object} element The data of the element to be rendered
    * @returns {JSX}
    */
-  renderNumberElement = e => (
-    (e.type === ELEMENT_TYPE_NUMBER && this.surroundWithPortal(
-      this.props.id,
-      e.id,
-      { /* TODO */ }
-    ))
-    || null
-  );
+  renderNumberElement = (element) => {
+    // Don't render element if type doesn't match or if the element is not visible
+    if (element.type !== ELEMENT_TYPE_NUMBER || !this.state.elementVisibility[element.id]) {
+      return null;
+    }
+
+    // TODO: Implement NUMBER element
+    return (
+      <div>--- NUMBER element ---</div>
+    );
+  };
 
   /**
    * Takes an element and renders it, if the type matches
-   * @param {Object} e The data of the element to be rendered
+   * @param {Object} element The data of the element to be rendered
    * @returns {JSX}
    */
-  renderSelectElement = e => (
-    (e.type === ELEMENT_TYPE_SELECT && this.surroundWithPortal(
-      this.props.id,
-      e.id,
+  renderSelectElement = (element) => {
+    // Don't render element if type doesn't match or if the element is not visible
+    if (element.type !== ELEMENT_TYPE_SELECT || !this.state.elementVisibility[element.id]) {
+      return null;
+    }
+
+    return (
       <Select
-        name={`${this.props.id}.${e.id}`}
-        className={this.props.className}
-        label={e.label}
-        placeholder={`${this.props.id}.${e.placeholder}`}
-        options={e.options}
-        value={this.state.formData[e.id]}
-        onChange={e.handleChange}
-        errorText={this.state.errors[e.id]}
+        name={`${this.props.id}.${element.id}`}
+        className={style.fields}
+        label={element.label}
+        placeholder={`${this.props.id}.${element.placeholder}`}
+        options={element.options}
+        value={this.state.formData[element.id]}
+        onChange={element.handleChange}
+        errorText={this.state.errors[element.id]}
       />
-    ))
-    || null
-  );
+    );
+  };
 
   /**
    * Takes an element and renders it, if the type matches
-   * @param {Object} e The data of the element to be rendered
+   * @param {Object} element The data of the element to be rendered
    * @returns {JSX}
    */
-  renderCountryElement = e => (
-    (e.type === ELEMENT_TYPE_COUNTRY && this.surroundWithPortal(
-      this.props.id,
-      e.id,
+  renderCountryElement = (element) => {
+    // Don't render element if type doesn't match or if the element is not visible
+    if (element.type !== ELEMENT_TYPE_COUNTRY || !this.state.elementVisibility[element.id]) {
+      return null;
+    }
+
+    return (
       <Select
-        name={`${this.props.id}.${e.id}`}
-        className={this.props.className}
-        label={e.label}
-        placeholder={e.placeholder}
+        name={`${this.props.id}.${element.id}`}
+        className={style.fields}
+        label={element.label}
+        placeholder={element.placeholder}
         options={this.countriesList}
-        value={this.state.formData[e.id] || Object.keys(this.countriesList)[0]}
-        onChange={e.handleChange}
-        errorText={this.state.errors[e.id]}
+        value={this.state.formData[element.id] || ''}
+        onChange={element.handleChange}
+        errorText={this.state.errors[element.id]}
       />
-    ))
-    || null
-  );
+    );
+  };
 
   /**
    * Takes an element and renders it, if the type matches
-   * @param {Object} e The data of the element to be rendered
+   * @param {Object} element The data of the element to be rendered
    * @returns {JSX}
    */
-  renderProvinceElement = e => (
-    (e.type === ELEMENT_TYPE_PROVINCE && this.surroundWithPortal(
-      this.props.id,
-      e.id,
+  renderProvinceElement = (element) => {
+    // Province element can't be rendered if no country element is available
+    const countryElement = this.formElements.find(el => el.type === ELEMENT_TYPE_COUNTRY);
+    if (!countryElement) {
+      return null;
+    }
+
+    // Don't render element if type doesn't match or if the element is not visible
+    if (element.type !== ELEMENT_TYPE_PROVINCE || !this.state.elementVisibility[element.id]) {
+      return null;
+    }
+
+    return (
       <Select
-        name={`${this.props.id}.${e.id}`}
-        className={this.props.className}
-        label={e.label}
-        placeholder={e.placeholder}
-        options={this.state.formData.country && provincesList(this.state.formData.country)}
-        value={this.state.formData[e.id] || (
-          this.state.formData.country &&
-          Object.keys(provincesList(this.state.formData.country))[0]
-        )}
-        onChange={e.handleChange}
-        errorText={this.state.errors[e.id]}
+        key={`${this.props.id}.${element.id}`}
+        name={`${this.props.id}.${element.id}`}
+        className={style.fields}
+        label={element.label}
+        placeholder={element.placeholder}
+        options={
+          this.state.formData[countryElement.id] &&
+          provincesList(this.state.formData[countryElement.id])
+        }
+        value={this.state.formData[element.id] || ''}
+        onChange={element.handleChange}
+        errorText={this.state.errors[element.id]}
       />
-    ))
-    || null
-  );
+    );
+  };
 
   /**
    * Takes an element and renders it, if the type matches
-   * @param {Object} e The data of the element to be rendered
+   * @param {Object} element The data of the element to be rendered
    * @returns {JSX}
    */
-  renderCheckboxElement = e => (
-    (e.type === ELEMENT_TYPE_CHECKBOX && this.surroundWithPortal(
-      this.props.id,
-      e.id,
+  renderCheckboxElement = (element) => {
+    // Don't render element if type doesn't match or if the element is not visible
+    if (element.type !== ELEMENT_TYPE_CHECKBOX || !this.state.elementVisibility[element.id]) {
+      return null;
+    }
+
+    return (
       <Checkbox
-        name={`${this.props.id}.${e.id}`}
-        className={this.props.className}
-        label={e.label}
-        key={this.state.formData[e.id]}
-        onChange={e.handleChange}
+        name={`${this.props.id}.${element.id}`}
+        className={style.fields}
+        label={element.label}
+        key={this.state.formData[element.id]}
+        onChange={element.handleChange}
       />
-    ))
-    || null
-  );
+    );
+  };
 
   /**
    * Takes an element and renders it, if the type matches
-   * @param {Object} e The data of the element to be rendered
+   * @param {Object} element The data of the element to be rendered
    * @returns {JSX}
    */
-  renderRadioElement = e => (
-    (e.type === ELEMENT_TYPE_RADIO && this.surroundWithPortal(
-      this.props.id,
-      e.id,
-      { /* TODO */ }
-    ))
-    || null
-  );
+  renderRadioElement = (element) => {
+    // Don't render element if type doesn't match or if the element is not visible
+    if (element.type !== ELEMENT_TYPE_RADIO || !this.state.elementVisibility[element.id]) {
+      return null;
+    }
+
+    // TODO: Implement RADIO element
+    return (
+      <div>--- RADIO element ---</div>
+    );
+  };
 
   /**
    * Takes an element and renders it, if the type matches
-   * @param {Object} e The data of the element to be rendered
+   * @param {Object} element The data of the element to be rendered
    * @returns {JSX}
    */
-  renderDateElement = e => (
-    (e.type === ELEMENT_TYPE_DATE && this.surroundWithPortal(
-      this.props.id,
-      e.id,
-      { /* TODO */ }
-    ))
-    || null
-  );
+  renderDateElement = (element) => {
+    // Don't render element if type doesn't match or if the element is not visible
+    if (element.type !== ELEMENT_TYPE_DATE || !this.state.elementVisibility[element.id]) {
+      return null;
+    }
+
+    // TODO: Implement DATE element
+    return (
+      <div>--- DATE element ---</div>
+    );
+  };
 
   /**
    * Takes an element and renders it, if the type matches
-   * @param {Object} e The data of the element to be rendered
+   * @param {Object} element The data of the element to be rendered
    * @returns {JSX}
    */
-  renderPhoneElement = e => (
-    (e.type === ELEMENT_TYPE_PHONE && this.surroundWithPortal(
-      this.props.id,
-      e.id,
-      { /* TODO */ }
-    ))
-    || null
-  );
+  renderPhoneElement = (element) => {
+    // Don't render element if type doesn't match or if the element is not visible
+    if (element.type !== ELEMENT_TYPE_PHONE || !this.state.elementVisibility[element.id]) {
+      return null;
+    }
+
+    // TODO: Implement PHONE element
+    return (
+      <div>--- PHONE element ---</div>
+    );
+  };
 
   /**
    * Renders the component based on the given config
@@ -413,7 +550,7 @@ class FormBuilder extends Component {
     return (
       <Fragment>
         <div className={this.props.className}>
-          {this.formElements.forEach(element => this.renderElement(element))}
+          {this.formElements.map(element => this.renderElement(element))}
         </div>
       </Fragment>
     );
