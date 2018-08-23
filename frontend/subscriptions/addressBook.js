@@ -1,7 +1,7 @@
 import goBackHistory from '@shopgate/pwa-common/actions/history/goBackHistory';
 import showModal from '@shopgate/pwa-common/actions/modal/showModal';
 import createToast from '@shopgate/pwa-common/actions/toast/createToast';
-import { userDidLogin$ } from '@shopgate/pwa-common/streams/user';
+import { userDidUpdate$ } from '@shopgate/pwa-common/streams/user';
 import getAddresses from './../actions/getAddresses';
 import {
   userAddressChanged$,
@@ -32,7 +32,7 @@ export default (subscribe) => {
   });
 
   // Fetch user addresses after login
-  subscribe(userDidLogin$, ({ dispatch }) => {
+  subscribe(userDidUpdate$, ({ dispatch }) => {
     dispatch(getAddresses());
   });
 
