@@ -18,8 +18,6 @@ import {
   DELETE_USER_ADDRESSES_SUCCESS,
   DELETE_USER_ADDRESSES_FAILED,
   SET_DEFAULT_ADDRESS,
-  UPDATE_USER_MAIL_SUCCESS,
-  UPDATE_USER_MAIL_FAILED,
 } from './../constants/ActionTypes';
 
 /**
@@ -61,20 +59,6 @@ export const userUpdateSuccess$ = main$
  */
 export const userUpdateFailed$ = main$
   .filter(({ action }) => action.type === UPDATE_USER_FAILED);
-
-/**
- * Get triggered when user updated mail address.
- * @type {Observable}
- */
-export const userMailUpdateSuccess$ = main$
-  .filter(({ action }) => action.type === UPDATE_USER_MAIL_SUCCESS);
-
-/**
- * Get triggered when mail address update is failed.
- * @type {Observable}
- */
-export const userMailUpdateFailed$ = main$
-  .filter(({ action }) => action.type === UPDATE_USER_MAIL_FAILED);
 
 /**
  * Gets triggered when user address is going to be added
