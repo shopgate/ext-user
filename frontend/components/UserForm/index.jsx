@@ -2,11 +2,14 @@ import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import Portal from '@shopgate/pwa-common/components/Portal';
 import I18n from '@shopgate/pwa-common/components/I18n';
-import TextField from '@shopgate/pwa-ui-shared/TextField';
+import Link from '@shopgate/pwa-common/components/Router/components/Link';
+import TextField from '@shopgate/pwa-ui-shared/Form/TextField';
+import LockIcon from '@shopgate/pwa-ui-shared/icons/LockIcon';
 import RippleButton from '@shopgate/pwa-ui-shared/RippleButton';
 import * as portals from '@shopgate/user/constants/Portals';
 import EventEmitter from '@shopgate/user/events/emitter';
 import * as events from '@shopgate/user/constants/EventTypes';
+import { USER_PASSWORD_PATH } from '@shopgate/user/constants/RoutePaths';
 import connect from './connector';
 import styles from './style';
 
@@ -153,14 +156,16 @@ export class UserForm extends Component {
    */
   renderTextField(name, type = 'text') {
     return (
-      <TextField
-        name={name}
-        type={type}
-        label={`user.${name}`}
-        onChange={value => this.handleUserChange(name, value)}
-        value={this.state.user[name]}
-        errorText={this.state.errors[name]}
-      />
+      <div className={styles.fieldWrapper}>
+        <TextField
+          name={name}
+          type={type}
+          label={`user.${name}`}
+          onChange={value => this.handleUserChange(name, value)}
+          value={this.state.user[name]}
+          errorText={this.state.errors[name]}
+        />
+      </div>
     );
   }
 
@@ -180,7 +185,29 @@ export class UserForm extends Component {
 
           {isRegister && this.renderTextField('password', 'password')}
 
-          {!isRegister && null}
+          {!isRegister &&
+            <Fragment>
+              <div className={styles.fieldWrapperDisabled}>
+                <TextField
+                  className={styles.noPad}
+                  name="password"
+                  type="password"
+                  label="user.password"
+                  value="**********"
+                  disabled
+                  rightElement={<LockIcon size="24" />}
+                />
+              </div>
+              <div className={styles.fieldWrapper}>
+                <Link
+                  href={USER_PASSWORD_PATH}
+                  className={styles.changePasswordButton}
+                >
+                  <I18n.Text string="password.update" />
+                </Link>
+              </div>
+            </Fragment>
+          }
 
           {isRegister &&
             <div data-test-id="RegisterButton" className={styles.buttonWrapper}>

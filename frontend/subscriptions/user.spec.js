@@ -33,7 +33,7 @@ describe('User subscriptions', () => {
   });
 
   it('should subscribe to the streams', () => {
-    expect(subscribe.mock.calls.length).toEqual(3);
+    expect(subscribe.mock.calls.length).toEqual(4);
   });
 
   it('should get user on fetchUser$ stream', () => {

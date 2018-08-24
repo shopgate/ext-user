@@ -8,9 +8,11 @@ import { setRedirectLocation } from '@shopgate/pwa-common/action-creators/histor
 import goBackHistory from '@shopgate/pwa-common/actions/history/goBackHistory';
 import unsetViewLoading from '@shopgate/pwa-common/actions/view/unsetViewLoading';
 import createToast from '@shopgate/pwa-common/actions/toast/createToast';
+import { EINVALIDCREDENTIALS } from '@shopgate/pwa-core/constants/Pipeline';
 import {
   userRegisterSuccess$,
   userUpdateSuccess$,
+  userUpdateFailed$,
 } from './../streams/user';
 
 /**
@@ -59,5 +61,20 @@ export default (subscribe) => {
     }
 
     dispatch(createToast({ message: 'profile.updated' }));
+  });
+
+  // Modal message when profile or password update failed
+  subscribe(userUpdateFailed$, ({ dispatch, action }) => {
+    const { error } = action;
+
+    if (error.code === EINVALIDCREDENTIALS) {
+      dispatch(showModal({
+        confirm: 'modal.ok',
+        dismiss: null,
+        message: 'password.errors.oldPassword',
+      }));
+    } else {
+      dispatch(createToast({ message: 'profile.failed' }));
+    }
   });
 };
