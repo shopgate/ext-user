@@ -1,8 +1,8 @@
 const uuidv4 = require('uuid/v4')
-const UnauthorizedError = require('../common/Error/UnauthorizedError')
-const InternalError = require('./../common/Error/InternalError')
-const UserExistError = require('./../common/Error/UserExistError')
-const Password = require('./Password')
+const UnauthorizedError = require('../../common/Error/UnauthorizedError')
+const InternalError = require('./../../common/Error/InternalError')
+const UserExistError = require('./../../common/Error/UserExistError')
+const Password = require('./../Password')
 
 /**
  * Validation and sanitation is done at previous step

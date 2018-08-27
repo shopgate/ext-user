@@ -1,16 +1,14 @@
 import React, { Component } from 'react';
-import classnames from 'classnames';
 import EventEmitter from '@shopgate/user/events/emitter';
 import I18n from '@shopgate/pwa-common/components/I18n';
 import ActionButton from '@shopgate/pwa-ui-shared/ActionButton';
 import {
-  NAVIGATOR_USER_ADDRESS_BUTTON_CLICK,
-  NAVIGATOR_USER_ADDRESS_BUTTON_ENABLE,
-  NAVIGATOR_USER_ADDRESS_BUTTON_DISABLE,
-  NAVIGATOR_USER_ADDRESS_BUTTON_SHOW,
-  NAVIGATOR_USER_ADDRESS_BUTTON_HIDE,
+  NAVIGATOR_SAVE_BUTTON_CLICK,
+  NAVIGATOR_SAVE_BUTTON_ENABLE,
+  NAVIGATOR_SAVE_BUTTON_DISABLE,
+  NAVIGATOR_SAVE_BUTTON_SHOW,
+  NAVIGATOR_SAVE_BUTTON_HIDE,
 } from '@shopgate/user/constants/EventTypes';
-import style from './style';
 
 /**
  * Navigator save button for AddressForm
@@ -33,20 +31,20 @@ export class NavigatorSaveButton extends Component {
    * Did mount
    */
   componentDidMount() {
-    EventEmitter.on(NAVIGATOR_USER_ADDRESS_BUTTON_SHOW, this.handleShow);
-    EventEmitter.on(NAVIGATOR_USER_ADDRESS_BUTTON_HIDE, this.handleHide);
-    EventEmitter.on(NAVIGATOR_USER_ADDRESS_BUTTON_DISABLE, this.handleDisable);
-    EventEmitter.on(NAVIGATOR_USER_ADDRESS_BUTTON_ENABLE, this.handleEnable);
+    EventEmitter.on(NAVIGATOR_SAVE_BUTTON_SHOW, this.handleShow);
+    EventEmitter.on(NAVIGATOR_SAVE_BUTTON_HIDE, this.handleHide);
+    EventEmitter.on(NAVIGATOR_SAVE_BUTTON_DISABLE, this.handleDisable);
+    EventEmitter.on(NAVIGATOR_SAVE_BUTTON_ENABLE, this.handleEnable);
   }
 
   /**
    * Will unmount
    */
   componentWillUnmount() {
-    EventEmitter.off(NAVIGATOR_USER_ADDRESS_BUTTON_SHOW, this.handleShow);
-    EventEmitter.off(NAVIGATOR_USER_ADDRESS_BUTTON_HIDE, this.handleHide);
-    EventEmitter.off(NAVIGATOR_USER_ADDRESS_BUTTON_DISABLE, this.handleDisable);
-    EventEmitter.off(NAVIGATOR_USER_ADDRESS_BUTTON_ENABLE, this.handleEnable);
+    EventEmitter.off(NAVIGATOR_SAVE_BUTTON_SHOW, this.handleShow);
+    EventEmitter.off(NAVIGATOR_SAVE_BUTTON_HIDE, this.handleHide);
+    EventEmitter.off(NAVIGATOR_SAVE_BUTTON_DISABLE, this.handleDisable);
+    EventEmitter.off(NAVIGATOR_SAVE_BUTTON_ENABLE, this.handleEnable);
   }
 
   /**
@@ -78,7 +76,7 @@ export class NavigatorSaveButton extends Component {
   }
 
   handleClick = () => {
-    EventEmitter.emit(NAVIGATOR_USER_ADDRESS_BUTTON_CLICK);
+    EventEmitter.emit(NAVIGATOR_SAVE_BUTTON_CLICK);
   }
 
   /**
@@ -96,7 +94,7 @@ export class NavigatorSaveButton extends Component {
         disabled={disabled}
         testId="saveAddressButton"
       >
-        <I18n.Text string="address.update.button" />
+        <I18n.Text string="navigator.save" />
       </ActionButton>
     );
   }

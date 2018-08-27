@@ -14,18 +14,7 @@ const subline = css({
   marginTop: variables.gap.xsmall,
 }).toString();
 
-const buttonWrapper = css({
-  paddingTop: variables.gap.big * 2,
-  paddingBottom: variables.gap.big * 1.5,
-}).toString();
-
-const button = css({
-  width: '100%',
-}).toString();
-
 export default {
   container,
   subline,
-  buttonWrapper,
-  button,
 };

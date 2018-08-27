@@ -182,14 +182,8 @@
   },
   "components": [
     {
-      "id": "AddressBookRoute",
-      "path": "frontend/pages/AddressBook/Overview/route.jsx",
-      "target": "app.routes",
-      "type": "portals"
-    },
-    {
-      "id": "AddressBookAddRoute",
-      "path": "frontend/pages/AddressBook/AddressDetails/route.jsx",
+      "id": "UserRoutes",
+      "path": "frontend/pages/routes.jsx",
       "target": "app.routes",
       "type": "portals"
     },
@@ -208,24 +202,6 @@
       "id": "UserReducers",
       "path": "frontend/reducers/index.js",
       "type": "reducers"
-    },
-    {
-      "id": "RegisterRoute",
-      "path": "frontend/Register/route.jsx",
-      "target": "app.routes",
-      "type": "portals"
-    },
-    {
-      "id": "CheckoutAddAddressRoute",
-      "path": "frontend/pages/Checkout/AddAddress/route.jsx",
-      "target": "app.routes",
-      "type": "portals"
-    },
-    {
-      "id": "SelectAddressRoute",
-      "path": "frontend/pages/Checkout/SelectAddress/route.jsx",
-      "target": "app.routes",
-      "type": "portals"
     },
     {
       "id": "CheckoutShipping",

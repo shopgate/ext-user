@@ -1,31 +1,29 @@
 import getUser from '@shopgate/pwa-common/actions/user/getUser';
-import { getRedirectLocation } from '@shopgate/pwa-common/selectors/history';
+import { getRedirectLocation, getHistoryPathname } from '@shopgate/pwa-common/selectors/history';
 import replaceHistory from '@shopgate/pwa-common/actions/history/replaceHistory';
 import { successLogin } from '@shopgate/pwa-common/action-creators/user';
 import { userDataReceived$ } from '@shopgate/pwa-common/streams/user';
 import { setRedirectLocation } from '@shopgate/pwa-common/action-creators/history';
 import goBackHistory from '@shopgate/pwa-common/actions/history/goBackHistory';
-import setViewLoading from '@shopgate/pwa-common/actions/view/setViewLoading';
 import unsetViewLoading from '@shopgate/pwa-common/actions/view/unsetViewLoading';
-
-import { registerFailed$, registerSuccess$, userWillRegister$ } from './streams';
+import createToast from '@shopgate/pwa-common/actions/toast/createToast';
+import {
+  userRegisterSuccess$,
+  userUpdateSuccess$,
+} from './../streams/user';
 
 /**
  * Register subscriptions.
  * @param {Function} subscribe The subscribe function.
  */
 export default (subscribe) => {
-  const registerAndDataReceived$ = registerSuccess$.zip(userDataReceived$).map(([first]) => first);
+  const fetchUser$ = userRegisterSuccess$.merge(userUpdateSuccess$);
 
-  subscribe(userWillRegister$, ({ dispatch }) => {
-    dispatch(setViewLoading('/register'));
-  });
+  const registerAndDataReceived$ = userRegisterSuccess$
+    .zip(userDataReceived$)
+    .map(([first]) => first);
 
-  subscribe(registerFailed$, ({ dispatch }) => {
-    dispatch(unsetViewLoading('/register'));
-  });
-
-  subscribe(registerSuccess$, ({ dispatch }) => {
+  subscribe(fetchUser$, ({ dispatch }) => {
     dispatch(getUser());
   });
 
@@ -33,7 +31,7 @@ export default (subscribe) => {
    * After register and user data received
    */
   subscribe(registerAndDataReceived$, ({ dispatch, getState }) => {
-    dispatch(unsetViewLoading('/register'));
+    dispatch(unsetViewLoading(getHistoryPathname(getState())));
 
     const redirectLocation = getRedirectLocation(getState());
 
@@ -45,5 +43,10 @@ export default (subscribe) => {
     } else {
       dispatch(goBackHistory(1));
     }
+  });
+
+  // Toast message, profile is updated
+  subscribe(userUpdateSuccess$, ({ dispatch }) => {
+    dispatch(createToast({ message: 'profile.updated' }));
   });
 };

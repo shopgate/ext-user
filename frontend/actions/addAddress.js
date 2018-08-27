@@ -1,6 +1,6 @@
 import PipelineRequest from '@shopgate/pwa-core/classes/PipelineRequest';
 import { PIPELINE_ADD_ADDRESS } from './../constants/Pipelines';
-import { addUserAddress, addUserAddressSuccess, addUserAddressFailed } from './../action-creators';
+import { addUserAddress, addUserAddressSuccess, addUserAddressFailed } from './../action-creators/addressBook';
 
 /**
  * @param {Object} address address
