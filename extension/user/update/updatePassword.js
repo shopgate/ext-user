@@ -1,6 +1,8 @@
 const InternalError = require('./../../common/Error/InternalError')
 const InvalidCredentialsError = require('./../../common/Error/InvalidCredentialsError')
+const ValidationError = require('./../../common/Error/ValidationError')
 const Password = require('./../Password')
+const { passwordSchema } = require('./../../common/userSchema')
 
 /**
  * @param {SDKContext} context
@@ -20,6 +22,15 @@ module.exports = async (context, { oldPassword, password }) => {
   const userOldPassword = new Password(oldPassword)
   if (user.password !== userOldPassword.password) {
     throw new InvalidCredentialsError()
+  }
+
+  // Validate new password
+  let validationResult = passwordSchema.validate(password)
+  if (validationResult.error) {
+    throw new ValidationError([{
+      path: 'password',
+      message: validationResult.error.message
+    }])
   }
 
   // Update user
