@@ -21,12 +21,12 @@
     "url-pattern": "^1.0.3"
   },
   "devDependencies": {
-    "@shopgate/eslint-config": "5.6.0",
-    "@shopgate/pwa-common": "5.6.0",
-    "@shopgate/pwa-common-commerce": "5.6.0",
-    "@shopgate/pwa-core": "5.6.0",
-    "@shopgate/pwa-ui-shared": "5.6.0",
-    "@shopgate/pwa-unit-test": "5.6.0",
+    "@shopgate/eslint-config": "5.7.3",
+    "@shopgate/pwa-common": "5.7.3",
+    "@shopgate/pwa-common-commerce": "5.7.3",
+    "@shopgate/pwa-core": "5.7.3",
+    "@shopgate/pwa-ui-shared": "5.7.3",
+    "@shopgate/pwa-unit-test": "5.7.3",
     "@shopgate/react-hammerjs": "^0.5.3",
     "babel-core": "^6.26.0",
     "babel-plugin-transform-class-properties": "^6.24.1",
