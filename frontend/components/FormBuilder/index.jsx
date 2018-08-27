@@ -31,7 +31,6 @@ class FormBuilder extends Component {
     config: PropTypes.shape().isRequired,
     handleUpdate: PropTypes.func.isRequired,
     id: PropTypes.string.isRequired,
-    locale: PropTypes.string.isRequired,
     defaults: PropTypes.shape(),
   }
 
@@ -54,7 +53,7 @@ class FormBuilder extends Component {
     };
 
     // Reorganize form elements into a strucure that can be easily rendered
-    this.formElements = this.buildFormElements(this.props.config, this.props.locale);
+    this.formElements = this.buildFormElements(this.props.config);
 
     // Take only those defaults, that are actually represented by an element
     this.formDefaults = {};
@@ -66,7 +65,7 @@ class FormBuilder extends Component {
         defaultState = element.default;
       }
 
-      // Take defaults from "customAttributes" or from the higher level, depending on element config
+      // Take defaults from "customAttributes" property or from the higher level, based on element
       if (element.custom && this.props.defaults.customAttributes !== undefined) {
         if (this.props.defaults.customAttributes[element.id] !== undefined) {
           defaultState = this.props.defaults.customAttributes[element.id];
@@ -104,17 +103,23 @@ class FormBuilder extends Component {
   }
 
   /**
+   * Takes returns a list of provinces nased on
+   * @param {string} countryCode Country code of the country to fetch provinces from
+   * @return {Object}
+   */
+  getProvincesList = countryCode => countries[countryCode].divisions;
+
+  /**
    * Takes a list of which elements to render based on the respective element type
    * @param {Object} formConfig Configuration of which form fields to render
-   * @param {string} locale The app's current locale setting
    * @return {Object[]}
    */
-  buildFormElements(formConfig, locale) {
+  buildFormElements = (formConfig) => {
     let elementList = [];
 
     // Add all non-custom attributes and mark them as such
     Object.getOwnPropertyNames(formConfig.fields).forEach((id) => {
-      if (id !== 'customAttributes') {
+      if (id !== 'custom') {
         const field = {
           id,
           ...formConfig.fields[id],
@@ -124,12 +129,12 @@ class FormBuilder extends Component {
       }
     });
 
-    // Add custom attributes to the list
-    if (formConfig.fields.customAttributes) {
-      Object.getOwnPropertyNames(formConfig.fields.customAttributes).forEach((id) => {
+    // Add custom fields to the element list
+    if (formConfig.fields.custom) {
+      Object.getOwnPropertyNames(formConfig.fields.custom).forEach((id) => {
         const field = {
           id,
-          ...formConfig.fields.customAttributes[id],
+          ...formConfig.fields.custom[id],
           custom: true,
         };
         elementList.push(field);
@@ -139,104 +144,101 @@ class FormBuilder extends Component {
     // Generate handler functions for each element
     elementList = elementList.map(element => ({
       ...element,
-      handleChange: (value) => {
-        const newFormData = { ...this.state.formData };
-
-        const newElementVisibility = { ...this.state.elementVisibility };
-        // TODO: Re-evaluate element visibility // The following snippet is just prototype code
-        if (element.type === ELEMENT_TYPE_COUNTRY) {
-          const provinceElement = this.formElements.find(el => el.type === ELEMENT_TYPE_PROVINCE);
-          newElementVisibility[provinceElement.id] = value !== 'DE';
-        }
-
-        // Remove state of elements that have become invisible
-        Object.getOwnPropertyNames(newFormData).forEach((elementId) => {
-          if (!this.state.elementVisibility[elementId]) {
-            delete newFormData[elementId];
-          }
-        });
-
-        // Handle province update when country changes
-        if (element.type === ELEMENT_TYPE_COUNTRY && this.state.formData[element.type] !== value) {
-          // Check if province element is even in the form config
-          const provinceElement = this.formElements.find(el => el.type === ELEMENT_TYPE_PROVINCE);
-          const countryElement = this.formElements.find(el => el.type === ELEMENT_TYPE_COUNTRY);
-          if (provinceElement && newElementVisibility[provinceElement.id]) {
-            // Overwrite province with the form's default, if country matches the default as well
-            if (countryElement && value === this.formDefaults[countryElement.id]) {
-              newFormData[provinceElement.id] = this.formDefaults[provinceElement.id];
-            } else {
-              // Update province to first or no selection, based on "required" attribute
-              newFormData[provinceElement.id] = !provinceElement.required
-                ? ''
-                : Object.keys(this.getProvincesList(value))[0];
-            }
-          }
-        }
-
-        // Handle state internally
-        newFormData[element.id] = value;
-        this.setState({
-          ...this.state,
-          formData: newFormData,
-          elementVisibility: newElementVisibility,
-        });
-
-        // Transform to external structure
-        const updateData = {};
-        this.formElements.forEach((el) => {
-          if (el.custom) {
-            if (updateData.customAttributes === undefined) {
-              updateData.customAttributes = {};
-            }
-            updateData.customAttributes[el.id] = this.state.formData[el.id];
-          } else {
-            updateData[el.id] = this.state.formData[el.id];
-          }
-        });
-
-        // Trigger the given update action
-        this.props.handleUpdate(updateData);
-      },
+      handleChange: this.createElementChangeHandler(element),
     }));
 
-    // Add translation strings to the form elements, where te've been assigned by config
-    if (locale) {
-      // TODO: fill up with translation here using "locale" parameter
-      // TODO: Make sure to fall back to defaults if possible
-    }
-
-    /**
-     * Sorts the elements by "sortOrder" property
-     *
-     * @typedef {Object} FormElement
-     * @property {number} sortOrder
-     *
-     * @param {FormElement} element1 First element
-     * @param {FormElement} element2 Second element
-     * @returns {number}
-     */
-    const sortFunc = (element1, element2) => {
-      // Keep relative sort order when no specific sort order was set for both
-      if (element2.sortOrder === undefined) {
-        return -1;
-      } else if (element1.sortOrder === undefined) {
-        return 1;
-      }
-
-      // Sort in ascending order of sortOrder otherwise
-      return element1.sortOrder - element2.sortOrder;
-    };
-
-    return elementList.sort(sortFunc);
+    return elementList.sort(this.elementSortFunc);
   }
 
   /**
-   * Takes returns a list of provinces nased on
-   * @param {string} countryCode Country code of the country to fetch provinces from
-   * @return {Object}
+   * Takes an element and generates a change handler based on it's type,
+   * @param {Object} element Element to create the handler for
+   * @returns {Function}
    */
-  getProvincesList = countryCode => countries[countryCode].divisions;
+  createElementChangeHandler = element => (value) => {
+    const newFormData = { ...this.state.formData };
+
+    const newElementVisibility = { ...this.state.elementVisibility };
+    // TODO: Re-evaluate element visibility // The following snippet is just prototype code
+    if (element.type === ELEMENT_TYPE_COUNTRY) {
+      const provinceElement = this.formElements.find(el => el.type === ELEMENT_TYPE_PROVINCE);
+      newElementVisibility[provinceElement.id] = value !== 'DE';
+    }
+
+    // Remove state of elements that have become invisible
+    Object.getOwnPropertyNames(newFormData).forEach((elementId) => {
+      if (!this.state.elementVisibility[elementId]) {
+        delete newFormData[elementId];
+      }
+    });
+
+    // Handle province update when country changes
+    if (element.type === ELEMENT_TYPE_COUNTRY && this.state.formData[element.type] !== value) {
+      // Check if province element is even in the form config
+      const provinceElement = this.formElements.find(el => el.type === ELEMENT_TYPE_PROVINCE);
+      const countryElement = this.formElements.find(el => el.type === ELEMENT_TYPE_COUNTRY);
+      if (provinceElement && newElementVisibility[provinceElement.id]) {
+        // Overwrite province with the form's default, if country matches the default as well
+        if (countryElement && value === this.formDefaults[countryElement.id]) {
+          newFormData[provinceElement.id] = this.formDefaults[provinceElement.id];
+        } else {
+          // Update province to first or no selection, based on "required" attribute
+          newFormData[provinceElement.id] = !provinceElement.required
+            ? ''
+            : Object.keys(this.getProvincesList(value))[0];
+        }
+      }
+    }
+
+    // TODO: handle validation errors and set "hasErrors" accordingly - no validation in place, yet
+    const hasErrors = false;
+
+    // Handle state internally
+    newFormData[element.id] = value;
+    this.setState({
+      ...this.state,
+      formData: newFormData,
+      elementVisibility: newElementVisibility,
+    });
+
+    // Transform to external structure
+    const updateData = {};
+    this.formElements.forEach((el) => {
+      if (el.custom) {
+        if (updateData.customAttributes === undefined) {
+          updateData.customAttributes = {};
+        }
+        updateData.customAttributes[el.id] = newFormData[el.id];
+      } else {
+        updateData[el.id] = newFormData[el.id];
+      }
+    });
+
+    // Trigger the given update action
+    this.props.handleUpdate(updateData, hasErrors);
+  };
+
+  /**
+   * Sorts the elements by "sortOrder" property
+   *
+   * @typedef {Object} FormElement
+   * @property {number} sortOrder
+   *
+   * @param {FormElement} element1 First element
+   * @param {FormElement} element2 Second element
+   * @returns {number}
+   */
+  elementSortFunc = (element1, element2) => {
+    // Keep relative sort order when no specific sort order was set for both
+    if (element2.sortOrder === undefined) {
+      return -1;
+    } else if (element1.sortOrder === undefined) {
+      return 1;
+    }
+
+    // Sort in ascending order of sortOrder otherwise
+    return element1.sortOrder - element2.sortOrder;
+  };
 
   /**
    * Takes an element of any type and renders it depending on type.

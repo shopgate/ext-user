@@ -1,5 +1,6 @@
 import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
+import assert from 'assert';
 import Portal from '@shopgate/pwa-common/components/Portal';
 import I18n from '@shopgate/pwa-common/components/I18n';
 import Button from '@shopgate/pwa-ui-shared/Button';
@@ -48,19 +49,24 @@ export class AddressForm extends Component {
   constructor(props) {
     super(props);
 
-    this.address = props.address;
+    this.state = {
+      address: props.address,
+      disabled: props.disabled || !!props.address.id,
+    };
   }
 
   /**
-   * Did mount
+   * Will mount
    */
-  componentDidMount() {
+  componentWillMount() {
     // Attach event handler for updating an address to the "save" button of the theme
     EventEmitter.on(NAVIGATOR_USER_ADDRESS_BUTTON_CLICK, this.addOrUpdateAddress);
 
     if (this.props.address.id) {
       EventEmitter.emit(NAVIGATOR_USER_ADDRESS_BUTTON_SHOW);
-      EventEmitter.emit(NAVIGATOR_USER_ADDRESS_BUTTON_DISABLE);
+      EventEmitter.emit(this.state.disabled
+        ? NAVIGATOR_USER_ADDRESS_BUTTON_DISABLE
+        : NAVIGATOR_USER_ADDRESS_BUTTON_ENABLE);
     }
   }
 
@@ -69,11 +75,6 @@ export class AddressForm extends Component {
    * @param {Object} nextProps The next props.
    */
   componentWillReceiveProps(nextProps) {
-    // TODO: Do proper validation error handling
-    if (Object.keys(nextProps.validationErrors).length) {
-      this.setState({ errors: nextProps.validationErrors });
-    }
-
     // Enable / Disable navigation button based on disabled prop.
     if (nextProps.disabled && !this.props.disabled) {
       EventEmitter.emit(NAVIGATOR_USER_ADDRESS_BUTTON_DISABLE);
@@ -91,56 +92,24 @@ export class AddressForm extends Component {
   }
 
   /**
-   * Takes the data from the FormBuilder, checks the latest changes and updates the component values
-   * @param {Object} address The new (or changed) address properties
+   * Checks if the address should be created or updated and performs the desired action
    */
-  updateAddress = (address) => {
-    // Fill up the current data with the latest form changes
-    this.address = {
-      ...this.address,
-      ...address,
-    };
-
-    // TODO: Check if anything has changed and enable save button if if validation passed
-    // ---------------------------------------------------------------------------------------------
-    // TODO:. this.setState({
-    // TODO:.   address: {
-    // TODO:.     ...this.state.address,
-    // TODO:.     ...address,
-    // TODO:.   },
-    // TODO:. }, this.state.inlineValidation ? this.validateInline : () => {
-    // TODO:.   if (!this.state.hasChanges) {
-    // TODO:.     // Show navigtion button when first time updating address.
-    // TODO:.     const hasChanges = !Object.keys(address)
-    // TODO:.       .every(key => address[key] === this.props.address[key]);
-    // TODO:
-    // TODO:.     if (hasChanges) {
-    // TODO:.       EventEmitter.emit(NAVIGATOR_USER_ADDRESS_BUTTON_ENABLE);
-    // TODO:
-    // TODO:.       this.setState({
-    // TODO:.         hasChanges,
-    // TODO:.       });
-    // TODO:.     }
-    // TODO:.   }
-    // TODO:. });
+  addOrUpdateAddress = () => {
+    if (this.props.address.id) {
+      // Join with origin and update
+      this.props.updateAddress({
+        ...this.props.address,
+        ...this.state.address,
+      });
+    } else {
+      this.props.addAddress(this.address);
+    }
   }
 
   /**
    * Handles the click on the "delete address" button
    */
   deleteAddress = () => { this.props.deleteAddress(this.props.address.id); }
-
-  // TODO: Take care of validation errors coming from the form builder
-  // -----------------------------------------------------------------------------------------------
-  // TODO:. validateInline = () => {
-  // TODO:.   const errors = this.props.validateAddress(this.state.address);
-  // TODO:.   this.setState({
-  // TODO:.     errors,
-  // TODO:.   });
-  // TODO:.   EventEmitter.emit(Object.keys(errors).length ?
-  // TODO:.     NAVIGATOR_USER_ADDRESS_BUTTON_DISABLE :
-  // TODO:.     NAVIGATOR_USER_ADDRESS_BUTTON_ENABLE);
-  // TODO:. }
 
   /**
    * Update handler to modify address tags based on the user selection
@@ -150,33 +119,40 @@ export class AddressForm extends Component {
   handleMakeDefault = (makeDefault, tag) => {
     const defaultTag = tag === 'default' ? tag : `default_${tag}`;
     if (makeDefault) {
-      this.updateAddress({ tags: [...this.address.tags, defaultTag] });
+      this.handleUpdate({ tags: [...this.address.tags, defaultTag] });
     } else {
-      this.updateAddress({
+      this.handleUpdate({
         tags: this.address.tags.filter(t => t !== defaultTag),
       });
     }
   }
 
   /**
-   * Checks if the address may be created or updated and performs the desired action
+   * Takes the data from the FormBuilder, checks the latest changes and updates the component values
+   * @param {Object} address The new (or changed) address properties
+   * @param {boolean} hasErrors Receives the info about the data contains validation errors or not
    */
-  addOrUpdateAddress = () => {
-    // TODO: Move the following code to a different place
-    // ---------------------------------------------------------------------------------------------
-    // TODO:. if (Object.keys(errors).length > 0) {
-    // TODO:.   EventEmitter.emit(NAVIGATOR_USER_ADDRESS_BUTTON_DISABLE);
-    // TODO:.   return;
-    // TODO:. }
+  handleUpdate = (address, hasErrors) => {
+    try {
+      // Avoid updating state, when no address fields changed
+      assert.strictEqual(address, this.state.address);
+    } catch (result) {
+      // Update save button
+      if (this.state.disabled !== hasErrors) {
+        EventEmitter.emit(hasErrors
+          ? NAVIGATOR_USER_ADDRESS_BUTTON_DISABLE
+          : NAVIGATOR_USER_ADDRESS_BUTTON_ENABLE);
+      }
 
-    if (this.props.address.id) {
-      // Join with origin and update
-      this.props.updateAddress({
-        ...this.props.address,
-        ...this.state.address,
+      // Update current state with the latest form changes
+      this.setState({
+        ...this.state,
+        address: {
+          ...this.state.address,
+          ...address,
+        },
+        disabled: hasErrors,
       });
-    } else {
-      this.props.addAddress(this.address);
     }
   }
 
@@ -193,10 +169,9 @@ export class AddressForm extends Component {
           <FormBuilder
             id="address"
             className={style.fields}
-            locale="en-US" // TODO: exchange with current locale
             config={this.props.addressFields}
-            defaults={this.address}
-            handleUpdate={this.updateAddress}
+            defaults={this.state.address}
+            handleUpdate={this.handleUpdate}
           />
 
           <div className={style.options}>

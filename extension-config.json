@@ -110,7 +110,7 @@
               "expression": "true"
             }
           },
-          "countryX": {
+          "country": {
             "sortOrder": 8,
             "label": "Land / Country",
             "type": "country",
@@ -122,7 +122,7 @@
               "expression": "true"
             }
           },
-          "provinceX": {
+          "province": {
             "sortOrder": 9,
             "label": "Province / Bundesland",
             "type": "province",
@@ -133,7 +133,7 @@
               "expression": "country not in ['DE']"
             }
           },
-          "customAttributes": {
+          "custom": {
             "additionalNote": {
               "sortOrder": 14,
               "label": "Note / Notiz",
