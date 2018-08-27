@@ -1,6 +1,5 @@
-const Joi = require('joi')
 const ValidationError = require('./../../common/Error/ValidationError')
-const userSchema = require('./../../common/userSchema')(Joi, true)
+const { userUpdateSchema } = require('./../../common/userSchema')
 const joiErrorToValidationErrors = require('./../../common/joiErrorToValidationErrors')
 
 /**
@@ -9,7 +8,7 @@ const joiErrorToValidationErrors = require('./../../common/joiErrorToValidationE
  * @return {Promise<Object>}
  */
 module.exports = async (context, user) => {
-  let validationResult = userSchema.validate(user)
+  let validationResult = userUpdateSchema.validate(user, { abortEarly: false })
   if (validationResult.error) {
     throw new ValidationError(joiErrorToValidationErrors(validationResult.error))
   }
