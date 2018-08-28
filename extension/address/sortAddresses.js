@@ -12,10 +12,9 @@ const hasDefault = (tags) => {
 /**
  * Step to sort addresses.
  * @param {SDKContext} context
- * @param {ExtUserAddress} address
  * @return {Promise<>}
  */
-module.exports = async (context, address) => {
+module.exports = async (context) => {
   // Read addresses.
   let addresses
   try {
