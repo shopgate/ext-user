@@ -124,8 +124,7 @@
             "required": true,
             "visible": {
               "country": {
-                  "oneOf": ["US", "AT", "FR", "GB"]
-                }
+                "oneOf": ["US", "AT", "FR", "GB"]
               }
             }
           },

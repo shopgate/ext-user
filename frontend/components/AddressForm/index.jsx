@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
-import assert from 'assert';
+import { isEqual } from 'lodash';
 import Portal from '@shopgate/pwa-common/components/Portal';
 import I18n from '@shopgate/pwa-common/components/I18n';
 import Button from '@shopgate/pwa-ui-shared/Button';
@@ -32,14 +32,11 @@ export class AddressForm extends Component {
     deleteAddress: PropTypes.func.isRequired,
     disabled: PropTypes.bool.isRequired,
     updateAddress: PropTypes.func.isRequired,
-    // TODO: possibly not needed =====>     validateAddress: PropTypes.func.isRequired,
     address: PropTypes.shape(),
-    // TODO: possibly not needed =====>     validationErrors: PropTypes.shape(),
   }
 
   static defaultProps = {
     address: {},
-    // TODO: possibly not needed =====>     validationErrors: {},
   }
 
   /**
@@ -56,17 +53,14 @@ export class AddressForm extends Component {
   }
 
   /**
-   * Will mount
+   * Did mount
    */
-  componentWillMount() {
+  componentDidMount() {
     // Attach event handler for updating an address to the "save" button of the theme
     EventEmitter.on(NAVIGATOR_SAVE_BUTTON_CLICK, this.addOrUpdateAddress);
 
     if (this.props.address.id) {
       EventEmitter.emit(NAVIGATOR_SAVE_BUTTON_SHOW);
-      EventEmitter.emit(this.state.disabled
-        ? NAVIGATOR_SAVE_BUTTON_DISABLE
-        : NAVIGATOR_SAVE_BUTTON_ENABLE);
     }
   }
 
@@ -102,7 +96,7 @@ export class AddressForm extends Component {
         ...this.state.address,
       });
     } else {
-      this.props.addAddress(this.address);
+      this.props.addAddress(this.state.address);
     }
   }
 
@@ -133,10 +127,9 @@ export class AddressForm extends Component {
    * @param {boolean} hasErrors Receives the info about the data contains validation errors or not
    */
   handleUpdate = (address, hasErrors) => {
-    try {
-      // Avoid updating state, when no address fields changed
-      assert.strictEqual(address, this.state.address);
-    } catch (result) {
+    // Avoid updating state, when no address fields changed
+    const hasChanged = !isEqual(address, this.state.address);
+    if (hasChanged) {
       // Update save button
       if (this.state.disabled !== hasErrors) {
         EventEmitter.emit(hasErrors
