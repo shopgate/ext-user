@@ -48,66 +48,62 @@
             "sortOrder": 1,
             "label": "First name / Vorname",
             "type": "text",
-            "default": "DEFAULT :: test-firstname",
+            "default": "DEFAULT-test-firstname",
             "placeholder": "locales",
             "required": true,
-            "visible": {
-              "expression": "true"
-            }
+            "visible": true
           },
           "lastName": {
             "sortOrder": 3,
             "label": "Last name / Nachname",
             "type": "text",
-            "default": "DEFAULT :: test-lastname",
+            "default": "DEFAULT-test-lastname",
             "placeholder": "locales",
             "required": true,
-            "visible": {
-              "expression": "true"
-            }
+            "visible": true
           },
           "street1": {
             "sortOrder": 4,
             "label": "Street and number / Straße und Hausnummer",
             "type": "text",
-            "default": "DEFAULT :: test-street1",
+            "default": "DEFAULT-test-street1",
             "placeholder": "locales",
             "required": true,
-            "visible": {
-              "expression": "true"
-            }
+            "visible": true
           },
           "street2": {
             "sortOrder": 5,
             "label": "Street 2 / Adresszusatz",
             "type": "text",
-            "default": "DEFAULT :: test-street2",
+            "default": "DEFAULT-test-street2",
             "placeholder": "",
             "required": false,
             "visible": {
-              "expression": "true"
+              "street1": {
+                "notIn": [""]
+              },
+              "firstName": {
+                "notIn": [""]
+              }
             }
           },
           "zipCode": {
             "sortOrder": 6,
             "label": "ZIP / PLZ",
             "type": "text",
-            "default": "DEFAULT :: test-zipCode",
+            "default": "DEFAULT-test-zipCode",
             "placeholder": "locales",
             "required": true,
-            "visible": {
-              "expression": "true"
-            }
+            "visible": true
           },
           "city": {
             "sortOrder": 7,
             "label": "City / Stadt",
             "type": "text",
-            "default": "DEFAULT :: test-city",
+            "default": "DEFAULT-test-city",
             "placeholder": "locales",
             "required": true,
-            "visible": {
-              "expression": "true"
+            "visible": true
             }
           },
           "country": {
@@ -118,9 +114,7 @@
             "placeholder": "locales",
             "required": true,
             "countries": ["DE", "US"],
-            "visible": {
-              "expression": "true"
-            }
+            "visible": true
           },
           "province": {
             "sortOrder": 9,
@@ -130,20 +124,21 @@
             "placeholder": "locales",
             "required": true,
             "visible": {
-              "expression": "country not in ['DE']"
+              "country": {
+                  "oneOf": ["US", "AT", "FR", "GB"]
+                }
+              }
             }
           },
           "custom": {
             "additionalNote": {
               "sortOrder": 14,
               "label": "Note / Notiz",
-              "type": "textarea",
-              "default": "DEFAULT :: test-note",
+              "type": "text",
+              "default": "DEFAULT-test-note",
               "placeholder": "Enter a custom note for the address here",
               "required": false,
-              "visible": {
-                "expression": "true"
-              },
+              "visible": true,
               "validationRules": [
                 {
                   "id": "max_length_10",
@@ -156,6 +151,11 @@
                   "message": "locales"
                 }
               ]
+            },
+            "INVISIBLE": {
+              "label": "Invisible element / unsichtbares element",
+              "type": "text",
+              "visible": false
             }
           }
         }
