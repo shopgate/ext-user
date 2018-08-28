@@ -96,6 +96,13 @@
             {"key": "id", "id": "200"}
           ]
         }
+      },
+      {
+        "type": "extension",
+        "id": "@shopgate/user",
+        "path": "@shopgate/user/address/sortAddresses.js",
+        "input": [],
+        "output": []
       }
     ]
   }
