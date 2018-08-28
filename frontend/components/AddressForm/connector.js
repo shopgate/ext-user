@@ -22,7 +22,7 @@ const validateAddress = (address) => {
       if (address[err.path] === '') {
         return {
           ...err,
-          message: 'register.errors.blank',
+          message: 'user.errors.blank',
         };
       }
       return err;
