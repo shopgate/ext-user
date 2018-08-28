@@ -4,7 +4,7 @@ import {
   getAddressFields,
   getAddressFieldsSuccess,
   getAddressFieldsFailed,
-} from '@shopgate/user/action-creators';
+} from '@shopgate/user/action-creators/addressBook';
 
 export default () => async (dispatch) => {
   dispatch(getAddressFields());
