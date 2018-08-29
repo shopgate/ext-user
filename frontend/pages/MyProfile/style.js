@@ -15,6 +15,7 @@ const headline = css({
   fontWeight: 500,
   margin: 0,
   marginBottom: variables.gap.xbig,
+  paddingLeft: variables.gap.big,
 }).toString();
 
 export default {

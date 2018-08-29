@@ -4,14 +4,12 @@ import Portal from '@shopgate/pwa-common/components/Portal';
 import I18n from '@shopgate/pwa-common/components/I18n';
 import Grid from '@shopgate/pwa-common/components/Grid';
 import RippleButton from '@shopgate/pwa-ui-shared/RippleButton';
-import Link from '@shopgate/pwa-common/components/Router/components/Link';
 import { themeName } from '@shopgate/pwa-common/helpers/config';
 import TextField from '@shopgate/pwa-ui-shared/Form/TextField';
 import Password from '@shopgate/pwa-ui-shared/Form/Password';
 import * as portals from '@shopgate/user/constants/Portals';
 import EventEmitter from '@shopgate/user/events/emitter';
 import * as events from '@shopgate/user/constants/EventTypes';
-import { USER_PROFILE_PATH } from '@shopgate/user/constants/RoutePaths';
 import connect from './connector';
 import styles from './style';
 
@@ -23,6 +21,7 @@ const isIos = themeName.includes('ios');
 */
 export class ChangePasswordForm extends Component {
   static propTypes = {
+    cancel: PropTypes.func.isRequired,
     updatePassword: PropTypes.func.isRequired,
     validatePassword: PropTypes.func.isRequired,
     validationErrors: PropTypes.shape(),
@@ -121,6 +120,7 @@ export class ChangePasswordForm extends Component {
    * @return {*}
    */
   render() {
+    const { cancel } = this.props;
     return (
       <Fragment>
         <Portal name={portals.USER_PASSWORD_FORM_BEFORE} />
@@ -154,13 +154,10 @@ export class ChangePasswordForm extends Component {
           {!isIos &&
             <Grid className={styles.buttons}>
               <Grid.Item grow={1} />
-              <Grid.Item grow={0} className={styles.cancelItem}>
-                <Link
-                  href={USER_PROFILE_PATH}
-                  className={styles.cancel}
-                >
+              <Grid.Item grow={0}>
+                <RippleButton type="regular" onClick={cancel}>
                   <I18n.Text string="common.cancel" />
-                </Link>
+                </RippleButton>
               </Grid.Item>
               <Grid.Item grow={0}>
                 <RippleButton type="secondary" disabled={this.state.disabled} onClick={this.updatePassword}>

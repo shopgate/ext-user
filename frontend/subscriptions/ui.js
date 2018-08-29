@@ -43,7 +43,7 @@ export default (subscribe) => {
       routeDidLeave(USER_PROFILE_PATH),
       routeDidLeave(USER_ADDRESS_BOOK_PATH),
       routeDidLeave(USER_ADDRESS_PATH),
-      routeDidEnter(USER_PASSWORD_PATH)
+      routeDidLeave(USER_PASSWORD_PATH)
     );
 
   const viewIsLoading$ = userWillRegister$.merge(

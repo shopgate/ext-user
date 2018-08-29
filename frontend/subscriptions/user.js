@@ -14,6 +14,7 @@ import {
   userUpdateSuccess$,
   userUpdateFailed$,
 } from './../streams/user';
+import { USER_PASSWORD_PATH } from './../constants/RoutePaths';
 
 /**
  * Register subscriptions.
@@ -48,8 +49,8 @@ export default (subscribe) => {
     }
   });
 
-  // Toast message, profile is updated
-  subscribe(userUpdateSuccess$, ({ dispatch, action }) => {
+  // Toast message, profile, email, password is updated
+  subscribe(userUpdateSuccess$, ({ dispatch, action, getState }) => {
     const { messages } = action;
     if (Array.isArray(messages) && messages.length > 0) {
       dispatch(showModal({
@@ -58,6 +59,12 @@ export default (subscribe) => {
         message: messages.join(' '),
       }));
       return;
+    }
+
+    // Redirect to profile page after password change
+    const path = getHistoryPathname(getState());
+    if (path === USER_PASSWORD_PATH) {
+      dispatch(goBackHistory(1));
     }
 
     dispatch(createToast({ message: 'profile.updated' }));
