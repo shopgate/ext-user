@@ -66,7 +66,7 @@
             "sortOrder": 4,
             "label": "Street and number / Straße und Hausnummer",
             "type": "text",
-            "default": "DEFAULT-test-street1",
+            "default": "DEFAULT-test-street1 99",
             "placeholder": "locales",
             "required": true,
             "visible": true
@@ -75,7 +75,6 @@
             "sortOrder": 5,
             "label": "Street 2 / Adresszusatz",
             "type": "text",
-            "default": "DEFAULT-test-street2",
             "placeholder": "",
             "required": false,
             "visible": {
@@ -91,7 +90,7 @@
             "sortOrder": 6,
             "label": "ZIP / PLZ",
             "type": "text",
-            "default": "DEFAULT-test-zipCode",
+            "default": "55555",
             "placeholder": "locales",
             "required": true,
             "visible": true
@@ -119,7 +118,7 @@
             "sortOrder": 9,
             "label": "Province / Bundesland",
             "type": "province",
-            "default": "US-AZ",
+            "default": "DE-HE",
             "placeholder": "locales",
             "required": true,
             "visible": {
@@ -151,7 +150,7 @@
               ]
             },
             "INVISIBLE": {
-              "label": "Invisible element / unsichtbares element",
+              "label": "Invisible element / Unsichtbares element",
               "type": "text",
               "visible": false
             }

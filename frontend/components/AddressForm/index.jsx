@@ -90,9 +90,8 @@ export class AddressForm extends Component {
    */
   addOrUpdateAddress = () => {
     if (this.props.address.id) {
-      // Join with origin and update
       this.props.updateAddress({
-        ...this.props.address,
+        id: this.props.address.id,
         ...this.state.address,
       });
     } else {
@@ -111,12 +110,17 @@ export class AddressForm extends Component {
    * @param {string} tag The tag name to work with
    */
   handleMakeDefault = (makeDefault, tag) => {
+    const addressTags = this.state.address.tags || [];
     const defaultTag = tag === 'default' ? tag : `default_${tag}`;
     if (makeDefault) {
-      this.handleUpdate({ tags: [...this.address.tags, defaultTag] });
+      this.handleUpdate({
+        ...this.state.address,
+        tags: [...addressTags, defaultTag],
+      });
     } else {
       this.handleUpdate({
-        tags: this.address.tags.filter(t => t !== defaultTag),
+        ...this.state.address,
+        tags: addressTags.filter(t => t !== defaultTag),
       });
     }
   }
@@ -140,10 +144,7 @@ export class AddressForm extends Component {
       // Update current state with the latest form changes
       this.setState({
         ...this.state,
-        address: {
-          ...this.state.address,
-          ...address,
-        },
+        address,
         disabled: hasErrors,
       });
     }

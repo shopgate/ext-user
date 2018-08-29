@@ -87,6 +87,9 @@ class FormBuilder extends Component {
       [countryCode]: countries[countryCode].name,
     }), {});
 
+    // TODO: Sanitize province default based on country (default)
+    // TODO: => Extract code from the handleChange function for that
+
     // Init form element visibility
     // TODO: Replace by real visibility evaluation, based on given state object
     this.formElements.forEach((element) => {
@@ -167,7 +170,7 @@ class FormBuilder extends Component {
 
     // Remove state of elements that have become invisible
     Object.getOwnPropertyNames(newFormData).forEach((elementId) => {
-      if (!this.state.elementVisibility[elementId]) {
+      if (!newElementVisibility[elementId]) {
         delete newFormData[elementId];
       }
     });
@@ -201,7 +204,7 @@ class FormBuilder extends Component {
       elementVisibility: newElementVisibility,
     });
 
-    // Transform to external structure
+    // Transform to external structure (invisible ones are taken from default value)
     const updateData = {};
     this.formElements.forEach((el) => {
       if (el.custom) {
