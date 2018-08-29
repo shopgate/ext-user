@@ -13,6 +13,7 @@ import {
   USER_REGISTER_PATH,
   USER_ADDRESS_BOOK_PATH,
   USER_ADDRESS_PATH,
+  USER_PASSWORD_PATH,
 } from '../constants/RoutePaths';
 import {
   userWillRegister$,
@@ -34,13 +35,15 @@ export default (subscribe) => {
     .merge(
       routeDidEnter(USER_PROFILE_PATH),
       routeDidEnter(USER_ADDRESS_BOOK_PATH),
-      routeDidEnter(USER_ADDRESS_PATH)
+      routeDidEnter(USER_ADDRESS_PATH),
+      routeDidEnter(USER_PASSWORD_PATH)
     );
   const fullPageViewLeave$ = routeDidLeave(USER_REGISTER_PATH)
     .merge(
       routeDidLeave(USER_PROFILE_PATH),
       routeDidLeave(USER_ADDRESS_BOOK_PATH),
-      routeDidLeave(USER_ADDRESS_PATH)
+      routeDidLeave(USER_ADDRESS_PATH),
+      routeDidLeave(USER_PASSWORD_PATH)
     );
 
   const viewIsLoading$ = userWillRegister$.merge(

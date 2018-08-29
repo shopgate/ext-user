@@ -3,6 +3,7 @@ const Joi = require('joi')
 const defaultAlphaExpr = /^[^[0-9!<>,;?=+()@#"°{}_$%:]*$/
 
 const mailSchema = Joi.string().trim().email({minDomainAtoms: 2}).required()
+const passwordSchema = Joi.string().trim().min(8).required()
 
 /**
  * User register schema
@@ -13,6 +14,8 @@ const mailSchema = Joi.string().trim().email({minDomainAtoms: 2}).required()
  */
 module.exports = {
   mailSchema,
+
+  passwordSchema,
 
   /**
    * User register schema

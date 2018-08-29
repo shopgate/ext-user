@@ -9,6 +9,7 @@ import AddressDetails from './AddressBook/AddressDetails';
 import MyProfile from './MyProfile';
 import AddAddress from './Checkout/AddAddress';
 import SelectAddress from './Checkout/SelectAddress';
+import ChangePassword from './ChangePassword';
 
 /**
  * @param {Object} props props
@@ -21,6 +22,7 @@ const UserRoutes = props => (
       <Route path={path.USER_ADDRESS_BOOK_PATH} component={AddressBook} {...props} />
       <Route path={path.USER_ADDRESS_PATH} component={AddressDetails} {...props} />
       <Route path={path.USER_PROFILE_PATH} component={MyProfile} {...props} />
+      <Route path={path.USER_PASSWORD_PATH} component={ChangePassword} {...props} />
       <Route path="/checkout/addAddress" component={AddAddress} {...props} />
       <Route path="/checkout/selectAddress" component={SelectAddress} {...props} />
     </AuthRoutes>

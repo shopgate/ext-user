@@ -8,10 +8,13 @@ import { setRedirectLocation } from '@shopgate/pwa-common/action-creators/histor
 import goBackHistory from '@shopgate/pwa-common/actions/history/goBackHistory';
 import unsetViewLoading from '@shopgate/pwa-common/actions/view/unsetViewLoading';
 import createToast from '@shopgate/pwa-common/actions/toast/createToast';
+import { EINVALIDCREDENTIALS } from '@shopgate/pwa-core/constants/Pipeline';
 import {
   userRegisterSuccess$,
   userUpdateSuccess$,
+  userUpdateFailed$,
 } from './../streams/user';
+import { USER_PASSWORD_PATH } from './../constants/RoutePaths';
 
 /**
  * Register subscriptions.
@@ -46,8 +49,8 @@ export default (subscribe) => {
     }
   });
 
-  // Toast message, profile is updated
-  subscribe(userUpdateSuccess$, ({ dispatch, action }) => {
+  // Toast message, profile, email, password is updated
+  subscribe(userUpdateSuccess$, ({ dispatch, action, getState }) => {
     const { messages } = action;
     if (Array.isArray(messages) && messages.length > 0) {
       dispatch(showModal({
@@ -58,6 +61,27 @@ export default (subscribe) => {
       return;
     }
 
+    // Redirect to profile page after password change
+    const path = getHistoryPathname(getState());
+    if (path === USER_PASSWORD_PATH) {
+      dispatch(goBackHistory(1));
+    }
+
     dispatch(createToast({ message: 'profile.updated' }));
+  });
+
+  // Modal message when profile or password update failed
+  subscribe(userUpdateFailed$, ({ dispatch, action }) => {
+    const { error } = action;
+
+    if (error.code === EINVALIDCREDENTIALS) {
+      dispatch(showModal({
+        confirm: 'modal.ok',
+        dismiss: null,
+        message: 'password.errors.oldPassword',
+      }));
+    } else {
+      dispatch(createToast({ message: 'profile.failed' }));
+    }
   });
 };

@@ -1,5 +1,4 @@
 import { connect } from 'react-redux';
-import joi from 'joi-browser';
 import { isUserLoggedIn, getUserData } from '@shopgate/pwa-common/selectors/user';
 import registerUser from '@shopgate/user/actions/registerUser';
 import updateUser from '@shopgate/user/actions/updateUser';
@@ -12,7 +11,7 @@ import { joiToValidationErrors, validationErrorsToMap } from '@shopgate/user/com
  * @return {Object}
  */
 const validateUser = (user, isUpdate = true) => {
-  const result = userSchema(joi, isUpdate).validate(user, { abortEarly: false });
+  const result = userSchema(isUpdate).validate(user, { abortEarly: false });
   if (!result.error) {
     return {};
   }

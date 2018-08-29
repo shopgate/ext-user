@@ -505,7 +505,7 @@ exports[`<AddressForm> should print validation errors inline 1`] = `
               errorText=""
             >
               <div
-                className=""
+                className="css-1g88oka"
               >
                 <Translate
                   className=""
@@ -658,7 +658,7 @@ exports[`<AddressForm> should print validation errors inline 1`] = `
               errorText=""
             >
               <div
-                className=""
+                className="css-1g88oka"
               >
                 <Translate
                   className=""
@@ -1253,7 +1253,7 @@ exports[`<AddressForm> should render only configured address fields 1`] = `
               errorText=""
             >
               <div
-                className=""
+                className="css-1g88oka"
               >
                 <Translate
                   className=""
@@ -1406,7 +1406,7 @@ exports[`<AddressForm> should render only configured address fields 1`] = `
               errorText=""
             >
               <div
-                className=""
+                className="css-1g88oka"
               >
                 <Translate
                   className=""

@@ -8,6 +8,19 @@
     "title": "Mijn profiel",
     "updated": "Uw gegevens zijn opgeslagen"
   },
+  "password": {
+    "update": "Change password",
+    "updated": "Your password has been saved",
+    "current": "Current password *",
+    "new": "New password *",
+    "repeat": "Repeat new password *",
+    "save": "Save",
+    "errors": {
+      "blank": "Please complete this field",
+      "password": "The minimum password length must be 8 characters",
+      "repeatPassword": "Those passwords didn't match. Try again"
+    }
+  },
   "user": {
     "firstName": "First name",
     "lastName": "Last name",
