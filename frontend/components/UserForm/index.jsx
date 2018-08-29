@@ -141,8 +141,7 @@ export class UserForm extends Component {
     if (this.props.isRegister) {
       this.props.registerUser(this.state.user);
     } else {
-      const { mail: ignoreCON756, password: ignoreCON755, ...restUser } = this.state.user;
-      this.props.updateUser(restUser);
+      this.props.updateUser(this.state.user);
     }
   }
 

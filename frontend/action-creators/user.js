@@ -38,10 +38,12 @@ export const updateUser = () => ({
 
 /**
  * Creates the dispatched UPDATE_USER_SUCCESS action object.
+ * @param {string[]} messages messages
  * @return {{type: string}}
  */
-export const updateUserSuccess = () => ({
+export const updateUserSuccess = messages => ({
   type: types.UPDATE_USER_SUCCESS,
+  messages,
 });
 
 /**

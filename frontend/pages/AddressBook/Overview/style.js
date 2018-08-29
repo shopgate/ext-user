@@ -11,6 +11,7 @@ const container = css({
   backgroundColor: isGmd ? colors.background : '',
   width: '100%',
   height: '100%',
+  overflow: 'auto',
 }).toString();
 
 const headline = css({

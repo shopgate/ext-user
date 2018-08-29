@@ -1,4 +1,5 @@
 import getUser from '@shopgate/pwa-common/actions/user/getUser';
+import showModal from '@shopgate/pwa-common/actions/modal/showModal';
 import { getRedirectLocation, getHistoryPathname } from '@shopgate/pwa-common/selectors/history';
 import replaceHistory from '@shopgate/pwa-common/actions/history/replaceHistory';
 import { successLogin } from '@shopgate/pwa-common/action-creators/user';
@@ -46,7 +47,17 @@ export default (subscribe) => {
   });
 
   // Toast message, profile is updated
-  subscribe(userUpdateSuccess$, ({ dispatch }) => {
+  subscribe(userUpdateSuccess$, ({ dispatch, action }) => {
+    const { messages } = action;
+    if (Array.isArray(messages) && messages.length > 0) {
+      dispatch(showModal({
+        confirm: 'modal.ok',
+        dismiss: null,
+        message: messages.join(' '),
+      }));
+      return;
+    }
+
     dispatch(createToast({ message: 'profile.updated' }));
   });
 };
