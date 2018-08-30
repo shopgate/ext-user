@@ -23,6 +23,12 @@
               ]
             }
           ]
+        }],
+        ["module-resolver", {
+          "cwd": "packagejson",
+          "alias": {
+            "@shopgate/user": "."
+          }
         }]
       ]
     },
