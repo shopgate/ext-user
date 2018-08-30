@@ -1,6 +1,6 @@
 import { createSelector } from 'reselect';
 
-const statePrefix = '../UserReducers';
+const statePrefix = '@shopgate/user/UserReducers';
 
 /**
  * Gets user.data.addresses from the redux store.
