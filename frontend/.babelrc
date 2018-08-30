@@ -23,18 +23,18 @@
               ]
             }
           ]
-        }],
+        }]
+      ]
+    },
+    "production": {
+      "plugins": [
+        "transform-react-inline-elements",
         ["module-resolver", {
           "cwd": "packagejson",
           "alias": {
             "@shopgate/user": "."
           }
         }]
-      ]
-    },
-    "production": {
-      "plugins": [
-        "transform-react-inline-elements"
       ]
     }
   }
