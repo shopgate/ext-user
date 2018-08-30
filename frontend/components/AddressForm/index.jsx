@@ -7,16 +7,16 @@ import Button from '@shopgate/pwa-ui-shared/Button';
 import RippleButton from '@shopgate/pwa-ui-shared/RippleButton';
 import Select from '@shopgate/pwa-ui-shared/Form/Select';
 import Checkbox from '@shopgate/pwa-ui-shared/Form/Checkbox';
-import * as portals from '@shopgate/user/constants/Portals';
-import EventEmitter from '@shopgate/user/events/emitter';
+import * as portals from '../../constants/Portals';
+import EventEmitter from '../../events/emitter';
 import {
   NAVIGATOR_SAVE_BUTTON_CLICK,
   NAVIGATOR_SAVE_BUTTON_SHOW,
   NAVIGATOR_SAVE_BUTTON_HIDE,
   NAVIGATOR_SAVE_BUTTON_ENABLE,
   NAVIGATOR_SAVE_BUTTON_DISABLE,
-} from '@shopgate/user/constants/EventTypes';
-import config from '@shopgate/user/config';
+} from '../../constants/EventTypes';
+import config from '../../config';
 import connect from './connector';
 import countries from './countries';
 import style from './style';
