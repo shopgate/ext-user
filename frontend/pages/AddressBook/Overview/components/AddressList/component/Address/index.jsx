@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import config from '@shopgate/user/config';
 import { themeName } from '@shopgate/pwa-common/helpers/config';
 import Portal from '@shopgate/pwa-common/components/Portal';
-import * as portals from '@shopgate/user/constants/Portals';
+import config from '../../../../../../../config';
+import * as portals from '../../../../../../../constants/Portals';
 import Info from './components/Info';
 import DefaultCard from './components/DefaultCard';
 import style from './style';

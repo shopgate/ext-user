@@ -69,7 +69,7 @@ describe('AddressBook subscriptions', () => {
   it('should add tags when marked as default', () => {
     const state = {
       extensions: {
-        '@shopgate/user/UserReducers': {
+        '../UserReducers': {
           addressBook: {
             addresses: [
               // eslint-disable-next-line extra-rules/no-single-line-objects

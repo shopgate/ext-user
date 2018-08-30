@@ -4,9 +4,9 @@ import Portal from '@shopgate/pwa-common/components/Portal';
 import I18n from '@shopgate/pwa-common/components/I18n';
 import TextField from '@shopgate/pwa-ui-shared/TextField';
 import RippleButton from '@shopgate/pwa-ui-shared/RippleButton';
-import * as portals from '@shopgate/user/constants/Portals';
-import EventEmitter from '@shopgate/user/events/emitter';
-import * as events from '@shopgate/user/constants/EventTypes';
+import * as portals from '../../constants/Portals';
+import EventEmitter from '../../events/emitter';
+import * as events from '../../constants/EventTypes';
 import connect from './connector';
 import styles from './style';
 

@@ -1,6 +1,6 @@
 {
   "name": "@shopgate/user",
-  "version": "2.2.3-beta.12",
+  "version": "2.2.3-beta.13",
   "description": "Shopgate Connect user extension",
   "repository": {
     "type": "git",
@@ -12,7 +12,6 @@
     "lint": "./node_modules/.bin/eslint --ignore-path ../.gitignore --ext .js --ext .jsx ."
   },
   "dependencies": {
-    "babel-plugin-module-resolver": "^3.1.1",
     "babel-plugin-transform-es2015-classes": "^6.24.1",
     "babel-plugin-transform-es2015-modules-commonjs": "^6.26.2",
     "babel-plugin-transform-object-assign": "^6.22.0",

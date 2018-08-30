@@ -1,14 +1,14 @@
 import React, { Component } from 'react';
-import EventEmitter from '@shopgate/user/events/emitter';
 import I18n from '@shopgate/pwa-common/components/I18n';
 import ActionButton from '@shopgate/pwa-ui-shared/ActionButton';
+import EventEmitter from '../../events/emitter';
 import {
   NAVIGATOR_SAVE_BUTTON_CLICK,
   NAVIGATOR_SAVE_BUTTON_ENABLE,
   NAVIGATOR_SAVE_BUTTON_DISABLE,
   NAVIGATOR_SAVE_BUTTON_SHOW,
   NAVIGATOR_SAVE_BUTTON_HIDE,
-} from '@shopgate/user/constants/EventTypes';
+} from '../../constants/EventTypes';
 
 /**
  * Navigator save button for AddressForm
