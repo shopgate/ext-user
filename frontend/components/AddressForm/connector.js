@@ -4,6 +4,7 @@ import addAddress from '../../actions/addAddress';
 import updateAddress from '../../actions/updateAddress';
 import { deleteUserAddresses } from '../../action-creators/addressBook';
 import { isBusy, getValidationErrors } from '../../selectors/addressBook';
+import { getConfig } from '../../selectors/config';
 import { joiToValidationErrors, validationErrorsToMap } from '../../common/transform';
 import userAddressSchema from '../../common/userAddressSchema';
 
@@ -32,16 +33,17 @@ const validateAddress = (address) => {
 
 /**
  * @param {Object} state state
- * @return {{addressType: (*|string)}}
+ * @return {{disabled: boolean, validationErrors: Object, config: UserConfig}}
  */
 const mapStateToProps = state => ({
   disabled: isBusy(state),
   validationErrors: validationErrorsToMap(getValidationErrors(state)),
+  config: getConfig(state),
 });
 
 /**
  * @param {function} dispatch dispatch
- * @return {{addAddress: function, updateAddress: function, validateAddress: function}}
+ * @return {{addAddress: function, updateAddress: function, deleteAddress: function, validateAddress: function}}
  */
 const mapDispatchToProps = dispatch => ({
   addAddress: address => dispatch(addAddress(address)),

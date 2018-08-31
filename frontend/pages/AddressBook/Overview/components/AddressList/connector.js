@@ -1,5 +1,6 @@
 import { connect } from 'react-redux';
 import { getUserAddresses, getUserDefaultAddresses } from '../../../../../selectors/addressBook';
+import { getConfig } from '../../../../../selectors/config';
 import { setDefaultAddress } from '../../../../../action-creators/addressBook';
 
 /**
@@ -9,6 +10,7 @@ import { setDefaultAddress } from '../../../../../action-creators/addressBook';
 const mapStateToProps = state => ({
   addresses: getUserAddresses(state) || [],
   defaults: getUserDefaultAddresses(state) || {},
+  defaultTags: getConfig(state).splitDefaultAddressesByTags,
 });
 
 /**

@@ -16,26 +16,24 @@ import {
   NAVIGATOR_SAVE_BUTTON_ENABLE,
   NAVIGATOR_SAVE_BUTTON_DISABLE,
 } from '../../constants/EventTypes';
-import config from '../../config';
 import connect from './connector';
-import countries from './countries';
+import iso3166 from '../../common/iso-3166-2';
 import style from './style';
 
-const { splitDefaultAddressesByTags = [], addressFields = [] } = config;
-
 /**
+ * @param {string[]} countryCodes from config
  * @return {Object}
  */
-const countriesList = () => Object.keys(countries).reduce((reducer, countryCode) => ({
+const countriesList = countryCodes => countryCodes.reduce((reducer, countryCode) => ({
   ...reducer,
-  [countryCode]: countries[countryCode].name,
+  [countryCode]: iso3166[countryCode].name,
 }), {});
 
 /**
  * @param {string} countryCode country
  * @return {Object}
  */
-const provincesList = countryCode => countries[countryCode].divisions;
+const provincesList = countryCode => iso3166[countryCode].divisions;
 
 // eslint-disable-next-line valid-jsdoc
 /**
@@ -44,6 +42,8 @@ const provincesList = countryCode => countries[countryCode].divisions;
 export class AddressForm extends Component {
   static propTypes = {
     addAddress: PropTypes.func.isRequired,
+    /** @type {UserConfig} */
+    config: PropTypes.shape().isRequired,
     deleteAddress: PropTypes.func.isRequired,
     disabled: PropTypes.bool.isRequired,
     updateAddress: PropTypes.func.isRequired,
@@ -64,7 +64,7 @@ export class AddressForm extends Component {
   constructor(props) {
     super(props);
 
-    this.countriesList = countriesList();
+    this.countriesList = countriesList(props.config.countryCodes);
     const country = Object.keys(this.countriesList)[0];
     const province = Object.keys(provincesList(country))[0];
 
@@ -194,8 +194,8 @@ export class AddressForm extends Component {
 
   handleCountryChange = (country) => {
     let province = null;
-    if (!countries[country].hideProvince) {
-      [province] = Object.keys(provincesList(country));
+    if (country !== 'DE') {
+      province = Object.keys(provincesList(country))[0];
     }
     this.updateAddress({
       country,
@@ -248,7 +248,7 @@ export class AddressForm extends Component {
    * @return {JSX|null}
    */
   renderTextField(name, changeHandler) {
-    if (!addressFields.includes(name)) {
+    if (!this.props.config.addressFields.includes(name)) {
       return null;
     }
     return (
@@ -281,7 +281,7 @@ export class AddressForm extends Component {
             {this.renderTextField('zipCode', this.handleZipCodeChange)}
             {this.renderTextField('city', this.handleCityChange)}
 
-            {addressFields.includes('country') &&
+            {this.props.config.addressFields.includes('country') &&
             <Fragment>
               <Select
                 name="country"
@@ -292,8 +292,7 @@ export class AddressForm extends Component {
                 onChange={this.handleCountryChange}
                 errorText={this.state.errors.country}
               />
-              {this.state.address.country &&
-              !countries[this.state.address.country].hideProvince &&
+              {this.state.address.country && this.state.address.country !== 'DE' &&
               <Select
                 name="province"
                 placeholder="placeholder"
@@ -326,7 +325,7 @@ export class AddressForm extends Component {
             {/* Default address and submit button for new address */}
             {!this.props.address.id &&
               <Fragment>
-                {splitDefaultAddressesByTags.map(tag => (
+                {this.props.config.splitDefaultAddressesByTags.map(tag => (
                   <Checkbox
                     className={style.defaults}
                     key={tag}
