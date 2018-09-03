@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
-import { getUserAddresses } from '@shopgate/user/selectors/addressBook';
-import { isFetching } from '@shopgate/user/selectors/addressForm';
+import { getUserAddresses } from '../../../selectors/addressBook';
+import { isFetching } from '../../../selectors/addressForm';
 
 /**
  * @param {Object} state state

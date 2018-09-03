@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 import I18n from '@shopgate/pwa-common/components/I18n';
 import Portal from '@shopgate/pwa-common/components/Portal';
 import { themeName } from '@shopgate/pwa-common/helpers/config';
-import * as portals from '@shopgate/user/constants/Portals';
-import AddressForm from '@shopgate/user/components/AddressForm';
+import * as portals from '../../../constants/Portals';
+import AddressForm from '../../../components/AddressForm';
 import connect from './connector';
 import style from './style';
 
