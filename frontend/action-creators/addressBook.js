@@ -52,12 +52,10 @@ export const addUserAddress = () => ({
 
 /**
  * Creates the dispatched ADD_USER_ADDRESS_SUCCESS action object.
- * @param {UserAddress} address address id
  * @returns {Object} The dispatched action object.
  */
-export const addUserAddressSuccess = address => ({
+export const addUserAddressSuccess = () => ({
   type: types.ADD_USER_ADDRESS_SUCCESS,
-  address,
 });
 
 /**

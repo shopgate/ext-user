@@ -46,6 +46,4 @@ module.exports = async (context, address) => {
     context.log.warn(err, 'User storage error: Failed to save the user\'s addresses.')
     throw new InternalError()
   }
-
-  return newAddress
 }
