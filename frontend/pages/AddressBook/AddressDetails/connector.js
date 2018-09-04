@@ -1,8 +1,8 @@
 import { connect } from 'react-redux';
 import { getHistoryPathname } from '@shopgate/pwa-common/selectors/history';
-import { getUserAddressIdSelector } from '@shopgate/user/selectors/addressBook';
-import { getAddressFields } from '@shopgate/user/selectors/addressForm';
-import { userAddressPathPattern } from '@shopgate/user/constants/RoutePaths';
+import { getUserAddressIdSelector } from '../../../selectors/addressBook';
+import { getAddressFields } from '../../../selectors/addressForm';
+import { userAddressPathPattern } from '../../../constants/RoutePaths';
 
 /**
  * Match current route and fetch user address for a form

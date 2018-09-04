@@ -113,6 +113,13 @@
           {"key": "customAttributes", "id": "115", "optional": true}
         ],
         "output": []
+      },
+      {
+        "type": "extension",
+        "id": "@shopgate/user",
+        "path": "@shopgate/user/address/sortAddresses.js",
+        "input": [],
+        "output": []
       }
     ]
   }

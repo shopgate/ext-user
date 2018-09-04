@@ -2,11 +2,11 @@ import { routeDidEnter, routeDidLeave } from '@shopgate/pwa-common/streams/histo
 import setViewLoading from '@shopgate/pwa-common/actions/view/setViewLoading';
 import unsetViewLoading from '@shopgate/pwa-common/actions/view/unsetViewLoading';
 import { getHistoryPathname } from '@shopgate/pwa-common/selectors/history';
-import EventEmitter from '@shopgate/user/events/emitter';
+import EventEmitter from '../events/emitter';
 import {
   NAVIGATOR_SAVE_BUTTON_CLICK,
   NAVIGATOR_SAVE_BUTTON_HIDE,
-} from '@shopgate/user/constants/EventTypes';
+} from '../constants/EventTypes';
 import { toggleNavigatorCart, toggleNavigatorSearch } from '../action-creators/ui';
 import {
   USER_PROFILE_PATH,

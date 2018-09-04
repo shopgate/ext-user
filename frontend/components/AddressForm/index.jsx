@@ -6,17 +6,17 @@ import I18n from '@shopgate/pwa-common/components/I18n';
 import Button from '@shopgate/pwa-ui-shared/Button';
 import RippleButton from '@shopgate/pwa-ui-shared/RippleButton';
 import Checkbox from '@shopgate/pwa-ui-shared/Form/Checkbox';
-import FormBuilder from '@shopgate/user/components/FormBuilder';
-import * as portals from '@shopgate/user/constants/Portals';
-import EventEmitter from '@shopgate/user/events/emitter';
+import FormBuilder from '../../components/FormBuilder';
+import * as portals from '../../constants/Portals';
+import EventEmitter from '../../events/emitter';
 import {
   NAVIGATOR_SAVE_BUTTON_CLICK,
   NAVIGATOR_SAVE_BUTTON_SHOW,
   NAVIGATOR_SAVE_BUTTON_HIDE,
   NAVIGATOR_SAVE_BUTTON_ENABLE,
   NAVIGATOR_SAVE_BUTTON_DISABLE,
-} from '@shopgate/user/constants/EventTypes';
-import config from '@shopgate/user/config';
+} from '../../constants/EventTypes';
+import config from '../../config';
 import connect from './connector'; // TODO: Check connector; Validation possibly not needed anymore!
 import style from './style';
 

@@ -9,10 +9,10 @@ import {
   ADD_USER_ADDRESS_FAILED,
   UPDATE_USER_ADDRESS_FAILED,
   USER_ADDRESS_VALIDATION_FAILED,
-} from '@shopgate/user/constants/ActionTypes';
+} from '../constants/ActionTypes';
 import reducer from './addressBook';
 
-jest.mock('@shopgate/user/config', () => ({
+jest.mock('../config', () => ({
   splitDefaultAddressesByTags: ['shipping', 'billing'],
   addressFields: ['firstName', 'lastName', 'phone'], // TODO: update the test to match the new config
   countryCodes: 'DE',

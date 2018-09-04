@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import I18n from '@shopgate/pwa-common/components/I18n';
 import { themeName } from '@shopgate/pwa-common/helpers/config';
-import UserForm from '@shopgate/user/components/UserForm';
+import UserForm from '../../components/UserForm';
 import connect from './connector';
 import styles from './style';
 

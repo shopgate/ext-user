@@ -1,0 +1,63 @@
+{
+  "version": "1",
+  "pipeline": {
+    "id": "shopgate.user.updateMail.v1",
+    "public": true,
+    "input": [
+      {"key": "mail", "id": "10"}
+    ],
+    "output": [
+      {"key": "messages", "id": "20", "optional": true}
+    ],
+    "steps": [
+      {
+        "type": "extension",
+        "id": "@shopgate/user",
+        "path": "@shopgate/user/user/checkLoginStatus.js",
+        "input": [],
+        "output": []
+      },
+      {
+        "type": "extension",
+        "id": "@shopgate/user",
+        "path": "@shopgate/user/user/update/validateMail.js",
+        "input": [
+          {"key": "mail", "id": "10"}
+        ],
+        "output": [
+          {"key": "mail", "id": "10"}
+        ]
+      },
+      {
+        "type": "extension",
+        "id": "@shopgate/user",
+        "path": "@shopgate/user/user/getUser.js",
+        "input": [],
+        "output": [
+          {"key": "mail", "id": "11"}
+        ]
+      },
+      {
+        "type": "extension",
+        "id": "@shopgate/user",
+        "path": "@shopgate/user/user/update/updateUser.js",
+        "input": [
+          {"key": "mail", "id": "10"}
+        ],
+        "output": []
+      },
+      {
+        "type": "extension",
+        "id": "@shopgate/user",
+        "path": "@shopgate/user/user/update/updateMail.js",
+        "input": [
+          {"key": "mail", "id": "10"},
+          {"key": "oldMail", "id": "11"}
+        ],
+        "output": [
+          {"key": "messages", "id": "20", "optional": true}
+        ]
+      }
+    ]
+  }
+}

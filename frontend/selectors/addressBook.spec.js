@@ -1,6 +1,6 @@
 import * as selectors from './addressBook';
 
-const statePrefix = '@shopgate/user/UserReducers';
+const statePrefix = '../UserReducers';
 
 describe('AddressBook selectors', () => {
   it('Should select getUserAddresses', () => {

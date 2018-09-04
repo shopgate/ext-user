@@ -1,5 +1,5 @@
 import { SUCCESS_LOGOUT } from '@shopgate/pwa-common/constants/ActionTypes';
-import config from '@shopgate/user/config';
+import config from '../config';
 import {
   USER_ADDRESSES_RECEIVED,
   SET_DEFAULT_ADDRESS,
