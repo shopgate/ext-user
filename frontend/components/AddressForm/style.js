@@ -24,6 +24,15 @@ const defaults = css({
   },
 }).toString();
 
+const defaultsDisabled = css({
+  color: colors.shade3,
+  fontWeight: !isIos ? 500 : 'normal',
+  '& svg': {
+    color: colors.shade3,
+    float: 'left',
+  },
+}).toString();
+
 const deleteAddressButton = css({
   textTransform: !isIos ? 'uppercase' : 'inherit',
   fontWeight: !isIos ? 500 : 'normal',
@@ -38,6 +47,7 @@ const addAddressButton = css({
 export default {
   fields,
   defaults,
+  defaultsDisabled,
   options,
   addAddressButton,
   deleteAddressButton,

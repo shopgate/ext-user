@@ -46,6 +46,7 @@ export class AddressForm extends Component {
     config: PropTypes.shape().isRequired,
     deleteAddress: PropTypes.func.isRequired,
     disabled: PropTypes.bool.isRequired,
+    isFirstAddress: PropTypes.bool.isRequired,
     updateAddress: PropTypes.func.isRequired,
     validateAddress: PropTypes.func.isRequired,
     address: PropTypes.shape(),
@@ -105,6 +106,15 @@ export class AddressForm extends Component {
     if (this.props.address.id) {
       EventEmitter.emit(NAVIGATOR_SAVE_BUTTON_SHOW);
       EventEmitter.emit(NAVIGATOR_SAVE_BUTTON_DISABLE);
+    }
+
+    // Init default tags for first address
+    if (this.props.isFirstAddress) {
+      const tags = [];
+      this.props.config.splitDefaultAddressesByTags.forEach(tag => (
+        tags.push(tag === 'default' ? tag : `default_${tag}`)
+      ));
+      this.updateAddress({ tags });
     }
   }
 
@@ -195,7 +205,7 @@ export class AddressForm extends Component {
   handleCountryChange = (country) => {
     let province = null;
     if (country !== 'DE') {
-      province = Object.keys(provincesList(country))[0];
+      [province] = Object.keys(provincesList(country));
     }
     this.updateAddress({
       country,
@@ -266,6 +276,7 @@ export class AddressForm extends Component {
    * @return {*}
    */
   render() {
+    const { isFirstAddress } = this.props;
     return (
       <Fragment>
 
@@ -327,11 +338,13 @@ export class AddressForm extends Component {
               <Fragment>
                 {this.props.config.splitDefaultAddressesByTags.map(tag => (
                   <Checkbox
-                    className={style.defaults}
+                    className={isFirstAddress ? style.defaultsDisabled : style.defaults}
                     key={tag}
                     name={`default_${tag}`}
                     label={`address.makeDefault.${tag}`}
                     onChange={makeDefault => this.handleMakeDefault(makeDefault, tag)}
+                    checked={isFirstAddress}
+                    disabled={isFirstAddress}
                   />
                 ))}
 

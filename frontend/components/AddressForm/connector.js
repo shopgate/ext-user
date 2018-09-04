@@ -3,7 +3,7 @@ import joi from 'joi-browser';
 import addAddress from '../../actions/addAddress';
 import updateAddress from '../../actions/updateAddress';
 import { deleteUserAddresses } from '../../action-creators/addressBook';
-import { isBusy, getValidationErrors } from '../../selectors/addressBook';
+import { isBusy, getValidationErrors, getUserAddressesCount } from '../../selectors/addressBook';
 import { getConfig } from '../../selectors/config';
 import { joiToValidationErrors, validationErrorsToMap } from '../../common/transform';
 import userAddressSchema from '../../common/userAddressSchema';
@@ -36,6 +36,7 @@ const validateAddress = (address) => {
  * @return {{disabled: boolean, validationErrors: Object, config: UserConfig}}
  */
 const mapStateToProps = state => ({
+  isFirstAddress: !getUserAddressesCount(state),
   disabled: isBusy(state),
   validationErrors: validationErrorsToMap(getValidationErrors(state)),
   config: getConfig(state),
