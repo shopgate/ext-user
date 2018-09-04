@@ -12,7 +12,7 @@
     },
     "addressFields": {
       "type": "admin",
-      "destination": "backend",
+      "destination": "both",
       "default": {
         "locales": {
           "default": {
@@ -128,6 +128,62 @@
             }
           },
           "custom": {
+            "myCheckbox": {
+              "sortOrder": 7.1,
+              "label": "Cool checkbox?",
+              "type": "checkbox",
+              "required": true,
+              "visible": true
+            },
+            "myNumber": {
+              "sortOrder": 7.2,
+              "label": "Number input",
+              "type": "number",
+              "default": "12345",
+              "required": true,
+              "visible": true
+            },
+            "myEmail": {
+              "sortOrder": 7.3,
+              "label": "Contact E-Mail",
+              "type": "email",
+              "required": true,
+              "visible": true
+            },
+            "myPassword": {
+              "sortOrder": 7.4,
+              "label": "Password",
+              "type": "password",
+              "required": true,
+              "visible": true
+            },
+            "myDate": {
+              "sortOrder": 7.5,
+              "label": "Expires on",
+              "type": "date",
+              "required": true,
+              "visible": true
+            },
+            "myPhone": {
+              "sortOrder": 7.3,
+              "label": "Contact phone",
+              "type": "phone",
+              "required": true,
+              "visible": true
+            },
+            "specialSpecial": {
+              "sortOrder": 7.5,
+              "label": "Want to be super important?",
+              "type": "radio",
+              "default": "foo",
+              "options": {
+                "foo": "No thanks",
+                "bar": "Awesome Special",
+                "fiz": "Even better special"
+              },
+              "required": true,
+              "visible": true
+            },
             "additionalNote": {
               "sortOrder": 14,
               "label": "Note / Notiz",

@@ -1,15 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Select from '@shopgate/pwa-ui-shared/Form/Select';
-import { ELEMENT_TYPE_COUNTRY } from './../elementTypes';
+import RadioGroup from '@shopgate/pwa-ui-shared/Form/RadioGroup';
+import RadioItem from '@shopgate/pwa-ui-shared/Form/RadioGroup/components/Item';
+import { ELEMENT_TYPE_RADIO } from './../elementTypes';
 
 /**
- * React component that takes the element and additional data and renders a select box
- * with a list of countries to select from.
+ * React component that takes the element and additional data and renders a radio group
+ * with a list of radio items.
  * @returns {JSX}
  */
-const CountryElement = ({
-  countryList,
+const RadioElement = ({
   element,
   errorText,
   name,
@@ -18,29 +18,34 @@ const CountryElement = ({
   visible,
 }) => {
   // Don't render element if type doesn't match or if the element is not visible
-  if (element.type !== ELEMENT_TYPE_COUNTRY || !visible) {
+  if (element.type !== ELEMENT_TYPE_RADIO || !visible) {
     return null;
   }
 
   return (
-    <Select
+    <RadioGroup
       name={name}
       className={style.fields}
       label={element.label}
-      placeholder={element.placeholder}
-      value={value}
-      options={countryList}
+      default={value}
       onChange={element.handleChange}
       errorText={errorText}
-    />
+    >
+      {Object.keys(element.options).map(itemName => (
+        <RadioItem
+          key={itemName}
+          name={itemName}
+          label={element.options[itemName]}
+        />
+      ))}
+    </RadioGroup>
   );
 };
 
-CountryElement.propTypes = {
+RadioElement.propTypes = {
   element: PropTypes.shape().isRequired,
   errorText: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
-  countryList: PropTypes.shape(),
   style: PropTypes.shape(),
   value: PropTypes.oneOfType([
     PropTypes.string.isRequired,
@@ -50,11 +55,10 @@ CountryElement.propTypes = {
   visible: PropTypes.bool,
 };
 
-CountryElement.defaultProps = {
-  countryList: {},
+RadioElement.defaultProps = {
   value: '',
   visible: false,
   style: { fields: '' },
 };
 
-export default CountryElement;
+export default RadioElement;

@@ -20,7 +20,6 @@ const defaults = css({
   fontWeight: !isIos ? 500 : 'normal',
   '& svg': {
     color: colors.primary,
-    float: 'left',
   },
 }).toString();
 

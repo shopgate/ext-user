@@ -1,46 +1,42 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Select from '@shopgate/pwa-ui-shared/Form/Select';
-import { ELEMENT_TYPE_COUNTRY } from './../elementTypes';
+import Checkbox from '@shopgate/pwa-ui-shared/Form/Checkbox';
+import { ELEMENT_TYPE_CHECKBOX } from '../elementTypes';
 
 /**
- * React component that takes the element and additional data and renders a select box
- * with a list of countries to select from.
- * @returns {JSX}
- */
-const CountryElement = ({
-  countryList,
+   * Takes an element and renders it, if the type matches
+   * @param {Object} element The data of the element to be rendered
+   * @returns {JSX}
+   */
+const CheckboxElement = ({
   element,
-  errorText,
-  name,
   style,
-  value,
+  errorText,
   visible,
+  value,
+  name,
 }) => {
   // Don't render element if type doesn't match or if the element is not visible
-  if (element.type !== ELEMENT_TYPE_COUNTRY || !visible) {
+  if (element.type !== ELEMENT_TYPE_CHECKBOX || !visible) {
     return null;
   }
 
   return (
-    <Select
+    <Checkbox
       name={name}
+      errorText={errorText}
+      defaultChecked={value}
       className={style.fields}
       label={element.label}
-      placeholder={element.placeholder}
-      value={value}
-      options={countryList}
       onChange={element.handleChange}
-      errorText={errorText}
     />
   );
 };
 
-CountryElement.propTypes = {
+CheckboxElement.propTypes = {
   element: PropTypes.shape().isRequired,
   errorText: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
-  countryList: PropTypes.shape(),
   style: PropTypes.shape(),
   value: PropTypes.oneOfType([
     PropTypes.string.isRequired,
@@ -50,11 +46,10 @@ CountryElement.propTypes = {
   visible: PropTypes.bool,
 };
 
-CountryElement.defaultProps = {
-  countryList: {},
-  value: '',
+CheckboxElement.defaultProps = {
+  value: false,
   visible: false,
   style: { fields: '' },
 };
 
-export default CountryElement;
+export default CheckboxElement;

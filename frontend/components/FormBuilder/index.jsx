@@ -2,24 +2,17 @@ import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import Portal from '@shopgate/pwa-common/components/Portal';
 import * as portals from '@shopgate/user/constants/Portals';
-import Checkbox from '@shopgate/pwa-ui-shared/Form/Checkbox';
 import {
-  ELEMENT_TYPE_EMAIL,
-  ELEMENT_TYPE_PASSWORD,
-  ELEMENT_TYPE_NUMBER,
   ELEMENT_TYPE_COUNTRY,
   ELEMENT_TYPE_PROVINCE,
-  ELEMENT_TYPE_CHECKBOX,
-  ELEMENT_TYPE_RADIO,
-  ELEMENT_TYPE_DATE,
-  ELEMENT_TYPE_PHONE,
 } from './elementTypes';
 import TextElement from './components/TextElement';
 import SelectElement from './components/SelectElement';
 import CountryElement from './components/CountryElement';
 import ProvinceElement from './components/ProvinceElement';
+import RadioElement from './components/RadioElement';
+import CheckboxElement from './components/CheckboxElement';
 import countries from './countries';
-import style from './style';
 
 /**
  * Takes a form configuration and handles rendering and updates of the form fields.
@@ -263,7 +256,7 @@ class FormBuilder extends Component {
     const portalName = `${portals.NAV_MENU}.${sanitize(this.props.id)}.${sanitize(elementData.id)}`;
     const elementName = `${this.props.id}.${elementData.id}`;
     const elementErrorText = this.state.errors[elementData.id] || '';
-    const elementValue = this.state.formData[elementData.id] || '';
+    const elementValue = this.state.formData[elementData.id];
     const elementVisible = this.state.elementVisibility[elementData.id] || false;
     const countryElement = this.formElements.find(el => el.type === ELEMENT_TYPE_COUNTRY);
 
@@ -272,20 +265,15 @@ class FormBuilder extends Component {
         <Portal name={`${portalName}.${portals.BEFORE}`} />
         <Portal name={portalName}>
           {/* Each element renders itself, only if the type matches */}
-          {this.renderEmailElement(elementData)}
-          {this.renderPasswordElement(elementData)}
           <TextElement
             name={elementName}
-            style={style.fields}
             element={elementData}
             errorText={elementErrorText}
             value={elementValue}
             visible={elementVisible}
           />
-          {/* TODO:. this.renderNumberElement(elementData) */}
           <SelectElement
             name={elementName}
-            style={style.fields}
             element={elementData}
             errorText={elementErrorText}
             value={elementValue}
@@ -293,7 +281,6 @@ class FormBuilder extends Component {
           />
           <CountryElement
             name={elementName}
-            style={style.fields}
             element={elementData}
             errorText={elementErrorText}
             value={elementValue}
@@ -302,7 +289,6 @@ class FormBuilder extends Component {
           />
           <ProvinceElement
             name={elementName}
-            style={style.fields}
             element={elementData}
             errorText={elementErrorText}
             value={elementValue}
@@ -313,136 +299,23 @@ class FormBuilder extends Component {
               this.getProvincesList(this.state.formData[countryElement.id])
             }
           />
-          {this.renderCheckboxElement(elementData)}
-          {/* TODO:. this.renderRadioElement(elementData) */}
-          {/* TODO:. this.renderDateElement(elementData) */}
-          {/* TODO:. this.renderPhoneElement(elementData) */}
+          <RadioElement
+            name={elementName}
+            element={elementData}
+            errorText={elementErrorText}
+            value={elementValue}
+            visible={elementVisible}
+          />
+          <CheckboxElement
+            name={elementName}
+            element={elementData}
+            errorText={elementErrorText}
+            value={elementValue}
+            visible={elementVisible}
+          />
         </Portal>
         <Portal name={`${portalName}.${portals.AFTER}`} />
       </Fragment>
-    );
-  };
-
-  /**
-   * Takes an element and renders it, if the type matches
-   * @param {Object} element The data of the element to be rendered
-   * @returns {JSX}
-   */
-  renderEmailElement = (element) => {
-    // Don't render element if type doesn't match or if the element is not visible
-    if (element.type !== ELEMENT_TYPE_EMAIL || !this.state.elementVisibility[element.id]) {
-      return null;
-    }
-
-    // TODO: Implement EMAIL element
-    return (
-      <div>--- EMAIL element ---</div>
-    );
-  };
-
-  /**
-   * Takes an element and renders it, if the type matches
-   * @param {Object} element The data of the element to be rendered
-   * @returns {JSX}
-   */
-  renderPasswordElement = (element) => {
-    // Don't render element if type doesn't match or if the element is not visible
-    if (element.type !== ELEMENT_TYPE_PASSWORD || !this.state.elementVisibility[element.id]) {
-      return null;
-    }
-
-    // TODO: Implement PASSWORD element
-    return (
-      <div>--- PASSWORD element ---</div>
-    );
-  };
-
-  /**
-   * Takes an element and renders it, if the type matches
-   * @param {Object} element The data of the element to be rendered
-   * @returns {JSX}
-   */
-  renderNumberElement = (element) => {
-    // Don't render element if type doesn't match or if the element is not visible
-    if (element.type !== ELEMENT_TYPE_NUMBER || !this.state.elementVisibility[element.id]) {
-      return null;
-    }
-
-    // TODO: Implement NUMBER element
-    return (
-      <div>--- NUMBER element ---</div>
-    );
-  };
-
-  /**
-   * Takes an element and renders it, if the type matches
-   * @param {Object} element The data of the element to be rendered
-   * @returns {JSX}
-   */
-  renderCheckboxElement = (element) => {
-    // Don't render element if type doesn't match or if the element is not visible
-    if (element.type !== ELEMENT_TYPE_CHECKBOX || !this.state.elementVisibility[element.id]) {
-      return null;
-    }
-
-    return (
-      <Checkbox
-        name={`${this.props.id}.${element.id}`}
-        className={style.fields}
-        label={element.label}
-        onChange={element.handleChange}
-      />
-    );
-  };
-
-  /**
-   * Takes an element and renders it, if the type matches
-   * @param {Object} element The data of the element to be rendered
-   * @returns {JSX}
-   */
-  renderRadioElement = (element) => {
-    // Don't render element if type doesn't match or if the element is not visible
-    if (element.type !== ELEMENT_TYPE_RADIO || !this.state.elementVisibility[element.id]) {
-      return null;
-    }
-
-    // TODO: Implement RADIO element
-    return (
-      <div>--- RADIO element ---</div>
-    );
-  };
-
-  /**
-   * Takes an element and renders it, if the type matches
-   * @param {Object} element The data of the element to be rendered
-   * @returns {JSX}
-   */
-  renderDateElement = (element) => {
-    // Don't render element if type doesn't match or if the element is not visible
-    if (element.type !== ELEMENT_TYPE_DATE || !this.state.elementVisibility[element.id]) {
-      return null;
-    }
-
-    // TODO: Implement DATE element
-    return (
-      <div>--- DATE element ---</div>
-    );
-  };
-
-  /**
-   * Takes an element and renders it, if the type matches
-   * @param {Object} element The data of the element to be rendered
-   * @returns {JSX}
-   */
-  renderPhoneElement = (element) => {
-    // Don't render element if type doesn't match or if the element is not visible
-    if (element.type !== ELEMENT_TYPE_PHONE || !this.state.elementVisibility[element.id]) {
-      return null;
-    }
-
-    // TODO: Implement PHONE element
-    return (
-      <div>--- PHONE element ---</div>
     );
   };
 

@@ -25,7 +25,7 @@ const ProvinceElement = ({
   return (
     <Select
       name={name}
-      className={style}
+      className={style.fields}
       label={element.label}
       placeholder={element.placeholder}
       value={value}
@@ -40,15 +40,21 @@ ProvinceElement.propTypes = {
   element: PropTypes.shape().isRequired,
   errorText: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
-  style: PropTypes.string.isRequired,
-  value: PropTypes.string.isRequired,
   provincesList: PropTypes.shape(),
+  style: PropTypes.shape(),
+  value: PropTypes.oneOfType([
+    PropTypes.string.isRequired,
+    PropTypes.bool.isRequired,
+    PropTypes.number.isRequired,
+  ]),
   visible: PropTypes.bool,
 };
 
 ProvinceElement.defaultProps = {
   provincesList: {},
+  value: '',
   visible: false,
+  style: { fields: '' },
 };
 
 export default ProvinceElement;
