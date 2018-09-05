@@ -99,7 +99,7 @@
                 "type": "notIn",
                 "data": [""]
               }],
-              "ruleConcatMethod": "any"
+              "ruleConcatMethod": "all"
             }]
           },
           "zipCode": {
@@ -205,14 +205,28 @@
             },
             "selectTestDemo": {
               "sortOrder": 7.5,
-              "label": "Want to be super important?",
+              "label": "Select somethinnn!",
               "type": "select",
               "default": "",
               "options": {
-                "foo": "No thanks",
+                "": "",
                 "bar": "Awesome Special",
                 "fiz": "Even better special"
               },
+              "actions": [{
+                "type": "setValue",
+                "rules": [{
+                  "context": "specialSpecial"
+                }, {
+                  "context": "cheatCode",
+                  "type": "regex",
+                  "data": "/^\\s*[<]*\\s*1337\\s*[>]*\\s*$/g"
+                }],
+                "params": {
+                  "type": "copyFrom",
+                  "value": "specialSpecial"
+                }
+              }],
               "required": true,
               "visible": true
             },
@@ -322,7 +336,7 @@
               "sortOrder": 4,
               "label": "Reset on - input / Zurücksetzung bei Eingabe von -",
               "type": "text",
-              "default": "",
+              "default": "ghj",
               "actions": [{
                 "type": "setValue",
                 "rules": [{
@@ -349,31 +363,26 @@
                 "type": "setValue",
                 "rules": [{
                   "context": "cheatCode",
-                  "type": "notIn",
-                  "data": ["<>", "<1>", "<13>", "<133>"]
+                  "type": "regex",
+                  "data": "/^\\s*[<]*\\s*1337\\s*[>]*\\s*$/g"
                 }],
                 "params": {
                   "type": "text",
-                  "value": "Try harder! :)"
-                }
+                  "value": "waiting..."
+                },
+                "ruleConcatMethod": "none"
               }, {
                 "type": "setValue",
                 "rules": [{
                   "context": "cheatCode",
-                  "type": "oneOf",
-                  "data": ["<1337>"]
+                  "type": "regex",
+                  "data": "/^\\s*[<]*\\s*1337\\s*[>]*\\s*$/g"
                 }],
                 "params": {
                   "type": "text",
                   "value": "YAY code CORRECT!!!"
-                }
-              }, {
-                "type": "setVisibility",
-                "rules": [{
-                  "context": "cheatCode",
-                  "type": "notIn",
-                  "data": ["<>", "<1>", "<13>", "<133>"]
-                }]
+                },
+                "ruleConcatMethod": "all"
               }]
             },
             "INVISIBLE": {

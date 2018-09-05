@@ -291,23 +291,28 @@ class FormBuilder extends Component {
    * @param {Object} action The action to be create a listener for
    * @returns {function} Returns the modified state.
    */
-  createSetValueActionListener = (element, action) => (prevState, nextState) => ({
-    ...nextState,
-    formData: {
-      ...nextState.formData,
-      [element.id]: (action.params && (
-        (action.params.type === 'text' &&
-          action.params.value
-        ) ||
-        (action.params.type === 'copyFrom' &&
-          nextState.formData[action.params.value]
-        ) ||
-        (action.params.type === 'lengthOf' &&
-          `${nextState.formData[action.params.value].length}`
-        )
-      )),
-    },
-  })
+  createSetValueActionListener = (element, action) => (prevState, nextState) => {
+    let { value } = action.params;
+    switch (action.params.type) {
+      case 'lengthOf':
+        value = `${nextState.formData[action.params.value].length}`;
+        break;
+      case 'copyFrom':
+        value = nextState.formData[action.params.value];
+        break;
+      case 'text':
+      default:
+        break;
+    }
+
+    return {
+      ...nextState,
+      formData: {
+        ...nextState.formData,
+        [element.id]: value,
+      },
+    };
+  }
 
   /**
    * Action listener creator to handle "setCase" actions
@@ -396,7 +401,7 @@ class FormBuilder extends Component {
           break;
         }
         case ACTION_RULE_TYPE_REGEX: {
-          const regexParts = nextState.formData[rule.context].split('/');
+          const regexParts = ruleData.split('/');
           let regexPattern = '';
           let regexParam = '';
           if (regexParts.length === 1) {
@@ -408,8 +413,9 @@ class FormBuilder extends Component {
             logger.error(`Error: Invalid regex string in action rule in element ${element.id}`);
             break;
           }
+
           const regex = new RegExp(regexPattern, regexParam);
-          tmpResult = regex.test(ruleData);
+          tmpResult = regex.test(nextState.formData[rule.context]);
           break;
         }
         default: break;
