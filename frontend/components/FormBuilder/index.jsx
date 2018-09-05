@@ -1,11 +1,27 @@
 import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
+import { logger } from '@shopgate/pwa-core/helpers';
 import Portal from '@shopgate/pwa-common/components/Portal';
 import * as portals from '@shopgate/user/constants/Portals';
 import {
   ELEMENT_TYPE_COUNTRY,
   ELEMENT_TYPE_PROVINCE,
 } from './elementTypes';
+import {
+  ACTION_TYPE_SET_VISIBILITY,
+  ACTION_TYPE_SET_VALUE,
+  ACTION_TYPE_SET_CASE,
+
+  ACTION_RULE_TYPE_NOT_IN,
+  ACTION_RULE_TYPE_ONE_OF,
+  ACTION_RULE_TYPE_BOOLEAN,
+  ACTION_RULE_TYPE_REGEX,
+  ACTION_RULE_DATA_TYPES,
+
+  ACTION_RULES_CONCAT_METHOD_ALL,
+  ACTION_RULES_CONCAT_METHOD_ANY,
+  ACTION_RULES_CONCAT_METHOD_NONE,
+} from './actionConstants';
 import TextElement from './components/TextElement';
 import SelectElement from './components/SelectElement';
 import CountryElement from './components/CountryElement';
@@ -41,38 +57,14 @@ class FormBuilder extends Component {
     // Prepare internal state
     this.state = {
       elementVisibility: {},
+      actionListeners: {},
       formData: {},
       errors: {},
     };
 
     // Reorganize form elements into a strucure that can be easily rendered
-    this.formElements = this.buildFormElements(this.props.config);
-
-    // Take only those defaults, that are actually represented by an element
-    this.formDefaults = {};
-    this.formElements.forEach((element) => {
-      let defaultState = null;
-
-      // Use default from element config as a base
-      if (element.default !== undefined) {
-        defaultState = element.default;
-      }
-
-      // Take defaults from "customAttributes" property or from the higher level, based on element
-      if (element.custom && this.props.defaults.customAttributes !== undefined) {
-        if (this.props.defaults.customAttributes[element.id] !== undefined) {
-          defaultState = this.props.defaults.customAttributes[element.id];
-        }
-      } else if (!element.custom && this.props.defaults[element.id] !== undefined) {
-        defaultState = this.props.defaults[element.id];
-      }
-
-      // Save default into the form state and into defaults property if one was set
-      if (defaultState !== undefined) {
-        this.state.formData[element.id] = defaultState;
-        this.formDefaults[element.id] = defaultState;
-      }
-    });
+    this.formElements = this.buildFormElements(props.config);
+    this.formDefaults = this.buildFormDefaults(this.formElements);
 
     // Build country list
     this.countryList = Object.keys(countries).reduce((reducer, countryCode) => ({
@@ -80,22 +72,12 @@ class FormBuilder extends Component {
       [countryCode]: countries[countryCode].name,
     }), {});
 
-    // TODO: Sanitize province default based on country (default)
-    // TODO: => Extract code from the handleChange function for that
-
-    // Init form element visibility
-    // TODO: Replace by real visibility evaluation, based on given state object
+    // Final form initialization, by triggering actionListeners in the defined order
+    let newState = this.state;
     this.formElements.forEach((element) => {
-      if (element.visible && element.visible.expression !== 'false') {
-        this.state.elementVisibility[element.id] = true;
-      }
-
-      // Remove invisible elements from "formData" state
-      if (!this.state.elementVisibility[element.id]
-      && this.state.formData[element.id] !== undefined) {
-        delete this.state.formData[element.id];
-      }
+      newState = this.notifyActionListeners(element.id, this.state, newState);
     });
+    this.state = newState;
   }
 
   /**
@@ -107,6 +89,7 @@ class FormBuilder extends Component {
 
   /**
    * Takes a list of which elements to render based on the respective element type
+   *
    * @param {Object} formConfig Configuration of which form fields to render
    * @return {Object[]}
    */
@@ -143,75 +126,410 @@ class FormBuilder extends Component {
       handleChange: this.createElementChangeHandler(element),
     }));
 
+    // Handle fixed visibilities
+    elementList.forEach((element) => {
+      // Assume as visible except it's explicitly set to "false"
+      this.state.elementVisibility[element.id] = element.visible !== false;
+    });
+
+    this.attachAllActionListeners(elementList);
+
     return elementList.sort(this.elementSortFunc);
+  }
+
+  /**
+   * @param {Object} formElements form elements
+   * @returns {Object}
+   */
+  buildFormDefaults = (formElements) => {
+    const formDefaults = {};
+
+    // Take only those defaults from props, that are actually represented by an element
+    formElements.forEach((element) => {
+      let defaultState = null;
+
+      // Use default from element config as a base
+      if (element.default !== undefined) {
+        defaultState = element.default;
+      }
+
+      // Take defaults from "customAttributes" property or from the higher level, based on element
+      if (element.custom && this.props.defaults.customAttributes !== undefined) {
+        if (this.props.defaults.customAttributes[element.id] !== undefined) {
+          defaultState = this.props.defaults.customAttributes[element.id];
+        }
+      } else if (!element.custom && this.props.defaults[element.id] !== undefined) {
+        defaultState = this.props.defaults[element.id];
+      }
+
+      // Save default into the form state and into defaults property if one was set
+      if (defaultState !== undefined) {
+        this.state.formData[element.id] = defaultState;
+        formDefaults[element.id] = defaultState;
+      }
+    });
+
+    return formDefaults;
+  }
+
+  /**
+   * Takes the elements to be rendered by the FormBuilder and attaches available action listeners
+   * to the component.
+   * @param {Object} elementList List of all elements
+   */
+  attachAllActionListeners = (elementList) => {
+    // Attach action listeners for element (context) actions
+    elementList.forEach((element) => {
+      if (element.actions === undefined) {
+        return;
+      }
+
+      // Create listeners for all supported actions
+      element.actions.forEach((action) => {
+        const actionRules = action.rules || [];
+        // Always apply action to itself if no rules given
+        if (actionRules.length === 0) {
+          // Define a basic rule if no rules given
+          actionRules.push({ context: element.id });
+        }
+
+        // Actions do have a fixed structure which needs to be fulfilled
+        const normalizedAction = {
+          ...action,
+          rules: actionRules,
+        };
+
+        // Assign the action listeners to all contexts of the current element
+        actionRules.forEach((rule) => {
+          this.attachRuleActionListener(element, normalizedAction, rule);
+        });
+      });
+    });
+  }
+
+  /**
+   * Attaches one or possibly multiple action listeners for the given rule
+   * @param {Object} element The curent element that is modified by the action
+   * @param {string} action The action and it's params
+   * @param {Object} rule The rule to check in case the action listener is triggered
+   */
+  attachRuleActionListener = (element, action, rule) => {
+    let actionListener;
+    switch (action.type) {
+      case ACTION_TYPE_SET_VISIBILITY: {
+        // Visibility is special and uses the result of the evaluation itself
+        actionListener = this.createSetVisibilityActionListener(element, action);
+        break;
+      }
+      case ACTION_TYPE_SET_VALUE: {
+        actionListener = this.createEvaluatedActionListener(
+          element,
+          action,
+          this.createSetValueActionListener(element, action)
+        );
+        break;
+      }
+      case ACTION_TYPE_SET_CASE: {
+        actionListener = this.createEvaluatedActionListener(
+          element,
+          action,
+          this.createSetCaseActionListener(element, action)
+        );
+        break;
+      }
+      default: return;
+    }
+
+    this.registerActionListener(rule.context, actionListener);
+  }
+
+  /**
+   * Action listener creator to check all related rules before calling any further action listeners
+   * @param {string} element The element for which the listener should be created for
+   * @param {Object} action The action to be create a listener for
+   * @param {function} actionListener The action listener to call if the rule applies
+   * @returns {function} Returns the modified state.
+   */
+  createEvaluatedActionListener = (element, action, actionListener) => (prevState, nextState) => {
+    // Apply rules before accepting any changes
+    if (!this.evaluateActionRules(element, action, nextState)) {
+      return nextState;
+    }
+
+    return actionListener(prevState, nextState);
+  }
+
+  /**
+   * Action listener creator to handle "setVisibility" actions
+   * @param {string} element The element for which the listener should be created for
+   * @param {Object} action The action to be create a listener for
+   * @returns {function} Returns the modified state.
+   */
+  createSetVisibilityActionListener = (element, action) => (prevState, nextState) => {
+    const updatedState = {
+      ...nextState,
+      elementVisibility: {
+        ...nextState.elementVisibility,
+        [element.id]: this.evaluateActionRules(element, action, nextState),
+      },
+    };
+
+    if (updatedState.formData[element.id] === undefined &&
+      updatedState.elementVisibility[element.id]) {
+      updatedState.formData[element.id] = this.formDefaults[element.id];
+    } else if (!updatedState.elementVisibility[element.id] &&
+      updatedState.formData[element.id] !== undefined) {
+      delete updatedState.formData[element.id];
+    }
+
+    return updatedState;
+  }
+
+  /**
+   * Action listener creator to handle "setValue" actions
+   * @param {string} element The element for which the listener should be created for
+   * @param {Object} action The action to be create a listener for
+   * @returns {function} Returns the modified state.
+   */
+  createSetValueActionListener = (element, action) => (prevState, nextState) => ({
+    ...nextState,
+    formData: {
+      ...nextState.formData,
+      [element.id]: (action.params && (
+        (action.params.type === 'text' &&
+          action.params.value
+        ) ||
+        (action.params.type === 'copyFrom' &&
+          nextState.formData[action.params.value]
+        ) ||
+        (action.params.type === 'lengthOf' &&
+          `${nextState.formData[action.params.value].length}`
+        )
+      )),
+    },
+  })
+
+  /**
+   * Action listener creator to handle "setCase" actions
+   * @param {string} element The element for which the listener should be created for
+   * @param {Object} action The action to be create a listener for
+   * @returns {function} Returns the modified state.
+   */
+  createSetCaseActionListener = (element, action) => (prevState, nextState) => {
+    /**
+     * Takes a string and applies a case function on it
+     * @param {string} str The input string
+     * @returns {str}
+     */
+    const setCase = (str) => {
+      if (action.params.value === 'upper') {
+        return str.toUpperCase();
+      }
+      if (action.params.value === 'lower') {
+        return str.toLowerCase();
+      }
+      return str;
+    };
+
+    return {
+      ...nextState,
+      formData: {
+        ...nextState.formData,
+        [element.id]: setCase(nextState.formData[element.id]),
+      },
+    };
+  }
+
+  /**
+   * Evaluates all action rules of a given element action
+   *
+   * @param {Object} element The element of which the action rules should be evaluated
+   * @param {Object} action The current action to be evaluate rules for
+   * @param {Object} nextState The state at the time before the "action" event finished
+   * @returns {boolean}
+   */
+  evaluateActionRules = (element, action, nextState) => {
+    const concatRules = this.createActionEvalConcatMethod(action.ruleConcatMethod);
+    const resultInitValue = action.ruleConcatMethod !== ACTION_RULES_CONCAT_METHOD_ANY;
+
+    let result = resultInitValue;
+    action.rules.forEach((rule) => {
+      let tmpResult = resultInitValue;
+      let ruleType = rule.type;
+      let ruleData = rule.data;
+
+      // Default to rule type "boolean" and data true when type not given
+      if (ruleType === undefined) {
+        ruleType = ACTION_RULE_TYPE_BOOLEAN;
+        ruleData = true;
+      }
+
+      // Check rule validity
+      if (!ACTION_RULE_DATA_TYPES[ruleType]) {
+        logger.error(`Error: Unknown action rule type '${ruleType}' in element '${element.id}'`);
+        return;
+      }
+      // Check type of ruleData
+      const ruleDataType = ACTION_RULE_DATA_TYPES[ruleType];
+      if (ruleDataType === 'array' && !Array.isArray(ruleData)) {
+        logger.error(`Error: Invalid FormBuilder action rule in field '${element.id}': `
+          .concat(`data must be an 'array' for rule type '${ruleType}'`));
+        return;
+        // eslint-disable-next-line valid-typeof
+      } else if (ruleDataType !== 'array' && typeof ruleData !== ruleDataType) {
+        logger.error(`Error: Invalid FormBuilder action rule in field '${element.id}': `
+          .concat(`data must be '${ruleDataType}' for rule type '${ruleType}'`));
+        return;
+      }
+
+      switch (ruleType) {
+        case ACTION_RULE_TYPE_ONE_OF: {
+          tmpResult = ruleData.includes(nextState.formData[rule.context]);
+          break;
+        }
+        case ACTION_RULE_TYPE_NOT_IN: {
+          tmpResult = !ruleData.includes(nextState.formData[rule.context]);
+          break;
+        }
+        case ACTION_RULE_TYPE_BOOLEAN: {
+          tmpResult = ruleData;
+          break;
+        }
+        case ACTION_RULE_TYPE_REGEX: {
+          const regexParts = nextState.formData[rule.context].split('/');
+          let regexPattern = '';
+          let regexParam = '';
+          if (regexParts.length === 1) {
+            [regexPattern] = regexParts;
+          } else if (regexParts.length === 3) {
+            regexParts.shift();
+            [regexPattern, regexParam = ''] = regexParts;
+          } else {
+            logger.error(`Error: Invalid regex string in action rule in element ${element.id}`);
+            break;
+          }
+          const regex = new RegExp(regexPattern, regexParam);
+          tmpResult = regex.test(ruleData);
+          break;
+        }
+        default: break;
+      }
+
+      // Concat rules based on the rule concat method of the action
+      result = concatRules(result, tmpResult);
+    });
+
+    return result;
+  }
+
+  /**
+   * Creates a concat function that defines how to concatenate action rule results
+   *
+   * @param {string} method The method defined by the action
+   * @returns {function}
+   */
+  createActionEvalConcatMethod = method => (prev, next) => {
+    switch (method) {
+      case ACTION_RULES_CONCAT_METHOD_NONE: return prev && !next;
+      case ACTION_RULES_CONCAT_METHOD_ANY: return prev || next;
+      case ACTION_RULES_CONCAT_METHOD_ALL:
+      default:
+        return prev && next;
+    }
+  }
+
+  /**
+   * Adds a "action" listener to a given context element
+   *
+   * @param {string} elementId the element to listen for
+   * @param {function} listener The listener to call when something has changed
+   */
+  registerActionListener = (elementId, listener) => {
+    if (!this.state.actionListeners[elementId]) {
+      this.state.actionListeners[elementId] = [];
+    }
+    this.state.actionListeners[elementId].push(listener);
+  }
+
+  /**
+   * Takes an element id, the state to work with and optional data and notifies all "action"
+   * listeners about the change. Every listener can manipulate the state.
+   * Returns the new state.
+   *
+   * @param {string} elementId The id of the element that was changed
+   * @param {Object} prevState The state before any changes took place
+   * @param {Object} nextState The state containing all updates before the listeners are executed
+   * @returns {Object} The new state
+   */
+  notifyActionListeners = (elementId, prevState, nextState) => {
+    let newState = nextState;
+    if (this.state.actionListeners[elementId]) {
+      this.state.actionListeners[elementId].forEach((notifyListener) => {
+        // Note: The order of state changes is applied in the same order of listener registration
+        newState = notifyListener(prevState, newState);
+      });
+    }
+
+    return newState;
   }
 
   /**
    * Takes an element and generates a change handler based on it's type,
    * @param {Object} element Element to create the handler for
-   * @returns {Function}
+   * @returns {function}
    */
   createElementChangeHandler = element => (value) => {
-    const newFormData = { ...this.state.formData };
-
-    const newElementVisibility = { ...this.state.elementVisibility };
-    // TODO: Re-evaluate element visibility // The following snippet is just prototype code
-    if (element.type === ELEMENT_TYPE_COUNTRY) {
-      const provinceElement = this.formElements.find(el => el.type === ELEMENT_TYPE_PROVINCE);
-      newElementVisibility[provinceElement.id] = value !== 'DE';
-    }
-
-    // Remove state of elements that have become invisible
-    Object.getOwnPropertyNames(newFormData).forEach((elementId) => {
-      if (!newElementVisibility[elementId]) {
-        delete newFormData[elementId];
-      }
-    });
+    // Apply value change to new state
+    const newState = {
+      ...this.state,
+      formData: {
+        ...this.state.formData,
+        [element.id]: value,
+      },
+    };
 
     // Handle province update when country changes
-    if (element.type === ELEMENT_TYPE_COUNTRY && this.state.formData[element.type] !== value) {
+    if (element.type === ELEMENT_TYPE_COUNTRY && newState.formData[element.type] !== value) {
       // Check if province element is even in the form config
       const provinceElement = this.formElements.find(el => el.type === ELEMENT_TYPE_PROVINCE);
       const countryElement = this.formElements.find(el => el.type === ELEMENT_TYPE_COUNTRY);
-      if (provinceElement && newElementVisibility[provinceElement.id]) {
+      if (provinceElement && newState.elementVisibility[provinceElement.id]) {
         // Overwrite province with the form's default, if country matches the default as well
         if (countryElement && value === this.formDefaults[countryElement.id]) {
-          newFormData[provinceElement.id] = this.formDefaults[provinceElement.id];
+          newState.formData[provinceElement.id] = this.formDefaults[provinceElement.id];
         } else {
           // Update province to first or no selection, based on "required" attribute
-          newFormData[provinceElement.id] = !provinceElement.required
+          newState.formData[provinceElement.id] = !provinceElement.required
             ? ''
             : Object.keys(this.getProvincesList(value))[0];
         }
       }
     }
 
-    // TODO: handle validation errors and set "hasErrors" accordingly - no validation in place, yet
+    // Handle context sensitive functionality by via "action" listener and use the "new" state
+    const updatedState = this.notifyActionListeners(element.id, this.state, newState);
+
+    // TODO: handle validation errors and set "hasErrors" accordingly - no validation, yet
     const hasErrors = false;
 
-    // Handle state internally
-    newFormData[element.id] = value;
-    this.setState({
-      ...this.state,
-      formData: newFormData,
-      elementVisibility: newElementVisibility,
-    });
-
-    // Transform to external structure (invisible ones are taken from default value)
-    const updateData = {};
-    this.formElements.forEach((el) => {
-      if (el.custom) {
-        if (updateData.customAttributes === undefined) {
-          updateData.customAttributes = {};
+    // Handle state internally and send an "onChange" event to parent if this finished
+    this.setState(updatedState, () => {
+      // Transform to external structure (unavailable ones will be set undefined)
+      const updateData = {};
+      this.formElements.forEach((el) => {
+        if (el.custom) {
+          if (updateData.customAttributes === undefined) {
+            updateData.customAttributes = {};
+          }
+          updateData.customAttributes[el.id] = updatedState.formData[el.id];
+        } else {
+          updateData[el.id] = updatedState.formData[el.id];
         }
-        updateData.customAttributes[el.id] = newFormData[el.id];
-      } else {
-        updateData[el.id] = newFormData[el.id];
-      }
-    });
+      });
 
-    // Trigger the given update action
-    this.props.handleUpdate(updateData, hasErrors);
+      // Trigger the given update action
+      this.props.handleUpdate(updateData, hasErrors);
+    });
   };
 
   /**

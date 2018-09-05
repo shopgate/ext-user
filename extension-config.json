@@ -77,14 +77,30 @@
             "type": "text",
             "placeholder": "",
             "required": false,
-            "visible": {
-              "street1": {
-                "notIn": [""]
-              },
-              "firstName": {
-                "notIn": [""]
+            "actions": [{
+              "type": "setValue",
+              "rules": [{
+                "context": "street1"
+              }, {
+                "context": "firstName"
+              }],
+              "params": {
+                "type": "copyFrom",
+                "value": "street1"
               }
-            }
+            }, {
+              "type": "setVisibility",
+              "rules": [{
+                "context": "firstName",
+                "type": "notIn",
+                "data": [""]
+              }, {
+                "context": "street1",
+                "type": "notIn",
+                "data": [""]
+              }],
+              "ruleConcatMethod": "any"
+            }]
           },
           "zipCode": {
             "sortOrder": 6,
@@ -121,11 +137,14 @@
             "default": "DE-HE",
             "placeholder": "locales",
             "required": true,
-            "visible": {
-              "country": {
-                "oneOf": ["US", "AT", "FR", "GB"]
-              }
-            }
+            "actions": [{
+              "type": "setVisibility",
+              "rules": [{
+                "context": "country",
+                "type": "oneOf",
+                "data": ["US", "AT", "FR", "GB"]
+              }]
+            }]
           },
           "custom": {
             "myCheckbox": {
@@ -184,6 +203,100 @@
               "required": true,
               "visible": true
             },
+            "selectTestDemo": {
+              "sortOrder": 7.5,
+              "label": "Want to be super important?",
+              "type": "select",
+              "default": "",
+              "options": {
+                "foo": "No thanks",
+                "bar": "Awesome Special",
+                "fiz": "Even better special"
+              },
+              "required": true,
+              "visible": true
+            },
+            "countryCopy": {
+              "sortOrder": 8,
+              "label": "Country Code / Ländercode",
+              "type": "text",
+              "default": "",
+              "actions": [{
+                "type": "setValue",
+                "rules": [{
+                  "context": "country"
+                }],
+                "params": {
+                  "type": "copyFrom",
+                  "value": "country"
+                }
+              }, {
+                "type": "setValue",
+                "params": {
+                  "type": "copyFrom",
+                  "value": "country"
+                }
+              }]
+            },
+            "fixedValueDemo": {
+              "sortOrder": 10,
+              "label": "Always TEST123 / Immer TEST123",
+              "type": "text",
+              "default": "",
+              "actions": [{
+                "type": "setValue",
+                "params": {
+                  "type": "text",
+                  "value": "TEST123"
+                }
+              }]
+            },
+            "firstNameLength": {
+              "sortOrder": 1,
+              "label": "Length of first name / Vornamenlänge",
+              "type": "text",
+              "default": "",
+              "actions": [{
+                "type": "setValue",
+                "rules": [{
+                  "context": "firstName"
+                }],
+                "params": {
+                  "type": "lengthOf",
+                  "value": "firstName"
+                }
+              }, {
+                "type": "setValue",
+                "params": {
+                  "type": "lengthOf",
+                  "value": "firstName"
+                }
+              }]
+            },
+            "upperCaseDemo": {
+              "sortOrder": 11,
+              "label": "Uppercase text / Großbuchstaben",
+              "type": "text",
+              "default": "",
+              "actions": [{
+                "type": "setCase",
+                "params": {
+                  "value": "upper"
+                }
+              }]
+            },
+            "lowerCaseDemo": {
+              "sortOrder": 11,
+              "label": "Lowercase text / Kleinbuchstaben",
+              "type": "text",
+              "default": "",
+              "actions": [{
+                "type": "setCase",
+                "params": {
+                  "value": "lower"
+                }
+              }]
+            },
             "additionalNote": {
               "sortOrder": 14,
               "label": "Note / Notiz",
@@ -204,6 +317,64 @@
                   "message": "locales"
                 }
               ]
+            },
+            "clearOnNumberInput": {
+              "sortOrder": 4,
+              "label": "Reset on - input / Zurücksetzung bei Eingabe von -",
+              "type": "text",
+              "default": "",
+              "actions": [{
+                "type": "setValue",
+                "rules": [{
+                  "context": "clearOnNumberInput",
+                  "type": "regex",
+                  "data": "/.*-.*/g"
+                }],
+                "params": {
+                  "type": "text",
+                  "value": ""
+                }
+              }]
+            },
+            "cheatCode": {
+              "label": "*** CHEAT CODE ***",
+              "type": "text",
+              "default": "<>"
+            },
+            "codeResult": {
+              "label": "Result / Ergebnis",
+              "type": "text",
+              "default": "",
+              "actions": [{
+                "type": "setValue",
+                "rules": [{
+                  "context": "cheatCode",
+                  "type": "notIn",
+                  "data": ["<>", "<1>", "<13>", "<133>"]
+                }],
+                "params": {
+                  "type": "text",
+                  "value": "Try harder! :)"
+                }
+              }, {
+                "type": "setValue",
+                "rules": [{
+                  "context": "cheatCode",
+                  "type": "oneOf",
+                  "data": ["<1337>"]
+                }],
+                "params": {
+                  "type": "text",
+                  "value": "YAY code CORRECT!!!"
+                }
+              }, {
+                "type": "setVisibility",
+                "rules": [{
+                  "context": "cheatCode",
+                  "type": "notIn",
+                  "data": ["<>", "<1>", "<13>", "<133>"]
+                }]
+              }]
             },
             "INVISIBLE": {
               "label": "Invisible element / Unsichtbares element",
