@@ -516,7 +516,18 @@ class FormBuilder extends Component {
     const updatedState = this.notifyActionListeners(element.id, this.state, newState);
 
     // TODO: handle validation errors and set "hasErrors" accordingly - no validation, yet
-    const hasErrors = false;
+    let hasErrors = false;
+
+    // Check "required" fields for all visible elements
+    this.formElements.forEach((formElement) => {
+      if (!updatedState.elementVisibility[formElement.id] || !formElement.required) {
+        return;
+      }
+
+      const tmpVal = updatedState.formData[formElement.id];
+      const tmpResult = tmpVal === null || tmpVal === undefined || tmpVal === '' || tmpVal === false;
+      hasErrors = hasErrors || tmpResult;
+    });
 
     // Handle state internally and send an "onChange" event to parent if this finished
     this.setState(updatedState, () => {
