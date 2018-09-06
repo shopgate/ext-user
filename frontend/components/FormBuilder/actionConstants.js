@@ -1,3 +1,4 @@
+export const ACTION_TYPE_UPDATE_PROVINCE_ELEMENT = 'updateProvinceElement';
 export const ACTION_TYPE_SET_VISIBILITY = 'setVisibility';
 export const ACTION_TYPE_SET_VALUE = 'setValue';
 export const ACTION_TYPE_SET_CASE = 'setCase';

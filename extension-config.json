@@ -132,17 +132,17 @@
           },
           "province": {
             "sortOrder": 9,
-            "label": "* Province / Bundesland",
+            "label": "Province / Bundesland",
             "type": "province",
             "default": "DE-HE",
             "placeholder": "locales",
-            "required": true,
+            "required": false,
             "actions": [{
               "type": "setVisibility",
               "rules": [{
                 "context": "country",
                 "type": "oneOf",
-                "data": ["US", "AT", "FR", "GB"]
+                "data": ["", "US", "AT", "FR", "GB"]
               }]
             }]
           },

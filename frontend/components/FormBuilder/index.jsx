@@ -9,6 +9,7 @@ import {
   ELEMENT_TYPE_PROVINCE,
 } from './elementTypes';
 import {
+  ACTION_TYPE_UPDATE_PROVINCE_ELEMENT,
   ACTION_TYPE_SET_VISIBILITY,
   ACTION_TYPE_SET_VALUE,
   ACTION_TYPE_SET_CASE,
@@ -70,10 +71,17 @@ class FormBuilder extends Component {
     this.formDefaults = this.buildFormDefaults(this.formElements);
 
     // Build country list
+    const countryElement = this.formElements.find(el => el.type === ELEMENT_TYPE_COUNTRY);
     this.countryList = Object.keys(countries).reduce((reducer, countryCode) => ({
       ...reducer,
       [countryCode]: countries[countryCode].name,
     }), {});
+    if (!countryElement.required) {
+      this.countryList = {
+        '': '',
+        ...this.countryList,
+      };
+    }
 
     // Final form initialization, by triggering actionListeners in the defined order
     let newState = this.state;
@@ -84,13 +92,25 @@ class FormBuilder extends Component {
   }
 
   /**
-   * Takes returns a list of provinces nased on
+   * Returns a list of provinces based on the given country id
+   *
    * @param {string} countryCode Country code of the country to fetch provinces from
    * @return {Object}
    */
-  getProvincesList = countryCode => (countries[countryCode]
-    ? countries[countryCode].divisions
-    : {});
+  getProvincesList = (countryCode) => {
+    let provinceList = {};
+    const provinceElement = this.formElements.find(el => el.type === ELEMENT_TYPE_PROVINCE);
+    if (provinceElement) {
+      provinceList = countries[countryCode] ? countries[countryCode].divisions : {};
+      if (!provinceElement.required) {
+        provinceList = {
+          '': '',
+          ...provinceList,
+        };
+      }
+    }
+    return provinceList;
+  }
 
   /**
    * Takes a list of which elements to render based on the respective element type
@@ -101,27 +121,52 @@ class FormBuilder extends Component {
   buildFormElements = (formConfig) => {
     let elementList = [];
 
+    let hasCountryElement = false;
+    let hasProvinceElement = false;
+
+    /**
+     * @param {string} id id
+     * @param {Object} field field
+     * @param {boolean} custom custom
+     */
+    const addFormElement = (id, field, custom) => {
+      // The "custom" field is just a placeholder for more fields
+      if (id === 'custom') {
+        return;
+      }
+
+      // Make sure country and province elements are only added once
+      if (field.type === ELEMENT_TYPE_COUNTRY) {
+        if (hasCountryElement) {
+          logger.error(`Error: Can not add multiple elements of type '${field.type}'`);
+          return;
+        }
+        hasCountryElement = true;
+      }
+      if (field.type === ELEMENT_TYPE_PROVINCE) {
+        if (hasProvinceElement) {
+          logger.error(`Error: Can not add multiple elements of type '${field.type}'`);
+          return;
+        }
+        hasProvinceElement = true;
+      }
+
+      elementList.push({
+        id,
+        ...field,
+        custom,
+      });
+    };
+
     // Add all non-custom attributes and mark them as such
     Object.getOwnPropertyNames(formConfig.fields).forEach((id) => {
-      if (id !== 'custom') {
-        const field = {
-          id,
-          ...formConfig.fields[id],
-          custom: false,
-        };
-        elementList.push(field);
-      }
+      addFormElement(id, formConfig.fields[id], false);
     });
 
     // Add custom fields to the element list
     if (formConfig.fields.custom) {
       Object.getOwnPropertyNames(formConfig.fields.custom).forEach((id) => {
-        const field = {
-          id,
-          ...formConfig.fields.custom[id],
-          custom: true,
-        };
-        elementList.push(field);
+        addFormElement(id, formConfig.fields.custom[id], true);
       });
     }
 
@@ -185,12 +230,27 @@ class FormBuilder extends Component {
   attachAllActionListeners = (elementList) => {
     // Attach action listeners for element (context) actions
     elementList.forEach((element) => {
-      if (element.actions === undefined) {
+      let elementActions = element.actions;
+      if (element.type === ELEMENT_TYPE_PROVINCE) {
+        elementActions = elementActions || [];
+
+        // Requires a country element to create a "update provinces" action
+        const countryElement = elementList.find(el => el.type === ELEMENT_TYPE_COUNTRY);
+        if (countryElement) {
+          // Attach new action, which is always triggered, when the (only) country element changes
+          elementActions.push({
+            type: ACTION_TYPE_UPDATE_PROVINCE_ELEMENT,
+            rules: [{ context: countryElement.id }],
+          });
+        }
+      }
+
+      if (elementActions === undefined) {
         return;
       }
 
       // Create listeners for all supported actions
-      element.actions.forEach((action) => {
+      elementActions.forEach((action) => {
         const actionRules = action.rules || [];
         // Always apply action to itself if no rules given
         if (actionRules.length === 0) {
@@ -221,6 +281,10 @@ class FormBuilder extends Component {
   attachRuleActionListener = (element, action, rule) => {
     let actionListener;
     switch (action.type) {
+      case ACTION_TYPE_UPDATE_PROVINCE_ELEMENT: {
+        actionListener = this.createUpdateProvinceElementActionListener(element, action);
+        break;
+      }
       case ACTION_TYPE_SET_VISIBILITY: {
         // Visibility is special and uses the result of the evaluation itself
         actionListener = this.createSetVisibilityActionListener(element, action);
@@ -262,6 +326,32 @@ class FormBuilder extends Component {
     }
 
     return actionListener(prevState, nextState);
+  }
+
+  /**
+   * Action listener creator to handle "updateCountryChange" action
+   * @param {string} provinceEl The element for which the listener should be created for
+   * @param {Object} action The action to be create a listener for
+   * @returns {function} Returns the modified state.
+   */
+  createUpdateProvinceElementActionListener = (provinceEl, action) => (prevState, nextState) => {
+    const countryElementId = action.rules[0].context;
+    const countryValue = nextState.formData[countryElementId];
+    const countryDefault = this.formDefaults[countryElementId];
+
+    const newState = { ...nextState };
+
+    // Overwrite province with the form's default, if country matches the default as well
+    if (countryValue === countryDefault) {
+      newState.formData[provinceEl.id] = this.formDefaults[provinceEl.id];
+    } else {
+      // Update province to first or no selection, based on "required" attribute
+      newState.formData[provinceEl.id] = !provinceEl.required
+        ? ''
+        : Object.keys(this.getProvincesList(countryValue))[0];
+    }
+
+    return newState;
   }
 
   /**
@@ -518,28 +608,10 @@ class FormBuilder extends Component {
       },
     };
 
-    // Handle province update when country changes
-    if (element.type === ELEMENT_TYPE_COUNTRY && newState.formData[element.type] !== value) {
-      // Check if province element is even in the form config
-      const provinceElement = this.formElements.find(el => el.type === ELEMENT_TYPE_PROVINCE);
-      const countryElement = this.formElements.find(el => el.type === ELEMENT_TYPE_COUNTRY);
-      if (provinceElement && newState.elementVisibility[provinceElement.id]) {
-        // Overwrite province with the form's default, if country matches the default as well
-        if (countryElement && value === this.formDefaults[countryElement.id]) {
-          newState.formData[provinceElement.id] = this.formDefaults[provinceElement.id];
-        } else {
-          // Update province to first or no selection, based on "required" attribute
-          newState.formData[provinceElement.id] = !provinceElement.required
-            ? ''
-            : Object.keys(this.getProvincesList(value))[0];
-        }
-      }
-    }
-
     // Handle context sensitive functionality by via "action" listener and use the "new" state
     const updatedState = this.notifyActionListeners(element.id, this.state, newState);
 
-    // TODO: handle validation errors and set "hasErrors" accordingly - no validation, yet
+    // TODO: handle validation errors and set "hasErrors" accordingly - only "requred" check, yet
     let hasErrors = false;
 
     // Check "required" fields for all visible elements
@@ -618,6 +690,9 @@ class FormBuilder extends Component {
     const elementValue = this.state.formData[elementData.id];
     const elementVisible = this.state.elementVisibility[elementData.id] || false;
     const countryElement = this.formElements.find(el => el.type === ELEMENT_TYPE_COUNTRY);
+    const provincesList = countryElement && this.state.formData[countryElement.id]
+      ? this.getProvincesList(this.state.formData[countryElement.id])
+      : {};
 
     return (
       <Fragment key={elementKey}>
@@ -652,11 +727,7 @@ class FormBuilder extends Component {
             errorText={elementErrorText}
             value={elementValue}
             visible={elementVisible}
-            provincesList={
-              countryElement &&
-              this.state.formData[countryElement.id] &&
-              this.getProvincesList(this.state.formData[countryElement.id])
-            }
+            provincesList={provincesList}
           />
           <RadioElement
             name={elementName}
