@@ -17,7 +17,7 @@ import {
   NAVIGATOR_SAVE_BUTTON_DISABLE,
 } from '../../constants/EventTypes';
 import config from '../../config';
-import connect from './connector'; // TODO: Check connector; Validation possibly not needed anymore!
+import connect from './connector';
 import style from './style';
 
 const { splitDefaultAddressesByTags = [] } = config;
@@ -30,7 +30,7 @@ export class AddressForm extends Component {
     addAddress: PropTypes.func.isRequired,
     addressFields: PropTypes.shape().isRequired,
     deleteAddress: PropTypes.func.isRequired,
-    disabled: PropTypes.bool.isRequired,
+    isBusy: PropTypes.bool.isRequired,
     updateAddress: PropTypes.func.isRequired,
     address: PropTypes.shape(),
   }
@@ -48,7 +48,10 @@ export class AddressForm extends Component {
 
     this.state = {
       address: props.address,
-      disabled: props.disabled || !!props.address.id,
+      isBusy: props.isBusy,
+      hasChanges: false,
+      editMode: !!props.address.id,
+      hasErrors: false,
     };
   }
 
@@ -56,11 +59,12 @@ export class AddressForm extends Component {
    * Did mount
    */
   componentDidMount() {
-    // Attach event handler for updating an address to the "save" button of the theme
-    EventEmitter.on(NAVIGATOR_SAVE_BUTTON_CLICK, this.addOrUpdateAddress);
-
-    if (this.props.address.id) {
+    if (this.state.editMode) {
+      // Attach event handler for updating an address to the "save" button of the theme
+      EventEmitter.on(NAVIGATOR_SAVE_BUTTON_CLICK, this.addOrUpdateAddress);
       EventEmitter.emit(NAVIGATOR_SAVE_BUTTON_SHOW);
+
+      this.setSaveButtonEnabledStatus(this.isSaveButtonVisible());
     }
   }
 
@@ -69,11 +73,14 @@ export class AddressForm extends Component {
    * @param {Object} nextProps The next props.
    */
   componentWillReceiveProps(nextProps) {
-    // Enable / Disable navigation button based on disabled prop.
-    if (nextProps.disabled && !this.props.disabled) {
-      EventEmitter.emit(NAVIGATOR_SAVE_BUTTON_DISABLE);
-    } else if (!nextProps.disabled && this.props.disabled) {
-      EventEmitter.emit(NAVIGATOR_SAVE_BUTTON_ENABLE);
+    // Disable save button if busy
+    if (nextProps.isBusy !== this.state.isBusy) {
+      // Update only if the button status actually has to change
+      if (nextProps.isBusy !== this.state.isBusy) {
+        this.setSaveButtonEnabledStatus(this.isSaveButtonVisible());
+      }
+
+      this.setState({ isBusy: nextProps.isBusy });
     }
   }
 
@@ -86,10 +93,41 @@ export class AddressForm extends Component {
   }
 
   /**
+   * Handles sending out events to enable or disable the navigator buttons based "show" state
+   * @param {boolean} enabled Defines if the button should be enabled or disabled
+   */
+  setSaveButtonEnabledStatus = (enabled) => {
+    if (!this.state.editMode) {
+      return;
+    }
+
+    if (enabled) {
+      EventEmitter.emit(NAVIGATOR_SAVE_BUTTON_ENABLE);
+    } else {
+      EventEmitter.emit(NAVIGATOR_SAVE_BUTTON_DISABLE);
+    }
+  }
+
+  /**
+   * Evaluates all values that affect the button enabled state
+   * @returns {boolean}
+   */
+  isSaveButtonVisible = () => (
+    // Is not in edit mode or has changes
+    (!this.state.editMode || this.state.hasChanges) &&
+
+    // Has no validation errors (like all required fields are filled out)
+    !this.state.hasErrors &&
+
+    // Is not waiting for anything
+    !this.state.isBusy
+  )
+
+  /**
    * Checks if the address should be created or updated and performs the desired action
    */
   addOrUpdateAddress = () => {
-    if (this.props.address.id) {
+    if (this.state.editMode) {
       this.props.updateAddress({
         id: this.props.address.id,
         ...this.state.address,
@@ -101,6 +139,12 @@ export class AddressForm extends Component {
         tags: this.state.address.tags || this.props.address.tags || [],
       });
     }
+
+    // Changes have been submitted
+    this.setState({
+      hasChanges: false,
+      isBusy: true,
+    });
   }
 
   /**
@@ -136,20 +180,50 @@ export class AddressForm extends Component {
    */
   handleUpdate = (address, hasErrors) => {
     // Avoid updating state, when no address fields changed
-    const hasChanged = !isEqual(address, this.state.address);
+    const hasChanged = !isEqual(address, this.state.address) || this.state.hasErrors !== hasErrors;
     if (hasChanged) {
-      // Update save button
-      if (this.state.disabled !== hasErrors) {
-        EventEmitter.emit(hasErrors
-          ? NAVIGATOR_SAVE_BUTTON_DISABLE
-          : NAVIGATOR_SAVE_BUTTON_ENABLE);
-      }
-
-      // Update current state with the latest form changes
-      this.setState({
+      const newState = {
         ...this.state,
         address,
-        disabled: hasErrors,
+        hasErrors,
+      };
+
+      // Disable only if in "edit" mode and no changes were done
+      const compareData = {
+        ...this.props.address,
+        id: this.props.address.id, // Updates don't change id
+        tags: this.props.address.tags, // Tags are not changeable in edit mode either
+      };
+
+      // Remove all properties from comparator that don not exist in the address anymore
+      Object.getOwnPropertyNames(address).forEach((key) => {
+        if (address[key] === undefined) {
+          compareData[key] = undefined;
+        }
+      });
+      // Same for custom attributes
+      Object.getOwnPropertyNames(address.customAttributes).forEach((key) => {
+        if (address.customAttributes[key] === undefined) {
+          compareData.customAttributes[key] = undefined;
+        }
+      });
+
+      if (this.state.editMode) {
+        newState.hasChanges = !isEqual({
+          ...address,
+          id: this.props.address.id,
+          tags: this.props.address.tags,
+        }, compareData);
+      }
+
+      // Check if save button visibility has changed and update it, if that's the case
+      const saveButtonWasVisible = this.isSaveButtonVisible();
+
+      // Update current state with the latest form changes
+      this.setState(newState, () => {
+        if (saveButtonWasVisible !== this.isSaveButtonVisible()) {
+          this.setSaveButtonEnabledStatus(this.isSaveButtonVisible());
+        }
       });
     }
   }
@@ -174,7 +248,7 @@ export class AddressForm extends Component {
 
           <div className={style.options}>
             {/* Delete address button */}
-            {this.props.address.id &&
+            {this.state.editMode &&
               <Button
                 className={style.deleteAddressButton}
                 onClick={this.deleteAddress}
@@ -187,7 +261,7 @@ export class AddressForm extends Component {
             }
 
             {/* Default address and submit button for new address */}
-            {!this.props.address.id &&
+            {!this.state.editMode &&
               <Fragment>
                 {splitDefaultAddressesByTags.map(tag => (
                   <Checkbox
@@ -207,7 +281,7 @@ export class AddressForm extends Component {
                   }
                   <RippleButton
                     type="secondary"
-                    disabled={this.props.disabled}
+                    disabled={!this.isSaveButtonVisible()}
                     onClick={this.addOrUpdateAddress}
                     className={style.addAddressButton}
                     data-test-id="AddAddressButton"
