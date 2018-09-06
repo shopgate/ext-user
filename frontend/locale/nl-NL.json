@@ -25,7 +25,7 @@
     "title": "Adresboek",
     "headline": "Adresboek",
     "button": "Voeg een nieuw adres toe",
-    "noAddresses": "Je hebt nog geen adresvermeldingen. Voeg een nieuw adres toe om uw bestelling te ontvangen",
+    "noAddresses": "Adresboek is leeg",
     "defaults": {
       "default": "Standaard adres",
       "shipping": "Standaard verzendadres",
