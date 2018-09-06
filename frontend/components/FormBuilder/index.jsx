@@ -266,7 +266,7 @@ class FormBuilder extends Component {
    * @returns {function} Returns the modified state.
    */
   createSetVisibilityActionListener = (element, action) => (prevState, nextState) => {
-    const updatedState = {
+    let newState = {
       ...nextState,
       elementVisibility: {
         ...nextState.elementVisibility,
@@ -274,15 +274,20 @@ class FormBuilder extends Component {
       },
     };
 
-    if (updatedState.formData[element.id] === undefined &&
-      updatedState.elementVisibility[element.id]) {
-      updatedState.formData[element.id] = this.formDefaults[element.id];
-    } else if (!updatedState.elementVisibility[element.id] &&
-      updatedState.formData[element.id] !== undefined) {
-      delete updatedState.formData[element.id];
+    if (newState.formData[element.id] === undefined &&
+      newState.elementVisibility[element.id]) {
+      newState.formData[element.id] = this.formDefaults[element.id];
+    } else if (!newState.elementVisibility[element.id] &&
+      newState.formData[element.id] !== undefined) {
+      delete newState.formData[element.id];
     }
 
-    return updatedState;
+    // Notify follow up listeners about the current change
+    if (nextState.formData[element.id] !== newState.formData[element.id]) {
+      newState = this.notifyActionListeners(element.id, prevState, newState);
+    }
+
+    return newState;
   }
 
   /**
@@ -343,13 +348,20 @@ class FormBuilder extends Component {
       return str;
     };
 
-    return {
+    let newState = {
       ...nextState,
       formData: {
         ...nextState.formData,
         [element.id]: setCase(nextState.formData[element.id]),
       },
     };
+
+    // Notify follow up listeners about the current change
+    if (nextState.formData[element.id] !== newState.formData[element.id]) {
+      newState = this.notifyActionListeners(element.id, prevState, newState);
+    }
+
+    return newState;
   }
 
   /**
