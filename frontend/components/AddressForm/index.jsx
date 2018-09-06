@@ -93,9 +93,13 @@ export class AddressForm extends Component {
       this.props.updateAddress({
         id: this.props.address.id,
         ...this.state.address,
+        tags: this.state.address.tags || this.props.address.tags || [],
       });
     } else {
-      this.props.addAddress(this.state.address);
+      this.props.addAddress({
+        ...this.state.address,
+        tags: this.state.address.tags || this.props.address.tags || [],
+      });
     }
   }
 
