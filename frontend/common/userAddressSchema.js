@@ -1,6 +1,6 @@
 const defaultAlphaExpr = /^[^[0-9!<>,;?=+()@#"°{}_$%:]*$/;
 const defaultSpecCharExpr = /^[^!<>;?=#"$%]*$/;
-const defaultFreeText = /^[!<>;-_*+?=#.,:"$%\w ]+$/;
+const defaultFreeText = /^[!<>;\-*+?=#.,:"$%\w ]+$/;
 const streetExpr = /^\d+(\s|\w{1,3}\s)|(\s\d+($|.{1,6}))/;
 
 /**
