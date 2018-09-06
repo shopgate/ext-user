@@ -164,12 +164,12 @@ export class AddressForm extends Component {
       this.handleUpdate({
         ...this.state.address,
         tags: [...addressTags, defaultTag],
-      });
+      }, this.state.hasErrors);
     } else {
       this.handleUpdate({
         ...this.state.address,
         tags: addressTags.filter(t => t !== defaultTag),
-      });
+      }, this.state.hasErrors);
     }
   }
 
