@@ -85,7 +85,9 @@ class FormBuilder extends Component {
    * @param {string} countryCode Country code of the country to fetch provinces from
    * @return {Object}
    */
-  getProvincesList = countryCode => countries[countryCode].divisions;
+  getProvincesList = countryCode => (countries[countryCode]
+    ? countries[countryCode].divisions
+    : {});
 
   /**
    * Takes a list of which elements to render based on the respective element type
