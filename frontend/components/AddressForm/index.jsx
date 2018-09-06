@@ -95,7 +95,10 @@ export class AddressForm extends Component {
         ...this.state.address,
       });
     } else {
-      this.props.addAddress(this.state.address);
+      this.props.addAddress({
+        ...this.state.address,
+        tags: this.state.address.tags || [],
+      });
     }
   }
 
