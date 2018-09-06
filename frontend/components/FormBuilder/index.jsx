@@ -2,6 +2,7 @@ import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { logger } from '@shopgate/pwa-core/helpers';
 import Portal from '@shopgate/pwa-common/components/Portal';
+import Form from '@shopgate/pwa-ui-shared/Form';
 import * as portals from '@shopgate/user/constants/Portals';
 import {
   ELEMENT_TYPE_COUNTRY,
@@ -41,10 +42,12 @@ class FormBuilder extends Component {
     handleUpdate: PropTypes.func.isRequired,
     id: PropTypes.string.isRequired,
     defaults: PropTypes.shape(),
+    onSubmit: PropTypes.func,
   }
 
   static defaultProps = {
     defaults: {},
+    onSubmit: () => {},
   }
 
   /**
@@ -670,7 +673,6 @@ class FormBuilder extends Component {
             visible={elementVisible}
           />
         </Portal>
-        <Portal name={`${portalName}.${portals.AFTER}`} />
       </Fragment>
     );
   };
@@ -682,9 +684,11 @@ class FormBuilder extends Component {
   render() {
     return (
       <Fragment>
-        <div className={this.props.className}>
-          {this.formElements.map(element => this.renderElement(element))}
-        </div>
+        <Form onSubmit={this.props.onSubmit}>
+          <div className={this.props.className}>
+            {this.formElements.map(element => this.renderElement(element))}
+          </div>
+        </Form>
       </Fragment>
     );
   }
