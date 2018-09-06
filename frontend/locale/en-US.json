@@ -114,10 +114,10 @@
     }
   },
   "navigation": {
-    "profile": "My Details",
-    "change_password": "Change Password",
-    "address_book": "Address Book",
-    "payment_options": "Payment Options"
+    "profile": "My profile",
+    "change_password": "Change password",
+    "address_book": "Address book",
+    "payment_options": "Payment options"
   },
   "navigator": {
     "save": "Save"

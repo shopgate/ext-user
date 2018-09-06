@@ -114,7 +114,7 @@
     }
   },
   "navigation": {
-    "profile": "Mijn Gegevens",
+    "profile": "Mijn profiel",
     "change_password": "Wachtwoord wijzigen",
     "address_book": "Adresboek",
     "payment_options": "Betalingsmogelijkheden"
