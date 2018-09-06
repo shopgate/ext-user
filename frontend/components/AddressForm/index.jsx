@@ -244,6 +244,7 @@ export class AddressForm extends Component {
             config={this.props.addressFields}
             defaults={this.state.address}
             handleUpdate={this.handleUpdate}
+            onSubmit={this.addOrUpdateAddress}
           />
 
           <div className={style.options}>
