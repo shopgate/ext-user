@@ -1,6 +1,9 @@
 import { main$ } from '@shopgate/pwa-common/streams/main';
 import { EVALIDATION } from '@shopgate/pwa-core/constants/Pipeline';
 import {
+  GET_USER_ADDRESSES,
+  USER_ADDRESSES_RECEIVED,
+  USER_ADDRESSES_FAILED,
   ADD_USER_ADDRESS,
   ADD_USER_ADDRESS_SUCCESS,
   ADD_USER_ADDRESS_FAILED,
@@ -13,6 +16,30 @@ import {
   DELETE_USER_ADDRESSES_FAILED,
   SET_DEFAULT_ADDRESS,
 } from './../constants/ActionTypes';
+
+/**
+ * Gets triggered when we fetch user addresses
+ * @type {Observable}
+ */
+export const getUserAddresses$ = main$.filter(({ action }) => (
+  action.type === GET_USER_ADDRESSES
+));
+
+/**
+ * Gets triggered when user addresses are received
+ * @type {Observable}
+ */
+export const userAddressesReceived$ = main$.filter(({ action }) => (
+  action.type === USER_ADDRESSES_RECEIVED
+));
+
+/**
+ * Gets triggered when user addresses are failed to receive
+ * @type {Observable}
+ */
+export const userAddressReceiveFailed$ = main$.filter(({ action }) => (
+  action.type === USER_ADDRESSES_FAILED
+));
 
 /**
  * Gets triggered when user address is going to be added
@@ -105,17 +132,21 @@ export const userAddressValidationFailed$ = userAddressAddFailed$
   .filter(({ action: { error } }) => error.code === EVALIDATION);
 
 /**
- * Gets triggered when user addresses are changed: new added, existing updated or deleted
+ * Gets triggered when user addresses are changed: received, new added, existing updated or deleted
  * @type {Observable}
  */
 export const userAddressChanged$ = userAddressAdded$
-  .merge(userAddressUpdated$)
-  .merge(userAddressesDeleted$);
+  .merge(
+    userAddressUpdated$,
+    userAddressesDeleted$
+  );
 
 /**
  * Gets triggered when adding/updating or deleting address is failed
  * @type {Observable}
  */
 export const userAddressFailed$ = userAddressAddFailed$
-  .merge(userAddressUpdateFailed$)
-  .merge(userAddressesDeleteFailed$);
+  .merge(
+    userAddressUpdateFailed$,
+    userAddressesDeleteFailed$
+  );

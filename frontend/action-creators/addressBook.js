@@ -1,6 +1,14 @@
 import * as types from './../constants/ActionTypes';
 
 /**
+ * Creates the dispatched GET_USER_ADDRESSES action object.
+ * @return {{type: string}}
+ */
+export const getUserAddresses = () => ({
+  type: types.GET_USER_ADDRESSES,
+});
+
+/**
  * Creates the dispatched USER_ADDRESSES_RECEIVED action object.
  * @param {UserAddress[]} addresses address id
  * @return {{type: string, addresses: UserAddress[]}}
