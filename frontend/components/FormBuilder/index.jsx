@@ -105,7 +105,7 @@ class FormBuilder extends Component {
    */
   getProvincesList = countryCode => (countries[countryCode]
     ? countries[countryCode].divisions
-    : []);
+    : {});
 
   /**
    * Takes a list of which elements to render based on the respective element type
