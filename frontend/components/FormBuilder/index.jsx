@@ -305,13 +305,20 @@ class FormBuilder extends Component {
         break;
     }
 
-    return {
+    let newState = {
       ...nextState,
       formData: {
         ...nextState.formData,
         [element.id]: value,
       },
     };
+
+    // Notify follow up listeners about the current change
+    if (nextState.formData[element.id] !== value) {
+      newState = this.notifyActionListeners(element.id, prevState, newState);
+    }
+
+    return newState;
   }
 
   /**
