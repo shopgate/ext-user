@@ -114,7 +114,7 @@
     }
   },
   "navigation": {
-    "profile": "Mes Données",
+    "profile": "Mon profil",
     "change_password": "Changer mot de passe",
     "address_book": "Carnet d'adresses",
     "payment_options": "Options de paiement"
