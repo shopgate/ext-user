@@ -25,7 +25,7 @@
     "title": "Carnet d'adresses",
     "headline": "Carnet d'adresses",
     "button": "Ajouter une nouvelle adresse",
-    "noAddresses": "Vous n'avez pas encore d'entrées d'adresse. Ajouter une nouvelle adresse pour recevoir votre commande",
+    "noAddresses": "Le carnet d'adresses est vide",
     "defaults": {
       "default": "Adresse par défaut",
       "shipping": "Adresse d'expédition par défaut",
@@ -79,7 +79,7 @@
       "button": "Choose address"
     },
     "update": {
-      "title": "Update address"
+      "title": "Edit address"
     },
     "delete": {
       "button": "Supprimer",
@@ -114,7 +114,7 @@
     }
   },
   "navigation": {
-    "profile": "Mes Données",
+    "profile": "Mon profil",
     "change_password": "Changer mot de passe",
     "address_book": "Carnet d'adresses",
     "payment_options": "Options de paiement"
