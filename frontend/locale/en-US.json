@@ -25,7 +25,7 @@
     "title": "Address book",
     "headline": "Address book",
     "button": "Add a new address",
-    "noAddresses": "You have no address entries yet. Add a new address in order to receive your order.",
+    "noAddresses": "Address book is empty",
     "defaults": {
       "default": "Default address",
       "shipping": "Default shipping address",
@@ -79,7 +79,7 @@
       "button": "Save new address"
     },
     "update": {
-      "title": "Update address"
+      "title": "Edit address"
     },
     "delete": {
       "button": "Delete",
@@ -114,10 +114,10 @@
     }
   },
   "navigation": {
-    "profile": "My Details",
-    "change_password": "Change Password",
-    "address_book": "Address Book",
-    "payment_options": "Payment Options"
+    "profile": "My profile",
+    "change_password": "Change password",
+    "address_book": "Address book",
+    "payment_options": "Payment options"
   },
   "navigator": {
     "save": "Save"

@@ -13,11 +13,8 @@ export default address => (dispatch) => {
     .setTrusted()
     .setInput(address)
     .dispatch()
-    .then(({ addressId }) => {
-      dispatch(addUserAddressSuccess({
-        id: addressId,
-        ...address,
-      }));
+    .then(() => {
+      dispatch(addUserAddressSuccess(address));
     })
     .catch((error) => {
       dispatch(addUserAddressFailed(error));
