@@ -20,15 +20,16 @@ import countries from './countries';
  */
 class FormBuilder extends Component {
   static propTypes = {
-    className: PropTypes.string.isRequired,
     config: PropTypes.shape().isRequired,
     handleUpdate: PropTypes.func.isRequired,
     id: PropTypes.string.isRequired,
+    className: PropTypes.string,
     defaults: PropTypes.shape(),
   }
 
   static defaultProps = {
     defaults: {},
+    className: '',
   }
 
   /**
