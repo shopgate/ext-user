@@ -3,6 +3,10 @@ export const ACTION_TYPE_SET_VISIBILITY = 'setVisibility';
 export const ACTION_TYPE_SET_VALUE = 'setValue';
 export const ACTION_TYPE_SET_CASE = 'setCase';
 
+export const ACTION_SET_VALUE_FIXED = 'fixed';
+export const ACTION_SET_VALUE_COPY_FROM = 'copyFrom';
+export const ACTION_SET_VALUE_LENGTH_OF = 'lengthOf';
+
 export const ACTION_RULE_TYPE_NOT_IN = 'notIn';
 export const ACTION_RULE_TYPE_ONE_OF = 'oneOf';
 export const ACTION_RULE_TYPE_BOOLEAN = 'boolean';

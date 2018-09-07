@@ -248,16 +248,53 @@
                 }
               }]
             },
-            "fixedValueDemo": {
-              "sortOrder": 10,
-              "label": "Always TEST123 / Immer TEST123",
-              "type": "text",
+            "fixedCheckDemo": {
+              "sortOrder": 0.01,
+              "label": "Always UNCHECKED / Immer ABGEHAKT",
+              "type": "checkbox",
               "default": "",
               "actions": [{
                 "type": "setValue",
                 "params": {
-                  "type": "text",
-                  "value": "TEST123"
+                  "type": "fixed",
+                  "value": false
+                }
+              }]
+            },
+            "fixedRadioDemo": {
+              "sortOrder": 0.02,
+              "label": "Unchangeable Radio / Unveränderbares Radiofeld",
+              "type": "radio",
+              "default": "some-invalid-default-which-is-never-used",
+              "options": {
+                "unselectable1": "can't select me",
+                "fixed-value": "This is always selected",
+                "unselectable3": "can't select me either"
+              },
+              "actions": [{
+                "type": "setValue",
+                "params": {
+                  "type": "fixed",
+                  "value": "fixed-value"
+                }
+              }]
+            },
+            "fixedSelectDemo": {
+              "sortOrder": 0.03,
+              "label": "Unchangeable Select / Unveränderbares Auswahlfeld",
+              "type": "select",
+              "default": "some-invalid-default-which-is-never-used",
+              "options": {
+                "unselectable-empty": "",
+                "unselectable1": "can't select me",
+                "fixed-value": "This is always selected",
+                "unselectable3": "can't select me either"
+              },
+              "actions": [{
+                "type": "setValue",
+                "params": {
+                  "type": "fixed",
+                  "value": "fixed-value"
                 }
               }]
             },
@@ -315,7 +352,7 @@
               "actions": [{
                 "type": "setCase",
                 "params": {
-                  "value": "upper"
+                  "type": "upper"
                 }
               }]
             },
@@ -327,7 +364,7 @@
               "actions": [{
                 "type": "setCase",
                 "params": {
-                  "value": "lower"
+                  "type": "lower"
                 }
               }]
             },
@@ -365,7 +402,7 @@
                   "data": "/.*-.*/g"
                 }],
                 "params": {
-                  "type": "text",
+                  "type": "fixed",
                   "value": ""
                 }
               }]
@@ -387,7 +424,7 @@
                   "data": "/^\\s*[<]*\\s*1337\\s*[>]*\\s*$/g"
                 }],
                 "params": {
-                  "type": "text",
+                  "type": "fixed",
                   "value": "waiting..."
                 },
                 "ruleConcatMethod": "none"
@@ -399,7 +436,7 @@
                   "data": "/^\\s*[<]*\\s*1337\\s*[>]*\\s*$/g"
                 }],
                 "params": {
-                  "type": "text",
+                  "type": "fixed",
                   "value": "YAY code CORRECT!!!"
                 },
                 "ruleConcatMethod": "all"
