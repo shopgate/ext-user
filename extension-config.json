@@ -3,13 +3,6 @@
   "id": "@shopgate/user",
   "trusted": true,
   "configuration": {
-    "countryCodes": {
-      "type": "static",
-      "destination": "frontend",
-      "params": {
-        "value": "DE,US,AT,FR,GB"
-      }
-    },
     "addressFields": {
       "type": "admin",
       "destination": "both",
@@ -127,7 +120,7 @@
             "default": "US",
             "placeholder": "locales",
             "required": true,
-            "countries": ["DE", "US"],
+            "countries": ["DE", "US", "AT", "FR", "GB"],
             "visible": true
           },
           "province": {

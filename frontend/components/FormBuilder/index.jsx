@@ -9,7 +9,7 @@ import {
   ELEMENT_TYPE_NUMBER,
   ELEMENT_TYPE_COUNTRY,
   ELEMENT_TYPE_PROVINCE,
-} from './elementTypes'
+} from './elementTypes';
 import {
   ACTION_TYPE_UPDATE_PROVINCE_ELEMENT,
   ACTION_TYPE_SET_VISIBILITY,
@@ -36,7 +36,7 @@ import CountryElement from './components/CountryElement';
 import ProvinceElement from './components/ProvinceElement';
 import RadioElement from './components/RadioElement';
 import CheckboxElement from './components/CheckboxElement';
-import countries from './countries';
+import iso3166 from '../../common/iso-3166-2';
 
 /**
  * Takes a form configuration and handles rendering and updates of the form fields.
@@ -76,17 +76,37 @@ class FormBuilder extends Component {
     this.formElements = this.buildFormElements(props.config);
     this.formDefaults = this.buildFormDefaults(this.formElements);
 
-    // Build country list
+    // Assemble combined country/province list based on the config element
     const countryElement = this.formElements.find(el => el.type === ELEMENT_TYPE_COUNTRY);
-    this.countryList = Object.keys(countries).reduce((reducer, countryCode) => ({
-      ...reducer,
-      [countryCode]: countries[countryCode].name,
-    }), {});
-    if (!countryElement.required) {
-      this.countryList = {
-        '': '',
-        ...this.countryList,
-      };
+    if (countryElement) {
+      // Check validity of the country element options list "countries"
+      if (!countryElement.countries || !Array.isArray(countryElement.countries)) {
+        logger.error("Error: Missing or invalid property 'countries' in element " +
+          `'${countryElement.id}'`);
+      } else {
+        this.countries = countryElement.countries
+        // Take element configuration and fill with data from the iso codes list
+          .map(countryCode => ({
+            [countryCode]: iso3166[countryCode],
+          }))
+          // Combine countries together to one single object
+          .reduce((reducer, country) => ({
+            ...reducer,
+            ...country,
+          }), {});
+
+        // Build country list to display in the country element
+        this.countryList = Object.keys(this.countries).reduce((reducer, countryCode) => ({
+          ...reducer,
+          [countryCode]: this.countries[countryCode].name,
+        }), {});
+        if (!countryElement.required) {
+          this.countryList = {
+            '': '',
+            ...this.countryList,
+          };
+        }
+      }
     }
 
     // Final form initialization, by triggering actionListeners and enable rendering for elements
@@ -104,10 +124,14 @@ class FormBuilder extends Component {
    * @return {Object}
    */
   getProvincesList = (countryCode) => {
+    if (!this.countries) {
+      return {};
+    }
+
     let provinceList = {};
     const provinceElement = this.formElements.find(el => el.type === ELEMENT_TYPE_PROVINCE);
     if (provinceElement) {
-      provinceList = countries[countryCode] ? countries[countryCode].divisions : {};
+      provinceList = this.countries[countryCode] ? this.countries[countryCode].divisions : {};
       if (!provinceElement.required) {
         provinceList = {
           '': '',
@@ -165,13 +189,13 @@ class FormBuilder extends Component {
     };
 
     // Add all non-custom attributes and mark them as such
-    Object.getOwnPropertyNames(formConfig.fields).forEach((id) => {
+    Object.keys(formConfig.fields).forEach((id) => {
       addFormElement(id, formConfig.fields[id], false);
     });
 
     // Add custom fields to the element list
     if (formConfig.fields.custom) {
-      Object.getOwnPropertyNames(formConfig.fields.custom).forEach((id) => {
+      Object.keys(formConfig.fields.custom).forEach((id) => {
         addFormElement(id, formConfig.fields.custom[id], true);
       });
     }
