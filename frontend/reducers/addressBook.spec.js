@@ -51,26 +51,12 @@ describe('AddressBook reducers', () => {
 
   it('Should reduce ADD_USER_ADDRESS_SUCCESS', () => {
     const state = {
-      // eslint-disable-next-line extra-rules/no-single-line-objects
-      addresses: [{ id: 321, name: 'Address 321' }],
-      default: {
-        shipping: 321,
-      },
+      busy: true,
     };
     const action = {
       type: ADD_USER_ADDRESS_SUCCESS,
-      address: {
-        id: 123,
-        name: 'Address 123',
-        tags: ['default_shipping'],
-      },
     };
     const expectedState = {
-      // eslint-disable-next-line extra-rules/no-single-line-objects
-      addresses: [{ id: 321, name: 'Address 321' }, { id: 123, name: 'Address 123', tags: ['default_shipping'] }],
-      default: {
-        shipping: 123,
-      },
       busy: false,
     };
     expect(reducer(state, action)).toEqual(expectedState);
@@ -78,20 +64,13 @@ describe('AddressBook reducers', () => {
 
   it('Should reduce UPDATE_USER_ADDRESS_SUCCESS', () => {
     const state = {
-      // eslint-disable-next-line extra-rules/no-single-line-objects
-      addresses: [{ id: 123, name: 'Address 123' }, { id: 321, name: 'Address 321' }],
+      busy: true,
     };
     const action = {
       type: UPDATE_USER_ADDRESS_SUCCESS,
-      address: {
-        id: 123,
-        name: 'New Address 123',
-      },
     };
     const expectedState = {
       busy: false,
-      // eslint-disable-next-line extra-rules/no-single-line-objects
-      addresses: [{ id: 123, name: 'New Address 123' }, { id: 321, name: 'Address 321' }],
     };
     expect(reducer(state, action)).toEqual(expectedState);
   });

@@ -15,9 +15,7 @@
       {"key": "tags", "id": "114", "optional": true},
       {"key": "customAttributes", "id": "115", "optional": true}
     ],
-    "output": [
-      {"key": "addressId", "id": "200"}
-    ],
+    "output": [],
     "steps": [
       {
         "type": "extension",
@@ -92,9 +90,7 @@
             {"key": "tags", "id": "114", "optional": true},
             {"key": "customAttributes", "id": "115", "optional": true}
           ],
-          "output": [
-            {"key": "id", "id": "200"}
-          ]
+          "output": []
         }
       },
       {
