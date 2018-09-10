@@ -14,6 +14,7 @@ describe('<FormBuilder />', () => {
           },
         }}
         id="foo"
+        name="foo"
         handleUpdate={() => {}}
       />
     ));
@@ -39,6 +40,7 @@ describe('<FormBuilder />', () => {
           },
         }}
         id="foo"
+        name="foo"
         handleUpdate={() => {}}
       />
     ));
@@ -60,6 +62,7 @@ describe('<FormBuilder />', () => {
           },
         }}
         id="foo"
+        name="foo"
         handleUpdate={() => {}}
       />
     ));
@@ -93,6 +96,7 @@ describe('<FormBuilder />', () => {
           },
         }}
         id="foo"
+        name="foo"
         handleUpdate={() => {}}
       />
     ));
@@ -128,6 +132,7 @@ describe('<FormBuilder />', () => {
                 type: 'setValue',
                 params: {
                   value: 'cheat',
+                  type: 'fixed',
                 },
                 rules: [{
                   context: 'foo',
@@ -139,6 +144,7 @@ describe('<FormBuilder />', () => {
           },
         }}
         id="foo"
+        name="foo"
         handleUpdate={() => {}}
       />
     ));
@@ -151,6 +157,7 @@ describe('<FormBuilder />', () => {
 
     // Simulate text input to trigger rule.
     wrapper.find('input').first().simulate('change', { target: { value: 'abc' } });
+    wrapper.update();
 
     // Second field should be hidden now.
     expect(wrapper).toMatchSnapshot();
@@ -173,6 +180,7 @@ describe('<FormBuilder />', () => {
             },
           },
         }}
+        name="foo"
         id="foo"
         handleUpdate={handleUpdate}
       />

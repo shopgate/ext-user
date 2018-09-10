@@ -47,8 +47,11 @@ export default (subscribe) => {
   });
 
   // Fetch user addresses silently
-  subscribe(userDidUpdateDebounced$, ({ dispatch }) => {
-    dispatch(getAddresses());
+  subscribe(userDidUpdateDebounced$, ({ dispatch, getState }) => {
+    const { user: { data: { id: userId = null } = {} } = {} } = getState();
+    if (userId) {
+      dispatch(getAddresses());
+    }
   });
 
   // Dispatch action to backend to delete the given addresses after successful confirmation

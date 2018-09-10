@@ -46,11 +46,12 @@ export class AddressForm extends Component {
   constructor(props) {
     super(props);
 
+    const { id: addressId, tags, ...addressData } = props.address;
     this.state = {
-      address: props.address,
+      address: addressData,
       isBusy: props.isBusy,
       hasChanges: false,
-      editMode: !!props.address.id,
+      editMode: !!addressId,
       hasErrors: false,
     };
   }
@@ -196,17 +197,19 @@ export class AddressForm extends Component {
       };
 
       // Remove all properties from comparator that don not exist in the address anymore
-      Object.getOwnPropertyNames(address).forEach((key) => {
+      Object.keys(address).forEach((key) => {
         if (address[key] === undefined) {
           compareData[key] = undefined;
         }
       });
       // Same for custom attributes
-      Object.getOwnPropertyNames(address.customAttributes).forEach((key) => {
-        if (address.customAttributes[key] === undefined) {
-          compareData.customAttributes[key] = undefined;
-        }
-      });
+      if (address.customAttributes) {
+        Object.keys(address.customAttributes).forEach((key) => {
+          if (address.customAttributes[key] === undefined) {
+            compareData.customAttributes[key] = undefined;
+          }
+        });
+      }
 
       if (this.state.editMode) {
         newState.hasChanges = !isEqual({
@@ -239,7 +242,7 @@ export class AddressForm extends Component {
         <Portal name={portals.USER_ADDRESS_FORM}>
 
           <FormBuilder
-            id="address"
+            name="address"
             className={style.fields}
             config={this.props.addressFields}
             defaults={this.state.address}
@@ -268,6 +271,7 @@ export class AddressForm extends Component {
                   <Checkbox
                     className={style.defaults}
                     key={tag}
+                    defaultChecked={false}
                     name={`default_${tag}`}
                     label={`address.makeDefault.${tag}`}
                     onChange={makeDefault => this.handleMakeDefault(makeDefault, tag)}
@@ -276,10 +280,6 @@ export class AddressForm extends Component {
 
                 <Portal name={portals.USER_ADDRESS_FORM_BUTTON_BEFORE} />
                 <Portal name={portals.USER_ADDRESS_FORM_BUTTON}>
-                  {
-                    /* TODO: Inconsistent form behaviour, possibly undesired!
-                     * Should the save and update buttons really be that different??? */
-                  }
                   <RippleButton
                     type="secondary"
                     disabled={!this.isSaveButtonVisible()}

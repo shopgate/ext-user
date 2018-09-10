@@ -5,14 +5,27 @@ import Portal from '@shopgate/pwa-common/components/Portal';
 import Form from '@shopgate/pwa-ui-shared/Form';
 import * as portals from '@shopgate/user/constants/Portals';
 import {
+  ELEMENT_TYPE_EMAIL,
+  ELEMENT_TYPE_PASSWORD,
+  ELEMENT_TYPE_TEXT,
+  ELEMENT_TYPE_NUMBER,
+  ELEMENT_TYPE_SELECT,
   ELEMENT_TYPE_COUNTRY,
   ELEMENT_TYPE_PROVINCE,
+  ELEMENT_TYPE_CHECKBOX,
+  ELEMENT_TYPE_RADIO,
+  ELEMENT_TYPE_DATE,
+  ELEMENT_TYPE_PHONE,
 } from './elementTypes';
 import {
   ACTION_TYPE_UPDATE_PROVINCE_ELEMENT,
   ACTION_TYPE_SET_VISIBILITY,
   ACTION_TYPE_SET_VALUE,
-  ACTION_TYPE_SET_CASE,
+  ACTION_TYPE_TRANSFORM,
+
+  ACTION_SET_VALUE_FIXED,
+  ACTION_SET_VALUE_COPY_FROM,
+  ACTION_SET_VALUE_LENGTH_OF,
 
   ACTION_RULE_TYPE_NOT_IN,
   ACTION_RULE_TYPE_ONE_OF,
@@ -30,7 +43,7 @@ import CountryElement from './components/CountryElement';
 import ProvinceElement from './components/ProvinceElement';
 import RadioElement from './components/RadioElement';
 import CheckboxElement from './components/CheckboxElement';
-import countries from './countries';
+import iso3166 from '../../common/iso-3166-2';
 
 /**
  * Takes a form configuration and handles rendering and updates of the form fields.
@@ -40,6 +53,7 @@ class FormBuilder extends Component {
   static propTypes = {
     config: PropTypes.shape().isRequired,
     handleUpdate: PropTypes.func.isRequired,
+    name: PropTypes.string.isRequired,
     id: PropTypes.string.isRequired,
     className: PropTypes.string,
     defaults: PropTypes.shape(),
@@ -71,21 +85,40 @@ class FormBuilder extends Component {
     this.formElements = this.buildFormElements(props.config);
     this.formDefaults = this.buildFormDefaults(this.formElements);
 
-    // Build country list
+    // Assemble combined country/province list based on the config element
     const countryElement = this.formElements.find(el => el.type === ELEMENT_TYPE_COUNTRY);
-    this.countryList = Object.keys(countries).reduce((reducer, countryCode) => ({
-      ...reducer,
-      [countryCode]: countries[countryCode].name,
-    }), {});
+    if (countryElement) {
+      // Check validity of the country element options list "countries"
+      if (!countryElement.countries || !Array.isArray(countryElement.countries)) {
+        logger.error("Error: Missing or invalid property 'countries' in element " +
+          `'${countryElement.id}'`);
+      } else {
+        this.countries = countryElement.countries
+        // Take element configuration and fill with data from the iso codes list
+          .map(countryCode => ({
+            [countryCode]: iso3166[countryCode],
+          }))
+          // Combine countries together to one single object
+          .reduce((reducer, country) => ({
+            ...reducer,
+            ...country,
+          }), {});
 
-    if (!countryElement || !countryElement.required) {
-      this.countryList = {
-        '': '',
-        ...this.countryList,
-      };
+        // Build country list to display in the country element
+        this.countryList = Object.keys(this.countries).reduce((reducer, countryCode) => ({
+          ...reducer,
+          [countryCode]: this.countries[countryCode].name,
+        }), {});
+        if (!countryElement.required) {
+          this.countryList = {
+            '': '',
+            ...this.countryList,
+          };
+        }
+      }
     }
 
-    // Final form initialization, by triggering actionListeners in the defined order
+    // Final form initialization, by triggering actionListeners and enable rendering for elements
     let newState = this.state;
     this.formElements.forEach((element) => {
       newState = this.notifyActionListeners(element.id, this.state, newState);
@@ -100,10 +133,14 @@ class FormBuilder extends Component {
    * @return {Object}
    */
   getProvincesList = (countryCode) => {
+    if (!this.countries) {
+      return {};
+    }
+
     let provinceList = {};
     const provinceElement = this.formElements.find(el => el.type === ELEMENT_TYPE_PROVINCE);
     if (provinceElement) {
-      provinceList = countries[countryCode] ? countries[countryCode].divisions : {};
+      provinceList = this.countries[countryCode] ? this.countries[countryCode].divisions : {};
       if (!provinceElement.required) {
         provinceList = {
           '': '',
@@ -161,13 +198,13 @@ class FormBuilder extends Component {
     };
 
     // Add all non-custom attributes and mark them as such
-    Object.getOwnPropertyNames(formConfig.fields).forEach((id) => {
+    Object.keys(formConfig.fields).forEach((id) => {
       addFormElement(id, formConfig.fields[id], false);
     });
 
     // Add custom fields to the element list
     if (formConfig.fields.custom) {
-      Object.getOwnPropertyNames(formConfig.fields.custom).forEach((id) => {
+      Object.keys(formConfig.fields.custom).forEach((id) => {
         addFormElement(id, formConfig.fields.custom[id], true);
       });
     }
@@ -300,11 +337,11 @@ class FormBuilder extends Component {
         );
         break;
       }
-      case ACTION_TYPE_SET_CASE: {
+      case ACTION_TYPE_TRANSFORM: {
         actionListener = this.createEvaluatedActionListener(
           element,
           action,
-          this.createSetCaseActionListener(element, action)
+          this.createTransformActionListener(element, action)
         );
         break;
       }
@@ -394,17 +431,59 @@ class FormBuilder extends Component {
    * @returns {function} Returns the modified state.
    */
   createSetValueActionListener = (element, action) => (prevState, nextState) => {
+    if (typeof action.params !== 'object' || Array.isArray(action.params)) {
+      logger.error(`Error: Invalid or missing form action in element '${element.id}'. ` +
+        'Params must be in the format: { "type": string, "value": string }');
+      return nextState;
+    }
+
     let { value } = action.params;
+
+    // Check correctness of value data type
+    switch (typeof value) {
+      case 'boolean':
+        if (element.type !== ELEMENT_TYPE_CHECKBOX) {
+          logger.error(`Error: Invalid form action param in element '${element.id}'. ` +
+            `Allowed '${ELEMENT_TYPE_CHECKBOX}' data type for 'params.value' is: 'boolean'`);
+          return nextState;
+        }
+        break;
+      case 'number':
+        if (element.type !== ELEMENT_TYPE_NUMBER) {
+          logger.error(`Error: Invalid form action param in element '${element.id}'. ` +
+            `Allowed '${ELEMENT_TYPE_NUMBER}' data types for 'params.value' are: ` +
+            "'number' and 'string'");
+          return nextState;
+        }
+        break;
+      case 'string':
+        if (element.type === ELEMENT_TYPE_CHECKBOX) {
+          logger.error(`Error: Invalid form action param in element '${element.id}'. ` +
+            `Allowed '${ELEMENT_TYPE_CHECKBOX}' data type for 'params.value' is: 'boolean'`);
+          return nextState;
+        }
+        break;
+      default:
+        logger.error(`Error: Invalid form action param in element '${element.id}'. ` +
+          `Can not use '${typeof value}' data for elements of type '${element.type}'`);
+        return nextState;
+    }
+
+    // Perform action based on "setValue" type, defined in params
     switch (action.params.type) {
-      case 'lengthOf':
+      case ACTION_SET_VALUE_LENGTH_OF:
         value = `${nextState.formData[action.params.value].length}`;
         break;
-      case 'copyFrom':
+      case ACTION_SET_VALUE_COPY_FROM:
         value = nextState.formData[action.params.value];
         break;
-      case 'text':
-      default:
+      case ACTION_SET_VALUE_FIXED:
         break;
+      default:
+        logger.error(`Error: Invalid form action param 'type' in element '${element.id}'. ` +
+          `Allowed param types are: '${ACTION_SET_VALUE_LENGTH_OF}', ` +
+          `'${ACTION_SET_VALUE_COPY_FROM}', '${ACTION_SET_VALUE_FIXED}'`);
+        return nextState;
     }
 
     let newState = {
@@ -415,7 +494,7 @@ class FormBuilder extends Component {
       },
     };
 
-    // Notify follow up listeners about the current change
+    // Notify follow up listeners about the current change, if there are any changes
     if (nextState.formData[element.id] !== value) {
       newState = this.notifyActionListeners(element.id, prevState, newState);
     }
@@ -424,32 +503,63 @@ class FormBuilder extends Component {
   }
 
   /**
-   * Action listener creator to handle "setCase" actions
+   * Action listener creator to handle "transform" actions
    * @param {string} element The element for which the listener should be created for
    * @param {Object} action The action to be create a listener for
    * @returns {function} Returns the modified state.
    */
-  createSetCaseActionListener = (element, action) => (prevState, nextState) => {
+  createTransformActionListener = (element, action) => (prevState, nextState) => {
     /**
      * Takes a string and applies a case function on it
-     * @param {string} str The input string
-     * @returns {str}
+     * @param {string|boolean|number} subject The subject to be transformed
+     * @returns {string|boolean|number}
      */
-    const setCase = (str) => {
-      if (action.params.value === 'upper') {
-        return str.toUpperCase();
+    const transform = (subject) => {
+      switch (typeof subject) {
+        case 'string': {
+          if (typeof String.prototype[action.params.type] !== 'function') {
+            logger.error("Error: Invalid transform function passed to actions 'params.type' " +
+              `attribute in element '${element.id}'. Must be withing 'String.prototype'!`);
+            return subject;
+          }
+          break;
+        }
+        case 'boolean': {
+          if (typeof Boolean.prototype[action.params.type] !== 'function') {
+            logger.error("Error: Invalid transform function passed to actions 'params.type' " +
+              `attribute in element '${element.id}'. Must be withing 'String.prototype'!`);
+            return subject;
+          }
+          break;
+        }
+        case 'number': {
+          if (typeof Number.prototype[action.params.type] !== 'function') {
+            logger.error("Error: Invalid transform function passed to actions 'params.type' " +
+              `attribute in element '${element.id}'. Must be withing 'String.prototype'!`);
+            return subject;
+          }
+          break;
+        }
+
+        default:
+          logger.error("Error: The given data can not be transformed. Must be of type 'string', "
+           + "'boolean' or 'number'");
+          return subject;
       }
-      if (action.params.value === 'lower') {
-        return str.toLowerCase();
+
+      // Apply transformation (with optional arguments) and return the result
+      let args = action.params.value || [];
+      if (Array.isArray(action.params.value)) {
+        args = action.params.value;
       }
-      return str;
+      return String.prototype[action.params.type].apply(subject, args);
     };
 
     let newState = {
       ...nextState,
       formData: {
         ...nextState.formData,
-        [element.id]: setCase(nextState.formData[element.id]),
+        [element.id]: transform(nextState.formData[element.id]),
       },
     };
 
@@ -487,19 +597,19 @@ class FormBuilder extends Component {
 
       // Check rule validity
       if (!ACTION_RULE_DATA_TYPES[ruleType]) {
-        logger.error(`Error: Unknown action rule type '${ruleType}' in element '${element.id}'`);
+        logger.error(`Error: Unknown action rule type '${ruleType}'in element '${element.id}'`);
         return;
       }
       // Check type of ruleData
       const ruleDataType = ACTION_RULE_DATA_TYPES[ruleType];
       if (ruleDataType === 'array' && !Array.isArray(ruleData)) {
-        logger.error(`Error: Invalid FormBuilder action rule in field '${element.id}': `
-          .concat(`data must be an 'array' for rule type '${ruleType}'`));
+        logger.error(`Error: Invalid FormBuilder action rule in element '${element.id}': ` +
+          `data must be an 'array' for rule type '${ruleType}'`);
         return;
         // eslint-disable-next-line valid-typeof
       } else if (ruleDataType !== 'array' && typeof ruleData !== ruleDataType) {
-        logger.error(`Error: Invalid FormBuilder action rule in field '${element.id}': `
-          .concat(`data must be '${ruleDataType}' for rule type '${ruleType}'`));
+        logger.error(`Error: Invalid FormBuilder action rule in element '${element.id}': ` +
+          `data must be '${ruleDataType}' for rule type '${ruleType}'`);
         return;
       }
 
@@ -616,7 +726,7 @@ class FormBuilder extends Component {
     // TODO: handle validation errors and set "hasErrors" accordingly - only "requred" check, yet
     let hasErrors = false;
 
-    // Check "required" fields for all visible elements
+    // Check "required" fields for all visible elements and enable rendering on changes
     this.formElements.forEach((formElement) => {
       if (!updatedState.elementVisibility[formElement.id] || !formElement.required) {
         return;
@@ -628,23 +738,23 @@ class FormBuilder extends Component {
     });
 
     // Handle state internally and send an "onChange" event to parent if this finished
-    this.setState(updatedState, () => {
-      // Transform to external structure (unavailable ones will be set undefined)
-      const updateData = {};
-      this.formElements.forEach((el) => {
-        if (el.custom) {
-          if (updateData.customAttributes === undefined) {
-            updateData.customAttributes = {};
-          }
-          updateData.customAttributes[el.id] = updatedState.formData[el.id];
-        } else {
-          updateData[el.id] = updatedState.formData[el.id];
-        }
-      });
+    this.setState(updatedState);
 
-      // Trigger the given update action
-      this.props.handleUpdate(updateData, hasErrors);
+    // Transform to external structure (unavailable ones will be set undefined)
+    const updateData = {};
+    this.formElements.forEach((el) => {
+      if (el.custom) {
+        if (updateData.customAttributes === undefined) {
+          updateData.customAttributes = {};
+        }
+        updateData.customAttributes[el.id] = updatedState.formData[el.id];
+      } else {
+        updateData[el.id] = updatedState.formData[el.id];
+      }
     });
+
+    // Trigger the given update action
+    this.props.handleUpdate(updateData, hasErrors);
   };
 
   /**
@@ -672,10 +782,114 @@ class FormBuilder extends Component {
   /**
    * Takes an element of any type and renders it depending on type.
    * Also puts portals around the element.
-   * @param {Object} elementData The data of the element to be rendered
+   * @param {Object} element The data of the element to be rendered
    * @returns {JSX}
    */
-  renderElement = (elementData) => {
+  renderElement = (element) => {
+    const elementName = `${this.props.name}.${element.id}`;
+    const elementErrorText = this.state.errors[element.id] || '';
+    const elementValue = this.state.formData[element.id];
+    const elementVisible = this.state.elementVisibility[element.id] || false;
+
+    /*
+     * Elements do check the type before they render themselves, but not even trying to render
+     * creates a better React DOM
+     */
+    switch (element.type) {
+      case ELEMENT_TYPE_TEXT:
+      case ELEMENT_TYPE_NUMBER:
+      case ELEMENT_TYPE_EMAIL:
+      case ELEMENT_TYPE_PASSWORD:
+      case ELEMENT_TYPE_DATE:
+      case ELEMENT_TYPE_PHONE: {
+        return (
+          <TextElement
+            name={elementName}
+            element={element}
+            errorText={elementErrorText}
+            value={elementValue}
+            visible={elementVisible}
+          />
+        );
+      }
+
+      case ELEMENT_TYPE_SELECT: return (
+        <SelectElement
+          name={elementName}
+          element={element}
+          errorText={elementErrorText}
+          value={elementValue}
+          visible={elementVisible}
+        />
+      );
+
+      case ELEMENT_TYPE_COUNTRY: return (
+        <CountryElement
+          name={elementName}
+          element={element}
+          errorText={elementErrorText}
+          value={elementValue}
+          visible={elementVisible}
+          countryList={this.countryList}
+        />
+      );
+
+      case ELEMENT_TYPE_PROVINCE: {
+        const countryElement = this.formElements.find(el => el.type === ELEMENT_TYPE_COUNTRY);
+        const provincesList = countryElement && this.state.formData[countryElement.id]
+          ? this.getProvincesList(this.state.formData[countryElement.id])
+          : {};
+
+        return (
+          <ProvinceElement
+            name={elementName}
+            element={element}
+            errorText={elementErrorText}
+            value={elementValue}
+            visible={elementVisible}
+            provincesList={provincesList}
+          />
+        );
+      }
+
+      case ELEMENT_TYPE_RADIO: {
+        return (
+          <RadioElement
+            name={elementName}
+            element={element}
+            errorText={elementErrorText}
+            value={elementValue}
+            visible={elementVisible}
+          />
+        );
+      }
+
+      case ELEMENT_TYPE_CHECKBOX: {
+        return (
+          <CheckboxElement
+            name={elementName}
+            element={element}
+            errorText={elementErrorText}
+            value={elementValue}
+            visible={elementVisible}
+          />
+        );
+      }
+
+      default: {
+        logger.error(`Unknown form element type: ${element.type}`);
+        break;
+      }
+    }
+
+    return null;
+  };
+
+  /**
+   * Renders the component based on the given config
+   * @return {JSX}
+   */
+  render() {
     /**
      * Takes a string and converts it to a part to be used in a portal name
      * @param {string} s The string to be sanitized
@@ -685,81 +899,23 @@ class FormBuilder extends Component {
       return s.replace(/[\\._]/, '-');
     }
 
-    const elementKey = `${this.props.id}.${elementData.id}`;
-    const portalName = `${portals.NAV_MENU}.${sanitize(this.props.id)}.${sanitize(elementData.id)}`;
-    const elementName = `${this.props.id}.${elementData.id}`;
-    const elementErrorText = this.state.errors[elementData.id] || '';
-    const elementValue = this.state.formData[elementData.id];
-    const elementVisible = this.state.elementVisibility[elementData.id] || false;
-    const countryElement = this.formElements.find(el => el.type === ELEMENT_TYPE_COUNTRY);
-    const provincesList = countryElement && this.state.formData[countryElement.id]
-      ? this.getProvincesList(this.state.formData[countryElement.id])
-      : {};
-
-    return (
-      <Fragment key={elementKey}>
-        <Portal name={`${portalName}.${portals.BEFORE}`} />
-        <Portal name={portalName}>
-          {/* Each element renders itself, only if the type matches */}
-          <TextElement
-            name={elementName}
-            element={elementData}
-            errorText={elementErrorText}
-            value={elementValue}
-            visible={elementVisible}
-          />
-          <SelectElement
-            name={elementName}
-            element={elementData}
-            errorText={elementErrorText}
-            value={elementValue}
-            visible={elementVisible}
-          />
-          <CountryElement
-            name={elementName}
-            element={elementData}
-            errorText={elementErrorText}
-            value={elementValue}
-            visible={elementVisible}
-            countryList={this.countryList}
-          />
-          <ProvinceElement
-            name={elementName}
-            element={elementData}
-            errorText={elementErrorText}
-            value={elementValue}
-            visible={elementVisible}
-            provincesList={provincesList}
-          />
-          <RadioElement
-            name={elementName}
-            element={elementData}
-            errorText={elementErrorText}
-            value={elementValue}
-            visible={elementVisible}
-          />
-          <CheckboxElement
-            name={elementName}
-            element={elementData}
-            errorText={elementErrorText}
-            value={elementValue}
-            visible={elementVisible}
-          />
-        </Portal>
-      </Fragment>
-    );
-  };
-
-  /**
-   * Renders the component based on the given config
-   * @return {JSX}
-   */
-  render() {
     return (
       <Fragment>
         <Form onSubmit={this.props.onSubmit}>
           <div className={this.props.className}>
-            {this.formElements.map(element => this.renderElement(element))}
+            {this.formElements.map(element => (
+              <Fragment key={`${this.props.name}.${element.id}`}>
+                <Portal
+                  name={`${sanitize(this.props.name)}.${sanitize(element.id)}.${portals.BEFORE}`}
+                />
+                <Portal name={`${sanitize(this.props.name)}.${sanitize(element.id)}`}>
+                  { this.renderElement(element, sanitize) }
+                </Portal>
+                <Portal
+                  name={`${sanitize(this.props.name)}.${sanitize(element.id)}.${portals.AFTER}`}
+                />
+              </Fragment>
+            ))}
           </div>
         </Form>
       </Fragment>
