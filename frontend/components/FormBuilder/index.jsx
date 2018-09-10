@@ -5,16 +5,23 @@ import Portal from '@shopgate/pwa-common/components/Portal';
 import Form from '@shopgate/pwa-ui-shared/Form';
 import * as portals from '@shopgate/user/constants/Portals';
 import {
-  ELEMENT_TYPE_CHECKBOX,
+  ELEMENT_TYPE_EMAIL,
+  ELEMENT_TYPE_PASSWORD,
+  ELEMENT_TYPE_TEXT,
   ELEMENT_TYPE_NUMBER,
+  ELEMENT_TYPE_SELECT,
   ELEMENT_TYPE_COUNTRY,
   ELEMENT_TYPE_PROVINCE,
+  ELEMENT_TYPE_CHECKBOX,
+  ELEMENT_TYPE_RADIO,
+  ELEMENT_TYPE_DATE,
+  ELEMENT_TYPE_PHONE,
 } from './elementTypes';
 import {
   ACTION_TYPE_UPDATE_PROVINCE_ELEMENT,
   ACTION_TYPE_SET_VISIBILITY,
   ACTION_TYPE_SET_VALUE,
-  ACTION_TYPE_SET_CASE,
+  ACTION_TYPE_TRANSFORM,
 
   ACTION_SET_VALUE_FIXED,
   ACTION_SET_VALUE_COPY_FROM,
@@ -328,11 +335,11 @@ class FormBuilder extends Component {
         );
         break;
       }
-      case ACTION_TYPE_SET_CASE: {
+      case ACTION_TYPE_TRANSFORM: {
         actionListener = this.createEvaluatedActionListener(
           element,
           action,
-          this.createSetCaseActionListener(element, action)
+          this.createTransformActionListener(element, action)
         );
         break;
       }
@@ -494,32 +501,63 @@ class FormBuilder extends Component {
   }
 
   /**
-   * Action listener creator to handle "setCase" actions
+   * Action listener creator to handle "transform" actions
    * @param {string} element The element for which the listener should be created for
    * @param {Object} action The action to be create a listener for
    * @returns {function} Returns the modified state.
    */
-  createSetCaseActionListener = (element, action) => (prevState, nextState) => {
+  createTransformActionListener = (element, action) => (prevState, nextState) => {
     /**
      * Takes a string and applies a case function on it
-     * @param {string} str The input string
-     * @returns {str}
+     * @param {string|boolean|number} subject The subject to be transformed
+     * @returns {string|boolean|number}
      */
-    const setCase = (str) => {
-      if (action.params.type === 'upper') {
-        return str.toUpperCase();
+    const transform = (subject) => {
+      switch (typeof subject) {
+        case 'string': {
+          if (typeof String.prototype[action.params.type] !== 'function') {
+            logger.error("Error: Invalid transform function passed to actions 'params.type' " +
+              `attribute in element '${element.id}'. Must be withing 'String.prototype'!`);
+            return subject;
+          }
+          break;
+        }
+        case 'boolean': {
+          if (typeof Boolean.prototype[action.params.type] !== 'function') {
+            logger.error("Error: Invalid transform function passed to actions 'params.type' " +
+              `attribute in element '${element.id}'. Must be withing 'String.prototype'!`);
+            return subject;
+          }
+          break;
+        }
+        case 'number': {
+          if (typeof Number.prototype[action.params.type] !== 'function') {
+            logger.error("Error: Invalid transform function passed to actions 'params.type' " +
+              `attribute in element '${element.id}'. Must be withing 'String.prototype'!`);
+            return subject;
+          }
+          break;
+        }
+
+        default:
+          logger.error("Error: The given data can not be transformed. Must be of type 'string', "
+           + "'boolean' or 'number'");
+          return subject;
       }
-      if (action.params.type === 'lower') {
-        return str.toLowerCase();
+
+      // Apply transformation (with optional arguments) and return the result
+      let args = action.params.value || [];
+      if (Array.isArray(action.params.value)) {
+        args = action.params.value;
       }
-      return str;
+      return String.prototype[action.params.type].apply(subject, args);
     };
 
     let newState = {
       ...nextState,
       formData: {
         ...nextState.formData,
-        [element.id]: setCase(nextState.formData[element.id]),
+        [element.id]: transform(nextState.formData[element.id]),
       },
     };
 
@@ -742,10 +780,114 @@ class FormBuilder extends Component {
   /**
    * Takes an element of any type and renders it depending on type.
    * Also puts portals around the element.
-   * @param {Object} elementData The data of the element to be rendered
+   * @param {Object} element The data of the element to be rendered
    * @returns {JSX}
    */
-  renderElement = (elementData) => {
+  renderElement = (element) => {
+    const elementName = `${this.props.name}.${element.id}`;
+    const elementErrorText = this.state.errors[element.id] || '';
+    const elementValue = this.state.formData[element.id];
+    const elementVisible = this.state.elementVisibility[element.id] || false;
+
+    /*
+     * Elements do check the type before they render themselves, but not even trying to render
+     * creates a better React DOM
+     */
+    switch (element.type) {
+      case ELEMENT_TYPE_TEXT:
+      case ELEMENT_TYPE_NUMBER:
+      case ELEMENT_TYPE_EMAIL:
+      case ELEMENT_TYPE_PASSWORD:
+      case ELEMENT_TYPE_DATE:
+      case ELEMENT_TYPE_PHONE: {
+        return (
+          <TextElement
+            name={elementName}
+            element={element}
+            errorText={elementErrorText}
+            value={elementValue}
+            visible={elementVisible}
+          />
+        );
+      }
+
+      case ELEMENT_TYPE_SELECT: return (
+        <SelectElement
+          name={elementName}
+          element={element}
+          errorText={elementErrorText}
+          value={elementValue}
+          visible={elementVisible}
+        />
+      );
+
+      case ELEMENT_TYPE_COUNTRY: return (
+        <CountryElement
+          name={elementName}
+          element={element}
+          errorText={elementErrorText}
+          value={elementValue}
+          visible={elementVisible}
+          countryList={this.countryList}
+        />
+      );
+
+      case ELEMENT_TYPE_PROVINCE: {
+        const countryElement = this.formElements.find(el => el.type === ELEMENT_TYPE_COUNTRY);
+        const provincesList = countryElement && this.state.formData[countryElement.id]
+          ? this.getProvincesList(this.state.formData[countryElement.id])
+          : {};
+
+        return (
+          <ProvinceElement
+            name={elementName}
+            element={element}
+            errorText={elementErrorText}
+            value={elementValue}
+            visible={elementVisible}
+            provincesList={provincesList}
+          />
+        );
+      }
+
+      case ELEMENT_TYPE_RADIO: {
+        return (
+          <RadioElement
+            name={elementName}
+            element={element}
+            errorText={elementErrorText}
+            value={elementValue}
+            visible={elementVisible}
+          />
+        );
+      }
+
+      case ELEMENT_TYPE_CHECKBOX: {
+        return (
+          <CheckboxElement
+            name={elementName}
+            element={element}
+            errorText={elementErrorText}
+            value={elementValue}
+            visible={elementVisible}
+          />
+        );
+      }
+
+      default: {
+        logger.error(`Unknown form element type: ${element.type}`);
+        break;
+      }
+    }
+
+    return null;
+  };
+
+  /**
+   * Renders the component based on the given config
+   * @return {JSX}
+   */
+  render() {
     /**
      * Takes a string and converts it to a part to be used in a portal name
      * @param {string} s The string to be sanitized
@@ -755,86 +897,23 @@ class FormBuilder extends Component {
       return s.replace(/[\\._]/, '-');
     }
 
-    const elementKey = `${this.props.name}.${elementData.id}`;
-    const portalName = `${sanitize(this.props.name)}.${sanitize(elementData.id)}`;
-    const elementName = `${this.props.name}.${elementData.id}`;
-    const elementErrorText = this.state.errors[elementData.id] || '';
-    const elementValue = this.state.formData[elementData.id];
-    const elementVisible = this.state.elementVisibility[elementData.id] || false;
-
-    let countryElement = null;
-    let provincesList = null;
-    if (elementData.type === ELEMENT_TYPE_PROVINCE) {
-      countryElement = this.formElements.find(el => el.type === ELEMENT_TYPE_COUNTRY);
-      provincesList = countryElement && this.state.formData[countryElement.id]
-        ? this.getProvincesList(this.state.formData[countryElement.id])
-        : {};
-    }
-
-    return (
-      <Fragment key={elementKey}>
-        <Portal name={`${portalName}.${portals.BEFORE}`} />
-        <Portal name={portalName}>
-          {/* Each element renders itself, only if the type matches */}
-          <TextElement
-            name={elementName}
-            element={elementData}
-            errorText={elementErrorText}
-            value={elementValue}
-            visible={elementVisible}
-          />
-          <SelectElement
-            name={elementName}
-            element={elementData}
-            errorText={elementErrorText}
-            value={elementValue}
-            visible={elementVisible}
-          />
-          <CountryElement
-            name={elementName}
-            element={elementData}
-            errorText={elementErrorText}
-            value={elementValue}
-            visible={elementVisible}
-            countryList={this.countryList}
-          />
-          <ProvinceElement
-            name={elementName}
-            element={elementData}
-            errorText={elementErrorText}
-            value={elementValue}
-            visible={elementVisible}
-            provincesList={provincesList}
-          />
-          <RadioElement
-            name={elementName}
-            element={elementData}
-            errorText={elementErrorText}
-            value={elementValue}
-            visible={elementVisible}
-          />
-          <CheckboxElement
-            name={elementName}
-            element={elementData}
-            errorText={elementErrorText}
-            value={elementValue}
-            visible={elementVisible}
-          />
-        </Portal>
-      </Fragment>
-    );
-  };
-
-  /**
-   * Renders the component based on the given config
-   * @return {JSX}
-   */
-  render() {
     return (
       <Fragment>
         <Form onSubmit={this.props.onSubmit}>
           <div className={this.props.className}>
-            {this.formElements.map(element => this.renderElement(element))}
+            {this.formElements.map(element => (
+              <Fragment key={`${this.props.name}.${element.id}`}>
+                <Portal
+                  name={`${sanitize(this.props.name)}.${sanitize(element.id)}.${portals.BEFORE}`}
+                />
+                <Portal name={`${sanitize(this.props.name)}.${sanitize(element.id)}`}>
+                  { this.renderElement(element, sanitize) }
+                </Portal>
+                <Portal
+                  name={`${sanitize(this.props.name)}.${sanitize(element.id)}.${portals.AFTER}`}
+                />
+              </Fragment>
+            ))}
           </div>
         </Form>
       </Fragment>

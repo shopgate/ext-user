@@ -343,9 +343,9 @@
               "type": "text",
               "default": "",
               "actions": [{
-                "type": "setCase",
+                "type": "transform",
                 "params": {
-                  "type": "upper"
+                  "type": "toUpperCase"
                 }
               }]
             },
@@ -355,9 +355,22 @@
               "type": "text",
               "default": "",
               "actions": [{
-                "type": "setCase",
+                "type": "transform",
                 "params": {
-                  "type": "lower"
+                  "type": "toLowerCase"
+                }
+              }]
+            },
+            "max10Chars": {
+              "sortOrder": 11.3,
+              "label": "MAX 7 chars",
+              "type": "text",
+              "default": "",
+              "actions": [{
+                "type": "transform",
+                "params": {
+                  "type": "substr",
+                  "value": [0, 7]
                 }
               }]
             },
