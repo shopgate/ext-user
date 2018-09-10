@@ -3,18 +3,464 @@
   "id": "@shopgate/user",
   "trusted": true,
   "configuration": {
-    "countryCodes": {
-      "type": "static",
-      "destination": "backend",
-      "params": {
-        "value": ["DE","AT","FR","GB"]
-      }
-    },
     "addressFields": {
-      "type": "static",
-      "destination": "backend",
+      "type": "admin",
+      "destination": "both",
+      "default": {
+        "locales": {
+          "default": {
+            "firstName.label": "First name",
+            "firstName.placeholder": "Please enter your first name",
+            "lastName.label": "Last name",
+            "lastName.placeholder": "Please enter your last name",
+            "street1.label": "Street and number",
+            "street1.placeholder": "",
+            "street2.label": "",
+            "zipCode.label": "",
+            "zipCode.placeholder": "",
+            "city.label": "City",
+            "city.placeholder": "",
+            "note.validationRules.max_length_10": "You entered to many characters!!!",
+            "note.validationRules.no_numbers": "You should not add any numbers!!!"
+          },
+          "de-DE": {
+            "firstName.label": "Vorname",
+            "firstName.placeholder": "Bitte trage deinen Vorname ein",
+            "lastName.label": "Nachname",
+            "lastName.placeholder": "Bitte trage deinen Nachnamen ein",
+            "street1.label": "Straße und Hausnummer",
+            "street1.placeholder": "",
+            "street2.label": "",
+            "zipCode.label": "",
+            "zipCode.placeholder": "",
+            "city.label": "Stadt"
+          }
+        },
+        "fields": {
+          "firstName": {
+            "sortOrder": 1,
+            "label": "* First name / Vorname",
+            "type": "text",
+            "default": "DEFAULT-test-firstname",
+            "placeholder": "locales",
+            "required": true,
+            "visible": true
+          },
+          "lastName": {
+            "sortOrder": 3,
+            "label": "* Last name / Nachname",
+            "type": "text",
+            "default": "DEFAULT-test-lastname",
+            "placeholder": "locales",
+            "required": true,
+            "visible": true
+          },
+          "street1": {
+            "sortOrder": 4,
+            "label": "* Street and number / Straße und Hausnummer",
+            "type": "text",
+            "default": "DEFAULT-test-street1 99",
+            "placeholder": "locales",
+            "required": true,
+            "visible": true
+          },
+          "street2": {
+            "sortOrder": 5,
+            "label": "Street 2 / Adresszusatz",
+            "type": "text",
+            "placeholder": "",
+            "required": false,
+            "actions": [{
+              "type": "setValue",
+              "rules": [{
+                "context": "street1"
+              }, {
+                "context": "firstName"
+              }],
+              "params": {
+                "type": "copyFrom",
+                "value": "street1"
+              }
+            }, {
+              "type": "setVisibility",
+              "rules": [{
+                "context": "firstName",
+                "type": "notIn",
+                "data": [""]
+              }, {
+                "context": "street1",
+                "type": "notIn",
+                "data": [""]
+              }],
+              "ruleConcatMethod": "all"
+            }]
+          },
+          "zipCode": {
+            "sortOrder": 6,
+            "label": "* ZIP / PLZ",
+            "type": "text",
+            "default": "55555",
+            "placeholder": "locales",
+            "required": true,
+            "visible": true
+          },
+          "city": {
+            "sortOrder": 7,
+            "label": "* City / Stadt",
+            "type": "text",
+            "default": "DEFAULT-test-city",
+            "placeholder": "locales",
+            "required": true,
+            "visible": true
+          },
+          "country": {
+            "sortOrder": 8,
+            "label": "* Land / Country",
+            "type": "country",
+            "default": "US",
+            "placeholder": "locales",
+            "required": true,
+            "countries": ["DE", "US", "AT", "FR", "GB"],
+            "visible": true
+          },
+          "province": {
+            "sortOrder": 9,
+            "label": "Province / Bundesland",
+            "type": "province",
+            "default": "DE-HE",
+            "placeholder": "locales",
+            "required": false,
+            "actions": [{
+              "type": "setVisibility",
+              "rules": [{
+                "context": "country",
+                "type": "oneOf",
+                "data": ["", "US", "AT", "FR", "GB"]
+              }]
+            }]
+          },
+          "custom": {
+            "myCheckbox": {
+              "sortOrder": 7.1,
+              "label": "* Cool checkbox",
+              "type": "checkbox",
+              "visible": true,
+              "required": true
+            },
+            "myNumber": {
+              "sortOrder": 7.2,
+              "label": "Number input",
+              "type": "number",
+              "default": "12345",
+              "visible": true
+            },
+            "myEmail": {
+              "sortOrder": 7.3,
+              "label": "Contact E-Mail",
+              "type": "email",
+              "visible": true
+            },
+            "myPassword": {
+              "sortOrder": 7.4,
+              "label": "Password",
+              "type": "password",
+              "visible": true
+            },
+            "myDate": {
+              "sortOrder": 7.5,
+              "label": "Expires on",
+              "type": "date",
+              "visible": true
+            },
+            "myPhone": {
+              "sortOrder": 7.3,
+              "label": "Contact phone",
+              "type": "phone",
+              "visible": true
+            },
+            "specialSpecial": {
+              "sortOrder": 7.5,
+              "label": "* Want to be super important?",
+              "type": "radio",
+              "default": "",
+              "options": {
+                "foo": "No thanks",
+                "bar": "Awesome Special",
+                "fiz": "Even better special"
+              },
+              "required": true,
+              "visible": true
+            },
+            "selectTestDemo": {
+              "sortOrder": 7.5,
+              "label": "* Select somethinnn!",
+              "type": "select",
+              "default": "",
+              "options": {
+                "": "",
+                "foo": "No thanks",
+                "bar": "Awesome Special",
+                "fiz": "Even better special"
+              },
+              "actions": [{
+                "type": "setValue",
+                "rules": [{
+                  "context": "specialSpecial"
+                }, {
+                  "context": "cheatCode",
+                  "type": "regex",
+                  "data": "/^\\s*[<]*\\s*1337\\s*[>]*\\s*$/g"
+                }],
+                "params": {
+                  "type": "copyFrom",
+                  "value": "specialSpecial"
+                }
+              }],
+              "required": true,
+              "visible": true
+            },
+            "countryCopy": {
+              "sortOrder": 8.1,
+              "label": "Country Code / Ländercode",
+              "type": "text",
+              "default": "",
+              "actions": [{
+                "type": "setValue",
+                "rules": [{
+                  "context": "country"
+                }],
+                "params": {
+                  "type": "copyFrom",
+                  "value": "country"
+                }
+              }, {
+                "type": "setValue",
+                "params": {
+                  "type": "copyFrom",
+                  "value": "country"
+                }
+              }]
+            },
+            "fixedCheckDemo": {
+              "sortOrder": 0.01,
+              "label": "Always UNCHECKED / Immer ABGEHAKT",
+              "type": "checkbox",
+              "default": "",
+              "actions": [{
+                "type": "setValue",
+                "params": {
+                  "type": "fixed",
+                  "value": false
+                }
+              }]
+            },
+            "fixedRadioDemo": {
+              "sortOrder": 0.02,
+              "label": "Unchangeable Radio / Unveränderbares Radiofeld",
+              "type": "radio",
+              "default": "some-invalid-default-which-is-never-used",
+              "options": {
+                "unselectable1": "can't select me",
+                "fixed-value": "This is always selected",
+                "unselectable3": "can't select me either"
+              },
+              "actions": [{
+                "type": "setValue",
+                "params": {
+                  "type": "fixed",
+                  "value": "fixed-value"
+                }
+              }]
+            },
+            "fixedSelectDemo": {
+              "sortOrder": 0.03,
+              "label": "Unchangeable Select / Unveränderbares Auswahlfeld",
+              "type": "select",
+              "default": "some-invalid-default-which-is-never-used",
+              "options": {
+                "unselectable-empty": "",
+                "unselectable1": "can't select me",
+                "fixed-value": "This is always selected",
+                "unselectable3": "can't select me either"
+              },
+              "actions": [{
+                "type": "setValue",
+                "params": {
+                  "type": "fixed",
+                  "value": "fixed-value"
+                }
+              }]
+            },
+            "firstNameLength": {
+              "sortOrder": 1.2,
+              "label": "* Length of first name / Vornamenlänge",
+              "type": "text",
+              "default": "",
+              "required": true,
+              "actions": [{
+                "type": "setValue",
+                "rules": [{
+                  "context": "firstName"
+                }],
+                "params": {
+                  "type": "lengthOf",
+                  "value": "firstName"
+                }
+              }, {
+                "type": "setValue",
+                "params": {
+                  "type": "lengthOf",
+                  "value": "firstName"
+                }
+              }]
+            },
+            "followUpActionTest": {
+              "sortOrder": 1.3,
+              "label": "Copies 'firstNameLength' / Kopiert 'firstNameLength'",
+              "type": "text",
+              "default": "",
+              "required": true,
+              "actions": [{
+                "type": "setValue",
+                "rules": [{
+                  "context": "firstNameLength"
+                }],
+                "params": {
+                  "type": "copyFrom",
+                  "value": "firstNameLength"
+                }
+              }, {
+                "type": "setValue",
+                "params": {
+                  "type": "copyFrom",
+                  "value": "firstNameLength"
+                }
+              }]
+            },
+            "upperCaseDemo": {
+              "sortOrder": 11.1,
+              "label": "Uppercase text / Großbuchstaben",
+              "type": "text",
+              "default": "",
+              "actions": [{
+                "type": "transform",
+                "params": {
+                  "type": "toUpperCase"
+                }
+              }]
+            },
+            "lowerCaseDemo": {
+              "sortOrder": 11.2,
+              "label": "Lowercase text / Kleinbuchstaben",
+              "type": "text",
+              "default": "",
+              "actions": [{
+                "type": "transform",
+                "params": {
+                  "type": "toLowerCase"
+                }
+              }]
+            },
+            "max10Chars": {
+              "sortOrder": 11.3,
+              "label": "MAX 7 chars",
+              "type": "text",
+              "default": "",
+              "actions": [{
+                "type": "transform",
+                "params": {
+                  "type": "substr",
+                  "value": [0, 7]
+                }
+              }]
+            },
+            "additionalNote": {
+              "sortOrder": 14,
+              "label": "Note / Notiz",
+              "type": "text",
+              "default": "DEFAULT-test-note",
+              "placeholder": "Enter a custom note for the address here",
+              "required": false,
+              "visible": true,
+              "validationRules": [
+                {
+                  "id": "max_length_10",
+                  "regex": "^.{0,10}$",
+                  "message": "locales"
+                },
+                {
+                  "id": "no_numbers",
+                  "regex": "^\\D+$",
+                  "message": "locales"
+                }
+              ]
+            },
+            "clearOnNumberInput": {
+              "sortOrder": 10.1,
+              "label": "Reset on - input / Zurücksetzung bei Eingabe von -",
+              "type": "text",
+              "default": "ghj",
+              "actions": [{
+                "type": "setValue",
+                "rules": [{
+                  "context": "clearOnNumberInput",
+                  "type": "regex",
+                  "data": "/.*-.*/g"
+                }],
+                "params": {
+                  "type": "fixed",
+                  "value": ""
+                }
+              }]
+            },
+            "cheatCode": {
+              "label": "*** CHEAT CODE ***",
+              "type": "text",
+              "default": "<>"
+            },
+            "codeResult": {
+              "label": "Result / Ergebnis",
+              "type": "text",
+              "default": "",
+              "actions": [{
+                "type": "setValue",
+                "rules": [{
+                  "context": "cheatCode",
+                  "type": "regex",
+                  "data": "/^\\s*[<]*\\s*1337\\s*[>]*\\s*$/g"
+                }],
+                "params": {
+                  "type": "fixed",
+                  "value": "waiting..."
+                },
+                "ruleConcatMethod": "none"
+              }, {
+                "type": "setValue",
+                "rules": [{
+                  "context": "cheatCode",
+                  "type": "regex",
+                  "data": "/^\\s*[<]*\\s*1337\\s*[>]*\\s*$/g"
+                }],
+                "params": {
+                  "type": "fixed",
+                  "value": "YAY code CORRECT!!!"
+                },
+                "ruleConcatMethod": "all"
+              }]
+            },
+            "INVISIBLE": {
+              "label": "* Invisible element / Unsichtbares element",
+              "type": "text",
+              "visible": false,
+              "required": true
+            }
+          }
+        }
+      },
       "params": {
-        "value": ["firstName", "lastName", "street1", "street2", "zipCode", "city", "country"]
+        "type": "json",
+        "label": "Address fields",
+        "required": true
       }
     },
     "splitDefaultAddressesByTags": {

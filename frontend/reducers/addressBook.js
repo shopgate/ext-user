@@ -69,15 +69,9 @@ export default (state = initialState, action) => {
 
     // Add address to redux immediately after we have success response
     case ADD_USER_ADDRESS_SUCCESS: {
-      const addresses = [
-        ...state.addresses,
-        action.address,
-      ];
       return {
         ...state,
-        addresses,
         busy: false,
-        default: getDefaultsByAddresses(addresses),
       };
     }
 
@@ -98,7 +92,6 @@ export default (state = initialState, action) => {
       return {
         ...state,
         busy: true,
-        validationErrors: [],
       };
 
     case ADD_USER_ADDRESS_FAILED:
@@ -107,7 +100,6 @@ export default (state = initialState, action) => {
       return {
         ...state,
         busy: false,
-        validationErrors: action.error.validationErrors,
       };
 
     case SUCCESS_LOGOUT:

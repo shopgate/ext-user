@@ -8,6 +8,11 @@ jest.mock('../actions/updateAddress', () => (...args) => mockUpdateAddress(...ar
 jest.mock('../actions/getAddresses', () => () => mockGetAddresses());
 jest.mock('@shopgate/pwa-common/actions/toast/createToast', () => options => mockCreateToast(options));
 jest.mock('@shopgate/pwa-common/actions/modal/showModal', () => (...args) => mockShowModal(...args));
+jest.mock('@shopgate/pwa-common/streams/user', () => ({
+  userDidUpdate$: {
+    debounceTime: () => jest.fn(),
+  },
+}));
 
 describe('AddressBook subscriptions', () => {
   const subscribe = jest.fn();
@@ -16,7 +21,8 @@ describe('AddressBook subscriptions', () => {
   const [
     userAddressValidationFailed$,
     userAddressChanged$,
-    userDidLogin$,
+    userAddressBookEnter$,
+    userDidUpdateDebounced$,
     userAddressesDelete$,
     userAddressesDeleted$,
     userSetDefaultAddress$,
@@ -34,7 +40,7 @@ describe('AddressBook subscriptions', () => {
   });
 
   it('should subscribe to the streams', () => {
-    expect(subscribe.mock.calls.length).toEqual(6);
+    expect(subscribe.mock.calls.length).toEqual(7);
   });
 
   it('should create toast message when validation is failed ', () => {
@@ -49,8 +55,13 @@ describe('AddressBook subscriptions', () => {
     expect(mockGetAddresses).toHaveBeenCalledTimes(1);
   });
 
-  it('should fetch addresses when user is logged in', () => {
-    userDidLogin$[1]({ dispatch });
+  it('should fetch addresses when address book enter', () => {
+    userAddressBookEnter$[1]({ dispatch });
+    expect(mockGetAddresses).toHaveBeenCalledTimes(1);
+  });
+
+  it('should fetch addresses when user is updated', () => {
+    userDidUpdateDebounced$[1]({ dispatch });
     expect(mockGetAddresses).toHaveBeenCalledTimes(1);
   });
 

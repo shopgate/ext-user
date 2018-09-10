@@ -1,6 +1,14 @@
 import * as types from './../constants/ActionTypes';
 
 /**
+ * Creates the dispatched GET_USER_ADDRESSES action object.
+ * @return {{type: string}}
+ */
+export const getUserAddresses = () => ({
+  type: types.GET_USER_ADDRESSES,
+});
+
+/**
  * Creates the dispatched USER_ADDRESSES_RECEIVED action object.
  * @param {UserAddress[]} addresses address id
  * @return {{type: string, addresses: UserAddress[]}}
@@ -52,12 +60,10 @@ export const addUserAddress = () => ({
 
 /**
  * Creates the dispatched ADD_USER_ADDRESS_SUCCESS action object.
- * @param {UserAddress} address address id
  * @returns {Object} The dispatched action object.
  */
-export const addUserAddressSuccess = address => ({
+export const addUserAddressSuccess = () => ({
   type: types.ADD_USER_ADDRESS_SUCCESS,
-  address,
 });
 
 /**
@@ -137,5 +143,33 @@ export const deleteUserAddressesSuccess = () => ({
  */
 export const deleteUserAddressesFailed = error => ({
   type: types.DELETE_USER_ADDRESSES_FAILED,
+  error,
+});
+
+/**
+ * Initiates the fetching for address field configuration.
+ * @returns {Object} The dispatched action object.
+ */
+export const getAddressFields = () => ({
+  type: types.GET_ADDRESS_FIELDS,
+});
+
+/**
+ * Signals the successful fetching of address field configuration.
+ * @param {Object} config The address field configuration.
+ * @returns {Object} The dispatched action object.
+ */
+export const getAddressFieldsSuccess = config => ({
+  type: types.GET_ADDRESS_FIELDS_SUCCESS,
+  config,
+});
+
+/**
+ * Signals that the address fetching failed with an error.
+ * @param {Object} error Error response.
+ * @returns {Object} The dispatched action object.
+ */
+export const getAddressFieldsFailed = error => ({
+  type: types.GET_ADDRESS_FIELDS_FAILED,
   error,
 });

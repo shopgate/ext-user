@@ -22,6 +22,9 @@ import {
   userRegisterFailed$,
 } from '../streams/user';
 import {
+  getUserAddresses$,
+  userAddressesReceived$,
+  userAddressReceiveFailed$,
   userAddressAdd$,
   userAddressUpdate$,
   userAddressChanged$,
@@ -46,11 +49,14 @@ export default (subscribe) => {
 
   const viewIsLoading$ = userWillRegister$.merge(
     userWillUpdate$,
+    getUserAddresses$,
     userAddressAdd$,
     userAddressUpdate$,
     userAddressesDeleteConfirmed$
   );
   const viewIsIdle$ = userUpdateSuccess$.merge(
+    userAddressesReceived$,
+    userAddressReceiveFailed$,
     userUpdateFailed$,
     userRegisterFailed$,
     userAddressChanged$,

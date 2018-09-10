@@ -1,6 +1,7 @@
 import { connect } from 'react-redux';
 import { getHistoryPathname } from '@shopgate/pwa-common/selectors/history';
 import { getUserAddressIdSelector } from '../../../selectors/addressBook';
+import { getAddressFields } from '../../../selectors/addressForm';
 import { userAddressPathPattern } from '../../../constants/RoutePaths';
 
 /**
@@ -19,6 +20,7 @@ const getAddressByRoute = (state) => {
  */
 const mapStateToProps = state => ({
   address: getAddressByRoute(state),
+  addressFields: getAddressFields(state),
 });
 
 export default connect(mapStateToProps, null, null, { withRef: true });
