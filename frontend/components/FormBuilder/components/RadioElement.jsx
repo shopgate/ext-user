@@ -52,7 +52,7 @@ class RadioElement extends PureComponent {
         name={name}
         className={style.fields}
         label={element.label}
-        default={value}
+        value={value}
         onChange={element.handleChange}
         errorText={errorText}
         isControlled

@@ -477,6 +477,7 @@ class FormBuilder extends Component {
       case ACTION_SET_VALUE_COPY_FROM:
         value = nextState.formData[action.params.value];
         break;
+      case undefined:
       case ACTION_SET_VALUE_FIXED:
         break;
       default:
@@ -807,7 +808,7 @@ class FormBuilder extends Component {
             name={elementName}
             element={element}
             errorText={elementErrorText}
-            value={elementValue}
+            value={elementValue || ''}
             visible={elementVisible}
           />
         );
