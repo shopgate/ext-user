@@ -806,7 +806,7 @@ class FormBuilder extends Component {
             name={elementName}
             element={element}
             errorText={elementErrorText}
-            value={elementValue}
+            value={elementValue || ''}
             visible={elementVisible}
           />
         );
