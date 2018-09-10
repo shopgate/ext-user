@@ -51,16 +51,17 @@ import iso3166 from '../../common/iso-3166-2';
  */
 class FormBuilder extends Component {
   static propTypes = {
-    className: PropTypes.string.isRequired,
     config: PropTypes.shape().isRequired,
     handleUpdate: PropTypes.func.isRequired,
     name: PropTypes.string.isRequired,
+    className: PropTypes.string,
     defaults: PropTypes.shape(),
     onSubmit: PropTypes.func,
   }
 
   static defaultProps = {
     defaults: {},
+    className: '',
     onSubmit: () => {},
   }
 
