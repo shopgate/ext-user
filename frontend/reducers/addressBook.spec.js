@@ -12,11 +12,6 @@ import {
 } from '../constants/ActionTypes';
 import reducer from './addressBook';
 
-jest.mock('../config', () => ({
-  splitDefaultAddressesByTags: ['shipping', 'billing'],
-  addressFields: ['firstName', 'lastName', 'phone'], // TODO: update the test to match the new config
-}));
-
 describe('AddressBook reducers', () => {
   it('Should reduce USER_ADDRESSES_RECEIVED', () => {
     const action = {
@@ -28,7 +23,6 @@ describe('AddressBook reducers', () => {
       // eslint-disable-next-line extra-rules/no-single-line-objects
       addresses: [{ id: 123, tags: ['default_shipping'] }],
       default: {
-        billing: null,
         shipping: 123,
       },
     };

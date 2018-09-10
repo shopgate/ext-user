@@ -465,7 +465,7 @@
     },
     "splitDefaultAddressesByTags": {
       "type": "admin",
-      "destination": "frontend",
+      "destination": "backend",
       "default": ["shipping", "billing"],
       "params": {
         "type": "json",

@@ -1,5 +1,4 @@
 import { SUCCESS_LOGOUT } from '@shopgate/pwa-common/constants/ActionTypes';
-import config from '../config';
 import {
   USER_ADDRESSES_RECEIVED,
   SET_DEFAULT_ADDRESS,
@@ -12,7 +11,34 @@ import {
   USER_ADDRESS_VALIDATION_FAILED,
 } from './../constants/ActionTypes';
 
-const { splitDefaultAddressesByTags = [] } = config;
+/**
+ * Prepare default addresses map by given addresses
+ * @param {UserAddress[]} addresses user addresses
+ * @returns {Object}
+ */
+const getDefaultsByAddresses = (addresses) => {
+  const defaultAddresses = {};
+
+  addresses.forEach((address) => {
+    if (!address.tags) {
+      return;
+    }
+    address.tags.forEach((tag) => {
+      if (tag.startsWith('default')) {
+        // Remove default prefix to have simple shipping, billing as a map
+        const normTag = tag.replace('default_', '');
+        defaultAddresses[normTag] = address.id;
+      }
+    });
+  });
+  return defaultAddresses;
+};
+
+const initialState = {
+  addresses: [],
+  default: {},
+  busy: false,
+};
 
 /**
  * Stores the user addresses
@@ -20,24 +46,14 @@ const { splitDefaultAddressesByTags = [] } = config;
  * @param {Object} action The action object
  * @return {Object} The new state
  */
-export default (state = {}, action) => {
+export default (state = initialState, action) => {
   switch (action.type) {
     case USER_ADDRESSES_RECEIVED: {
-      const { addresses } = action;
-
-      const defaultAddresses = {};
-      splitDefaultAddressesByTags.forEach((tag) => {
-        // Tag is prefixed with default_ for shipping, billing, etc
-        const defTag = tag === 'default' ? tag : `default_${tag}`;
-
-        const defA = addresses.find(a => a.tags && a.tags.includes(defTag));
-        defaultAddresses[tag] = defA ? defA.id : null;
-      });
-
+      const { addresses = [] } = action;
       return {
         ...state,
         addresses,
-        default: defaultAddresses,
+        default: getDefaultsByAddresses(addresses),
       };
     }
 

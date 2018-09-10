@@ -3,6 +3,5 @@
  * @return {Promise<Object>}
  */
 module.exports = async (context) => {
-  const { addressFields } = context.config
-  return { addressFields }
+  return context.config
 }

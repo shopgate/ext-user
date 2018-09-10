@@ -16,11 +16,8 @@ import {
   NAVIGATOR_SAVE_BUTTON_ENABLE,
   NAVIGATOR_SAVE_BUTTON_DISABLE,
 } from '../../constants/EventTypes';
-import config from '../../config';
 import connect from './connector';
 import style from './style';
-
-const { splitDefaultAddressesByTags = [] } = config;
 
 /**
  * Address form component
@@ -28,9 +25,11 @@ const { splitDefaultAddressesByTags = [] } = config;
 export class AddressForm extends Component {
   static propTypes = {
     addAddress: PropTypes.func.isRequired,
-    addressFields: PropTypes.shape().isRequired,
+    /** @type {UserConfig} */
+    config: PropTypes.shape().isRequired,
     deleteAddress: PropTypes.func.isRequired,
     isBusy: PropTypes.bool.isRequired,
+    isFirstAddress: PropTypes.bool.isRequired,
     updateAddress: PropTypes.func.isRequired,
     address: PropTypes.shape(),
   }
@@ -53,7 +52,18 @@ export class AddressForm extends Component {
       hasChanges: false,
       editMode: !!addressId,
       hasErrors: false,
+      tags: this.props.isFirstAddress || !tags ? [] : tags,
     };
+
+    this.initialAddressTags = [];
+    this.props.config.splitDefaultAddressesByTags.forEach(tag => (
+      this.initialAddressTags.push(tag === 'default' ? tag : `default_${tag}`)
+    ));
+
+    // Init default tags for first address
+    if (this.props.isFirstAddress) {
+      this.state.tags = this.initialAddressTags;
+    }
   }
 
   /**
@@ -132,12 +142,12 @@ export class AddressForm extends Component {
       this.props.updateAddress({
         id: this.props.address.id,
         ...this.state.address,
-        tags: this.state.address.tags || this.props.address.tags || [],
+        tags: this.props.address.tags || [],
       });
     } else {
       this.props.addAddress({
         ...this.state.address,
-        tags: this.state.address.tags || this.props.address.tags || [],
+        tags: this.state.tags || [],
       });
     }
 
@@ -159,18 +169,16 @@ export class AddressForm extends Component {
    * @param {string} tag The tag name to work with
    */
   handleMakeDefault = (makeDefault, tag) => {
-    const addressTags = this.state.address.tags || [];
+    const addressTags = this.state.tags || [];
     const defaultTag = tag === 'default' ? tag : `default_${tag}`;
     if (makeDefault) {
-      this.handleUpdate({
-        ...this.state.address,
+      this.setState({
         tags: [...addressTags, defaultTag],
-      }, this.state.hasErrors);
+      });
     } else {
-      this.handleUpdate({
-        ...this.state.address,
+      this.setState({
         tags: addressTags.filter(t => t !== defaultTag),
-      }, this.state.hasErrors);
+      });
     }
   }
 
@@ -181,7 +189,16 @@ export class AddressForm extends Component {
    */
   handleUpdate = (address, hasErrors) => {
     // Avoid updating state, when no address fields changed
-    const hasChanged = !isEqual(address, this.state.address) || this.state.hasErrors !== hasErrors;
+    let hasChanged;
+    if (this.state.editMode) {
+      hasChanged = !isEqual(address, this.state.address) || this.state.hasErrors !== hasErrors;
+    } else {
+      hasChanged = !isEqual({
+        ...address,
+        tags: this.state.address.tags,
+      }, this.state.address) || this.state.hasErrors !== hasErrors;
+    }
+
     if (hasChanged) {
       const newState = {
         ...this.state,
@@ -235,6 +252,7 @@ export class AddressForm extends Component {
    * @return {*}
    */
   render() {
+    const { isFirstAddress } = this.props;
     return (
       <Fragment>
 
@@ -244,7 +262,7 @@ export class AddressForm extends Component {
           <FormBuilder
             name="address"
             className={style.fields}
-            config={this.props.addressFields}
+            config={this.props.config.addressFields}
             defaults={this.state.address}
             handleUpdate={this.handleUpdate}
             onSubmit={this.addOrUpdateAddress}
@@ -267,14 +285,15 @@ export class AddressForm extends Component {
             {/* Default address and submit button for new address */}
             {!this.state.editMode &&
               <Fragment>
-                {splitDefaultAddressesByTags.map(tag => (
+                {this.props.config.splitDefaultAddressesByTags.map(tag => (
                   <Checkbox
-                    className={style.defaults}
+                    className={isFirstAddress ? style.defaultsDisabled : style.defaults}
                     key={tag}
-                    defaultChecked={false}
                     name={`default_${tag}`}
                     label={`address.makeDefault.${tag}`}
                     onChange={makeDefault => this.handleMakeDefault(makeDefault, tag)}
+                    checked={isFirstAddress || this.state.tags.includes(`default_${tag}`)}
+                    disabled={isFirstAddress}
                   />
                 ))}
 

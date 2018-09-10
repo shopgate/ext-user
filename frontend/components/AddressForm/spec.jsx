@@ -2,11 +2,6 @@ import React from 'react';
 import { mount } from 'enzyme';
 import { AddressForm } from './';
 
-jest.mock('../../config', () => ({
-  splitDefaultAddressesByTags: ['shipping', 'billing'],
-  addressFields: ['firstName', 'lastName', 'phone'], // TODO: update the test to match the new config
-}));
-
 /**
  * Noop function
  */

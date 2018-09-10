@@ -15,7 +15,6 @@ const isIos = themeName.includes('ios');
  */
 class AddAddress extends Component {
   static propTypes = {
-    addressFields: PropTypes.shape().isRequired,
     View: PropTypes.func.isRequired,
     address: PropTypes.shape(),
   }
@@ -55,7 +54,7 @@ class AddAddress extends Component {
    * @return {*}
    */
   render() {
-    const { addressFields, View, address } = this.props;
+    const { View, address } = this.props;
     return (
       <View title={!isIos ? this.title : ''}>
         <section className={style.container} data-test-id="UserAddressBookAddPage">
@@ -68,7 +67,7 @@ class AddAddress extends Component {
 
           <Portal name={portals.USER_ADDRESSES_ADD_BEFORE} />
           <Portal name={portals.USER_ADDRESSES_ADD}>
-            <AddressForm addressFields={addressFields} address={address} />
+            <AddressForm address={address} />
           </Portal>
           <Portal name={portals.USER_ADDRESSES_ADD_AFTER} />
         </section>
