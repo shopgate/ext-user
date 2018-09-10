@@ -5,7 +5,6 @@
     "public": true,
     "input": [],
     "output": [
-      {"key": "countryCodes", "id": "1", "optional": true},
       {"key": "addressFields", "id": "2", "optional": true},
       {"key": "splitDefaultAddressesByTags", "id": "3", "optional": true}
     ],
@@ -16,7 +15,6 @@
         "path": "@shopgate/user/config/getConfig.js",
         "input": [],
         "output": [
-          {"key": "countryCodes", "id": "1", "optional": true},
           {"key": "addressFields", "id": "2", "optional": true},
           {"key": "splitDefaultAddressesByTags", "id": "3", "optional": true}
         ]

@@ -52,7 +52,18 @@ export class AddressForm extends Component {
       hasChanges: false,
       editMode: !!addressId,
       hasErrors: false,
+      tags: this.props.isFirstAddress || !tags ? [] : tags,
     };
+
+    this.initialAddressTags = [];
+    this.props.config.splitDefaultAddressesByTags.forEach(tag => (
+      this.initialAddressTags.push(tag === 'default' ? tag : `default_${tag}`)
+    ));
+
+    // Init default tags for first address
+    if (this.props.isFirstAddress) {
+      this.state.tags = this.initialAddressTags;
+    }
   }
 
   /**
@@ -65,15 +76,6 @@ export class AddressForm extends Component {
       EventEmitter.emit(NAVIGATOR_SAVE_BUTTON_SHOW);
 
       this.setSaveButtonEnabledStatus(this.isSaveButtonVisible());
-    }
-
-    // Init default tags for first address
-    if (this.props.isFirstAddress) {
-      const tags = [];
-      this.props.config.splitDefaultAddressesByTags.forEach(tag => (
-        tags.push(tag === 'default' ? tag : `default_${tag}`)
-      ));
-      this.updateAddress({ tags });
     }
   }
 
@@ -140,12 +142,12 @@ export class AddressForm extends Component {
       this.props.updateAddress({
         id: this.props.address.id,
         ...this.state.address,
-        tags: this.state.address.tags || this.props.address.tags || [],
+        tags: this.props.address.tags || [],
       });
     } else {
       this.props.addAddress({
         ...this.state.address,
-        tags: this.state.address.tags || this.props.address.tags || [],
+        tags: this.state.tags || [],
       });
     }
 
@@ -167,18 +169,16 @@ export class AddressForm extends Component {
    * @param {string} tag The tag name to work with
    */
   handleMakeDefault = (makeDefault, tag) => {
-    const addressTags = this.state.address.tags || [];
+    const addressTags = this.state.tags || [];
     const defaultTag = tag === 'default' ? tag : `default_${tag}`;
     if (makeDefault) {
-      this.handleUpdate({
-        ...this.state.address,
+      this.setState({
         tags: [...addressTags, defaultTag],
-      }, this.state.hasErrors);
+      });
     } else {
-      this.handleUpdate({
-        ...this.state.address,
+      this.setState({
         tags: addressTags.filter(t => t !== defaultTag),
-      }, this.state.hasErrors);
+      });
     }
   }
 
@@ -189,7 +189,16 @@ export class AddressForm extends Component {
    */
   handleUpdate = (address, hasErrors) => {
     // Avoid updating state, when no address fields changed
-    const hasChanged = !isEqual(address, this.state.address) || this.state.hasErrors !== hasErrors;
+    let hasChanged;
+    if (this.state.editMode) {
+      hasChanged = !isEqual(address, this.state.address) || this.state.hasErrors !== hasErrors;
+    } else {
+      hasChanged = !isEqual({
+        ...address,
+        tags: this.state.address.tags,
+      }, this.state.address) || this.state.hasErrors !== hasErrors;
+    }
+
     if (hasChanged) {
       const newState = {
         ...this.state,
@@ -283,7 +292,7 @@ export class AddressForm extends Component {
                     name={`default_${tag}`}
                     label={`address.makeDefault.${tag}`}
                     onChange={makeDefault => this.handleMakeDefault(makeDefault, tag)}
-                    checked={isFirstAddress}
+                    checked={isFirstAddress || this.state.tags.includes(`default_${tag}`)}
                     disabled={isFirstAddress}
                   />
                 ))}
