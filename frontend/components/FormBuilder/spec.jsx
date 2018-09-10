@@ -13,7 +13,6 @@ describe('<FormBuilder />', () => {
           fields: {
           },
         }}
-        id="foo"
         name="foo"
         handleUpdate={() => {}}
       />
@@ -39,7 +38,6 @@ describe('<FormBuilder />', () => {
             },
           },
         }}
-        id="foo"
         name="foo"
         handleUpdate={() => {}}
       />
@@ -61,7 +59,6 @@ describe('<FormBuilder />', () => {
             },
           },
         }}
-        id="foo"
         name="foo"
         handleUpdate={() => {}}
       />
@@ -95,7 +92,6 @@ describe('<FormBuilder />', () => {
             },
           },
         }}
-        id="foo"
         name="foo"
         handleUpdate={() => {}}
       />
@@ -143,7 +139,6 @@ describe('<FormBuilder />', () => {
             },
           },
         }}
-        id="foo"
         name="foo"
         handleUpdate={() => {}}
       />

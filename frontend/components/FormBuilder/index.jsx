@@ -54,7 +54,6 @@ class FormBuilder extends Component {
     config: PropTypes.shape().isRequired,
     handleUpdate: PropTypes.func.isRequired,
     name: PropTypes.string.isRequired,
-    id: PropTypes.string.isRequired,
     className: PropTypes.string,
     defaults: PropTypes.shape(),
     onSubmit: PropTypes.func,
