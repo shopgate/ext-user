@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import TextField from '@shopgate/pwa-ui-shared/Form/TextField';
+import TextField from '@shopgate/pwa-ui-shared/TextField';
 import {
   ELEMENT_TYPE_TEXT,
   ELEMENT_TYPE_NUMBER,
