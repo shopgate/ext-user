@@ -77,7 +77,8 @@ class FormBuilder extends Component {
       ...reducer,
       [countryCode]: countries[countryCode].name,
     }), {});
-    if (!countryElement.required) {
+
+    if (!countryElement || !countryElement.required) {
       this.countryList = {
         '': '',
         ...this.countryList,

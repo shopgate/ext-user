@@ -1,5 +1,1727 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`<FormBuilder /> should call onChange callback when input is changed 1`] = `
+<FormBuilder
+  className=""
+  config={
+    Object {
+      "fields": Object {
+        "foo": Object {
+          "default": "default",
+          "label": "foo",
+          "type": "text",
+          "visible": true,
+        },
+      },
+    }
+  }
+  defaults={Object {}}
+  handleUpdate={
+    [MockFunction] {
+      "calls": Array [
+        Array [
+          Object {
+            "foo": "default",
+          },
+          false,
+        ],
+      ],
+      "results": Array [
+        Object {
+          "isThrow": false,
+          "value": undefined,
+        },
+      ],
+    }
+  }
+  id="foo"
+  onSubmit={[Function]}
+>
+  <Form
+    onSubmit={[Function]}
+  >
+    <form
+      action="#"
+      onKeyPress={[Function]}
+      onSubmit={[Function]}
+    >
+      <div
+        className=""
+      >
+        <Portal
+          name="nav-menu.foo.foo.before"
+          props={null}
+        />
+        <Portal
+          name="nav-menu.foo.foo"
+          props={null}
+        >
+          <TextElement
+            element={
+              Object {
+                "custom": false,
+                "default": "default",
+                "handleChange": [Function],
+                "id": "foo",
+                "label": "foo",
+                "type": "text",
+                "visible": true,
+              }
+            }
+            errorText=""
+            name="foo.foo"
+            style={
+              Object {
+                "field": "",
+              }
+            }
+            value="default"
+            visible={true}
+          >
+            <TextField
+              className=""
+              errorText=""
+              hintText=""
+              isControlled={false}
+              label="foo"
+              multiLine={false}
+              name="foo.foo"
+              onChange={[Function]}
+              onFocusChange={[Function]}
+              onSanitize={[Function]}
+              onValidate={[Function]}
+              password={false}
+              setRef={[Function]}
+              type="text"
+              value="default"
+            >
+              <div
+                className="css-n6iwau "
+              >
+                <Hint
+                  hintText=""
+                  visible={false}
+                >
+                  <div
+                    className="css-tnfb18 css-1jyyyen"
+                  >
+                    <Translate
+                      className=""
+                      params={Object {}}
+                      string=""
+                    >
+                      <span
+                        className=""
+                      />
+                    </Translate>
+                  </div>
+                </Hint>
+                <Label
+                  hasErrorMessage={false}
+                  isFloating={true}
+                  isFocused={false}
+                  label="foo"
+                  name="foo.foo"
+                >
+                  <label
+                    className="css-u7lqu6 css-16msjt6 css-1fekhao"
+                    htmlFor="foo.foo"
+                  >
+                    <Translate
+                      className=""
+                      params={Object {}}
+                      string="foo"
+                    >
+                      <span
+                        className=""
+                      >
+                        foo
+                      </span>
+                    </Translate>
+                  </label>
+                </Label>
+                <FormElement
+                  id="foo.foo"
+                  isControlled={false}
+                  multiLine={false}
+                  name="foo.foo"
+                  onChange={[Function]}
+                  onFocusChange={[Function]}
+                  onSanitize={[Function]}
+                  onValidate={[Function]}
+                  password={false}
+                  setRef={[Function]}
+                  type="text"
+                  value="default"
+                >
+                  <Component
+                    className="css-keangt"
+                    id="foo.foo"
+                    isControlled={false}
+                    multiLine={false}
+                    name="foo.foo"
+                    onChange={[Function]}
+                    onFocusChange={[Function]}
+                    onSanitize={[Function]}
+                    onValidate={[Function]}
+                    password={false}
+                    setRef={[Function]}
+                    type="text"
+                    validateOnBlur={true}
+                    value="default"
+                  >
+                    <SimpleInput
+                      autoComplete={false}
+                      autoCorrect={false}
+                      className="css-keangt"
+                      disabled={false}
+                      id="foo.foo"
+                      isControlled={false}
+                      multiLine={false}
+                      name="foo.foo"
+                      onChange={[Function]}
+                      onFocusChange={[Function]}
+                      onSanitize={[Function]}
+                      onValidate={[Function]}
+                      password={false}
+                      setRef={[Function]}
+                      type="text"
+                      validateOnBlur={true}
+                      value="default"
+                    >
+                      <input
+                        autoComplete="off"
+                        autoCorrect="off"
+                        className="css-keangt"
+                        disabled={false}
+                        id="foo.foo"
+                        name="foo.foo"
+                        onBlur={[Function]}
+                        onChange={[Function]}
+                        onFocus={[Function]}
+                        type="text"
+                        value="default"
+                      />
+                    </SimpleInput>
+                  </Component>
+                </FormElement>
+                <Underline
+                  hasErrorMessage={false}
+                  isFocused={false}
+                >
+                  <div
+                    className="css-ycal4l"
+                  >
+                    <div
+                      className="css-1tpmuef"
+                      style={
+                        Object {
+                          "borderBottomColor": undefined,
+                          "transform": "scale3d(0,1,1)",
+                        }
+                      }
+                    />
+                  </div>
+                </Underline>
+                <ErrorText
+                  className=""
+                  errorText=""
+                  validationError={null}
+                >
+                  <div
+                    className=" css-hmgfge"
+                  >
+                    <Translate
+                      className=""
+                      params={Object {}}
+                      string=""
+                    >
+                      <span
+                        className=""
+                      />
+                    </Translate>
+                  </div>
+                </ErrorText>
+              </div>
+            </TextField>
+          </TextElement>
+          <SelectElement
+            element={
+              Object {
+                "custom": false,
+                "default": "default",
+                "handleChange": [Function],
+                "id": "foo",
+                "label": "foo",
+                "type": "text",
+                "visible": true,
+              }
+            }
+            errorText=""
+            name="foo.foo"
+            style={
+              Object {
+                "fields": "",
+              }
+            }
+            value="default"
+            visible={true}
+          />
+          <CountryElement
+            countryList={
+              Object {
+                "": "",
+                "AT": "Austria",
+                "DE": "Germany",
+                "FR": "France",
+                "GB": "United Kingdom",
+                "US": "United States",
+              }
+            }
+            element={
+              Object {
+                "custom": false,
+                "default": "default",
+                "handleChange": [Function],
+                "id": "foo",
+                "label": "foo",
+                "type": "text",
+                "visible": true,
+              }
+            }
+            errorText=""
+            name="foo.foo"
+            style={
+              Object {
+                "fields": "",
+              }
+            }
+            value="default"
+            visible={true}
+          />
+          <ProvinceElement
+            element={
+              Object {
+                "custom": false,
+                "default": "default",
+                "handleChange": [Function],
+                "id": "foo",
+                "label": "foo",
+                "type": "text",
+                "visible": true,
+              }
+            }
+            errorText=""
+            name="foo.foo"
+            provincesList={Object {}}
+            style={
+              Object {
+                "fields": "",
+              }
+            }
+            value="default"
+            visible={true}
+          />
+          <RadioElement
+            element={
+              Object {
+                "custom": false,
+                "default": "default",
+                "handleChange": [Function],
+                "id": "foo",
+                "label": "foo",
+                "type": "text",
+                "visible": true,
+              }
+            }
+            errorText=""
+            name="foo.foo"
+            style={
+              Object {
+                "fields": "",
+              }
+            }
+            value="default"
+            visible={true}
+          />
+          <CheckboxElement
+            element={
+              Object {
+                "custom": false,
+                "default": "default",
+                "handleChange": [Function],
+                "id": "foo",
+                "label": "foo",
+                "type": "text",
+                "visible": true,
+              }
+            }
+            errorText=""
+            name="foo.foo"
+            style={
+              Object {
+                "fields": "",
+              }
+            }
+            value="default"
+            visible={true}
+          />
+        </Portal>
+      </div>
+    </form>
+  </Form>
+</FormBuilder>
+`;
+
+exports[`<FormBuilder /> should hide element if setVisibilty rule applies 1`] = `
+<FormBuilder
+  className=""
+  config={
+    Object {
+      "fields": Object {
+        "bar": Object {
+          "actions": Array [
+            Object {
+              "rules": Array [
+                Object {
+                  "context": "foo",
+                  "data": Array [
+                    "abc",
+                  ],
+                  "type": "notIn",
+                },
+              ],
+              "type": "setVisibility",
+            },
+          ],
+          "label": "bar",
+          "type": "text",
+        },
+        "foo": Object {
+          "label": "foo",
+          "type": "text",
+          "visible": true,
+        },
+      },
+    }
+  }
+  defaults={Object {}}
+  handleUpdate={[Function]}
+  id="foo"
+  onSubmit={[Function]}
+>
+  <Form
+    onSubmit={[Function]}
+  >
+    <form
+      action="#"
+      onKeyPress={[Function]}
+      onSubmit={[Function]}
+    >
+      <div
+        className=""
+      >
+        <Portal
+          name="nav-menu.foo.foo.before"
+          props={null}
+        />
+        <Portal
+          name="nav-menu.foo.foo"
+          props={null}
+        >
+          <TextElement
+            element={
+              Object {
+                "custom": false,
+                "handleChange": [Function],
+                "id": "foo",
+                "label": "foo",
+                "type": "text",
+                "visible": true,
+              }
+            }
+            errorText=""
+            name="foo.foo"
+            style={
+              Object {
+                "field": "",
+              }
+            }
+            value={null}
+            visible={true}
+          >
+            <TextField
+              className=""
+              errorText=""
+              hintText=""
+              isControlled={false}
+              label="foo"
+              multiLine={false}
+              name="foo.foo"
+              onChange={[Function]}
+              onFocusChange={[Function]}
+              onSanitize={[Function]}
+              onValidate={[Function]}
+              password={false}
+              setRef={[Function]}
+              type="text"
+              value={null}
+            >
+              <div
+                className="css-n6iwau "
+              >
+                <Hint
+                  hintText=""
+                  visible={false}
+                >
+                  <div
+                    className="css-tnfb18 css-1jyyyen"
+                  >
+                    <Translate
+                      className=""
+                      params={Object {}}
+                      string=""
+                    >
+                      <span
+                        className=""
+                      />
+                    </Translate>
+                  </div>
+                </Hint>
+                <Label
+                  hasErrorMessage={false}
+                  isFloating={false}
+                  isFocused={false}
+                  label="foo"
+                  name="foo.foo"
+                >
+                  <label
+                    className="css-u7lqu6 css-1fekhao"
+                    htmlFor="foo.foo"
+                  >
+                    <Translate
+                      className=""
+                      params={Object {}}
+                      string="foo"
+                    >
+                      <span
+                        className=""
+                      >
+                        foo
+                      </span>
+                    </Translate>
+                  </label>
+                </Label>
+                <FormElement
+                  id="foo.foo"
+                  isControlled={false}
+                  multiLine={false}
+                  name="foo.foo"
+                  onChange={[Function]}
+                  onFocusChange={[Function]}
+                  onSanitize={[Function]}
+                  onValidate={[Function]}
+                  password={false}
+                  setRef={[Function]}
+                  type="text"
+                  value={null}
+                >
+                  <Component
+                    className="css-keangt"
+                    id="foo.foo"
+                    isControlled={false}
+                    multiLine={false}
+                    name="foo.foo"
+                    onChange={[Function]}
+                    onFocusChange={[Function]}
+                    onSanitize={[Function]}
+                    onValidate={[Function]}
+                    password={false}
+                    setRef={[Function]}
+                    type="text"
+                    validateOnBlur={true}
+                    value={null}
+                  >
+                    <SimpleInput
+                      autoComplete={false}
+                      autoCorrect={false}
+                      className="css-keangt"
+                      disabled={false}
+                      id="foo.foo"
+                      isControlled={false}
+                      multiLine={false}
+                      name="foo.foo"
+                      onChange={[Function]}
+                      onFocusChange={[Function]}
+                      onSanitize={[Function]}
+                      onValidate={[Function]}
+                      password={false}
+                      setRef={[Function]}
+                      type="text"
+                      validateOnBlur={true}
+                      value={null}
+                    >
+                      <input
+                        autoComplete="off"
+                        autoCorrect="off"
+                        className="css-keangt"
+                        disabled={false}
+                        id="foo.foo"
+                        name="foo.foo"
+                        onBlur={[Function]}
+                        onChange={[Function]}
+                        onFocus={[Function]}
+                        type="text"
+                        value=""
+                      />
+                    </SimpleInput>
+                  </Component>
+                </FormElement>
+                <Underline
+                  hasErrorMessage={false}
+                  isFocused={false}
+                >
+                  <div
+                    className="css-ycal4l"
+                  >
+                    <div
+                      className="css-1tpmuef"
+                      style={
+                        Object {
+                          "borderBottomColor": undefined,
+                          "transform": "scale3d(0,1,1)",
+                        }
+                      }
+                    />
+                  </div>
+                </Underline>
+                <ErrorText
+                  className=""
+                  errorText=""
+                  validationError={null}
+                >
+                  <div
+                    className=" css-hmgfge"
+                  >
+                    <Translate
+                      className=""
+                      params={Object {}}
+                      string=""
+                    >
+                      <span
+                        className=""
+                      />
+                    </Translate>
+                  </div>
+                </ErrorText>
+              </div>
+            </TextField>
+          </TextElement>
+          <SelectElement
+            element={
+              Object {
+                "custom": false,
+                "handleChange": [Function],
+                "id": "foo",
+                "label": "foo",
+                "type": "text",
+                "visible": true,
+              }
+            }
+            errorText=""
+            name="foo.foo"
+            style={
+              Object {
+                "fields": "",
+              }
+            }
+            value={null}
+            visible={true}
+          />
+          <CountryElement
+            countryList={
+              Object {
+                "": "",
+                "AT": "Austria",
+                "DE": "Germany",
+                "FR": "France",
+                "GB": "United Kingdom",
+                "US": "United States",
+              }
+            }
+            element={
+              Object {
+                "custom": false,
+                "handleChange": [Function],
+                "id": "foo",
+                "label": "foo",
+                "type": "text",
+                "visible": true,
+              }
+            }
+            errorText=""
+            name="foo.foo"
+            style={
+              Object {
+                "fields": "",
+              }
+            }
+            value={null}
+            visible={true}
+          />
+          <ProvinceElement
+            element={
+              Object {
+                "custom": false,
+                "handleChange": [Function],
+                "id": "foo",
+                "label": "foo",
+                "type": "text",
+                "visible": true,
+              }
+            }
+            errorText=""
+            name="foo.foo"
+            provincesList={Object {}}
+            style={
+              Object {
+                "fields": "",
+              }
+            }
+            value={null}
+            visible={true}
+          />
+          <RadioElement
+            element={
+              Object {
+                "custom": false,
+                "handleChange": [Function],
+                "id": "foo",
+                "label": "foo",
+                "type": "text",
+                "visible": true,
+              }
+            }
+            errorText=""
+            name="foo.foo"
+            style={
+              Object {
+                "fields": "",
+              }
+            }
+            value={null}
+            visible={true}
+          />
+          <CheckboxElement
+            element={
+              Object {
+                "custom": false,
+                "handleChange": [Function],
+                "id": "foo",
+                "label": "foo",
+                "type": "text",
+                "visible": true,
+              }
+            }
+            errorText=""
+            name="foo.foo"
+            style={
+              Object {
+                "fields": "",
+              }
+            }
+            value={null}
+            visible={true}
+          />
+        </Portal>
+        <Portal
+          name="nav-menu.foo.bar.before"
+          props={null}
+        />
+        <Portal
+          name="nav-menu.foo.bar"
+          props={null}
+        >
+          <TextElement
+            element={
+              Object {
+                "actions": Array [
+                  Object {
+                    "rules": Array [
+                      Object {
+                        "context": "foo",
+                        "data": Array [
+                          "abc",
+                        ],
+                        "type": "notIn",
+                      },
+                    ],
+                    "type": "setVisibility",
+                  },
+                ],
+                "custom": false,
+                "handleChange": [Function],
+                "id": "bar",
+                "label": "bar",
+                "type": "text",
+              }
+            }
+            errorText=""
+            name="foo.bar"
+            style={
+              Object {
+                "field": "",
+              }
+            }
+            value=""
+            visible={true}
+          >
+            <TextField
+              className=""
+              errorText=""
+              hintText=""
+              isControlled={false}
+              label="bar"
+              multiLine={false}
+              name="foo.bar"
+              onChange={[Function]}
+              onFocusChange={[Function]}
+              onSanitize={[Function]}
+              onValidate={[Function]}
+              password={false}
+              setRef={[Function]}
+              type="text"
+              value=""
+            >
+              <div
+                className="css-n6iwau "
+              >
+                <Hint
+                  hintText=""
+                  visible={false}
+                >
+                  <div
+                    className="css-tnfb18 css-1jyyyen"
+                  >
+                    <Translate
+                      className=""
+                      params={Object {}}
+                      string=""
+                    >
+                      <span
+                        className=""
+                      />
+                    </Translate>
+                  </div>
+                </Hint>
+                <Label
+                  hasErrorMessage={false}
+                  isFloating={false}
+                  isFocused={false}
+                  label="bar"
+                  name="foo.bar"
+                >
+                  <label
+                    className="css-u7lqu6 css-1fekhao"
+                    htmlFor="foo.bar"
+                  >
+                    <Translate
+                      className=""
+                      params={Object {}}
+                      string="bar"
+                    >
+                      <span
+                        className=""
+                      >
+                        bar
+                      </span>
+                    </Translate>
+                  </label>
+                </Label>
+                <FormElement
+                  id="foo.bar"
+                  isControlled={false}
+                  multiLine={false}
+                  name="foo.bar"
+                  onChange={[Function]}
+                  onFocusChange={[Function]}
+                  onSanitize={[Function]}
+                  onValidate={[Function]}
+                  password={false}
+                  setRef={[Function]}
+                  type="text"
+                  value=""
+                >
+                  <Component
+                    className="css-keangt"
+                    id="foo.bar"
+                    isControlled={false}
+                    multiLine={false}
+                    name="foo.bar"
+                    onChange={[Function]}
+                    onFocusChange={[Function]}
+                    onSanitize={[Function]}
+                    onValidate={[Function]}
+                    password={false}
+                    setRef={[Function]}
+                    type="text"
+                    validateOnBlur={true}
+                    value=""
+                  >
+                    <SimpleInput
+                      autoComplete={false}
+                      autoCorrect={false}
+                      className="css-keangt"
+                      disabled={false}
+                      id="foo.bar"
+                      isControlled={false}
+                      multiLine={false}
+                      name="foo.bar"
+                      onChange={[Function]}
+                      onFocusChange={[Function]}
+                      onSanitize={[Function]}
+                      onValidate={[Function]}
+                      password={false}
+                      setRef={[Function]}
+                      type="text"
+                      validateOnBlur={true}
+                      value=""
+                    >
+                      <input
+                        autoComplete="off"
+                        autoCorrect="off"
+                        className="css-keangt"
+                        disabled={false}
+                        id="foo.bar"
+                        name="foo.bar"
+                        onBlur={[Function]}
+                        onChange={[Function]}
+                        onFocus={[Function]}
+                        type="text"
+                        value=""
+                      />
+                    </SimpleInput>
+                  </Component>
+                </FormElement>
+                <Underline
+                  hasErrorMessage={false}
+                  isFocused={false}
+                >
+                  <div
+                    className="css-ycal4l"
+                  >
+                    <div
+                      className="css-1tpmuef"
+                      style={
+                        Object {
+                          "borderBottomColor": undefined,
+                          "transform": "scale3d(0,1,1)",
+                        }
+                      }
+                    />
+                  </div>
+                </Underline>
+                <ErrorText
+                  className=""
+                  errorText=""
+                  validationError={null}
+                >
+                  <div
+                    className=" css-hmgfge"
+                  >
+                    <Translate
+                      className=""
+                      params={Object {}}
+                      string=""
+                    >
+                      <span
+                        className=""
+                      />
+                    </Translate>
+                  </div>
+                </ErrorText>
+              </div>
+            </TextField>
+          </TextElement>
+          <SelectElement
+            element={
+              Object {
+                "actions": Array [
+                  Object {
+                    "rules": Array [
+                      Object {
+                        "context": "foo",
+                        "data": Array [
+                          "abc",
+                        ],
+                        "type": "notIn",
+                      },
+                    ],
+                    "type": "setVisibility",
+                  },
+                ],
+                "custom": false,
+                "handleChange": [Function],
+                "id": "bar",
+                "label": "bar",
+                "type": "text",
+              }
+            }
+            errorText=""
+            name="foo.bar"
+            style={
+              Object {
+                "fields": "",
+              }
+            }
+            value=""
+            visible={true}
+          />
+          <CountryElement
+            countryList={
+              Object {
+                "": "",
+                "AT": "Austria",
+                "DE": "Germany",
+                "FR": "France",
+                "GB": "United Kingdom",
+                "US": "United States",
+              }
+            }
+            element={
+              Object {
+                "actions": Array [
+                  Object {
+                    "rules": Array [
+                      Object {
+                        "context": "foo",
+                        "data": Array [
+                          "abc",
+                        ],
+                        "type": "notIn",
+                      },
+                    ],
+                    "type": "setVisibility",
+                  },
+                ],
+                "custom": false,
+                "handleChange": [Function],
+                "id": "bar",
+                "label": "bar",
+                "type": "text",
+              }
+            }
+            errorText=""
+            name="foo.bar"
+            style={
+              Object {
+                "fields": "",
+              }
+            }
+            value=""
+            visible={true}
+          />
+          <ProvinceElement
+            element={
+              Object {
+                "actions": Array [
+                  Object {
+                    "rules": Array [
+                      Object {
+                        "context": "foo",
+                        "data": Array [
+                          "abc",
+                        ],
+                        "type": "notIn",
+                      },
+                    ],
+                    "type": "setVisibility",
+                  },
+                ],
+                "custom": false,
+                "handleChange": [Function],
+                "id": "bar",
+                "label": "bar",
+                "type": "text",
+              }
+            }
+            errorText=""
+            name="foo.bar"
+            provincesList={Object {}}
+            style={
+              Object {
+                "fields": "",
+              }
+            }
+            value=""
+            visible={true}
+          />
+          <RadioElement
+            element={
+              Object {
+                "actions": Array [
+                  Object {
+                    "rules": Array [
+                      Object {
+                        "context": "foo",
+                        "data": Array [
+                          "abc",
+                        ],
+                        "type": "notIn",
+                      },
+                    ],
+                    "type": "setVisibility",
+                  },
+                ],
+                "custom": false,
+                "handleChange": [Function],
+                "id": "bar",
+                "label": "bar",
+                "type": "text",
+              }
+            }
+            errorText=""
+            name="foo.bar"
+            style={
+              Object {
+                "fields": "",
+              }
+            }
+            value=""
+            visible={true}
+          />
+          <CheckboxElement
+            element={
+              Object {
+                "actions": Array [
+                  Object {
+                    "rules": Array [
+                      Object {
+                        "context": "foo",
+                        "data": Array [
+                          "abc",
+                        ],
+                        "type": "notIn",
+                      },
+                    ],
+                    "type": "setVisibility",
+                  },
+                ],
+                "custom": false,
+                "handleChange": [Function],
+                "id": "bar",
+                "label": "bar",
+                "type": "text",
+              }
+            }
+            errorText=""
+            name="foo.bar"
+            style={
+              Object {
+                "fields": "",
+              }
+            }
+            value=""
+            visible={true}
+          />
+        </Portal>
+      </div>
+    </form>
+  </Form>
+</FormBuilder>
+`;
+
+exports[`<FormBuilder /> should hide element if setVisibilty rule applies 2`] = `
+<FormBuilder
+  className=""
+  config={
+    Object {
+      "fields": Object {
+        "bar": Object {
+          "actions": Array [
+            Object {
+              "rules": Array [
+                Object {
+                  "context": "foo",
+                  "data": Array [
+                    "abc",
+                  ],
+                  "type": "notIn",
+                },
+              ],
+              "type": "setVisibility",
+            },
+          ],
+          "label": "bar",
+          "type": "text",
+        },
+        "foo": Object {
+          "label": "foo",
+          "type": "text",
+          "visible": true,
+        },
+      },
+    }
+  }
+  defaults={Object {}}
+  handleUpdate={[Function]}
+  id="foo"
+  onSubmit={[Function]}
+>
+  <Form
+    onSubmit={[Function]}
+  >
+    <form
+      action="#"
+      onKeyPress={[Function]}
+      onSubmit={[Function]}
+    >
+      <div
+        className=""
+      >
+        <Portal
+          name="nav-menu.foo.foo.before"
+          props={null}
+        />
+        <Portal
+          name="nav-menu.foo.foo"
+          props={null}
+        >
+          <TextElement
+            element={
+              Object {
+                "custom": false,
+                "handleChange": [Function],
+                "id": "foo",
+                "label": "foo",
+                "type": "text",
+                "visible": true,
+              }
+            }
+            errorText=""
+            name="foo.foo"
+            style={
+              Object {
+                "field": "",
+              }
+            }
+            value="abc"
+            visible={true}
+          >
+            <TextField
+              className=""
+              errorText=""
+              hintText=""
+              isControlled={false}
+              label="foo"
+              multiLine={false}
+              name="foo.foo"
+              onChange={[Function]}
+              onFocusChange={[Function]}
+              onSanitize={[Function]}
+              onValidate={[Function]}
+              password={false}
+              setRef={[Function]}
+              type="text"
+              value="abc"
+            >
+              <div
+                className="css-n6iwau "
+              >
+                <Hint
+                  hintText=""
+                  visible={false}
+                >
+                  <div
+                    className="css-tnfb18 css-1jyyyen"
+                  >
+                    <Translate
+                      className=""
+                      params={Object {}}
+                      string=""
+                    >
+                      <span
+                        className=""
+                      />
+                    </Translate>
+                  </div>
+                </Hint>
+                <Label
+                  hasErrorMessage={false}
+                  isFloating={true}
+                  isFocused={false}
+                  label="foo"
+                  name="foo.foo"
+                >
+                  <label
+                    className="css-u7lqu6 css-16msjt6 css-1fekhao"
+                    htmlFor="foo.foo"
+                  >
+                    <Translate
+                      className=""
+                      params={Object {}}
+                      string="foo"
+                    >
+                      <span
+                        className=""
+                      >
+                        foo
+                      </span>
+                    </Translate>
+                  </label>
+                </Label>
+                <FormElement
+                  id="foo.foo"
+                  isControlled={false}
+                  multiLine={false}
+                  name="foo.foo"
+                  onChange={[Function]}
+                  onFocusChange={[Function]}
+                  onSanitize={[Function]}
+                  onValidate={[Function]}
+                  password={false}
+                  setRef={[Function]}
+                  type="text"
+                  value="abc"
+                >
+                  <Component
+                    className="css-keangt"
+                    id="foo.foo"
+                    isControlled={false}
+                    multiLine={false}
+                    name="foo.foo"
+                    onChange={[Function]}
+                    onFocusChange={[Function]}
+                    onSanitize={[Function]}
+                    onValidate={[Function]}
+                    password={false}
+                    setRef={[Function]}
+                    type="text"
+                    validateOnBlur={true}
+                    value="abc"
+                  >
+                    <SimpleInput
+                      autoComplete={false}
+                      autoCorrect={false}
+                      className="css-keangt"
+                      disabled={false}
+                      id="foo.foo"
+                      isControlled={false}
+                      multiLine={false}
+                      name="foo.foo"
+                      onChange={[Function]}
+                      onFocusChange={[Function]}
+                      onSanitize={[Function]}
+                      onValidate={[Function]}
+                      password={false}
+                      setRef={[Function]}
+                      type="text"
+                      validateOnBlur={true}
+                      value="abc"
+                    >
+                      <input
+                        autoComplete="off"
+                        autoCorrect="off"
+                        className="css-keangt"
+                        disabled={false}
+                        id="foo.foo"
+                        name="foo.foo"
+                        onBlur={[Function]}
+                        onChange={[Function]}
+                        onFocus={[Function]}
+                        type="text"
+                        value="abc"
+                      />
+                    </SimpleInput>
+                  </Component>
+                </FormElement>
+                <Underline
+                  hasErrorMessage={false}
+                  isFocused={false}
+                >
+                  <div
+                    className="css-ycal4l"
+                  >
+                    <div
+                      className="css-1tpmuef"
+                      style={
+                        Object {
+                          "borderBottomColor": undefined,
+                          "transform": "scale3d(0,1,1)",
+                        }
+                      }
+                    />
+                  </div>
+                </Underline>
+                <ErrorText
+                  className=""
+                  errorText=""
+                  validationError={null}
+                >
+                  <div
+                    className=" css-hmgfge"
+                  >
+                    <Translate
+                      className=""
+                      params={Object {}}
+                      string=""
+                    >
+                      <span
+                        className=""
+                      />
+                    </Translate>
+                  </div>
+                </ErrorText>
+              </div>
+            </TextField>
+          </TextElement>
+          <SelectElement
+            element={
+              Object {
+                "custom": false,
+                "handleChange": [Function],
+                "id": "foo",
+                "label": "foo",
+                "type": "text",
+                "visible": true,
+              }
+            }
+            errorText=""
+            name="foo.foo"
+            style={
+              Object {
+                "fields": "",
+              }
+            }
+            value="abc"
+            visible={true}
+          />
+          <CountryElement
+            countryList={
+              Object {
+                "": "",
+                "AT": "Austria",
+                "DE": "Germany",
+                "FR": "France",
+                "GB": "United Kingdom",
+                "US": "United States",
+              }
+            }
+            element={
+              Object {
+                "custom": false,
+                "handleChange": [Function],
+                "id": "foo",
+                "label": "foo",
+                "type": "text",
+                "visible": true,
+              }
+            }
+            errorText=""
+            name="foo.foo"
+            style={
+              Object {
+                "fields": "",
+              }
+            }
+            value="abc"
+            visible={true}
+          />
+          <ProvinceElement
+            element={
+              Object {
+                "custom": false,
+                "handleChange": [Function],
+                "id": "foo",
+                "label": "foo",
+                "type": "text",
+                "visible": true,
+              }
+            }
+            errorText=""
+            name="foo.foo"
+            provincesList={Object {}}
+            style={
+              Object {
+                "fields": "",
+              }
+            }
+            value="abc"
+            visible={true}
+          />
+          <RadioElement
+            element={
+              Object {
+                "custom": false,
+                "handleChange": [Function],
+                "id": "foo",
+                "label": "foo",
+                "type": "text",
+                "visible": true,
+              }
+            }
+            errorText=""
+            name="foo.foo"
+            style={
+              Object {
+                "fields": "",
+              }
+            }
+            value="abc"
+            visible={true}
+          />
+          <CheckboxElement
+            element={
+              Object {
+                "custom": false,
+                "handleChange": [Function],
+                "id": "foo",
+                "label": "foo",
+                "type": "text",
+                "visible": true,
+              }
+            }
+            errorText=""
+            name="foo.foo"
+            style={
+              Object {
+                "fields": "",
+              }
+            }
+            value="abc"
+            visible={true}
+          />
+        </Portal>
+        <Portal
+          name="nav-menu.foo.bar.before"
+          props={null}
+        />
+        <Portal
+          name="nav-menu.foo.bar"
+          props={null}
+        >
+          <TextElement
+            element={
+              Object {
+                "actions": Array [
+                  Object {
+                    "rules": Array [
+                      Object {
+                        "context": "foo",
+                        "data": Array [
+                          "abc",
+                        ],
+                        "type": "notIn",
+                      },
+                    ],
+                    "type": "setVisibility",
+                  },
+                ],
+                "custom": false,
+                "handleChange": [Function],
+                "id": "bar",
+                "label": "bar",
+                "type": "text",
+              }
+            }
+            errorText=""
+            name="foo.bar"
+            style={
+              Object {
+                "field": "",
+              }
+            }
+            value=""
+            visible={false}
+          />
+          <SelectElement
+            element={
+              Object {
+                "actions": Array [
+                  Object {
+                    "rules": Array [
+                      Object {
+                        "context": "foo",
+                        "data": Array [
+                          "abc",
+                        ],
+                        "type": "notIn",
+                      },
+                    ],
+                    "type": "setVisibility",
+                  },
+                ],
+                "custom": false,
+                "handleChange": [Function],
+                "id": "bar",
+                "label": "bar",
+                "type": "text",
+              }
+            }
+            errorText=""
+            name="foo.bar"
+            style={
+              Object {
+                "fields": "",
+              }
+            }
+            value=""
+            visible={false}
+          />
+          <CountryElement
+            countryList={
+              Object {
+                "": "",
+                "AT": "Austria",
+                "DE": "Germany",
+                "FR": "France",
+                "GB": "United Kingdom",
+                "US": "United States",
+              }
+            }
+            element={
+              Object {
+                "actions": Array [
+                  Object {
+                    "rules": Array [
+                      Object {
+                        "context": "foo",
+                        "data": Array [
+                          "abc",
+                        ],
+                        "type": "notIn",
+                      },
+                    ],
+                    "type": "setVisibility",
+                  },
+                ],
+                "custom": false,
+                "handleChange": [Function],
+                "id": "bar",
+                "label": "bar",
+                "type": "text",
+              }
+            }
+            errorText=""
+            name="foo.bar"
+            style={
+              Object {
+                "fields": "",
+              }
+            }
+            value=""
+            visible={false}
+          />
+          <ProvinceElement
+            element={
+              Object {
+                "actions": Array [
+                  Object {
+                    "rules": Array [
+                      Object {
+                        "context": "foo",
+                        "data": Array [
+                          "abc",
+                        ],
+                        "type": "notIn",
+                      },
+                    ],
+                    "type": "setVisibility",
+                  },
+                ],
+                "custom": false,
+                "handleChange": [Function],
+                "id": "bar",
+                "label": "bar",
+                "type": "text",
+              }
+            }
+            errorText=""
+            name="foo.bar"
+            provincesList={Object {}}
+            style={
+              Object {
+                "fields": "",
+              }
+            }
+            value=""
+            visible={false}
+          />
+          <RadioElement
+            element={
+              Object {
+                "actions": Array [
+                  Object {
+                    "rules": Array [
+                      Object {
+                        "context": "foo",
+                        "data": Array [
+                          "abc",
+                        ],
+                        "type": "notIn",
+                      },
+                    ],
+                    "type": "setVisibility",
+                  },
+                ],
+                "custom": false,
+                "handleChange": [Function],
+                "id": "bar",
+                "label": "bar",
+                "type": "text",
+              }
+            }
+            errorText=""
+            name="foo.bar"
+            style={
+              Object {
+                "fields": "",
+              }
+            }
+            value=""
+            visible={false}
+          />
+          <CheckboxElement
+            element={
+              Object {
+                "actions": Array [
+                  Object {
+                    "rules": Array [
+                      Object {
+                        "context": "foo",
+                        "data": Array [
+                          "abc",
+                        ],
+                        "type": "notIn",
+                      },
+                    ],
+                    "type": "setVisibility",
+                  },
+                ],
+                "custom": false,
+                "handleChange": [Function],
+                "id": "bar",
+                "label": "bar",
+                "type": "text",
+              }
+            }
+            errorText=""
+            name="foo.bar"
+            style={
+              Object {
+                "fields": "",
+              }
+            }
+            value={false}
+            visible={false}
+          />
+        </Portal>
+      </div>
+    </form>
+  </Form>
+</FormBuilder>
+`;
+
 exports[`<FormBuilder /> should not render invisible field 1`] = `
 <FormBuilder
   className=""
@@ -17,160 +1739,168 @@ exports[`<FormBuilder /> should not render invisible field 1`] = `
   defaults={Object {}}
   handleUpdate={[Function]}
   id="foo"
+  onSubmit={[Function]}
 >
-  <div
-    className=""
+  <Form
+    onSubmit={[Function]}
   >
-    <Portal
-      name="nav-menu.foo.firstName.before"
-      props={null}
-    />
-    <Portal
-      name="nav-menu.foo.firstName"
-      props={null}
+    <form
+      action="#"
+      onKeyPress={[Function]}
+      onSubmit={[Function]}
     >
-      <TextElement
-        element={
-          Object {
-            "custom": false,
-            "handleChange": [Function],
-            "id": "firstName",
-            "label": "foo",
-            "type": "text",
-            "visible": false,
-          }
-        }
-        errorText=""
-        name="foo.firstName"
-        style={
-          Object {
-            "field": "",
-          }
-        }
-        value=""
-        visible={false}
-      />
-      <SelectElement
-        element={
-          Object {
-            "custom": false,
-            "handleChange": [Function],
-            "id": "firstName",
-            "label": "foo",
-            "type": "text",
-            "visible": false,
-          }
-        }
-        errorText=""
-        name="foo.firstName"
-        style={
-          Object {
-            "fields": "",
-          }
-        }
-        value=""
-        visible={false}
-      />
-      <CountryElement
-        countryList={
-          Object {
-            "AT": "Austria",
-            "DE": "Germany",
-            "FR": "France",
-            "GB": "United Kingdom",
-            "US": "United States",
-          }
-        }
-        element={
-          Object {
-            "custom": false,
-            "handleChange": [Function],
-            "id": "firstName",
-            "label": "foo",
-            "type": "text",
-            "visible": false,
-          }
-        }
-        errorText=""
-        name="foo.firstName"
-        style={
-          Object {
-            "fields": "",
-          }
-        }
-        value=""
-        visible={false}
-      />
-      <ProvinceElement
-        element={
-          Object {
-            "custom": false,
-            "handleChange": [Function],
-            "id": "firstName",
-            "label": "foo",
-            "type": "text",
-            "visible": false,
-          }
-        }
-        errorText=""
-        name="foo.firstName"
-        provincesList={Object {}}
-        style={
-          Object {
-            "fields": "",
-          }
-        }
-        value=""
-        visible={false}
-      />
-      <RadioElement
-        element={
-          Object {
-            "custom": false,
-            "handleChange": [Function],
-            "id": "firstName",
-            "label": "foo",
-            "type": "text",
-            "visible": false,
-          }
-        }
-        errorText=""
-        name="foo.firstName"
-        style={
-          Object {
-            "fields": "",
-          }
-        }
-        value=""
-        visible={false}
-      />
-      <CheckboxElement
-        element={
-          Object {
-            "custom": false,
-            "handleChange": [Function],
-            "id": "firstName",
-            "label": "foo",
-            "type": "text",
-            "visible": false,
-          }
-        }
-        errorText=""
-        name="foo.firstName"
-        style={
-          Object {
-            "fields": "",
-          }
-        }
-        value={false}
-        visible={false}
-      />
-    </Portal>
-    <Portal
-      name="nav-menu.foo.firstName.after"
-      props={null}
-    />
-  </div>
+      <div
+        className=""
+      >
+        <Portal
+          name="nav-menu.foo.firstName.before"
+          props={null}
+        />
+        <Portal
+          name="nav-menu.foo.firstName"
+          props={null}
+        >
+          <TextElement
+            element={
+              Object {
+                "custom": false,
+                "handleChange": [Function],
+                "id": "firstName",
+                "label": "foo",
+                "type": "text",
+                "visible": false,
+              }
+            }
+            errorText=""
+            name="foo.firstName"
+            style={
+              Object {
+                "field": "",
+              }
+            }
+            value={null}
+            visible={false}
+          />
+          <SelectElement
+            element={
+              Object {
+                "custom": false,
+                "handleChange": [Function],
+                "id": "firstName",
+                "label": "foo",
+                "type": "text",
+                "visible": false,
+              }
+            }
+            errorText=""
+            name="foo.firstName"
+            style={
+              Object {
+                "fields": "",
+              }
+            }
+            value={null}
+            visible={false}
+          />
+          <CountryElement
+            countryList={
+              Object {
+                "": "",
+                "AT": "Austria",
+                "DE": "Germany",
+                "FR": "France",
+                "GB": "United Kingdom",
+                "US": "United States",
+              }
+            }
+            element={
+              Object {
+                "custom": false,
+                "handleChange": [Function],
+                "id": "firstName",
+                "label": "foo",
+                "type": "text",
+                "visible": false,
+              }
+            }
+            errorText=""
+            name="foo.firstName"
+            style={
+              Object {
+                "fields": "",
+              }
+            }
+            value={null}
+            visible={false}
+          />
+          <ProvinceElement
+            element={
+              Object {
+                "custom": false,
+                "handleChange": [Function],
+                "id": "firstName",
+                "label": "foo",
+                "type": "text",
+                "visible": false,
+              }
+            }
+            errorText=""
+            name="foo.firstName"
+            provincesList={Object {}}
+            style={
+              Object {
+                "fields": "",
+              }
+            }
+            value={null}
+            visible={false}
+          />
+          <RadioElement
+            element={
+              Object {
+                "custom": false,
+                "handleChange": [Function],
+                "id": "firstName",
+                "label": "foo",
+                "type": "text",
+                "visible": false,
+              }
+            }
+            errorText=""
+            name="foo.firstName"
+            style={
+              Object {
+                "fields": "",
+              }
+            }
+            value={null}
+            visible={false}
+          />
+          <CheckboxElement
+            element={
+              Object {
+                "custom": false,
+                "handleChange": [Function],
+                "id": "firstName",
+                "label": "foo",
+                "type": "text",
+                "visible": false,
+              }
+            }
+            errorText=""
+            name="foo.firstName"
+            style={
+              Object {
+                "fields": "",
+              }
+            }
+            value={null}
+            visible={false}
+          />
+        </Portal>
+      </div>
+    </form>
+  </Form>
 </FormBuilder>
 `;
 
@@ -185,10 +1915,21 @@ exports[`<FormBuilder /> should render empty form 1`] = `
   defaults={Object {}}
   handleUpdate={[Function]}
   id="foo"
+  onSubmit={[Function]}
 >
-  <div
-    className=""
-  />
+  <Form
+    onSubmit={[Function]}
+  >
+    <form
+      action="#"
+      onKeyPress={[Function]}
+      onSubmit={[Function]}
+    >
+      <div
+        className=""
+      />
+    </form>
+  </Form>
 </FormBuilder>
 `;
 
@@ -214,102 +1955,54 @@ exports[`<FormBuilder /> should render two text fields 1`] = `
   defaults={Object {}}
   handleUpdate={[Function]}
   id="foo"
+  onSubmit={[Function]}
 >
-  <div
-    className=""
+  <Form
+    onSubmit={[Function]}
   >
-    <Portal
-      name="nav-menu.foo.firstName.before"
-      props={null}
-    />
-    <Portal
-      name="nav-menu.foo.firstName"
-      props={null}
+    <form
+      action="#"
+      onKeyPress={[Function]}
+      onSubmit={[Function]}
     >
-      <TextElement
-        element={
-          Object {
-            "custom": false,
-            "handleChange": [Function],
-            "id": "firstName",
-            "label": "foo",
-            "type": "text",
-            "visible": true,
-          }
-        }
-        errorText=""
-        name="foo.firstName"
-        style={
-          Object {
-            "field": "",
-          }
-        }
-        value={null}
-        visible={true}
+      <div
+        className=""
       >
-        <TextField
-          className=""
-          errorText=""
-          hintText=""
-          label="foo"
-          multiLine={false}
-          name="foo.firstName"
-          onChange={[Function]}
-          onFocusChange={[Function]}
-          onSanitize={[Function]}
-          onValidate={[Function]}
-          password={false}
-          setRef={[Function]}
-          type="text"
-          value={null}
+        <Portal
+          name="nav-menu.foo.firstName.before"
+          props={null}
+        />
+        <Portal
+          name="nav-menu.foo.firstName"
+          props={null}
         >
-          <div
-            className="css-n6iwau "
+          <TextElement
+            element={
+              Object {
+                "custom": false,
+                "handleChange": [Function],
+                "id": "firstName",
+                "label": "foo",
+                "type": "text",
+                "visible": true,
+              }
+            }
+            errorText=""
+            name="foo.firstName"
+            style={
+              Object {
+                "field": "",
+              }
+            }
+            value={null}
+            visible={true}
           >
-            <Hint
+            <TextField
+              className=""
+              errorText=""
               hintText=""
-              visible={false}
-            >
-              <div
-                className="css-tnfb18 css-1jyyyen"
-              >
-                <Translate
-                  className=""
-                  params={Object {}}
-                  string=""
-                >
-                  <span
-                    className=""
-                  />
-                </Translate>
-              </div>
-            </Hint>
-            <Label
-              hasErrorMessage={false}
-              isFloating={false}
-              isFocused={false}
+              isControlled={false}
               label="foo"
-              name="foo.firstName"
-            >
-              <label
-                className="css-u7lqu6 css-1fekhao"
-                htmlFor="foo.firstName"
-              >
-                <Translate
-                  className=""
-                  params={Object {}}
-                  string="foo"
-                >
-                  <span
-                    className=""
-                  >
-                    foo
-                  </span>
-                </Translate>
-              </label>
-            </Label>
-            <FormElement
-              id="foo.firstName"
               multiLine={false}
               name="foo.firstName"
               onChange={[Function]}
@@ -321,27 +2014,54 @@ exports[`<FormBuilder /> should render two text fields 1`] = `
               type="text"
               value={null}
             >
-              <Component
-                className="css-keangt"
-                id="foo.firstName"
-                multiLine={false}
-                name="foo.firstName"
-                onChange={[Function]}
-                onFocusChange={[Function]}
-                onSanitize={[Function]}
-                onValidate={[Function]}
-                password={false}
-                setRef={[Function]}
-                type="text"
-                validateOnBlur={true}
-                value={null}
+              <div
+                className="css-n6iwau "
               >
-                <SimpleInput
-                  autoComplete={false}
-                  autoCorrect={false}
-                  className="css-keangt"
-                  disabled={false}
+                <Hint
+                  hintText=""
+                  visible={false}
+                >
+                  <div
+                    className="css-tnfb18 css-1jyyyen"
+                  >
+                    <Translate
+                      className=""
+                      params={Object {}}
+                      string=""
+                    >
+                      <span
+                        className=""
+                      />
+                    </Translate>
+                  </div>
+                </Hint>
+                <Label
+                  hasErrorMessage={false}
+                  isFloating={false}
+                  isFocused={false}
+                  label="foo"
+                  name="foo.firstName"
+                >
+                  <label
+                    className="css-u7lqu6 css-1fekhao"
+                    htmlFor="foo.firstName"
+                  >
+                    <Translate
+                      className=""
+                      params={Object {}}
+                      string="foo"
+                    >
+                      <span
+                        className=""
+                      >
+                        foo
+                      </span>
+                    </Translate>
+                  </label>
+                </Label>
+                <FormElement
                   id="foo.firstName"
+                  isControlled={false}
                   multiLine={false}
                   name="foo.firstName"
                   onChange={[Function]}
@@ -351,277 +2071,251 @@ exports[`<FormBuilder /> should render two text fields 1`] = `
                   password={false}
                   setRef={[Function]}
                   type="text"
-                  validateOnBlur={true}
                   value={null}
                 >
-                  <input
-                    autoComplete="off"
-                    autoCorrect="off"
+                  <Component
                     className="css-keangt"
-                    disabled={false}
                     id="foo.firstName"
+                    isControlled={false}
+                    multiLine={false}
                     name="foo.firstName"
-                    onBlur={[Function]}
                     onChange={[Function]}
-                    onFocus={[Function]}
+                    onFocusChange={[Function]}
+                    onSanitize={[Function]}
+                    onValidate={[Function]}
+                    password={false}
+                    setRef={[Function]}
                     type="text"
-                    value=""
-                  />
-                </SimpleInput>
-              </Component>
-            </FormElement>
-            <Underline
-              hasErrorMessage={false}
-              isFocused={false}
-            >
-              <div
-                className="css-ycal4l"
-              >
-                <div
-                  className="css-1tpmuef"
-                  style={
-                    Object {
-                      "borderBottomColor": undefined,
-                      "transform": "scale3d(0,1,1)",
-                    }
-                  }
-                />
+                    validateOnBlur={true}
+                    value={null}
+                  >
+                    <SimpleInput
+                      autoComplete={false}
+                      autoCorrect={false}
+                      className="css-keangt"
+                      disabled={false}
+                      id="foo.firstName"
+                      isControlled={false}
+                      multiLine={false}
+                      name="foo.firstName"
+                      onChange={[Function]}
+                      onFocusChange={[Function]}
+                      onSanitize={[Function]}
+                      onValidate={[Function]}
+                      password={false}
+                      setRef={[Function]}
+                      type="text"
+                      validateOnBlur={true}
+                      value={null}
+                    >
+                      <input
+                        autoComplete="off"
+                        autoCorrect="off"
+                        className="css-keangt"
+                        disabled={false}
+                        id="foo.firstName"
+                        name="foo.firstName"
+                        onBlur={[Function]}
+                        onChange={[Function]}
+                        onFocus={[Function]}
+                        type="text"
+                        value=""
+                      />
+                    </SimpleInput>
+                  </Component>
+                </FormElement>
+                <Underline
+                  hasErrorMessage={false}
+                  isFocused={false}
+                >
+                  <div
+                    className="css-ycal4l"
+                  >
+                    <div
+                      className="css-1tpmuef"
+                      style={
+                        Object {
+                          "borderBottomColor": undefined,
+                          "transform": "scale3d(0,1,1)",
+                        }
+                      }
+                    />
+                  </div>
+                </Underline>
+                <ErrorText
+                  className=""
+                  errorText=""
+                  validationError={null}
+                >
+                  <div
+                    className=" css-hmgfge"
+                  >
+                    <Translate
+                      className=""
+                      params={Object {}}
+                      string=""
+                    >
+                      <span
+                        className=""
+                      />
+                    </Translate>
+                  </div>
+                </ErrorText>
               </div>
-            </Underline>
-            <ErrorText
+            </TextField>
+          </TextElement>
+          <SelectElement
+            element={
+              Object {
+                "custom": false,
+                "handleChange": [Function],
+                "id": "firstName",
+                "label": "foo",
+                "type": "text",
+                "visible": true,
+              }
+            }
+            errorText=""
+            name="foo.firstName"
+            style={
+              Object {
+                "fields": "",
+              }
+            }
+            value={null}
+            visible={true}
+          />
+          <CountryElement
+            countryList={
+              Object {
+                "": "",
+                "AT": "Austria",
+                "DE": "Germany",
+                "FR": "France",
+                "GB": "United Kingdom",
+                "US": "United States",
+              }
+            }
+            element={
+              Object {
+                "custom": false,
+                "handleChange": [Function],
+                "id": "firstName",
+                "label": "foo",
+                "type": "text",
+                "visible": true,
+              }
+            }
+            errorText=""
+            name="foo.firstName"
+            style={
+              Object {
+                "fields": "",
+              }
+            }
+            value={null}
+            visible={true}
+          />
+          <ProvinceElement
+            element={
+              Object {
+                "custom": false,
+                "handleChange": [Function],
+                "id": "firstName",
+                "label": "foo",
+                "type": "text",
+                "visible": true,
+              }
+            }
+            errorText=""
+            name="foo.firstName"
+            provincesList={Object {}}
+            style={
+              Object {
+                "fields": "",
+              }
+            }
+            value={null}
+            visible={true}
+          />
+          <RadioElement
+            element={
+              Object {
+                "custom": false,
+                "handleChange": [Function],
+                "id": "firstName",
+                "label": "foo",
+                "type": "text",
+                "visible": true,
+              }
+            }
+            errorText=""
+            name="foo.firstName"
+            style={
+              Object {
+                "fields": "",
+              }
+            }
+            value={null}
+            visible={true}
+          />
+          <CheckboxElement
+            element={
+              Object {
+                "custom": false,
+                "handleChange": [Function],
+                "id": "firstName",
+                "label": "foo",
+                "type": "text",
+                "visible": true,
+              }
+            }
+            errorText=""
+            name="foo.firstName"
+            style={
+              Object {
+                "fields": "",
+              }
+            }
+            value={null}
+            visible={true}
+          />
+        </Portal>
+        <Portal
+          name="nav-menu.foo.lastName.before"
+          props={null}
+        />
+        <Portal
+          name="nav-menu.foo.lastName"
+          props={null}
+        >
+          <TextElement
+            element={
+              Object {
+                "custom": false,
+                "handleChange": [Function],
+                "id": "lastName",
+                "label": "bar",
+                "type": "text",
+                "visible": true,
+              }
+            }
+            errorText=""
+            name="foo.lastName"
+            style={
+              Object {
+                "field": "",
+              }
+            }
+            value=""
+            visible={true}
+          >
+            <TextField
               className=""
               errorText=""
-              validationError={null}
-            >
-              <div
-                className=" css-hmgfge"
-              >
-                <Translate
-                  className=""
-                  params={Object {}}
-                  string=""
-                >
-                  <span
-                    className=""
-                  />
-                </Translate>
-              </div>
-            </ErrorText>
-          </div>
-        </TextField>
-      </TextElement>
-      <SelectElement
-        element={
-          Object {
-            "custom": false,
-            "handleChange": [Function],
-            "id": "firstName",
-            "label": "foo",
-            "type": "text",
-            "visible": true,
-          }
-        }
-        errorText=""
-        name="foo.firstName"
-        style={
-          Object {
-            "fields": "",
-          }
-        }
-        value={null}
-        visible={true}
-      />
-      <CountryElement
-        countryList={
-          Object {
-            "AT": "Austria",
-            "DE": "Germany",
-            "FR": "France",
-            "GB": "United Kingdom",
-            "US": "United States",
-          }
-        }
-        element={
-          Object {
-            "custom": false,
-            "handleChange": [Function],
-            "id": "firstName",
-            "label": "foo",
-            "type": "text",
-            "visible": true,
-          }
-        }
-        errorText=""
-        name="foo.firstName"
-        style={
-          Object {
-            "fields": "",
-          }
-        }
-        value={null}
-        visible={true}
-      />
-      <ProvinceElement
-        element={
-          Object {
-            "custom": false,
-            "handleChange": [Function],
-            "id": "firstName",
-            "label": "foo",
-            "type": "text",
-            "visible": true,
-          }
-        }
-        errorText=""
-        name="foo.firstName"
-        provincesList={Object {}}
-        style={
-          Object {
-            "fields": "",
-          }
-        }
-        value={null}
-        visible={true}
-      />
-      <RadioElement
-        element={
-          Object {
-            "custom": false,
-            "handleChange": [Function],
-            "id": "firstName",
-            "label": "foo",
-            "type": "text",
-            "visible": true,
-          }
-        }
-        errorText=""
-        name="foo.firstName"
-        style={
-          Object {
-            "fields": "",
-          }
-        }
-        value={null}
-        visible={true}
-      />
-      <CheckboxElement
-        element={
-          Object {
-            "custom": false,
-            "handleChange": [Function],
-            "id": "firstName",
-            "label": "foo",
-            "type": "text",
-            "visible": true,
-          }
-        }
-        errorText=""
-        name="foo.firstName"
-        style={
-          Object {
-            "fields": "",
-          }
-        }
-        value={null}
-        visible={true}
-      />
-    </Portal>
-    <Portal
-      name="nav-menu.foo.firstName.after"
-      props={null}
-    />
-    <Portal
-      name="nav-menu.foo.lastName.before"
-      props={null}
-    />
-    <Portal
-      name="nav-menu.foo.lastName"
-      props={null}
-    >
-      <TextElement
-        element={
-          Object {
-            "custom": false,
-            "handleChange": [Function],
-            "id": "lastName",
-            "label": "bar",
-            "type": "text",
-            "visible": true,
-          }
-        }
-        errorText=""
-        name="foo.lastName"
-        style={
-          Object {
-            "field": "",
-          }
-        }
-        value=""
-        visible={true}
-      >
-        <TextField
-          className=""
-          errorText=""
-          hintText=""
-          label="bar"
-          multiLine={false}
-          name="foo.lastName"
-          onChange={[Function]}
-          onFocusChange={[Function]}
-          onSanitize={[Function]}
-          onValidate={[Function]}
-          password={false}
-          setRef={[Function]}
-          type="text"
-          value=""
-        >
-          <div
-            className="css-n6iwau "
-          >
-            <Hint
               hintText=""
-              visible={false}
-            >
-              <div
-                className="css-tnfb18 css-1jyyyen"
-              >
-                <Translate
-                  className=""
-                  params={Object {}}
-                  string=""
-                >
-                  <span
-                    className=""
-                  />
-                </Translate>
-              </div>
-            </Hint>
-            <Label
-              hasErrorMessage={false}
-              isFloating={false}
-              isFocused={false}
+              isControlled={false}
               label="bar"
-              name="foo.lastName"
-            >
-              <label
-                className="css-u7lqu6 css-1fekhao"
-                htmlFor="foo.lastName"
-              >
-                <Translate
-                  className=""
-                  params={Object {}}
-                  string="bar"
-                >
-                  <span
-                    className=""
-                  >
-                    bar
-                  </span>
-                </Translate>
-              </label>
-            </Label>
-            <FormElement
-              id="foo.lastName"
               multiLine={false}
               name="foo.lastName"
               onChange={[Function]}
@@ -633,27 +2327,54 @@ exports[`<FormBuilder /> should render two text fields 1`] = `
               type="text"
               value=""
             >
-              <Component
-                className="css-keangt"
-                id="foo.lastName"
-                multiLine={false}
-                name="foo.lastName"
-                onChange={[Function]}
-                onFocusChange={[Function]}
-                onSanitize={[Function]}
-                onValidate={[Function]}
-                password={false}
-                setRef={[Function]}
-                type="text"
-                validateOnBlur={true}
-                value=""
+              <div
+                className="css-n6iwau "
               >
-                <SimpleInput
-                  autoComplete={false}
-                  autoCorrect={false}
-                  className="css-keangt"
-                  disabled={false}
+                <Hint
+                  hintText=""
+                  visible={false}
+                >
+                  <div
+                    className="css-tnfb18 css-1jyyyen"
+                  >
+                    <Translate
+                      className=""
+                      params={Object {}}
+                      string=""
+                    >
+                      <span
+                        className=""
+                      />
+                    </Translate>
+                  </div>
+                </Hint>
+                <Label
+                  hasErrorMessage={false}
+                  isFloating={false}
+                  isFocused={false}
+                  label="bar"
+                  name="foo.lastName"
+                >
+                  <label
+                    className="css-u7lqu6 css-1fekhao"
+                    htmlFor="foo.lastName"
+                  >
+                    <Translate
+                      className=""
+                      params={Object {}}
+                      string="bar"
+                    >
+                      <span
+                        className=""
+                      >
+                        bar
+                      </span>
+                    </Translate>
+                  </label>
+                </Label>
+                <FormElement
                   id="foo.lastName"
+                  isControlled={false}
                   multiLine={false}
                   name="foo.lastName"
                   onChange={[Function]}
@@ -663,185 +2384,1804 @@ exports[`<FormBuilder /> should render two text fields 1`] = `
                   password={false}
                   setRef={[Function]}
                   type="text"
-                  validateOnBlur={true}
                   value=""
                 >
-                  <input
-                    autoComplete="off"
-                    autoCorrect="off"
+                  <Component
                     className="css-keangt"
-                    disabled={false}
                     id="foo.lastName"
+                    isControlled={false}
+                    multiLine={false}
                     name="foo.lastName"
-                    onBlur={[Function]}
                     onChange={[Function]}
-                    onFocus={[Function]}
+                    onFocusChange={[Function]}
+                    onSanitize={[Function]}
+                    onValidate={[Function]}
+                    password={false}
+                    setRef={[Function]}
                     type="text"
+                    validateOnBlur={true}
                     value=""
-                  />
-                </SimpleInput>
-              </Component>
-            </FormElement>
-            <Underline
-              hasErrorMessage={false}
-              isFocused={false}
-            >
-              <div
-                className="css-ycal4l"
-              >
-                <div
-                  className="css-1tpmuef"
-                  style={
-                    Object {
-                      "borderBottomColor": undefined,
-                      "transform": "scale3d(0,1,1)",
-                    }
-                  }
-                />
+                  >
+                    <SimpleInput
+                      autoComplete={false}
+                      autoCorrect={false}
+                      className="css-keangt"
+                      disabled={false}
+                      id="foo.lastName"
+                      isControlled={false}
+                      multiLine={false}
+                      name="foo.lastName"
+                      onChange={[Function]}
+                      onFocusChange={[Function]}
+                      onSanitize={[Function]}
+                      onValidate={[Function]}
+                      password={false}
+                      setRef={[Function]}
+                      type="text"
+                      validateOnBlur={true}
+                      value=""
+                    >
+                      <input
+                        autoComplete="off"
+                        autoCorrect="off"
+                        className="css-keangt"
+                        disabled={false}
+                        id="foo.lastName"
+                        name="foo.lastName"
+                        onBlur={[Function]}
+                        onChange={[Function]}
+                        onFocus={[Function]}
+                        type="text"
+                        value=""
+                      />
+                    </SimpleInput>
+                  </Component>
+                </FormElement>
+                <Underline
+                  hasErrorMessage={false}
+                  isFocused={false}
+                >
+                  <div
+                    className="css-ycal4l"
+                  >
+                    <div
+                      className="css-1tpmuef"
+                      style={
+                        Object {
+                          "borderBottomColor": undefined,
+                          "transform": "scale3d(0,1,1)",
+                        }
+                      }
+                    />
+                  </div>
+                </Underline>
+                <ErrorText
+                  className=""
+                  errorText=""
+                  validationError={null}
+                >
+                  <div
+                    className=" css-hmgfge"
+                  >
+                    <Translate
+                      className=""
+                      params={Object {}}
+                      string=""
+                    >
+                      <span
+                        className=""
+                      />
+                    </Translate>
+                  </div>
+                </ErrorText>
               </div>
-            </Underline>
-            <ErrorText
+            </TextField>
+          </TextElement>
+          <SelectElement
+            element={
+              Object {
+                "custom": false,
+                "handleChange": [Function],
+                "id": "lastName",
+                "label": "bar",
+                "type": "text",
+                "visible": true,
+              }
+            }
+            errorText=""
+            name="foo.lastName"
+            style={
+              Object {
+                "fields": "",
+              }
+            }
+            value=""
+            visible={true}
+          />
+          <CountryElement
+            countryList={
+              Object {
+                "": "",
+                "AT": "Austria",
+                "DE": "Germany",
+                "FR": "France",
+                "GB": "United Kingdom",
+                "US": "United States",
+              }
+            }
+            element={
+              Object {
+                "custom": false,
+                "handleChange": [Function],
+                "id": "lastName",
+                "label": "bar",
+                "type": "text",
+                "visible": true,
+              }
+            }
+            errorText=""
+            name="foo.lastName"
+            style={
+              Object {
+                "fields": "",
+              }
+            }
+            value=""
+            visible={true}
+          />
+          <ProvinceElement
+            element={
+              Object {
+                "custom": false,
+                "handleChange": [Function],
+                "id": "lastName",
+                "label": "bar",
+                "type": "text",
+                "visible": true,
+              }
+            }
+            errorText=""
+            name="foo.lastName"
+            provincesList={Object {}}
+            style={
+              Object {
+                "fields": "",
+              }
+            }
+            value=""
+            visible={true}
+          />
+          <RadioElement
+            element={
+              Object {
+                "custom": false,
+                "handleChange": [Function],
+                "id": "lastName",
+                "label": "bar",
+                "type": "text",
+                "visible": true,
+              }
+            }
+            errorText=""
+            name="foo.lastName"
+            style={
+              Object {
+                "fields": "",
+              }
+            }
+            value=""
+            visible={true}
+          />
+          <CheckboxElement
+            element={
+              Object {
+                "custom": false,
+                "handleChange": [Function],
+                "id": "lastName",
+                "label": "bar",
+                "type": "text",
+                "visible": true,
+              }
+            }
+            errorText=""
+            name="foo.lastName"
+            style={
+              Object {
+                "fields": "",
+              }
+            }
+            value=""
+            visible={true}
+          />
+        </Portal>
+      </div>
+    </form>
+  </Form>
+</FormBuilder>
+`;
+
+exports[`<FormBuilder /> should reset value when rule applies 1`] = `
+<FormBuilder
+  className=""
+  config={
+    Object {
+      "fields": Object {
+        "bar": Object {
+          "actions": Array [
+            Object {
+              "params": Object {
+                "value": "cheat",
+              },
+              "rules": Array [
+                Object {
+                  "context": "foo",
+                  "data": Array [
+                    "default",
+                  ],
+                  "type": "notIn",
+                },
+              ],
+              "type": "setValue",
+            },
+          ],
+          "default": "default",
+          "label": "bar",
+          "type": "text",
+        },
+        "foo": Object {
+          "default": "default",
+          "label": "foo",
+          "type": "text",
+          "visible": true,
+        },
+      },
+    }
+  }
+  defaults={Object {}}
+  handleUpdate={[Function]}
+  id="foo"
+  onSubmit={[Function]}
+>
+  <Form
+    onSubmit={[Function]}
+  >
+    <form
+      action="#"
+      onKeyPress={[Function]}
+      onSubmit={[Function]}
+    >
+      <div
+        className=""
+      >
+        <Portal
+          name="nav-menu.foo.foo.before"
+          props={null}
+        />
+        <Portal
+          name="nav-menu.foo.foo"
+          props={null}
+        >
+          <TextElement
+            element={
+              Object {
+                "custom": false,
+                "default": "default",
+                "handleChange": [Function],
+                "id": "foo",
+                "label": "foo",
+                "type": "text",
+                "visible": true,
+              }
+            }
+            errorText=""
+            name="foo.foo"
+            style={
+              Object {
+                "field": "",
+              }
+            }
+            value="default"
+            visible={true}
+          >
+            <TextField
               className=""
               errorText=""
-              validationError={null}
+              hintText=""
+              isControlled={false}
+              label="foo"
+              multiLine={false}
+              name="foo.foo"
+              onChange={[Function]}
+              onFocusChange={[Function]}
+              onSanitize={[Function]}
+              onValidate={[Function]}
+              password={false}
+              setRef={[Function]}
+              type="text"
+              value="default"
             >
               <div
-                className=" css-hmgfge"
+                className="css-n6iwau "
               >
-                <Translate
-                  className=""
-                  params={Object {}}
-                  string=""
+                <Hint
+                  hintText=""
+                  visible={false}
                 >
-                  <span
-                    className=""
-                  />
-                </Translate>
+                  <div
+                    className="css-tnfb18 css-1jyyyen"
+                  >
+                    <Translate
+                      className=""
+                      params={Object {}}
+                      string=""
+                    >
+                      <span
+                        className=""
+                      />
+                    </Translate>
+                  </div>
+                </Hint>
+                <Label
+                  hasErrorMessage={false}
+                  isFloating={true}
+                  isFocused={false}
+                  label="foo"
+                  name="foo.foo"
+                >
+                  <label
+                    className="css-u7lqu6 css-16msjt6 css-1fekhao"
+                    htmlFor="foo.foo"
+                  >
+                    <Translate
+                      className=""
+                      params={Object {}}
+                      string="foo"
+                    >
+                      <span
+                        className=""
+                      >
+                        foo
+                      </span>
+                    </Translate>
+                  </label>
+                </Label>
+                <FormElement
+                  id="foo.foo"
+                  isControlled={false}
+                  multiLine={false}
+                  name="foo.foo"
+                  onChange={[Function]}
+                  onFocusChange={[Function]}
+                  onSanitize={[Function]}
+                  onValidate={[Function]}
+                  password={false}
+                  setRef={[Function]}
+                  type="text"
+                  value="default"
+                >
+                  <Component
+                    className="css-keangt"
+                    id="foo.foo"
+                    isControlled={false}
+                    multiLine={false}
+                    name="foo.foo"
+                    onChange={[Function]}
+                    onFocusChange={[Function]}
+                    onSanitize={[Function]}
+                    onValidate={[Function]}
+                    password={false}
+                    setRef={[Function]}
+                    type="text"
+                    validateOnBlur={true}
+                    value="default"
+                  >
+                    <SimpleInput
+                      autoComplete={false}
+                      autoCorrect={false}
+                      className="css-keangt"
+                      disabled={false}
+                      id="foo.foo"
+                      isControlled={false}
+                      multiLine={false}
+                      name="foo.foo"
+                      onChange={[Function]}
+                      onFocusChange={[Function]}
+                      onSanitize={[Function]}
+                      onValidate={[Function]}
+                      password={false}
+                      setRef={[Function]}
+                      type="text"
+                      validateOnBlur={true}
+                      value="default"
+                    >
+                      <input
+                        autoComplete="off"
+                        autoCorrect="off"
+                        className="css-keangt"
+                        disabled={false}
+                        id="foo.foo"
+                        name="foo.foo"
+                        onBlur={[Function]}
+                        onChange={[Function]}
+                        onFocus={[Function]}
+                        type="text"
+                        value="default"
+                      />
+                    </SimpleInput>
+                  </Component>
+                </FormElement>
+                <Underline
+                  hasErrorMessage={false}
+                  isFocused={false}
+                >
+                  <div
+                    className="css-ycal4l"
+                  >
+                    <div
+                      className="css-1tpmuef"
+                      style={
+                        Object {
+                          "borderBottomColor": undefined,
+                          "transform": "scale3d(0,1,1)",
+                        }
+                      }
+                    />
+                  </div>
+                </Underline>
+                <ErrorText
+                  className=""
+                  errorText=""
+                  validationError={null}
+                >
+                  <div
+                    className=" css-hmgfge"
+                  >
+                    <Translate
+                      className=""
+                      params={Object {}}
+                      string=""
+                    >
+                      <span
+                        className=""
+                      />
+                    </Translate>
+                  </div>
+                </ErrorText>
               </div>
-            </ErrorText>
-          </div>
-        </TextField>
-      </TextElement>
-      <SelectElement
-        element={
-          Object {
-            "custom": false,
-            "handleChange": [Function],
-            "id": "lastName",
-            "label": "bar",
-            "type": "text",
-            "visible": true,
-          }
-        }
-        errorText=""
-        name="foo.lastName"
-        style={
-          Object {
-            "fields": "",
-          }
-        }
-        value=""
-        visible={true}
-      />
-      <CountryElement
-        countryList={
-          Object {
-            "AT": "Austria",
-            "DE": "Germany",
-            "FR": "France",
-            "GB": "United Kingdom",
-            "US": "United States",
-          }
-        }
-        element={
-          Object {
-            "custom": false,
-            "handleChange": [Function],
-            "id": "lastName",
-            "label": "bar",
-            "type": "text",
-            "visible": true,
-          }
-        }
-        errorText=""
-        name="foo.lastName"
-        style={
-          Object {
-            "fields": "",
-          }
-        }
-        value=""
-        visible={true}
-      />
-      <ProvinceElement
-        element={
-          Object {
-            "custom": false,
-            "handleChange": [Function],
-            "id": "lastName",
-            "label": "bar",
-            "type": "text",
-            "visible": true,
-          }
-        }
-        errorText=""
-        name="foo.lastName"
-        provincesList={Object {}}
-        style={
-          Object {
-            "fields": "",
-          }
-        }
-        value=""
-        visible={true}
-      />
-      <RadioElement
-        element={
-          Object {
-            "custom": false,
-            "handleChange": [Function],
-            "id": "lastName",
-            "label": "bar",
-            "type": "text",
-            "visible": true,
-          }
-        }
-        errorText=""
-        name="foo.lastName"
-        style={
-          Object {
-            "fields": "",
-          }
-        }
-        value=""
-        visible={true}
-      />
-      <CheckboxElement
-        element={
-          Object {
-            "custom": false,
-            "handleChange": [Function],
-            "id": "lastName",
-            "label": "bar",
-            "type": "text",
-            "visible": true,
-          }
-        }
-        errorText=""
-        name="foo.lastName"
-        style={
-          Object {
-            "fields": "",
-          }
-        }
-        value=""
-        visible={true}
-      />
-    </Portal>
-    <Portal
-      name="nav-menu.foo.lastName.after"
-      props={null}
-    />
-  </div>
+            </TextField>
+          </TextElement>
+          <SelectElement
+            element={
+              Object {
+                "custom": false,
+                "default": "default",
+                "handleChange": [Function],
+                "id": "foo",
+                "label": "foo",
+                "type": "text",
+                "visible": true,
+              }
+            }
+            errorText=""
+            name="foo.foo"
+            style={
+              Object {
+                "fields": "",
+              }
+            }
+            value="default"
+            visible={true}
+          />
+          <CountryElement
+            countryList={
+              Object {
+                "": "",
+                "AT": "Austria",
+                "DE": "Germany",
+                "FR": "France",
+                "GB": "United Kingdom",
+                "US": "United States",
+              }
+            }
+            element={
+              Object {
+                "custom": false,
+                "default": "default",
+                "handleChange": [Function],
+                "id": "foo",
+                "label": "foo",
+                "type": "text",
+                "visible": true,
+              }
+            }
+            errorText=""
+            name="foo.foo"
+            style={
+              Object {
+                "fields": "",
+              }
+            }
+            value="default"
+            visible={true}
+          />
+          <ProvinceElement
+            element={
+              Object {
+                "custom": false,
+                "default": "default",
+                "handleChange": [Function],
+                "id": "foo",
+                "label": "foo",
+                "type": "text",
+                "visible": true,
+              }
+            }
+            errorText=""
+            name="foo.foo"
+            provincesList={Object {}}
+            style={
+              Object {
+                "fields": "",
+              }
+            }
+            value="default"
+            visible={true}
+          />
+          <RadioElement
+            element={
+              Object {
+                "custom": false,
+                "default": "default",
+                "handleChange": [Function],
+                "id": "foo",
+                "label": "foo",
+                "type": "text",
+                "visible": true,
+              }
+            }
+            errorText=""
+            name="foo.foo"
+            style={
+              Object {
+                "fields": "",
+              }
+            }
+            value="default"
+            visible={true}
+          />
+          <CheckboxElement
+            element={
+              Object {
+                "custom": false,
+                "default": "default",
+                "handleChange": [Function],
+                "id": "foo",
+                "label": "foo",
+                "type": "text",
+                "visible": true,
+              }
+            }
+            errorText=""
+            name="foo.foo"
+            style={
+              Object {
+                "fields": "",
+              }
+            }
+            value="default"
+            visible={true}
+          />
+        </Portal>
+        <Portal
+          name="nav-menu.foo.bar.before"
+          props={null}
+        />
+        <Portal
+          name="nav-menu.foo.bar"
+          props={null}
+        >
+          <TextElement
+            element={
+              Object {
+                "actions": Array [
+                  Object {
+                    "params": Object {
+                      "value": "cheat",
+                    },
+                    "rules": Array [
+                      Object {
+                        "context": "foo",
+                        "data": Array [
+                          "default",
+                        ],
+                        "type": "notIn",
+                      },
+                    ],
+                    "type": "setValue",
+                  },
+                ],
+                "custom": false,
+                "default": "default",
+                "handleChange": [Function],
+                "id": "bar",
+                "label": "bar",
+                "type": "text",
+              }
+            }
+            errorText=""
+            name="foo.bar"
+            style={
+              Object {
+                "field": "",
+              }
+            }
+            value="default"
+            visible={true}
+          >
+            <TextField
+              className=""
+              errorText=""
+              hintText=""
+              isControlled={false}
+              label="bar"
+              multiLine={false}
+              name="foo.bar"
+              onChange={[Function]}
+              onFocusChange={[Function]}
+              onSanitize={[Function]}
+              onValidate={[Function]}
+              password={false}
+              setRef={[Function]}
+              type="text"
+              value="default"
+            >
+              <div
+                className="css-n6iwau "
+              >
+                <Hint
+                  hintText=""
+                  visible={false}
+                >
+                  <div
+                    className="css-tnfb18 css-1jyyyen"
+                  >
+                    <Translate
+                      className=""
+                      params={Object {}}
+                      string=""
+                    >
+                      <span
+                        className=""
+                      />
+                    </Translate>
+                  </div>
+                </Hint>
+                <Label
+                  hasErrorMessage={false}
+                  isFloating={true}
+                  isFocused={false}
+                  label="bar"
+                  name="foo.bar"
+                >
+                  <label
+                    className="css-u7lqu6 css-16msjt6 css-1fekhao"
+                    htmlFor="foo.bar"
+                  >
+                    <Translate
+                      className=""
+                      params={Object {}}
+                      string="bar"
+                    >
+                      <span
+                        className=""
+                      >
+                        bar
+                      </span>
+                    </Translate>
+                  </label>
+                </Label>
+                <FormElement
+                  id="foo.bar"
+                  isControlled={false}
+                  multiLine={false}
+                  name="foo.bar"
+                  onChange={[Function]}
+                  onFocusChange={[Function]}
+                  onSanitize={[Function]}
+                  onValidate={[Function]}
+                  password={false}
+                  setRef={[Function]}
+                  type="text"
+                  value="default"
+                >
+                  <Component
+                    className="css-keangt"
+                    id="foo.bar"
+                    isControlled={false}
+                    multiLine={false}
+                    name="foo.bar"
+                    onChange={[Function]}
+                    onFocusChange={[Function]}
+                    onSanitize={[Function]}
+                    onValidate={[Function]}
+                    password={false}
+                    setRef={[Function]}
+                    type="text"
+                    validateOnBlur={true}
+                    value="default"
+                  >
+                    <SimpleInput
+                      autoComplete={false}
+                      autoCorrect={false}
+                      className="css-keangt"
+                      disabled={false}
+                      id="foo.bar"
+                      isControlled={false}
+                      multiLine={false}
+                      name="foo.bar"
+                      onChange={[Function]}
+                      onFocusChange={[Function]}
+                      onSanitize={[Function]}
+                      onValidate={[Function]}
+                      password={false}
+                      setRef={[Function]}
+                      type="text"
+                      validateOnBlur={true}
+                      value="default"
+                    >
+                      <input
+                        autoComplete="off"
+                        autoCorrect="off"
+                        className="css-keangt"
+                        disabled={false}
+                        id="foo.bar"
+                        name="foo.bar"
+                        onBlur={[Function]}
+                        onChange={[Function]}
+                        onFocus={[Function]}
+                        type="text"
+                        value="default"
+                      />
+                    </SimpleInput>
+                  </Component>
+                </FormElement>
+                <Underline
+                  hasErrorMessage={false}
+                  isFocused={false}
+                >
+                  <div
+                    className="css-ycal4l"
+                  >
+                    <div
+                      className="css-1tpmuef"
+                      style={
+                        Object {
+                          "borderBottomColor": undefined,
+                          "transform": "scale3d(0,1,1)",
+                        }
+                      }
+                    />
+                  </div>
+                </Underline>
+                <ErrorText
+                  className=""
+                  errorText=""
+                  validationError={null}
+                >
+                  <div
+                    className=" css-hmgfge"
+                  >
+                    <Translate
+                      className=""
+                      params={Object {}}
+                      string=""
+                    >
+                      <span
+                        className=""
+                      />
+                    </Translate>
+                  </div>
+                </ErrorText>
+              </div>
+            </TextField>
+          </TextElement>
+          <SelectElement
+            element={
+              Object {
+                "actions": Array [
+                  Object {
+                    "params": Object {
+                      "value": "cheat",
+                    },
+                    "rules": Array [
+                      Object {
+                        "context": "foo",
+                        "data": Array [
+                          "default",
+                        ],
+                        "type": "notIn",
+                      },
+                    ],
+                    "type": "setValue",
+                  },
+                ],
+                "custom": false,
+                "default": "default",
+                "handleChange": [Function],
+                "id": "bar",
+                "label": "bar",
+                "type": "text",
+              }
+            }
+            errorText=""
+            name="foo.bar"
+            style={
+              Object {
+                "fields": "",
+              }
+            }
+            value="default"
+            visible={true}
+          />
+          <CountryElement
+            countryList={
+              Object {
+                "": "",
+                "AT": "Austria",
+                "DE": "Germany",
+                "FR": "France",
+                "GB": "United Kingdom",
+                "US": "United States",
+              }
+            }
+            element={
+              Object {
+                "actions": Array [
+                  Object {
+                    "params": Object {
+                      "value": "cheat",
+                    },
+                    "rules": Array [
+                      Object {
+                        "context": "foo",
+                        "data": Array [
+                          "default",
+                        ],
+                        "type": "notIn",
+                      },
+                    ],
+                    "type": "setValue",
+                  },
+                ],
+                "custom": false,
+                "default": "default",
+                "handleChange": [Function],
+                "id": "bar",
+                "label": "bar",
+                "type": "text",
+              }
+            }
+            errorText=""
+            name="foo.bar"
+            style={
+              Object {
+                "fields": "",
+              }
+            }
+            value="default"
+            visible={true}
+          />
+          <ProvinceElement
+            element={
+              Object {
+                "actions": Array [
+                  Object {
+                    "params": Object {
+                      "value": "cheat",
+                    },
+                    "rules": Array [
+                      Object {
+                        "context": "foo",
+                        "data": Array [
+                          "default",
+                        ],
+                        "type": "notIn",
+                      },
+                    ],
+                    "type": "setValue",
+                  },
+                ],
+                "custom": false,
+                "default": "default",
+                "handleChange": [Function],
+                "id": "bar",
+                "label": "bar",
+                "type": "text",
+              }
+            }
+            errorText=""
+            name="foo.bar"
+            provincesList={Object {}}
+            style={
+              Object {
+                "fields": "",
+              }
+            }
+            value="default"
+            visible={true}
+          />
+          <RadioElement
+            element={
+              Object {
+                "actions": Array [
+                  Object {
+                    "params": Object {
+                      "value": "cheat",
+                    },
+                    "rules": Array [
+                      Object {
+                        "context": "foo",
+                        "data": Array [
+                          "default",
+                        ],
+                        "type": "notIn",
+                      },
+                    ],
+                    "type": "setValue",
+                  },
+                ],
+                "custom": false,
+                "default": "default",
+                "handleChange": [Function],
+                "id": "bar",
+                "label": "bar",
+                "type": "text",
+              }
+            }
+            errorText=""
+            name="foo.bar"
+            style={
+              Object {
+                "fields": "",
+              }
+            }
+            value="default"
+            visible={true}
+          />
+          <CheckboxElement
+            element={
+              Object {
+                "actions": Array [
+                  Object {
+                    "params": Object {
+                      "value": "cheat",
+                    },
+                    "rules": Array [
+                      Object {
+                        "context": "foo",
+                        "data": Array [
+                          "default",
+                        ],
+                        "type": "notIn",
+                      },
+                    ],
+                    "type": "setValue",
+                  },
+                ],
+                "custom": false,
+                "default": "default",
+                "handleChange": [Function],
+                "id": "bar",
+                "label": "bar",
+                "type": "text",
+              }
+            }
+            errorText=""
+            name="foo.bar"
+            style={
+              Object {
+                "fields": "",
+              }
+            }
+            value="default"
+            visible={true}
+          />
+        </Portal>
+      </div>
+    </form>
+  </Form>
+</FormBuilder>
+`;
+
+exports[`<FormBuilder /> should reset value when rule applies 2`] = `
+<FormBuilder
+  className=""
+  config={
+    Object {
+      "fields": Object {
+        "bar": Object {
+          "actions": Array [
+            Object {
+              "params": Object {
+                "value": "cheat",
+              },
+              "rules": Array [
+                Object {
+                  "context": "foo",
+                  "data": Array [
+                    "default",
+                  ],
+                  "type": "notIn",
+                },
+              ],
+              "type": "setValue",
+            },
+          ],
+          "default": "default",
+          "label": "bar",
+          "type": "text",
+        },
+        "foo": Object {
+          "default": "default",
+          "label": "foo",
+          "type": "text",
+          "visible": true,
+        },
+      },
+    }
+  }
+  defaults={Object {}}
+  handleUpdate={[Function]}
+  id="foo"
+  onSubmit={[Function]}
+>
+  <Form
+    onSubmit={[Function]}
+  >
+    <form
+      action="#"
+      onKeyPress={[Function]}
+      onSubmit={[Function]}
+    >
+      <div
+        className=""
+      >
+        <Portal
+          name="nav-menu.foo.foo.before"
+          props={null}
+        />
+        <Portal
+          name="nav-menu.foo.foo"
+          props={null}
+        >
+          <TextElement
+            element={
+              Object {
+                "custom": false,
+                "default": "default",
+                "handleChange": [Function],
+                "id": "foo",
+                "label": "foo",
+                "type": "text",
+                "visible": true,
+              }
+            }
+            errorText=""
+            name="foo.foo"
+            style={
+              Object {
+                "field": "",
+              }
+            }
+            value="abc"
+            visible={true}
+          >
+            <TextField
+              className=""
+              errorText=""
+              hintText=""
+              isControlled={false}
+              label="foo"
+              multiLine={false}
+              name="foo.foo"
+              onChange={[Function]}
+              onFocusChange={[Function]}
+              onSanitize={[Function]}
+              onValidate={[Function]}
+              password={false}
+              setRef={[Function]}
+              type="text"
+              value="abc"
+            >
+              <div
+                className="css-n6iwau "
+              >
+                <Hint
+                  hintText=""
+                  visible={false}
+                >
+                  <div
+                    className="css-tnfb18 css-1jyyyen"
+                  >
+                    <Translate
+                      className=""
+                      params={Object {}}
+                      string=""
+                    >
+                      <span
+                        className=""
+                      />
+                    </Translate>
+                  </div>
+                </Hint>
+                <Label
+                  hasErrorMessage={false}
+                  isFloating={true}
+                  isFocused={false}
+                  label="foo"
+                  name="foo.foo"
+                >
+                  <label
+                    className="css-u7lqu6 css-16msjt6 css-1fekhao"
+                    htmlFor="foo.foo"
+                  >
+                    <Translate
+                      className=""
+                      params={Object {}}
+                      string="foo"
+                    >
+                      <span
+                        className=""
+                      >
+                        foo
+                      </span>
+                    </Translate>
+                  </label>
+                </Label>
+                <FormElement
+                  id="foo.foo"
+                  isControlled={false}
+                  multiLine={false}
+                  name="foo.foo"
+                  onChange={[Function]}
+                  onFocusChange={[Function]}
+                  onSanitize={[Function]}
+                  onValidate={[Function]}
+                  password={false}
+                  setRef={[Function]}
+                  type="text"
+                  value="abc"
+                >
+                  <Component
+                    className="css-keangt"
+                    id="foo.foo"
+                    isControlled={false}
+                    multiLine={false}
+                    name="foo.foo"
+                    onChange={[Function]}
+                    onFocusChange={[Function]}
+                    onSanitize={[Function]}
+                    onValidate={[Function]}
+                    password={false}
+                    setRef={[Function]}
+                    type="text"
+                    validateOnBlur={true}
+                    value="abc"
+                  >
+                    <SimpleInput
+                      autoComplete={false}
+                      autoCorrect={false}
+                      className="css-keangt"
+                      disabled={false}
+                      id="foo.foo"
+                      isControlled={false}
+                      multiLine={false}
+                      name="foo.foo"
+                      onChange={[Function]}
+                      onFocusChange={[Function]}
+                      onSanitize={[Function]}
+                      onValidate={[Function]}
+                      password={false}
+                      setRef={[Function]}
+                      type="text"
+                      validateOnBlur={true}
+                      value="abc"
+                    >
+                      <input
+                        autoComplete="off"
+                        autoCorrect="off"
+                        className="css-keangt"
+                        disabled={false}
+                        id="foo.foo"
+                        name="foo.foo"
+                        onBlur={[Function]}
+                        onChange={[Function]}
+                        onFocus={[Function]}
+                        type="text"
+                        value="abc"
+                      />
+                    </SimpleInput>
+                  </Component>
+                </FormElement>
+                <Underline
+                  hasErrorMessage={false}
+                  isFocused={false}
+                >
+                  <div
+                    className="css-ycal4l"
+                  >
+                    <div
+                      className="css-1tpmuef"
+                      style={
+                        Object {
+                          "borderBottomColor": undefined,
+                          "transform": "scale3d(0,1,1)",
+                        }
+                      }
+                    />
+                  </div>
+                </Underline>
+                <ErrorText
+                  className=""
+                  errorText=""
+                  validationError={null}
+                >
+                  <div
+                    className=" css-hmgfge"
+                  >
+                    <Translate
+                      className=""
+                      params={Object {}}
+                      string=""
+                    >
+                      <span
+                        className=""
+                      />
+                    </Translate>
+                  </div>
+                </ErrorText>
+              </div>
+            </TextField>
+          </TextElement>
+          <SelectElement
+            element={
+              Object {
+                "custom": false,
+                "default": "default",
+                "handleChange": [Function],
+                "id": "foo",
+                "label": "foo",
+                "type": "text",
+                "visible": true,
+              }
+            }
+            errorText=""
+            name="foo.foo"
+            style={
+              Object {
+                "fields": "",
+              }
+            }
+            value="abc"
+            visible={true}
+          />
+          <CountryElement
+            countryList={
+              Object {
+                "": "",
+                "AT": "Austria",
+                "DE": "Germany",
+                "FR": "France",
+                "GB": "United Kingdom",
+                "US": "United States",
+              }
+            }
+            element={
+              Object {
+                "custom": false,
+                "default": "default",
+                "handleChange": [Function],
+                "id": "foo",
+                "label": "foo",
+                "type": "text",
+                "visible": true,
+              }
+            }
+            errorText=""
+            name="foo.foo"
+            style={
+              Object {
+                "fields": "",
+              }
+            }
+            value="abc"
+            visible={true}
+          />
+          <ProvinceElement
+            element={
+              Object {
+                "custom": false,
+                "default": "default",
+                "handleChange": [Function],
+                "id": "foo",
+                "label": "foo",
+                "type": "text",
+                "visible": true,
+              }
+            }
+            errorText=""
+            name="foo.foo"
+            provincesList={Object {}}
+            style={
+              Object {
+                "fields": "",
+              }
+            }
+            value="abc"
+            visible={true}
+          />
+          <RadioElement
+            element={
+              Object {
+                "custom": false,
+                "default": "default",
+                "handleChange": [Function],
+                "id": "foo",
+                "label": "foo",
+                "type": "text",
+                "visible": true,
+              }
+            }
+            errorText=""
+            name="foo.foo"
+            style={
+              Object {
+                "fields": "",
+              }
+            }
+            value="abc"
+            visible={true}
+          />
+          <CheckboxElement
+            element={
+              Object {
+                "custom": false,
+                "default": "default",
+                "handleChange": [Function],
+                "id": "foo",
+                "label": "foo",
+                "type": "text",
+                "visible": true,
+              }
+            }
+            errorText=""
+            name="foo.foo"
+            style={
+              Object {
+                "fields": "",
+              }
+            }
+            value="abc"
+            visible={true}
+          />
+        </Portal>
+        <Portal
+          name="nav-menu.foo.bar.before"
+          props={null}
+        />
+        <Portal
+          name="nav-menu.foo.bar"
+          props={null}
+        >
+          <TextElement
+            element={
+              Object {
+                "actions": Array [
+                  Object {
+                    "params": Object {
+                      "value": "cheat",
+                    },
+                    "rules": Array [
+                      Object {
+                        "context": "foo",
+                        "data": Array [
+                          "default",
+                        ],
+                        "type": "notIn",
+                      },
+                    ],
+                    "type": "setValue",
+                  },
+                ],
+                "custom": false,
+                "default": "default",
+                "handleChange": [Function],
+                "id": "bar",
+                "label": "bar",
+                "type": "text",
+              }
+            }
+            errorText=""
+            name="foo.bar"
+            style={
+              Object {
+                "field": "",
+              }
+            }
+            value="cheat"
+            visible={true}
+          >
+            <TextField
+              className=""
+              errorText=""
+              hintText=""
+              isControlled={false}
+              label="bar"
+              multiLine={false}
+              name="foo.bar"
+              onChange={[Function]}
+              onFocusChange={[Function]}
+              onSanitize={[Function]}
+              onValidate={[Function]}
+              password={false}
+              setRef={[Function]}
+              type="text"
+              value="cheat"
+            >
+              <div
+                className="css-n6iwau "
+              >
+                <Hint
+                  hintText=""
+                  visible={false}
+                >
+                  <div
+                    className="css-tnfb18 css-1jyyyen"
+                  >
+                    <Translate
+                      className=""
+                      params={Object {}}
+                      string=""
+                    >
+                      <span
+                        className=""
+                      />
+                    </Translate>
+                  </div>
+                </Hint>
+                <Label
+                  hasErrorMessage={false}
+                  isFloating={true}
+                  isFocused={false}
+                  label="bar"
+                  name="foo.bar"
+                >
+                  <label
+                    className="css-u7lqu6 css-16msjt6 css-1fekhao"
+                    htmlFor="foo.bar"
+                  >
+                    <Translate
+                      className=""
+                      params={Object {}}
+                      string="bar"
+                    >
+                      <span
+                        className=""
+                      >
+                        bar
+                      </span>
+                    </Translate>
+                  </label>
+                </Label>
+                <FormElement
+                  id="foo.bar"
+                  isControlled={false}
+                  multiLine={false}
+                  name="foo.bar"
+                  onChange={[Function]}
+                  onFocusChange={[Function]}
+                  onSanitize={[Function]}
+                  onValidate={[Function]}
+                  password={false}
+                  setRef={[Function]}
+                  type="text"
+                  value="cheat"
+                >
+                  <Component
+                    className="css-keangt"
+                    id="foo.bar"
+                    isControlled={false}
+                    multiLine={false}
+                    name="foo.bar"
+                    onChange={[Function]}
+                    onFocusChange={[Function]}
+                    onSanitize={[Function]}
+                    onValidate={[Function]}
+                    password={false}
+                    setRef={[Function]}
+                    type="text"
+                    validateOnBlur={true}
+                    value="cheat"
+                  >
+                    <SimpleInput
+                      autoComplete={false}
+                      autoCorrect={false}
+                      className="css-keangt"
+                      disabled={false}
+                      id="foo.bar"
+                      isControlled={false}
+                      multiLine={false}
+                      name="foo.bar"
+                      onChange={[Function]}
+                      onFocusChange={[Function]}
+                      onSanitize={[Function]}
+                      onValidate={[Function]}
+                      password={false}
+                      setRef={[Function]}
+                      type="text"
+                      validateOnBlur={true}
+                      value="cheat"
+                    >
+                      <input
+                        autoComplete="off"
+                        autoCorrect="off"
+                        className="css-keangt"
+                        disabled={false}
+                        id="foo.bar"
+                        name="foo.bar"
+                        onBlur={[Function]}
+                        onChange={[Function]}
+                        onFocus={[Function]}
+                        type="text"
+                        value="cheat"
+                      />
+                    </SimpleInput>
+                  </Component>
+                </FormElement>
+                <Underline
+                  hasErrorMessage={false}
+                  isFocused={false}
+                >
+                  <div
+                    className="css-ycal4l"
+                  >
+                    <div
+                      className="css-1tpmuef"
+                      style={
+                        Object {
+                          "borderBottomColor": undefined,
+                          "transform": "scale3d(0,1,1)",
+                        }
+                      }
+                    />
+                  </div>
+                </Underline>
+                <ErrorText
+                  className=""
+                  errorText=""
+                  validationError={null}
+                >
+                  <div
+                    className=" css-hmgfge"
+                  >
+                    <Translate
+                      className=""
+                      params={Object {}}
+                      string=""
+                    >
+                      <span
+                        className=""
+                      />
+                    </Translate>
+                  </div>
+                </ErrorText>
+              </div>
+            </TextField>
+          </TextElement>
+          <SelectElement
+            element={
+              Object {
+                "actions": Array [
+                  Object {
+                    "params": Object {
+                      "value": "cheat",
+                    },
+                    "rules": Array [
+                      Object {
+                        "context": "foo",
+                        "data": Array [
+                          "default",
+                        ],
+                        "type": "notIn",
+                      },
+                    ],
+                    "type": "setValue",
+                  },
+                ],
+                "custom": false,
+                "default": "default",
+                "handleChange": [Function],
+                "id": "bar",
+                "label": "bar",
+                "type": "text",
+              }
+            }
+            errorText=""
+            name="foo.bar"
+            style={
+              Object {
+                "fields": "",
+              }
+            }
+            value="cheat"
+            visible={true}
+          />
+          <CountryElement
+            countryList={
+              Object {
+                "": "",
+                "AT": "Austria",
+                "DE": "Germany",
+                "FR": "France",
+                "GB": "United Kingdom",
+                "US": "United States",
+              }
+            }
+            element={
+              Object {
+                "actions": Array [
+                  Object {
+                    "params": Object {
+                      "value": "cheat",
+                    },
+                    "rules": Array [
+                      Object {
+                        "context": "foo",
+                        "data": Array [
+                          "default",
+                        ],
+                        "type": "notIn",
+                      },
+                    ],
+                    "type": "setValue",
+                  },
+                ],
+                "custom": false,
+                "default": "default",
+                "handleChange": [Function],
+                "id": "bar",
+                "label": "bar",
+                "type": "text",
+              }
+            }
+            errorText=""
+            name="foo.bar"
+            style={
+              Object {
+                "fields": "",
+              }
+            }
+            value="cheat"
+            visible={true}
+          />
+          <ProvinceElement
+            element={
+              Object {
+                "actions": Array [
+                  Object {
+                    "params": Object {
+                      "value": "cheat",
+                    },
+                    "rules": Array [
+                      Object {
+                        "context": "foo",
+                        "data": Array [
+                          "default",
+                        ],
+                        "type": "notIn",
+                      },
+                    ],
+                    "type": "setValue",
+                  },
+                ],
+                "custom": false,
+                "default": "default",
+                "handleChange": [Function],
+                "id": "bar",
+                "label": "bar",
+                "type": "text",
+              }
+            }
+            errorText=""
+            name="foo.bar"
+            provincesList={Object {}}
+            style={
+              Object {
+                "fields": "",
+              }
+            }
+            value="cheat"
+            visible={true}
+          />
+          <RadioElement
+            element={
+              Object {
+                "actions": Array [
+                  Object {
+                    "params": Object {
+                      "value": "cheat",
+                    },
+                    "rules": Array [
+                      Object {
+                        "context": "foo",
+                        "data": Array [
+                          "default",
+                        ],
+                        "type": "notIn",
+                      },
+                    ],
+                    "type": "setValue",
+                  },
+                ],
+                "custom": false,
+                "default": "default",
+                "handleChange": [Function],
+                "id": "bar",
+                "label": "bar",
+                "type": "text",
+              }
+            }
+            errorText=""
+            name="foo.bar"
+            style={
+              Object {
+                "fields": "",
+              }
+            }
+            value="cheat"
+            visible={true}
+          />
+          <CheckboxElement
+            element={
+              Object {
+                "actions": Array [
+                  Object {
+                    "params": Object {
+                      "value": "cheat",
+                    },
+                    "rules": Array [
+                      Object {
+                        "context": "foo",
+                        "data": Array [
+                          "default",
+                        ],
+                        "type": "notIn",
+                      },
+                    ],
+                    "type": "setValue",
+                  },
+                ],
+                "custom": false,
+                "default": "default",
+                "handleChange": [Function],
+                "id": "bar",
+                "label": "bar",
+                "type": "text",
+              }
+            }
+            errorText=""
+            name="foo.bar"
+            style={
+              Object {
+                "fields": "",
+              }
+            }
+            value="cheat"
+            visible={true}
+          />
+        </Portal>
+      </div>
+    </form>
+  </Form>
 </FormBuilder>
 `;
