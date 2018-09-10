@@ -46,12 +46,12 @@ export class AddressForm extends Component {
   constructor(props) {
     super(props);
 
-    const { id, tags, ...addressRest } = props.address;
+    const { id: addressId, tags, ...addressData } = props.address;
     this.state = {
-      address: addressRest,
+      address: addressData,
       isBusy: props.isBusy,
       hasChanges: false,
-      editMode: !!id,
+      editMode: !!addressId,
       hasErrors: false,
     };
   }
@@ -242,7 +242,7 @@ export class AddressForm extends Component {
         <Portal name={portals.USER_ADDRESS_FORM}>
 
           <FormBuilder
-            id="address"
+            name="address"
             className={style.fields}
             config={this.props.addressFields}
             defaults={this.state.address}

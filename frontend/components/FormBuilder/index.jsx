@@ -47,7 +47,7 @@ class FormBuilder extends Component {
     className: PropTypes.string.isRequired,
     config: PropTypes.shape().isRequired,
     handleUpdate: PropTypes.func.isRequired,
-    id: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
     defaults: PropTypes.shape(),
     onSubmit: PropTypes.func,
   }
@@ -755,9 +755,9 @@ class FormBuilder extends Component {
       return s.replace(/[\\._]/, '-');
     }
 
-    const elementKey = `${this.props.id}.${elementData.id}`;
-    const portalName = `${portals.NAV_MENU}.${sanitize(this.props.id)}.${sanitize(elementData.id)}`;
-    const elementName = `${this.props.id}.${elementData.id}`;
+    const elementKey = `${this.props.name}.${elementData.id}`;
+    const portalName = `${sanitize(this.props.name)}.${sanitize(elementData.id)}`;
+    const elementName = `${this.props.name}.${elementData.id}`;
     const elementErrorText = this.state.errors[elementData.id] || '';
     const elementValue = this.state.formData[elementData.id];
     const elementVisible = this.state.elementVisibility[elementData.id] || false;
