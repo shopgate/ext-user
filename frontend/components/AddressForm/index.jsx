@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { isEqual } from 'lodash';
 import Portal from '@shopgate/pwa-common/components/Portal';
 import I18n from '@shopgate/pwa-common/components/I18n';
-import { Builder as FormBuilder } from '@shopgate/pwa-ui-shared/Form/Builder';
+import FormBuilder from '@shopgate/pwa-ui-shared/Form/Builder';
 import Button from '@shopgate/pwa-ui-shared/Button';
 import RippleButton from '@shopgate/pwa-ui-shared/RippleButton';
 import Checkbox from '@shopgate/pwa-ui-shared/Form/Checkbox';
