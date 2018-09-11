@@ -36,10 +36,7 @@ class AddAddress extends Component {
    * @returns {boolean}
    */
   shouldComponentUpdate(nextProps) {
-    if (this.props.address.id !== nextProps.address.id) {
-      return false;
-    }
-    return true;
+    return this.props.address.id === nextProps.address.id;
   }
 
   /**
