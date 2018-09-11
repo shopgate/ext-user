@@ -262,7 +262,7 @@ export class AddressForm extends Component {
           <FormBuilder
             name="address"
             className={style.fields}
-            config={this.props.config.addressFields}
+            config={this.props.config.addressForm}
             defaults={this.state.address}
             handleUpdate={this.handleUpdate}
             onSubmit={this.addOrUpdateAddress}

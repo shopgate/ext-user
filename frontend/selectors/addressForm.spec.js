@@ -29,32 +29,10 @@ describe('AddressForm selectors', () => {
       extensions: {
         [statePrefix]: {
           addressForm: { error: null },
-        }
-      }
+        },
+      },
     };
 
     expect(selectors.hasErrors(stateB)).toEqual(false);
-  })
-
-  it('should select config', () => {
-    const state = {
-      extensions: {
-        [statePrefix]: {
-          addressForm: { isFetching: false, error: null, config: 'foo' },
-        },
-      },
-    };
-
-    expect(selectors.getAddressFields(state)).toEqual('foo');
-
-    const stateB = {
-      extensions: {
-        [statePrefix]: {
-          addressForm: { isFetching: false, error: 'foo', config: 'foo' },
-        },
-      },
-    };
-
-    expect(selectors.getAddressFields(stateB)).toEqual(null);
   });
 });

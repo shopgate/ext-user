@@ -3,7 +3,7 @@
   "id": "@shopgate/user",
   "trusted": true,
   "configuration": {
-    "addressFields": {
+    "addressForm": {
       "type": "admin",
       "destination": "both",
       "default": {
@@ -111,16 +111,6 @@
             "default": "DEFAULT-test-city",
             "placeholder": "locales",
             "required": true,
-            "visible": true
-          },
-          "country": {
-            "sortOrder": 8,
-            "label": "* Land / Country",
-            "type": "country",
-            "default": "US",
-            "placeholder": "locales",
-            "required": true,
-            "countries": ["DE", "US", "AT", "FR", "GB"],
             "visible": true
           },
           "province": {

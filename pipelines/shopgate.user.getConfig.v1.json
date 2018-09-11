@@ -5,7 +5,7 @@
     "public": true,
     "input": [],
     "output": [
-      {"key": "addressFields", "id": "2", "optional": true},
+      {"key": "addressForm", "id": "2", "optional": true},
       {"key": "splitDefaultAddressesByTags", "id": "3", "optional": true}
     ],
     "steps": [
@@ -15,7 +15,7 @@
         "path": "@shopgate/user/config/getConfig.js",
         "input": [],
         "output": [
-          {"key": "addressFields", "id": "2", "optional": true},
+          {"key": "addressForm", "id": "2", "optional": true},
           {"key": "splitDefaultAddressesByTags", "id": "3", "optional": true}
         ]
       }

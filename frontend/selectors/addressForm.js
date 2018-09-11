@@ -36,19 +36,3 @@ export const hasErrors = state => getState(state).error !== null;
  * @returns {Object}
  */
 export const getErrors = state => getState(state).error;
-
-/**
- * Returns address fields configuration from state.
- * @param {Object} state The application state.
- */
-export const getAddressFields = createSelector(
-  isFetching,
-  hasErrors,
-  getConfig,
-  (fetching, failed, config) => {
-    if (fetching && !config) return null;
-    if (failed) return null;
-
-    return config;
-  }
-);

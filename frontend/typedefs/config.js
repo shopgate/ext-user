@@ -1,6 +1,11 @@
 /**
  * @typedef {Object} UserConfig
  * @property {string[]} splitDefaultAddressesByTags
- * @property {Object} addressFields
+ * @property {AddressForm[]} addressForm
  * @property {string[]} countryCodes
+ */
+
+/**
+ * @typedef {Object} AddressForm
+ * @property {}
  */
