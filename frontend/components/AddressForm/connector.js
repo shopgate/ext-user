@@ -2,7 +2,7 @@ import { connect } from 'react-redux';
 import addAddress from '../../actions/addAddress';
 import updateAddress from '../../actions/updateAddress';
 import { deleteUserAddresses } from '../../action-creators/addressBook';
-import { isBusy, getUserAddressesCount } from '../../selectors/addressBook';
+import { isBusy, getUserAddressesCount, getValidationErrors } from '../../selectors/addressBook';
 import { getConfig } from '../../selectors/config';
 
 /**
@@ -13,6 +13,7 @@ const mapStateToProps = state => ({
   isFirstAddress: !getUserAddressesCount(state),
   isBusy: isBusy(state),
   config: getConfig(state),
+  validationErrors: getValidationErrors(state) || [],
 });
 
 /**

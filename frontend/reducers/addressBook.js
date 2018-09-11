@@ -92,6 +92,7 @@ export default (state = initialState, action) => {
       return {
         ...state,
         busy: true,
+        validationErrors: [],
       };
 
     case ADD_USER_ADDRESS_FAILED:
@@ -100,6 +101,7 @@ export default (state = initialState, action) => {
       return {
         ...state,
         busy: false,
+        validationErrors: action.error ? action.error.validationErrors : [],
       };
 
     case SUCCESS_LOGOUT:
