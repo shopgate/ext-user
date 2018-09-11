@@ -100,7 +100,7 @@ class FormBuilder extends Component {
         // Add a "no selection" element
         if (!countryElement.required) {
           this.countryList = {
-            [this.emptySelection.key]: this.emptySelection.Label,
+            [this.emptySelection.key]: this.emptySelection.label,
             ...this.countryList,
           };
         }
@@ -129,6 +129,7 @@ class FormBuilder extends Component {
     let provinceList = {};
     const provinceElement = this.formElements.find(el => el.type === ELEMENT_TYPE_PROVINCE);
     if (provinceElement) {
+      /** @property {iso3166} divisions */
       provinceList = iso3166[countryCode] ? iso3166[countryCode].divisions : {};
       if (!provinceElement.required) {
         provinceList = {
@@ -143,10 +144,13 @@ class FormBuilder extends Component {
   /**
    * Takes a list of which elements to render based on the respective element type
    *
-   * @param {Object} formConfig Configuration of which form fields to render
-   * @return {Object[]}
+   * @param {Form} formConfig Configuration of which form fields to render
+   * @return {FormElement[]}
    */
   buildFormElements = (formConfig) => {
+    /**
+     * @type {FormElement[]}
+     */
     let elementList = [];
 
     let hasCountryElement = false;
@@ -154,7 +158,7 @@ class FormBuilder extends Component {
 
     /**
      * @param {string} id id
-     * @param {Object} field field
+     * @param {AnyFormField} field field
      * @param {boolean} custom custom
      */
     const addFormElement = (id, field, custom) => {
@@ -452,7 +456,7 @@ class FormBuilder extends Component {
                   name={`${sanitize(this.props.name)}.${sanitize(element.id)}.${portals.BEFORE}`}
                 />
                 <Portal name={`${sanitize(this.props.name)}.${sanitize(element.id)}`}>
-                  { this.renderElement(element, sanitize) }
+                  { this.renderElement(element) }
                 </Portal>
                 <Portal
                   name={`${sanitize(this.props.name)}.${sanitize(element.id)}.${portals.AFTER}`}

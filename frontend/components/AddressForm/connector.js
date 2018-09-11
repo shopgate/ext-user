@@ -7,7 +7,7 @@ import { getConfig } from '../../selectors/config';
 
 /**
  * @param {Object} state state
- * @return {{disabled: boolean, config: UserConfig}}
+ * @return {{isFirstAddress: boolean, isBusy: boolean, config: UserConfig}}
  */
 const mapStateToProps = state => ({
   isFirstAddress: !getUserAddressesCount(state),

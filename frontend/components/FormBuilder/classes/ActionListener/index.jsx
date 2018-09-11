@@ -45,7 +45,7 @@ class ActionListener {
   /**
    * Takes the elements to be rendered by the FormBuilder and attaches available action listeners
    * to the component.
-   * @param {Object} elementList List of all elements
+   * @param {FormElement[]} elementList List of all elements
    */
   attachAll = (elementList) => {
     // Attach action listeners for element (context) actions
@@ -94,9 +94,9 @@ class ActionListener {
 
   /**
    * Attaches one or possibly multiple action listeners for the given rule
-   * @param {Object} element The curent element that is modified by the action
-   * @param {string} action The action and it's params
-   * @param {Object} rule The rule to check in case the action listener is triggered
+   * @param {FormElement} element The current element that is modified by the action
+   * @param {FormFieldAction} action The action and it's params
+   * @param {FormFieldActionRule} rule The rule to check in case the action listener is triggered
    */
   attach = (element, action, rule) => {
     let actionListener;
@@ -134,10 +134,10 @@ class ActionListener {
 
   /**
    * Action listener creator to check all related rules before calling any further action listeners
-   * @param {string} element The element for which the listener should be created for
-   * @param {Object} action The action to be create a listener for
+   * @param {FormElement} element The element for which the listener should be created for
+   * @param {FormFieldAction} action The action to be create a listener for
    * @param {function} actionListener The action listener to call if the rule applies
-   * @returns {function} Returns the modified state.
+   * @returns {function} Returns a function to modify and return the modified state.
    */
   createEvaluatedHandler = (element, action, actionListener) => (prevState, nextState) => {
     // Apply rules before accepting any changes
@@ -150,9 +150,9 @@ class ActionListener {
 
   /**
    * Action listener creator to handle "updateCountryChange" action
-   * @param {string} provinceEl The element for which the listener should be created for
-   * @param {Object} action The action to be create a listener for
-   * @returns {function} Returns the modified state.
+   * @param {FormElement} provinceEl The element for which the listener should be created for
+   * @param {FormFieldAction} action The action to be create a listener for
+   * @returns {function} Returns a function to modify and return the modified state.
    */
   createUpdateProvinceElementHandler = (provinceEl, action) => (prevState, nextState) => {
     const countryElementId = action.rules[0].context;
@@ -176,9 +176,9 @@ class ActionListener {
 
   /**
    * Action listener creator to handle "setVisibility" actions
-   * @param {string} element The element for which the listener should be created for
-   * @param {Object} action The action to be create a listener for
-   * @returns {function} Returns the modified state.
+   * @param {FormElement} element The element for which the listener should be created for
+   * @param {FormFieldAction} action The action to be create a listener for
+   * @returns {function} Returns a function to modify and return the modified state.
    */
   createSetVisibilityHandler = (element, action) => (prevState, nextState) => {
     let newState = {
@@ -207,8 +207,8 @@ class ActionListener {
 
   /**
    * Action listener creator to handle "setValue" actions
-   * @param {string} element The element for which the listener should be created for
-   * @param {Object} action The action to be create a listener for
+   * @param {FormElement} element The element for which the listener should be created for
+   * @param {FormFieldAction} action The action to be create a listener for
    * @returns {function} Returns the modified state.
    */
   createSetValueHandler = (element, action) => (prevState, nextState) => {
@@ -286,9 +286,9 @@ class ActionListener {
 
   /**
    * Action listener creator to handle "transform" actions
-   * @param {string} element The element for which the listener should be created for
-   * @param {Object} action The action to be create a listener for
-   * @returns {function} Returns the modified state.
+   * @param {FormElement} element The element for which the listener should be created for
+   * @param {FormFieldAction} action The action to be create a listener for
+   * @returns {function} Returns a function to modify and return the modified state.
    */
   createTransformHandler = (element, action) => (prevState, nextState) => {
     /**
@@ -356,8 +356,8 @@ class ActionListener {
   /**
    * Evaluates all action rules of a given element action
    *
-   * @param {Object} element The element of which the action rules should be evaluated
-   * @param {Object} action The current action to be evaluate rules for
+   * @param {FormElement} element The element of which the action rules should be evaluated
+   * @param {FormFieldAction} action The current action to be evaluate rules for
    * @param {Object} nextState The state at the time before the "action" event finished
    * @returns {boolean}
    */
@@ -456,13 +456,13 @@ class ActionListener {
    * Adds a "action" listener to a given context element
    *
    * @param {string} elementId the element to listen for
-   * @param {function} listener The listener to call when something has changed
+   * @param {function} handler The listener to call when something has changed
    */
-  register = (elementId, listener) => {
+  register = (elementId, handler) => {
     if (!this.actionListeners[elementId]) {
       this.actionListeners[elementId] = [];
     }
-    this.actionListeners[elementId].push(listener);
+    this.actionListeners[elementId].push(handler);
   }
 
   /**
@@ -473,7 +473,7 @@ class ActionListener {
    * @param {string} elementId The id of the element that was changed
    * @param {Object} prevState The state before any changes took place
    * @param {Object} nextState The state containing all updates before the listeners are executed
-   * @returns {Object} The new state
+   * @returns {Object} The new state after all handlers have been executed.
    */
   notify = (elementId, prevState, nextState) => {
     let newState = nextState;

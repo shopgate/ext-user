@@ -113,6 +113,16 @@
             "required": true,
             "visible": true
           },
+          "country": {
+            "sortOrder": 8,
+            "label": "* Land / Country",
+            "type": "country",
+            "default": "US",
+            "countries": ["DE", "US", "AT", "FR", "GB"],
+            "placeholder": "locales",
+            "required": true,
+            "visible": true
+          },
           "province": {
             "sortOrder": 9,
             "label": "Province / Bundesland",

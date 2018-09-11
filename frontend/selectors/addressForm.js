@@ -1,5 +1,3 @@
-import { createSelector } from 'reselect';
-
 const statePrefix = '@shopgate/user/UserReducers';
 
 /**
