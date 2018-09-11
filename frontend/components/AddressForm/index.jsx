@@ -1,6 +1,5 @@
 import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
-import { isEqual } from 'lodash';
 import Portal from '@shopgate/pwa-common/components/Portal';
 import I18n from '@shopgate/pwa-common/components/I18n';
 import FormBuilder from '@shopgate/pwa-ui-shared/Form/Builder';
@@ -185,57 +184,81 @@ class AddressForm extends Component {
   }
 
   /**
+   * Compares two addresses if anything has changed (except id and tags) and returns the result
+   * @param {Object} address1 First address
+   * @param {Object} address2 Second address
+   * @returns {boolean}
+   */
+  compareAddresses = (address1, address2) => {
+    const comparator1 = {
+      ...address1,
+      customAttributes: address1.customAttributes || {},
+    };
+    const comparator2 = {
+      ...address2,
+      customAttributes: address2.customAttributes || {},
+    };
+
+    // Compare main attributes first
+    const keys1 = Object.keys(comparator1).filter(key => (
+      key !== 'id' && key !== 'customAttributes' && key !== 'tags'
+    ));
+    const keys2 = Object.keys(comparator2).filter(key => (
+      key !== 'id' && key !== 'customAttributes' && key !== 'tags'
+    ));
+
+    // Finish early if already different
+    if (keys1.length !== keys2.length) {
+      return true;
+    }
+
+    const customKeys1 = Object.keys(comparator1.customAttributes).sort();
+    const customKeys2 = Object.keys(comparator2.customAttributes).sort();
+
+    // Finish early again if already different
+    if (customKeys1.length !== customKeys2.length) {
+      return true;
+    }
+
+    // Shallow comparison without regards of property order (use faster for loop to return early)
+    // eslint-disable-next-line no-restricted-syntax,guard-for-in
+    for (const i in keys1) {
+      const key = keys1[i];
+      if (comparator1[key] !== comparator2[key]) {
+        return true;
+      }
+    }
+    // eslint-disable-next-line no-restricted-syntax,guard-for-in
+    for (const i in customKeys1) {
+      const key = customKeys1[i];
+      if (comparator1.customAttributes[key] !== comparator2.customAttributes[key]) {
+        return true;
+      }
+    }
+
+    // No changes detected
+    return false;
+  }
+
+  /**
    * Takes the data from the FormBuilder, checks the latest changes and updates the component values
    * @param {Object} address The new (or changed) address properties
    * @param {boolean} hasErrors Receives the info about the data contains validation errors or not
    */
   handleUpdate = (address, hasErrors) => {
     // Avoid updating state, when no address fields changed
-    let hasChanged;
-    if (this.state.editMode) {
-      hasChanged = !isEqual(address, this.state.address) || this.state.hasErrors !== hasErrors;
-    } else {
-      hasChanged = !isEqual({
-        ...address,
-        tags: this.state.address.tags,
-      }, this.state.address) || this.state.hasErrors !== hasErrors;
-    }
-
+    const hasChanged = this.compareAddresses(address, this.state.address);
     if (hasChanged) {
       const newState = {
         ...this.state,
         address,
         hasErrors,
+        hasChanges: false,
       };
 
-      // Disable only if in "edit" mode and no changes were done
-      const compareData = {
-        ...this.props.address,
-        id: this.props.address.id, // Updates don't change id
-        tags: this.props.address.tags, // Tags are not changeable in edit mode either
-      };
-
-      // Remove all properties from comparator that don not exist in the address anymore
-      Object.keys(address).forEach((key) => {
-        if (address[key] === undefined) {
-          compareData[key] = undefined;
-        }
-      });
-      // Same for custom attributes
-      if (address.customAttributes) {
-        Object.keys(address.customAttributes).forEach((key) => {
-          if (address.customAttributes[key] === undefined) {
-            compareData.customAttributes[key] = undefined;
-          }
-        });
-      }
-
+      // Check differences between current and initial data to disable "save" button if not changed
       if (this.state.editMode) {
-        newState.hasChanges = !isEqual({
-          ...address,
-          id: this.props.address.id,
-          tags: this.props.address.tags,
-        }, compareData);
+        newState.hasChanges = this.compareAddresses(address, this.props.address);
       }
 
       // Check if save button visibility has changed and update it, if that's the case
