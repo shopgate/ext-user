@@ -22,7 +22,7 @@ import style from './style';
 /**
  * Address form component
  */
-export class AddressForm extends Component {
+class AddressForm extends Component {
   static propTypes = {
     addAddress: PropTypes.func.isRequired,
     /** @type {UserConfig} */
