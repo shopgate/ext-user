@@ -8,14 +8,7 @@ const statePrefix = '@shopgate/user/UserReducers';
 const getState = state => state.extensions[statePrefix].addressForm;
 
 /**
- * Returns whether the form is still being fetched.
- * @param {Object} state The application state.
- * @returns {boolean}
- */
-export const isFetching = state => getState(state).isFetching;
-
-/**
- * Returns the configured address fields.
+ * Returns the user configuration.
  * @param {Object} state The application state.
  * @returns {Object}
  */

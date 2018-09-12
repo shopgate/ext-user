@@ -21,7 +21,6 @@ class AddressBook extends Component {
   static propTypes = {
     hasAddresses: PropTypes.bool.isRequired,
     View: PropTypes.func.isRequired,
-    isFetching: PropTypes.bool.isRequired,
   }
 
   static contextTypes = {
@@ -40,7 +39,7 @@ class AddressBook extends Component {
    * @return {*}
    */
   render() {
-    const { hasAddresses, View, isFetching } = this.props;
+    const { hasAddresses, View } = this.props;
     return (
       <View title={!isIos ? this.title : ''}>
         <section className={styles.container} data-test-id="UserAddressBookPage">
@@ -62,7 +61,7 @@ class AddressBook extends Component {
           <Portal name={portals.USER_ADDRESSES_ADD}>
             <div className={styles.buttonWrapper} data-test-id="AddAddressButton">
               <Link className={styles.link} href={userAddressPathPattern.stringify({ id: 0 })}>
-                <RippleButton className={styles.button} type="secondary" disabled={isFetching}>
+                <RippleButton className={styles.button} type="secondary">
                   <I18n.Text string="addresses.button" />
                 </RippleButton>
               </Link>

@@ -3,16 +3,6 @@ import * as selectors from './addressForm';
 const statePrefix = '@shopgate/user/UserReducers';
 
 describe('AddressForm selectors', () => {
-  it('should select isFetching', () => {
-    expect(selectors.isFetching({
-      extensions: {
-        [statePrefix]: {
-          addressForm: { isFetching: true },
-        },
-      },
-    })).toEqual(true);
-  });
-
   it('should select errors', () => {
     const state = {
       extensions: {

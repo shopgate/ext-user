@@ -348,4 +348,5 @@ class AddressForm extends Component {
   }
 }
 
+export { AddressForm as UnwrappedAddressForm };
 export default connect(AddressForm);
