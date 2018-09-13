@@ -143,11 +143,13 @@ class AddressForm extends Component {
       this.props.updateAddress({
         id: this.props.address.id,
         ...this.state.address,
+        customAttributes: this.state.address.customAttributes || {},
         tags: this.props.address.tags || [],
       });
     } else {
       this.props.addAddress({
         ...this.state.address,
+        customAttributes: this.state.address.customAttributes || {},
         tags: this.state.tags || [],
       });
     }
