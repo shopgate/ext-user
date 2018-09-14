@@ -57,7 +57,7 @@ class AddressForm extends Component {
     };
 
     this.initialAddressTags = [];
-    this.props.config.splitDefaultAddressesByTags.forEach(tag => (
+    this.props.config.addressDefaultGroups.forEach(tag => (
       this.initialAddressTags.push(tag === 'default' ? tag : `default_${tag}`)
     ));
 
@@ -313,7 +313,7 @@ class AddressForm extends Component {
             {/* Default address and submit button for new address */}
             {!this.state.editMode &&
               <Fragment>
-                {this.props.config.splitDefaultAddressesByTags.map(tag => (
+                {this.props.config.addressDefaultGroups.map(tag => (
                   <Checkbox
                     className={isFirstAddress ? style.defaultsDisabled : style.defaults}
                     key={tag}

@@ -5,7 +5,7 @@
   "configuration": {
     "addressForm": {
       "type": "admin",
-      "destination": "both",
+      "destination": "backend",
       "default": {
         "fields": {
           "firstName": {
@@ -88,13 +88,13 @@
         "required": true
       }
     },
-    "splitDefaultAddressesByTags": {
+    "addressDefaultGroups": {
       "type": "admin",
       "destination": "backend",
       "default": ["shipping", "billing"],
       "params": {
         "type": "json",
-        "label": "Default addresses",
+        "label": "Address default groups",
         "required": true,
         "options": {
           "placeholder": "[\"shipping\", \"billing\"]"

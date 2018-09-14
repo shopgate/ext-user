@@ -12,7 +12,7 @@ import {
  */
 const noop = () => {};
 const userConfig = {
-  splitDefaultAddressesByTags: [],
+  addressDefaultGroups: [],
   addressForm: {
     fields: {
       firstName: {

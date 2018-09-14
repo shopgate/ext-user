@@ -10,7 +10,7 @@ import { setDefaultAddress } from '../../../../../action-creators/addressBook';
 const mapStateToProps = state => ({
   addresses: getUserAddresses(state) || [],
   defaults: getUserDefaultAddresses(state) || {},
-  defaultTags: getConfig(state).splitDefaultAddressesByTags,
+  defaultTags: getConfig(state).addressDefaultGroups,
 });
 
 /**

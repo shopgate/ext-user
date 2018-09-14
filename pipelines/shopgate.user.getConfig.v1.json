@@ -6,7 +6,7 @@
     "input": [],
     "output": [
       {"key": "addressForm", "id": "2", "optional": true},
-      {"key": "splitDefaultAddressesByTags", "id": "3", "optional": true}
+      {"key": "addressDefaultGroups", "id": "3", "optional": true}
     ],
     "steps": [
       {
@@ -16,7 +16,7 @@
         "input": [],
         "output": [
           {"key": "addressForm", "id": "2", "optional": true},
-          {"key": "splitDefaultAddressesByTags", "id": "3", "optional": true}
+          {"key": "addressDefaultGroups", "id": "3", "optional": true}
         ]
       }
     ]
