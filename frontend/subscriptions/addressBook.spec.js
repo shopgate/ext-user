@@ -61,7 +61,10 @@ describe('AddressBook subscriptions', () => {
   });
 
   it('should fetch addresses when user is updated', () => {
-    userDidUpdateDebounced$[1]({ dispatch });
+    userDidUpdateDebounced$[1]({
+      dispatch,
+      getState: () => ({ user: { data: { id: 1 } } }),
+    });
     expect(mockGetAddresses).toHaveBeenCalledTimes(1);
   });
 

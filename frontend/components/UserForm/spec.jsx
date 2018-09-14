@@ -1,6 +1,6 @@
 import React from 'react';
 import { mount } from 'enzyme';
-import { UserForm } from './';
+import { UnwrappedUserForm as UserForm } from './';
 
 /**
  * Noop function

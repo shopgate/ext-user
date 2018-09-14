@@ -2,12 +2,14 @@ import user from './user';
 import addressBook from './addressBook';
 import checkout from './checkout';
 import ui from './ui';
+import config from './config';
 
 const subscriptions = [
   user,
   addressBook,
   checkout,
   ui,
+  config,
 ];
 
 /**

@@ -14,7 +14,7 @@ import styles from './style';
 /**
  * User form component
  */
-export class UserForm extends Component {
+class UserForm extends Component {
   static propTypes = {
     isRegister: PropTypes.bool.isRequired,
     registerUser: PropTypes.func.isRequired,
@@ -197,4 +197,5 @@ export class UserForm extends Component {
   }
 }
 
+export { UserForm as UnwrappedUserForm };
 export default connect(UserForm);

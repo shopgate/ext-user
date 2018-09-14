@@ -1,6 +1,6 @@
 import * as selectors from './addressBook';
 
-const statePrefix = '../UserReducers';
+const statePrefix = '@shopgate/user/UserReducers';
 
 describe('AddressBook selectors', () => {
   it('Should select getUserAddresses', () => {
@@ -17,6 +17,28 @@ describe('AddressBook selectors', () => {
     // eslint-disable-next-line extra-rules/no-single-line-objects
     const expected = [{ id: 123, tags: ['default'] }];
     expect(selectors.getUserAddresses(state)).toEqual(expected);
+  });
+
+  it('Should select getUserAddressesCount', () => {
+    let state = {
+      extensions: {
+        [statePrefix]: {
+          addressBook: {},
+        },
+      },
+    };
+    expect(selectors.getUserAddressesCount(state)).toEqual(0);
+
+    state = {
+      extensions: {
+        [statePrefix]: {
+          addressBook: {
+            addresses: [{ id: 123 }],
+          },
+        },
+      },
+    };
+    expect(selectors.getUserAddressesCount(state)).toEqual(1);
   });
 
   it('Should select getUserDefaultAddresses', () => {

@@ -2,10 +2,9 @@ import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import Portal from '@shopgate/pwa-common/components/Portal';
 import I18n from '@shopgate/pwa-common/components/I18n';
-import TextField from '@shopgate/pwa-ui-shared/TextField';
+import FormBuilder from '@shopgate/pwa-ui-shared/Form/Builder';
 import Button from '@shopgate/pwa-ui-shared/Button';
 import RippleButton from '@shopgate/pwa-ui-shared/RippleButton';
-import Select from '@shopgate/pwa-ui-shared/Form/Select';
 import Checkbox from '@shopgate/pwa-ui-shared/Form/Checkbox';
 import * as portals from '../../constants/Portals';
 import EventEmitter from '../../events/emitter';
@@ -16,45 +15,28 @@ import {
   NAVIGATOR_SAVE_BUTTON_ENABLE,
   NAVIGATOR_SAVE_BUTTON_DISABLE,
 } from '../../constants/EventTypes';
-import config from '../../config';
 import connect from './connector';
-import countries from './countries';
 import style from './style';
 
-const { splitDefaultAddressesByTags = [], addressFields = [] } = config;
-
-/**
- * @return {Object}
- */
-const countriesList = () => Object.keys(countries).reduce((reducer, countryCode) => ({
-  ...reducer,
-  [countryCode]: countries[countryCode].name,
-}), {});
-
-/**
- * @param {string} countryCode country
- * @return {Object}
- */
-const provincesList = countryCode => countries[countryCode].divisions;
-
-// eslint-disable-next-line valid-jsdoc
 /**
  * Address form component
  */
-export class AddressForm extends Component {
+class AddressForm extends Component {
   static propTypes = {
     addAddress: PropTypes.func.isRequired,
+    /** @type {UserConfig} */
+    config: PropTypes.shape().isRequired,
     deleteAddress: PropTypes.func.isRequired,
-    disabled: PropTypes.bool.isRequired,
+    isBusy: PropTypes.bool.isRequired,
+    isFirstAddress: PropTypes.bool.isRequired,
     updateAddress: PropTypes.func.isRequired,
-    validateAddress: PropTypes.func.isRequired,
     address: PropTypes.shape(),
-    validationErrors: PropTypes.shape(),
+    validationErrors: PropTypes.arrayOf(PropTypes.shape()),
   }
 
   static defaultProps = {
     address: {},
-    validationErrors: {},
+    validationErrors: [],
   }
 
   /**
@@ -64,47 +46,37 @@ export class AddressForm extends Component {
   constructor(props) {
     super(props);
 
-    this.countriesList = countriesList();
-    const country = Object.keys(this.countriesList)[0];
-    const province = Object.keys(provincesList(country))[0];
-
+    const { id: addressId, tags, ...addressData } = props.address;
     this.state = {
+      address: addressData,
+      isBusy: props.isBusy,
       hasChanges: false,
-      address: {
-        firstName: '',
-        lastName: '',
-        street1: '',
-        street2: '',
-        city: '',
-        province,
-        country,
-        zipCode: '',
-        tags: [],
-        ...props.address, // Init edit address form
-      },
-      errors: {
-        firstName: '',
-        lastName: '',
-        street1: '',
-        street2: '',
-        city: '',
-        province: '',
-        country: '',
-        zipCode: '',
-        ...props.validationErrors,
-      },
-      inlineValidation: false,
+      editMode: !!addressId,
+      hasErrors: false,
+      tags: this.props.isFirstAddress || !tags ? [] : tags,
     };
+
+    this.initialAddressTags = [];
+    this.props.config.splitDefaultAddressesByTags.forEach(tag => (
+      this.initialAddressTags.push(tag === 'default' ? tag : `default_${tag}`)
+    ));
+
+    // Init default tags for first address
+    if (this.props.isFirstAddress) {
+      this.state.tags = this.initialAddressTags;
+    }
   }
 
   /**
    * Did mount
    */
   componentDidMount() {
-    EventEmitter.on(NAVIGATOR_SAVE_BUTTON_CLICK, this.addAddress);
-    if (this.props.address.id) {
+    if (this.state.editMode) {
+      // Attach event handler for updating an address to the "save" button of the theme
+      EventEmitter.on(NAVIGATOR_SAVE_BUTTON_CLICK, this.addOrUpdateAddress);
       EventEmitter.emit(NAVIGATOR_SAVE_BUTTON_SHOW);
-      EventEmitter.emit(NAVIGATOR_SAVE_BUTTON_DISABLE);
+
+      this.setSaveButtonEnabledStatus(this.isSaveButtonVisible());
     }
   }
 
@@ -113,15 +85,14 @@ export class AddressForm extends Component {
    * @param {Object} nextProps The next props.
    */
   componentWillReceiveProps(nextProps) {
-    if (Object.keys(nextProps.validationErrors).length) {
-      this.setState({ errors: nextProps.validationErrors });
-    }
+    // Disable save button if busy
+    if (nextProps.isBusy !== this.state.isBusy) {
+      // Update only if the button status actually has to change
+      if (nextProps.isBusy !== this.state.isBusy) {
+        this.setSaveButtonEnabledStatus(this.isSaveButtonVisible());
+      }
 
-    // Enable / Disable navigation button based on disabled prop.
-    if (nextProps.disabled && !this.props.disabled) {
-      EventEmitter.emit(NAVIGATOR_SAVE_BUTTON_DISABLE);
-    } else if (!nextProps.disabled && this.props.disabled) {
-      EventEmitter.emit(NAVIGATOR_SAVE_BUTTON_ENABLE);
+      this.setState({ isBusy: nextProps.isBusy });
     }
   }
 
@@ -129,189 +100,205 @@ export class AddressForm extends Component {
    * Will unmount
    */
   componentWillUnmount() {
-    EventEmitter.off(NAVIGATOR_SAVE_BUTTON_CLICK, this.addAddress);
+    EventEmitter.off(NAVIGATOR_SAVE_BUTTON_CLICK, this.addOrUpdateAddress);
     EventEmitter.emit(NAVIGATOR_SAVE_BUTTON_HIDE);
   }
 
-  updateAddress = (address) => {
-    this.setState({
-      address: {
-        ...this.state.address,
-        ...address,
-      },
-    }, this.state.inlineValidation ? this.validateInline : () => {
-      if (!this.state.hasChanges) {
-        // Show navigtion button when first time updating address.
-        const hasChanges = !Object.keys(address)
-          .every(key => address[key] === this.props.address[key]);
-
-        if (hasChanges) {
-          EventEmitter.emit(NAVIGATOR_SAVE_BUTTON_ENABLE);
-
-          this.setState({
-            hasChanges,
-          });
-        }
-      }
-    });
-  }
-
-  deleteAddress = () => this.props.deleteAddress(this.props.address.id)
-
-  validateInline = () => {
-    const errors = this.props.validateAddress(this.state.address);
-    this.setState({
-      errors,
-    });
-    EventEmitter.emit(Object.keys(errors).length ?
-      NAVIGATOR_SAVE_BUTTON_DISABLE :
-      NAVIGATOR_SAVE_BUTTON_ENABLE);
-  }
-
-  handleFirstNameChange = (firstName) => {
-    this.updateAddress({ firstName });
-  }
-
-  handleLastNameChange = (lastName) => {
-    this.updateAddress({ lastName });
-  }
-
-  handleStreet1Change = (street1) => {
-    this.updateAddress({ street1 });
-  }
-
-  handleStreet2Change = (street2) => {
-    this.updateAddress({ street2 });
-  }
-
-  handleCityChange = (city) => {
-    this.updateAddress({ city });
-  }
-
-  handleZipCodeChange = (zipCode) => {
-    this.updateAddress({ zipCode });
-  }
-
-  handleCountryChange = (country) => {
-    let province = null;
-    if (!countries[country].hideProvince) {
-      [province] = Object.keys(provincesList(country));
-    }
-    this.updateAddress({
-      country,
-      province,
-    });
-  }
-
-  handleProvinceChange = (province) => {
-    this.updateAddress({ province });
-  }
-
-  handleMakeDefault = (makeDefault, tag) => {
-    const defaultTag = tag === 'default' ? tag : `default_${tag}`;
-    if (makeDefault) {
-      this.updateAddress({ tags: [...this.state.address.tags, defaultTag] });
-    } else {
-      this.updateAddress({
-        tags: this.state.address.tags.filter(t => t !== defaultTag),
-      });
-    }
-  }
-
-  addAddress = () => {
-    const errors = this.props.validateAddress(this.state.address);
-    this.setState({
-      inlineValidation: true,
-      errors,
-    });
-
-    if (Object.keys(errors).length > 0) {
-      EventEmitter.emit(NAVIGATOR_SAVE_BUTTON_DISABLE);
+  /**
+   * Handles sending out events to enable or disable the navigator buttons based "show" state
+   * @param {boolean} enabled Defines if the button should be enabled or disabled
+   */
+  setSaveButtonEnabledStatus = (enabled) => {
+    if (!this.state.editMode) {
       return;
     }
 
-    if (this.props.address.id) {
-      // Join with origin and update
-      this.props.updateAddress({
-        ...this.props.address,
-        ...this.state.address,
-      });
+    if (enabled) {
+      EventEmitter.emit(NAVIGATOR_SAVE_BUTTON_ENABLE);
     } else {
-      this.props.addAddress(this.state.address);
+      EventEmitter.emit(NAVIGATOR_SAVE_BUTTON_DISABLE);
     }
   }
 
   /**
-   * Render text field of form
-   * @param {string} name field name
-   * @param {function} changeHandler change handler
-   * @return {JSX|null}
+   * Evaluates all values that affect the button enabled state
+   * @returns {boolean}
    */
-  renderTextField(name, changeHandler) {
-    if (!addressFields.includes(name)) {
-      return null;
+  isSaveButtonVisible = () => (
+    // Is not in edit mode or has changes
+    (!this.state.editMode || this.state.hasChanges) &&
+
+    // Has no validation errors (like all required fields are filled out)
+    !this.state.hasErrors &&
+
+    // Is not waiting for anything
+    !this.state.isBusy
+  )
+
+  /**
+   * Checks if the address should be created or updated and performs the desired action
+   */
+  addOrUpdateAddress = () => {
+    if (this.state.editMode) {
+      this.props.updateAddress({
+        id: this.props.address.id,
+        ...this.state.address,
+        customAttributes: this.state.address.customAttributes || {},
+        tags: this.props.address.tags || [],
+      });
+    } else {
+      this.props.addAddress({
+        ...this.state.address,
+        customAttributes: this.state.address.customAttributes || {},
+        tags: this.state.tags || [],
+      });
     }
-    return (
-      <TextField
-        name={name}
-        label={`address.${name}`}
-        onChange={changeHandler}
-        value={this.state.address[name]}
-        errorText={this.state.errors[name]}
-      />
-    );
+
+    // Changes have been submitted
+    this.setState({
+      hasChanges: false,
+      isBusy: true,
+    });
+  }
+
+  /**
+   * Handles the click on the "delete address" button
+   */
+  deleteAddress = () => { this.props.deleteAddress(this.props.address.id); }
+
+  /**
+   * Update handler to modify address tags based on the user selection
+   * @param {boolean} makeDefault Determines if the tag is supposed to be set or removed
+   * @param {string} tag The tag name to work with
+   */
+  handleMakeDefault = (makeDefault, tag) => {
+    const addressTags = this.state.tags || [];
+    const defaultTag = tag === 'default' ? tag : `default_${tag}`;
+    if (makeDefault) {
+      this.setState({
+        tags: [...addressTags, defaultTag],
+      });
+    } else {
+      this.setState({
+        tags: addressTags.filter(t => t !== defaultTag),
+      });
+    }
+  }
+
+  /**
+   * Compares two addresses if anything has changed (except id and tags) and returns the result
+   * @param {Object} address1 First address
+   * @param {Object} address2 Second address
+   * @returns {boolean}
+   */
+  compareAddresses = (address1, address2) => {
+    const comparator1 = {
+      ...address1,
+      customAttributes: address1.customAttributes || {},
+    };
+    const comparator2 = {
+      ...address2,
+      customAttributes: address2.customAttributes || {},
+    };
+
+    // Compare main attributes first
+    const keys1 = Object.keys(comparator1).filter(key => (
+      key !== 'id' && key !== 'customAttributes' && key !== 'tags'
+    ));
+    const keys2 = Object.keys(comparator2).filter(key => (
+      key !== 'id' && key !== 'customAttributes' && key !== 'tags'
+    ));
+
+    // Finish early if already different
+    if (keys1.length !== keys2.length) {
+      return true;
+    }
+
+    const customKeys1 = Object.keys(comparator1.customAttributes).sort();
+    const customKeys2 = Object.keys(comparator2.customAttributes).sort();
+
+    // Finish early again if already different
+    if (customKeys1.length !== customKeys2.length) {
+      return true;
+    }
+
+    // Shallow comparison without regards of property order (use faster for loop to return early)
+    // eslint-disable-next-line no-restricted-syntax,guard-for-in
+    for (const i in keys1) {
+      const key = keys1[i];
+      if (comparator1[key] !== comparator2[key]) {
+        return true;
+      }
+    }
+    // eslint-disable-next-line no-restricted-syntax,guard-for-in
+    for (const i in customKeys1) {
+      const key = customKeys1[i];
+      if (comparator1.customAttributes[key] !== comparator2.customAttributes[key]) {
+        return true;
+      }
+    }
+
+    // No changes detected
+    return false;
+  }
+
+  /**
+   * Takes the data from the FormBuilder, checks the latest changes and updates the component values
+   * @param {Object} address The new (or changed) address properties
+   * @param {boolean} hasErrors Receives the info about the data contains validation errors or not
+   */
+  handleUpdate = (address, hasErrors) => {
+    // Avoid updating state, when no address fields changed
+    const hasChanged = this.compareAddresses(address, this.state.address);
+    if (hasChanged) {
+      const newState = {
+        ...this.state,
+        address,
+        hasErrors,
+        hasChanges: false,
+      };
+
+      // Check differences between current and initial data to disable "save" button if not changed
+      if (this.state.editMode) {
+        newState.hasChanges = this.compareAddresses(address, this.props.address);
+      }
+
+      // Check if save button visibility has changed and update it, if that's the case
+      const saveButtonWasVisible = this.isSaveButtonVisible();
+
+      // Update current state with the latest form changes
+      this.setState(newState, () => {
+        if (saveButtonWasVisible !== this.isSaveButtonVisible()) {
+          this.setSaveButtonEnabledStatus(this.isSaveButtonVisible());
+        }
+      });
+    }
   }
 
   /**
    * @return {*}
    */
   render() {
+    const { isFirstAddress, validationErrors } = this.props;
     return (
       <Fragment>
 
         <Portal name={portals.USER_ADDRESS_FORM_BEFORE} />
         <Portal name={portals.USER_ADDRESS_FORM}>
 
-          <div className={style.fields}>
-
-            {this.renderTextField('firstName', this.handleFirstNameChange)}
-            {this.renderTextField('lastName', this.handleLastNameChange)}
-            {this.renderTextField('street1', this.handleStreet1Change)}
-            {this.renderTextField('street2', this.handleStreet2Change)}
-            {this.renderTextField('zipCode', this.handleZipCodeChange)}
-            {this.renderTextField('city', this.handleCityChange)}
-
-            {addressFields.includes('country') &&
-            <Fragment>
-              <Select
-                name="country"
-                placeholder="placeholder"
-                label="address.country"
-                options={this.countriesList}
-                value={this.state.address.country}
-                onChange={this.handleCountryChange}
-                errorText={this.state.errors.country}
-              />
-              {this.state.address.country &&
-              !countries[this.state.address.country].hideProvince &&
-              <Select
-                name="province"
-                placeholder="placeholder"
-                label="address.province"
-                options={provincesList(this.state.address.country)}
-                value={this.state.address.province || ''}
-                onChange={this.handleProvinceChange}
-                errorText={this.state.errors.province}
-              />
-            }
-            </Fragment>
-          }
-
-          </div>
+          <FormBuilder
+            name="address"
+            className={style.fields}
+            config={this.props.config.addressForm}
+            defaults={this.state.address}
+            handleUpdate={this.handleUpdate}
+            onSubmit={this.addOrUpdateAddress}
+            validationErrors={validationErrors}
+          />
 
           <div className={style.options}>
             {/* Delete address button */}
-            {this.props.address.id &&
+            {this.state.editMode &&
               <Button
                 className={style.deleteAddressButton}
                 onClick={this.deleteAddress}
@@ -324,15 +311,17 @@ export class AddressForm extends Component {
             }
 
             {/* Default address and submit button for new address */}
-            {!this.props.address.id &&
+            {!this.state.editMode &&
               <Fragment>
-                {splitDefaultAddressesByTags.map(tag => (
+                {this.props.config.splitDefaultAddressesByTags.map(tag => (
                   <Checkbox
-                    className={style.defaults}
+                    className={isFirstAddress ? style.defaultsDisabled : style.defaults}
                     key={tag}
                     name={`default_${tag}`}
                     label={`address.makeDefault.${tag}`}
                     onChange={makeDefault => this.handleMakeDefault(makeDefault, tag)}
+                    checked={isFirstAddress || this.state.tags.includes(`default_${tag}`)}
+                    disabled={isFirstAddress}
                   />
                 ))}
 
@@ -340,8 +329,8 @@ export class AddressForm extends Component {
                 <Portal name={portals.USER_ADDRESS_FORM_BUTTON}>
                   <RippleButton
                     type="secondary"
-                    disabled={this.props.disabled}
-                    onClick={this.addAddress}
+                    disabled={!this.isSaveButtonVisible()}
+                    onClick={this.addOrUpdateAddress}
                     className={style.addAddressButton}
                     data-test-id="AddAddressButton"
                   >
@@ -361,4 +350,5 @@ export class AddressForm extends Component {
   }
 }
 
+export { AddressForm as UnwrappedAddressForm };
 export default connect(AddressForm);

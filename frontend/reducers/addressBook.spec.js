@@ -12,12 +12,6 @@ import {
 } from '../constants/ActionTypes';
 import reducer from './addressBook';
 
-jest.mock('../config', () => ({
-  splitDefaultAddressesByTags: ['shipping', 'billing'],
-  addressFields: ['firstName', 'lastName', 'phone'],
-  countryCodes: 'DE',
-}));
-
 describe('AddressBook reducers', () => {
   it('Should reduce USER_ADDRESSES_RECEIVED', () => {
     const action = {
@@ -29,7 +23,6 @@ describe('AddressBook reducers', () => {
       // eslint-disable-next-line extra-rules/no-single-line-objects
       addresses: [{ id: 123, tags: ['default_shipping'] }],
       default: {
-        billing: null,
         shipping: 123,
       },
     };
@@ -65,12 +58,24 @@ describe('AddressBook reducers', () => {
 
   it('Should reduce UPDATE_USER_ADDRESS_SUCCESS', () => {
     const state = {
+      addresses: [
+        { id: 1, street1: 'not to be changed' },
+        { id: 2, street1: 'street1 to be updated' },
+        { id: 3, street1: 'not to be changed' },
+      ],
       busy: true,
     };
+    const newAddress = { id: 2, street1: 'updated street1' };
     const action = {
       type: UPDATE_USER_ADDRESS_SUCCESS,
+      address: newAddress,
     };
     const expectedState = {
+      addresses: [
+        state.addresses[0],
+        newAddress,
+        state.addresses[2],
+      ],
       busy: false,
     };
     expect(reducer(state, action)).toEqual(expectedState);
