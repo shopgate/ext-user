@@ -136,21 +136,39 @@ class AddressForm extends Component {
   )
 
   /**
+   * Update handler to modify address tags based on the user selection
+   * @param {boolean} makeDefault Determines if the tag is supposed to be set or removed
+   * @param {string} tag The tag name to work with
+   */
+  handleMakeDefault = (makeDefault, tag) => {
+    const addressTags = this.state.tags || [];
+    const defaultTag = tag === 'default' ? tag : `default_${tag}`;
+
+    const tags = makeDefault
+      ? [...addressTags, defaultTag].filter(this.filterUnavailableDefaultTag)
+      : addressTags.filter(t => t !== defaultTag);
+
+    this.setState({ tags: tags.filter(this.filterUnavailableDefaultTag) });
+  }
+
+  /**
    * Checks if the address should be created or updated and performs the desired action
    */
   addOrUpdateAddress = () => {
     if (this.state.editMode) {
+      // Update uddress and remove existing default tags, that are not configured
       this.props.updateAddress({
         id: this.props.address.id,
         ...this.state.address,
         customAttributes: this.state.address.customAttributes || {},
-        tags: this.props.address.tags || [],
+        tags: this.props.address.tags.filter(this.filterUnavailableDefaultTag) || [],
       });
     } else {
+      // Add the address, with filtered tags
       this.props.addAddress({
         ...this.state.address,
         customAttributes: this.state.address.customAttributes || {},
-        tags: this.state.tags || [],
+        tags: this.state.tags.filter(this.filterUnavailableDefaultTag) || [],
       });
     }
 
@@ -162,28 +180,24 @@ class AddressForm extends Component {
   }
 
   /**
+   * Takes address tag and removes all tag, that are not present in the config
+   * @param {string} tag Tag to filter
+   * @returns {boolean}
+   */
+  filterUnavailableDefaultTag = (tag) => {
+    if (/^(default|default_.*)$/.test(tag)) {
+      // Check if the default tag is part of the config and keep, if so
+      return this.props.config.addressDefaultGroups.includes(tag);
+    }
+
+    // Don't filter out non-default tags
+    return true;
+  };
+
+  /**
    * Handles the click on the "delete address" button
    */
   deleteAddress = () => { this.props.deleteAddress(this.props.address.id); }
-
-  /**
-   * Update handler to modify address tags based on the user selection
-   * @param {boolean} makeDefault Determines if the tag is supposed to be set or removed
-   * @param {string} tag The tag name to work with
-   */
-  handleMakeDefault = (makeDefault, tag) => {
-    const addressTags = this.state.tags || [];
-    const defaultTag = tag === 'default' ? tag : `default_${tag}`;
-    if (makeDefault) {
-      this.setState({
-        tags: [...addressTags, defaultTag],
-      });
-    } else {
-      this.setState({
-        tags: addressTags.filter(t => t !== defaultTag),
-      });
-    }
-  }
 
   /**
    * Compares two addresses if anything has changed (except id and tags) and returns the result
