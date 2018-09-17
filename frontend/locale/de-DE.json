@@ -85,7 +85,7 @@
       "button": "Löschen",
       "confirmationDialog": {
         "title": "Adresse löschen",
-        "message": "Möchtest du diese Adresse wirklich löschen?"
+        "message": "Möchten Sie diese Adresse wirklich löschen?"
       },
       "successMessage": "Die Adresse wurde gelöscht"
     },
