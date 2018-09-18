@@ -1,5 +1,5 @@
 import goBackHistory from '@shopgate/pwa-common/actions/history/goBackHistory';
-import { routeDidChange$ } from '@shopgate/pwa-common/streams/history';
+import { routeDidChange$ } from '@shopgate/pwa-common/streams/router';
 import showModal from '@shopgate/pwa-common/actions/modal/showModal';
 import createToast from '@shopgate/pwa-common/actions/toast/createToast';
 import { userDidUpdate$ } from '@shopgate/pwa-common/streams/user';

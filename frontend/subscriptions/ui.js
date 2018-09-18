@@ -1,4 +1,4 @@
-import { routeDidEnter, routeDidLeave } from '@shopgate/pwa-common/streams/history';
+import { routeDidEnter$, routeDidLeave$ } from '@shopgate/pwa-common/streams/router';
 import setViewLoading from '@shopgate/pwa-common/actions/view/setViewLoading';
 import unsetViewLoading from '@shopgate/pwa-common/actions/view/unsetViewLoading';
 import { getHistoryPathname } from '@shopgate/pwa-common/selectors/history';
@@ -9,10 +9,10 @@ import {
 } from '../constants/EventTypes';
 import { toggleNavigatorCart, toggleNavigatorSearch } from '../action-creators/ui';
 import {
+  USER_ADDRESS_PATH,
+  USER_ADDRESS_BOOK_PATH,
   USER_PROFILE_PATH,
   USER_REGISTER_PATH,
-  USER_ADDRESS_BOOK_PATH,
-  userAddressPathPattern,
 } from '../constants/RoutePaths';
 import {
   userWillRegister$,
@@ -32,20 +32,19 @@ import {
   userAddressesDeleteConfirmed$,
 } from '../streams/addressBook';
 
+const USER_PATHS = [
+  USER_ADDRESS_PATH,
+  USER_ADDRESS_BOOK_PATH,
+  USER_PROFILE_PATH,
+  USER_REGISTER_PATH,
+];
+
 export default (subscribe) => {
-  const userAddressPath = userAddressPathPattern.stringify();
-  const fullPageViewEnter$ = routeDidEnter(USER_REGISTER_PATH)
-    .merge(
-      routeDidEnter(USER_PROFILE_PATH),
-      routeDidEnter(USER_ADDRESS_BOOK_PATH),
-      routeDidEnter(userAddressPath)
-    );
-  const fullPageViewLeave$ = routeDidLeave(USER_REGISTER_PATH)
-    .merge(
-      routeDidLeave(USER_PROFILE_PATH),
-      routeDidLeave(USER_ADDRESS_BOOK_PATH),
-      routeDidLeave(userAddressPath)
-    );
+  const fullPageViewEnter$ = routeDidEnter$
+    .filter(({ action }) => USER_PATHS.includes(action.route.pattern));
+
+  const fullPageViewLeave$ = routeDidLeave$
+    .filter(({ action }) => USER_PATHS.includes(action.route.pattern));
 
   const viewIsLoading$ = userWillRegister$.merge(
     userWillUpdate$,
@@ -80,11 +79,13 @@ export default (subscribe) => {
 
   // View is loading
   subscribe(viewIsLoading$, ({ dispatch, getState }) => {
+    // TODO: change
     dispatch(setViewLoading(getHistoryPathname(getState())));
   });
 
   // View is idle
   subscribe(viewIsIdle$, ({ dispatch, getState }) => {
+    // TODO: change
     dispatch(unsetViewLoading(getHistoryPathname(getState())));
   });
 };

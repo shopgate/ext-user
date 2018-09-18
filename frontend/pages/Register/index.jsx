@@ -1,52 +1,38 @@
-import React, { Component } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import I18n from '@shopgate/pwa-common/components/I18n';
-import { themeName } from '@shopgate/pwa-common/helpers/config';
+import { Theme } from '@shopgate/pwa-common/context';
 import UserForm from '../../components/UserForm';
 import connect from './connector';
 import styles from './style';
 
-const isIos = themeName.includes('ios');
-
 /**
- * Register component
+ * @param {Object} props The component props.
+ * @param {boolean} props.isLoggedIn The user's logged in state.
+ * @returns {JSX}
  */
-class Register extends Component {
-  static propTypes = {
-    isLoggedIn: PropTypes.bool.isRequired,
-  }
-
-  static contextTypes = {
-    i18n: PropTypes.func,
-  };
-
-  /**
-   * Returns the translated view title.
-   * @return {string}
-   */
-  get title() {
-    const { __ } = this.context.i18n();
-    return __('register.title');
-  }
-
-  /**
-   * @return {*}
-   */
-  render() {
-    // eslint-disable-next-line react/prop-types
-    const { View, isLoggedIn } = this.props;
-    return (
-      <View title={isIos ? undefined : this.title}>
-        <section className={styles.container} data-test-id="RegisterPage">
+const Register = ({ isLoggedIn }) => (
+  <Theme>
+    {({ View }) => (
+      <View>
+        <section className={styles.container}>
           <div className={styles.subline}>
             <I18n.Text string="register.subTitle" />
           </div>
-          {/* Kick of user form immediately after register */}
+          {/* Kick off user form immediately after register */}
           {!isLoggedIn && <UserForm />}
         </section>
       </View>
-    );
-  }
-}
+    )}
+  </Theme>
+);
+
+Register.propTypes = {
+  isLoggedIn: PropTypes.bool.isRequired,
+};
+
+Register.contextTypes = {
+  i18n: PropTypes.func,
+};
 
 export default connect(Register);

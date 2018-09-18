@@ -1,5 +1,5 @@
 import { main$ } from '@shopgate/pwa-common/streams/main';
-import { routeDidChange$ } from '@shopgate/pwa-common/streams/history';
+import { routeDidChange$ } from '@shopgate/pwa-common/streams/router';
 import { getUserData } from '@shopgate/pwa-common/selectors/user';
 import { userDataReceived$, userDidLogin$ } from '@shopgate/pwa-common/streams/user';
 import getUser from '@shopgate/pwa-common/actions/user/getUser';

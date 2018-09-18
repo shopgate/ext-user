@@ -1,3 +1,6 @@
+import setTitle from '@shopgate/pwa-common/actions/view/setTitle';
+import redirects from '@shopgate/pwa-common/collections/Redirects';
+import { appWillStart$ } from '@shopgate/pwa-common/streams/app';
 import getUser from '@shopgate/pwa-common/actions/user/getUser';
 import showModal from '@shopgate/pwa-common/actions/modal/showModal';
 import { getRedirectLocation, getHistoryPathname } from '@shopgate/pwa-common/selectors/history';
@@ -9,9 +12,11 @@ import goBackHistory from '@shopgate/pwa-common/actions/history/goBackHistory';
 import unsetViewLoading from '@shopgate/pwa-common/actions/view/unsetViewLoading';
 import createToast from '@shopgate/pwa-common/actions/toast/createToast';
 import {
+  registerRouteWillEnter$,
   userRegisterSuccess$,
   userUpdateSuccess$,
 } from './../streams/user';
+import { USER_REGISTER_PATH } from '../constants/RoutePaths';
 
 /**
  * Register subscriptions.
@@ -26,6 +31,14 @@ export default (subscribe) => {
 
   subscribe(fetchUser$, ({ dispatch }) => {
     dispatch(getUser());
+  });
+
+  subscribe(appWillStart$, () => {
+    redirects.unset(USER_REGISTER_PATH);
+  });
+
+  subscribe(registerRouteWillEnter$, ({ dispatch }) => {
+    dispatch(setTitle('register.title'));
   });
 
   /**
