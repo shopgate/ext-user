@@ -145,7 +145,7 @@ class AddressForm extends Component {
     const defaultTag = tag === 'default' ? tag : `default_${tag}`;
 
     const tags = makeDefault
-      ? [...addressTags, defaultTag].filter(this.filterUnavailableDefaultTag)
+      ? [...addressTags, defaultTag]
       : addressTags.filter(t => t !== defaultTag);
 
     this.setState({ tags: tags.filter(this.filterUnavailableDefaultTag) });
@@ -327,17 +327,23 @@ class AddressForm extends Component {
             {/* Default address and submit button for new address */}
             {!this.state.editMode &&
               <Fragment>
-                {this.props.config.addressDefaultGroups.map(tag => (
-                  <Checkbox
-                    className={isFirstAddress ? style.defaultsDisabled : style.defaults}
-                    key={tag}
-                    name={`default_${tag}`}
-                    label={`address.makeDefault.${tag}`}
-                    onChange={makeDefault => this.handleMakeDefault(makeDefault, tag)}
-                    checked={isFirstAddress || this.state.tags.includes(`default_${tag}`)}
-                    disabled={isFirstAddress}
-                  />
-                ))}
+                {this.props.config.addressDefaultGroups.map((tag) => {
+                  let checkTag = tag;
+                  if (tag !== 'default') {
+                    checkTag = `default_${tag}`;
+                  }
+                  return (
+                    <Checkbox
+                      className={isFirstAddress ? style.defaultsDisabled : style.defaults}
+                      key={tag}
+                      name={`default_${tag}`}
+                      label={`address.makeDefault.${tag}`}
+                      onChange={makeDefault => this.handleMakeDefault(makeDefault, tag)}
+                      checked={isFirstAddress || this.state.tags.includes(checkTag)}
+                      disabled={isFirstAddress}
+                    />
+                  );
+                })}
 
                 <Portal name={portals.USER_ADDRESS_FORM_BUTTON_BEFORE} />
                 <Portal name={portals.USER_ADDRESS_FORM_BUTTON}>
