@@ -13,16 +13,44 @@
     ],
     "steps": [
       {
-        "type": "extension",
-        "id": "@shopgate/user",
-        "path": "@shopgate/user/user/login.js",
-        "input": [
-          {"key": "strategy", "id": "1010"},
-          {"key": "parameters", "id": "1020"}
+        "type": "staticValue",
+        "input": [],
+        "values": [
+          {"key": "userId", "value": null}
         ],
         "output": [
           {"key": "userId", "id": "1030"}
         ]
+      },
+      {
+        "id": "loginUser",
+        "type": "hook",
+        "input": [
+          {"key": "strategy",  "id": "1010"},
+          {"key": "parameters", "id": "1020"}
+        ],
+        "output": [
+          {"key": "userId", "id": "1030", "optional": true}
+        ]
+      },
+      {
+        "type": "conditional",
+        "input": [
+          {"key": "userId", "id": "1030"}
+        ],
+        "expression": {"null": [{"name": "userId"}]},
+        "then": {
+          "type": "extension",
+          "id": "@shopgate/user",
+          "path": "@shopgate/user/user/login.js",
+          "input": [
+            {"key": "strategy", "id": "1010"},
+            {"key": "parameters", "id": "1020"}
+          ],
+          "output": [
+            {"key": "userId", "id": "1030"}
+          ]
+        }
       },
       {
         "type": "auth",
