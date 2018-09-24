@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 import { themeName } from '@shopgate/pwa-common/helpers/config';
 import I18n from '@shopgate/pwa-common/components/I18n';
 import Portal from '@shopgate/pwa-common/components/Portal';
-import * as portals from '@shopgate/user/constants/Portals';
-import UserForm from '@shopgate/user/components/UserForm';
+import * as portals from '../../constants/Portals';
+import UserForm from '../../components/UserForm';
 import styles from './style';
 
 const isIos = themeName.includes('ios');

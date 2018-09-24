@@ -1,9 +1,9 @@
 import { connect } from 'react-redux';
 import { isUserLoggedIn, getUserData } from '@shopgate/pwa-common/selectors/user';
-import registerUser from '@shopgate/user/actions/registerUser';
-import updateUser from '@shopgate/user/actions/updateUser';
-import userSchema from '@shopgate/user/common/userSchema';
-import { joiToValidationErrors, validationErrorsToMap } from '@shopgate/user/common/transform';
+import registerUser from '../../actions/registerUser';
+import updateUser from '../../actions/updateUser';
+import userSchema from '../../common/userSchema';
+import { joiToValidationErrors, validationErrorsToMap } from '../../common/transform';
 
 /**
  * @param {Object} user user

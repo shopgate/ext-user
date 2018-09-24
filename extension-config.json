@@ -1,29 +1,100 @@
 {
-  "version": "2.2.3-beta.8",
+  "version": "2.3.0-beta.2",
   "id": "@shopgate/user",
   "trusted": true,
   "configuration": {
-    "countryCodes": {
-      "type": "static",
-      "destination": "frontend",
-      "params": {
-        "value": "DE,AT,FR,GB"
-      }
-    },
-    "addressFields": {
-      "type": "static",
-      "destination": "frontend",
-      "params": {
-        "value": ["firstName", "lastName", "street1", "street2", "zipCode", "city", "country"]
-      }
-    },
-    "splitDefaultAddressesByTags": {
+    "addressForm": {
       "type": "admin",
-      "destination": "frontend",
+      "destination": "backend",
+      "default": {
+        "fields": {
+          "firstName": {
+            "sortOrder": 1,
+            "label": "* First name",
+            "type": "text",
+            "required": true,
+            "visible": true
+          },
+          "lastName": {
+            "sortOrder": 3,
+            "label": "* Last name",
+            "type": "text",
+            "required": true,
+            "visible": true
+          },
+          "street1": {
+            "sortOrder": 4,
+            "label": "* Street and number",
+            "type": "text",
+            "required": true,
+            "visible": true
+          },
+          "street2": {
+            "sortOrder": 5,
+            "label": "Street 2",
+            "type": "text",
+            "required": false,
+            "actions": [{
+              "type": "setVisibility",
+              "rules": [{
+                "context": "street1",
+                "type": "notIn",
+                "data": [""]
+              }]
+            }]
+          },
+          "zipCode": {
+            "sortOrder": 6,
+            "label": "* Postal code",
+            "type": "text",
+            "required": true,
+            "visible": true
+          },
+          "city": {
+            "sortOrder": 7,
+            "label": "* City",
+            "type": "text",
+            "required": true,
+            "visible": true
+          },
+          "country": {
+            "sortOrder": 8,
+            "label": "* Country",
+            "type": "country",
+            "default": "US",
+            "countries": ["DE", "US", "AT", "FR", "GB"],
+            "required": true,
+            "visible": true
+          },
+          "province": {
+            "sortOrder": 9,
+            "label": "Province",
+            "type": "province",
+            "required": false,
+            "actions": [{
+              "type": "setVisibility",
+              "rules": [{
+                "context": "country",
+                "type": "oneOf",
+                "data": ["US", "AT", "FR", "GB"]
+              }]
+            }]
+          }
+        }
+      },
+      "params": {
+        "type": "json",
+        "label": "Address fields",
+        "required": true
+      }
+    },
+    "addressDefaultGroups": {
+      "type": "admin",
+      "destination": "backend",
       "default": ["shipping", "billing"],
       "params": {
         "type": "json",
-        "label": "Default addresses",
+        "label": "Address default groups",
         "required": true,
         "options": {
           "placeholder": "[\"shipping\", \"billing\"]"

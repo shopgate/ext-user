@@ -19,6 +19,28 @@ describe('AddressBook selectors', () => {
     expect(selectors.getUserAddresses(state)).toEqual(expected);
   });
 
+  it('Should select getUserAddressesCount', () => {
+    let state = {
+      extensions: {
+        [statePrefix]: {
+          addressBook: {},
+        },
+      },
+    };
+    expect(selectors.getUserAddressesCount(state)).toEqual(0);
+
+    state = {
+      extensions: {
+        [statePrefix]: {
+          addressBook: {
+            addresses: [{ id: 123 }],
+          },
+        },
+      },
+    };
+    expect(selectors.getUserAddressesCount(state)).toEqual(1);
+  });
+
   it('Should select getUserDefaultAddresses', () => {
     const state = {
       extensions: {

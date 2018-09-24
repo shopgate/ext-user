@@ -23,6 +23,13 @@
           {"key": "ids", "id": "1"}
         ],
         "output": []
+      },
+      {
+        "type": "extension",
+        "id": "@shopgate/user",
+        "path": "@shopgate/user/address/sortAddresses.js",
+        "input": [],
+        "output": []
       }
     ]
   }

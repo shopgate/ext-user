@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Title from '@shopgate/user/components/Title';
-import AddressForm from '@shopgate/user/components/AddressForm';
+import Title from '../../../components/Title';
+import AddressForm from '../../../components/AddressForm';
 import connect from './connector';
 import styles from './style';
 

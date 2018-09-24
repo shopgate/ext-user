@@ -9,14 +9,8 @@ import {
   ADD_USER_ADDRESS_FAILED,
   UPDATE_USER_ADDRESS_FAILED,
   USER_ADDRESS_VALIDATION_FAILED,
-} from '@shopgate/user/constants/ActionTypes';
+} from '../constants/ActionTypes';
 import reducer from './addressBook';
-
-jest.mock('@shopgate/user/config', () => ({
-  splitDefaultAddressesByTags: ['shipping', 'billing'],
-  addressFields: ['firstName', 'lastName', 'phone'],
-  countryCodes: 'DE',
-}));
 
 describe('AddressBook reducers', () => {
   it('Should reduce USER_ADDRESSES_RECEIVED', () => {
@@ -29,7 +23,6 @@ describe('AddressBook reducers', () => {
       // eslint-disable-next-line extra-rules/no-single-line-objects
       addresses: [{ id: 123, tags: ['default_shipping'] }],
       default: {
-        billing: null,
         shipping: 123,
       },
     };
@@ -52,26 +45,12 @@ describe('AddressBook reducers', () => {
 
   it('Should reduce ADD_USER_ADDRESS_SUCCESS', () => {
     const state = {
-      // eslint-disable-next-line extra-rules/no-single-line-objects
-      addresses: [{ id: 321, name: 'Address 321' }],
-      default: {
-        shipping: 321,
-      },
+      busy: true,
     };
     const action = {
       type: ADD_USER_ADDRESS_SUCCESS,
-      address: {
-        id: 123,
-        name: 'Address 123',
-        tags: ['default_shipping'],
-      },
     };
     const expectedState = {
-      // eslint-disable-next-line extra-rules/no-single-line-objects
-      addresses: [{ id: 321, name: 'Address 321' }, { id: 123, name: 'Address 123', tags: ['default_shipping'] }],
-      default: {
-        shipping: 123,
-      },
       busy: false,
     };
     expect(reducer(state, action)).toEqual(expectedState);
@@ -79,20 +58,25 @@ describe('AddressBook reducers', () => {
 
   it('Should reduce UPDATE_USER_ADDRESS_SUCCESS', () => {
     const state = {
-      // eslint-disable-next-line extra-rules/no-single-line-objects
-      addresses: [{ id: 123, name: 'Address 123' }, { id: 321, name: 'Address 321' }],
+      addresses: [
+        { id: 1, street1: 'not to be changed' },
+        { id: 2, street1: 'street1 to be updated' },
+        { id: 3, street1: 'not to be changed' },
+      ],
+      busy: true,
     };
+    const newAddress = { id: 2, street1: 'updated street1' };
     const action = {
       type: UPDATE_USER_ADDRESS_SUCCESS,
-      address: {
-        id: 123,
-        name: 'New Address 123',
-      },
+      address: newAddress,
     };
     const expectedState = {
+      addresses: [
+        state.addresses[0],
+        newAddress,
+        state.addresses[2],
+      ],
       busy: false,
-      // eslint-disable-next-line extra-rules/no-single-line-objects
-      addresses: [{ id: 123, name: 'New Address 123' }, { id: 321, name: 'Address 321' }],
     };
     expect(reducer(state, action)).toEqual(expectedState);
   });

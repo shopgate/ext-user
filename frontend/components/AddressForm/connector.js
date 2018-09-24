@@ -1,53 +1,29 @@
 import { connect } from 'react-redux';
-import joi from 'joi-browser';
-import addAddress from '@shopgate/user/actions/addAddress';
-import updateAddress from '@shopgate/user/actions/updateAddress';
-import { deleteUserAddresses } from '@shopgate/user/action-creators/addressBook';
-import { isBusy, getValidationErrors } from '@shopgate/user/selectors/addressBook';
-import { joiToValidationErrors, validationErrorsToMap } from './../../common/transform';
-import userAddressSchema from './../../common/userAddressSchema';
-
-/**
- * @param {Object} address address
- * @return {Object}
- */
-const validateAddress = (address) => {
-  const result = userAddressSchema(joi).validate(address, { abortEarly: false });
-  if (!result.error) {
-    return {};
-  }
-  const validationErrors = joiToValidationErrors(result.error, 'address.errors')
-  // Make error message empty when input is empty
-    .map((err) => {
-      if (address[err.path] === '') {
-        return {
-          ...err,
-          message: 'user.errors.blank',
-        };
-      }
-      return err;
-    });
-  return validationErrorsToMap(validationErrors);
-};
+import addAddress from '../../actions/addAddress';
+import updateAddress from '../../actions/updateAddress';
+import { deleteUserAddresses } from '../../action-creators/addressBook';
+import { isBusy, getUserAddressesCount, getValidationErrors } from '../../selectors/addressBook';
+import { getConfig } from '../../selectors/config';
 
 /**
  * @param {Object} state state
- * @return {{addressType: (*|string)}}
+ * @return {{isFirstAddress: boolean, isBusy: boolean, config: UserConfig}}
  */
 const mapStateToProps = state => ({
-  disabled: isBusy(state),
-  validationErrors: validationErrorsToMap(getValidationErrors(state)),
+  isFirstAddress: !getUserAddressesCount(state),
+  isBusy: isBusy(state),
+  config: getConfig(state),
+  validationErrors: getValidationErrors(state) || [],
 });
 
 /**
  * @param {function} dispatch dispatch
- * @return {{addAddress: function, updateAddress: function, validateAddress: function}}
+ * @return {{addAddress: function, updateAddress: function, deleteAddress: function}}
  */
 const mapDispatchToProps = dispatch => ({
   addAddress: address => dispatch(addAddress(address)),
   updateAddress: address => dispatch(updateAddress(address)),
   deleteAddress: addressId => dispatch(deleteUserAddresses([addressId])),
-  validateAddress,
 });
 
 export default connect(mapStateToProps, mapDispatchToProps);

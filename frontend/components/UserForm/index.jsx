@@ -9,7 +9,6 @@ import RippleButton from '@shopgate/pwa-ui-shared/RippleButton';
 import * as portals from '@shopgate/user/constants/Portals';
 import EventEmitter from '@shopgate/user/events/emitter';
 import * as events from '@shopgate/user/constants/EventTypes';
-import { USER_PASSWORD_PATH } from '@shopgate/user/constants/RoutePaths';
 import connect from './connector';
 import styles from './style';
 
@@ -17,7 +16,7 @@ import styles from './style';
 /**
  * User form component
  */
-export class UserForm extends Component {
+class UserForm extends Component {
   static propTypes = {
     isRegister: PropTypes.bool.isRequired,
     registerUser: PropTypes.func.isRequired,
@@ -224,4 +223,5 @@ export class UserForm extends Component {
   }
 }
 
+export { UserForm as UnwrappedUserForm };
 export default connect(UserForm);

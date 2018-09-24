@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 import I18n from '@shopgate/pwa-common/components/I18n';
 import Portal from '@shopgate/pwa-common/components/Portal';
 import { themeName } from '@shopgate/pwa-common/helpers/config';
-import * as portals from '@shopgate/user/constants/Portals';
-import AddressForm from '@shopgate/user/components/AddressForm';
+import * as portals from '../../../constants/Portals';
+import AddressForm from '../../../components/AddressForm';
 import connect from './connector';
 import style from './style';
 
@@ -26,6 +26,18 @@ class AddAddress extends Component {
   static contextTypes = {
     i18n: PropTypes.func,
   };
+
+  /**
+   * Don't update if addressId changed.
+   * This only happens when the address was deleted and
+   * therefore no longer has an id, and when the address was added
+   * and therefore got a new id.
+   * @param {Object} nextProps The next props.
+   * @returns {boolean}
+   */
+  shouldComponentUpdate(nextProps) {
+    return this.props.address.id === nextProps.address.id;
+  }
 
   /**
    * @return {string}

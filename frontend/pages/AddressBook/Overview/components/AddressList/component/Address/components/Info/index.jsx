@@ -4,8 +4,8 @@ import Grid from '@shopgate/pwa-common/components/Grid';
 import Link from '@shopgate/pwa-common/components/Router/components/Link';
 import ChevronIcon from '@shopgate/pwa-ui-shared/icons/ChevronIcon';
 import Portal from '@shopgate/pwa-common/components/Portal';
-import * as portals from '@shopgate/user/constants/Portals';
-import { userAddressPathPattern } from '@shopgate/user/constants/RoutePaths';
+import * as portals from '../../../../../../../../../constants/Portals';
+import { userAddressPathPattern } from '../../../../../../../../../constants/RoutePaths';
 
 /**
  * @param {UserAddress} address address

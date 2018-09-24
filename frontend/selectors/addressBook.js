@@ -13,6 +13,16 @@ export const getUserAddresses = createSelector(
 );
 
 /**
+ * Get count of user.data.addresses from the redux store.
+ * @param {Object} state The application state.
+ * @return {number}
+ */
+export const getUserAddressesCount = createSelector(
+  state => state.extensions[statePrefix].addressBook.addresses,
+  (addresses = []) => addresses.length
+);
+
+/**
  * Gets user.data.addresses.default from the redux store.
  * @param {Object} state The application state.
  * @returns {Object|null}

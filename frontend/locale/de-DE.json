@@ -39,7 +39,7 @@
     "title": "Addressbuch",
     "headline": "Addressbuch",
     "button": "Neue Adresse hinzufügen",
-    "noAddresses": "Sie haben noch keine Adresse hinterlegt. Fügen Sie eine neue Adresse hinzu, um Ihre Bestellung zu erhalten.",
+    "noAddresses": "Adressbuch ist leer",
     "defaults": {
       "default": "Standard-Adresse",
       "shipping": "Standard-Lieferadresse",
@@ -77,9 +77,9 @@
       "firstName": "Nur Buchstaben und Leerzeichen sind erlaubt",
       "middleName": "Nur Buchstaben und Leerzeichen sind erlaubt",
       "lastName": "Nur Buchstaben und Leerzeichen sind erlaubt",
-      "suffix": "Straße und Hausnummer sind erforderlich",
+      "suffix": "Nur Buchstaben und Leerzeichen sind erlaubt",
       "street1": "Straße und Hausnummer sind erforderlich",
-      "street2": "Straße und Hausnummer sind erforderlich",
+      "street2": "Die Eingabe enthält unerlaubte Sonderzeichen",
       "city": "Nur Buchstaben und Leerzeichen sind erlaubt",
       "country": "Wähle ein Land aus",
       "province": "Wähle ein Bundesland aus",
@@ -99,7 +99,7 @@
       "button": "Löschen",
       "confirmationDialog": {
         "title": "Adresse löschen",
-        "message": "Möchtest du diese Adresse wirklich löschen?"
+        "message": "Möchten Sie diese Adresse wirklich löschen?"
       },
       "successMessage": "Die Adresse wurde gelöscht"
     },
