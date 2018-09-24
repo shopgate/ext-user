@@ -5,6 +5,8 @@ const { variables, colors } = themeConfig;
 const isIos = themeName.includes('ios');
 
 const buttonWrapper = css({
+  paddingLeft: variables.gap.big,
+  paddingRight: variables.gap.big,
   paddingTop: variables.gap.big * 2,
   paddingBottom: variables.gap.big,
 }).toString();
