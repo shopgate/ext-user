@@ -50,8 +50,5 @@ describe('<UserForm>', () => {
 
     expect(firstName.get(0).props.value).toEqual('John');
     expect(lastName.get(0).props.value).toEqual('Doe');
-
-    // Profile should not have a password field
-    expect(wrapper.find('input[name="password"]').length).toEqual(0);
   });
 });

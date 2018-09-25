@@ -3,6 +3,7 @@ export const NAV_MENU = 'nav-menu';
 
 // CONTENTS
 const PROFILE = 'profile';
+const PASSWORD = 'password';
 const ADDRESS_BOOK = 'address-book';
 const USER = 'user';
 const ADDRESSES = 'addresses';
@@ -26,6 +27,10 @@ export const USER_PROFILE_BEFORE = `${USER}.${PROFILE}.${BEFORE}`;
 export const USER_PROFILE = `${USER}.${PROFILE}`;
 export const USER_PROFILE_AFTER = `${USER}.${PROFILE}.${AFTER}`;
 
+export const USER_PASSWORD_BEFORE = `${USER}.${PASSWORD}.${BEFORE}`;
+export const USER_PASSWORD = `${USER}.${PASSWORD}`;
+export const USER_PASSWORD_AFTER = `${USER}.${PASSWORD}.${AFTER}`;
+
 export const USER_ADDRESSES_BEFORE = `${USER}.${ADDRESSES}.${BEFORE}`;
 export const USER_ADDRESSES = `${USER}.${ADDRESSES}`;
 export const USER_ADDRESSES_AFTER = `${USER}.${ADDRESSES}.${AFTER}`;
@@ -45,6 +50,10 @@ export const USER_ADDRESSES_ADD_AFTER = `${USER}.${ADDRESSES}.${ADD}.${AFTER}`;
 export const USER_FORM_BEFORE = `${USER}.${FORM}.${BEFORE}`;
 export const USER_FORM = `${USER}.${FORM}`;
 export const USER_FORM_AFTER = `${USER}.${FORM}.${AFTER}`;
+
+export const USER_PASSWORD_FORM_BEFORE = `${USER}.${PASSWORD}.${FORM}.${BEFORE}`;
+export const USER_PASSWORD_FORM = `${USER}.${PASSWORD}.${FORM}`;
+export const USER_PASSWORD_FORM_AFTER = `${USER}.${PASSWORD}.${FORM}.${AFTER}`;
 
 export const USER_ADDRESS_FORM_BEFORE = `${USER}.${ADDRESS_FORM}.${BEFORE}`;
 export const USER_ADDRESS_FORM = `${USER}.${ADDRESS_FORM}`;

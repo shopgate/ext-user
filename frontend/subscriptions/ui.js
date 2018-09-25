@@ -2,17 +2,18 @@ import { routeDidEnter, routeDidLeave } from '@shopgate/pwa-common/streams/histo
 import setViewLoading from '@shopgate/pwa-common/actions/view/setViewLoading';
 import unsetViewLoading from '@shopgate/pwa-common/actions/view/unsetViewLoading';
 import { getHistoryPathname } from '@shopgate/pwa-common/selectors/history';
-import EventEmitter from '../events/emitter';
+import EventEmitter from '@shopgate/user/events/emitter';
 import {
   NAVIGATOR_SAVE_BUTTON_CLICK,
   NAVIGATOR_SAVE_BUTTON_HIDE,
-} from '../constants/EventTypes';
+} from '@shopgate/user/constants/EventTypes';
 import { toggleNavigatorCart, toggleNavigatorSearch } from '../action-creators/ui';
 import {
   USER_PROFILE_PATH,
   USER_REGISTER_PATH,
   USER_ADDRESS_BOOK_PATH,
   userAddressPathPattern,
+  USER_PASSWORD_PATH,
 } from '../constants/RoutePaths';
 import {
   userWillRegister$,
@@ -38,13 +39,15 @@ export default (subscribe) => {
     .merge(
       routeDidEnter(USER_PROFILE_PATH),
       routeDidEnter(USER_ADDRESS_BOOK_PATH),
-      routeDidEnter(userAddressPath)
+      routeDidEnter(userAddressPath),
+      routeDidEnter(USER_PASSWORD_PATH)
     );
   const fullPageViewLeave$ = routeDidLeave(USER_REGISTER_PATH)
     .merge(
       routeDidLeave(USER_PROFILE_PATH),
       routeDidLeave(USER_ADDRESS_BOOK_PATH),
-      routeDidLeave(userAddressPath)
+      routeDidLeave(userAddressPath),
+      routeDidLeave(USER_PASSWORD_PATH)
     );
 
   const viewIsLoading$ = userWillRegister$.merge(
