@@ -7,9 +7,9 @@ import RippleButton from '@shopgate/pwa-ui-shared/RippleButton';
 import { themeName } from '@shopgate/pwa-common/helpers/config';
 import TextField from '@shopgate/pwa-ui-shared/Form/TextField';
 import Password from '@shopgate/pwa-ui-shared/Form/Password';
-import * as portals from '@shopgate/user/constants/Portals';
-import EventEmitter from '@shopgate/user/events/emitter';
-import * as events from '@shopgate/user/constants/EventTypes';
+import * as portals from '../../constants/Portals';
+import EventEmitter from '../../events/emitter';
+import * as events from '../../constants/EventTypes';
 import connect from './connector';
 import styles from './style';
 
@@ -19,7 +19,7 @@ const isIos = themeName.includes('ios');
 /**
  * User form component
 */
-export class ChangePasswordForm extends Component {
+class ChangePasswordForm extends Component {
   static propTypes = {
     cancel: PropTypes.func.isRequired,
     updatePassword: PropTypes.func.isRequired,

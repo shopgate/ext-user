@@ -1,8 +1,8 @@
 import { connect } from 'react-redux';
 import goBackHistory from '@shopgate/pwa-common/actions/history/goBackHistory';
-import updatePassword from '@shopgate/user/actions/updatePassword';
-import { changePasswordSchema } from '@shopgate/user/common/userSchema';
-import { joiToValidationErrors, validationErrorsToMap } from '@shopgate/user/common/transform';
+import updatePassword from '../../actions/updatePassword';
+import { changePasswordSchema } from '../../common/userSchema';
+import { joiToValidationErrors, validationErrorsToMap } from '../../common/transform';
 
 /**
  * @param {Object} passwords passwords

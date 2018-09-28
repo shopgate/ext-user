@@ -6,10 +6,10 @@ import Link from '@shopgate/pwa-common/components/Router/components/Link';
 import TextField from '@shopgate/pwa-ui-shared/Form/TextField';
 import LockIcon from '@shopgate/pwa-ui-shared/icons/LockIcon';
 import RippleButton from '@shopgate/pwa-ui-shared/RippleButton';
-import * as portals from '@shopgate/user/constants/Portals';
-import EventEmitter from '@shopgate/user/events/emitter';
-import * as events from '@shopgate/user/constants/EventTypes';
-import { USER_PASSWORD_PATH } from '@shopgate/user/constants/RoutePaths';
+import * as portals from '../../constants/Portals';
+import EventEmitter from '../../events/emitter';
+import * as events from '../../constants/EventTypes';
+import { USER_PASSWORD_PATH } from '../../constants/RoutePaths';
 import connect from './connector';
 import styles from './style';
 
