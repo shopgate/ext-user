@@ -1,6 +1,6 @@
 {
   "name": "@shopgate/user",
-  "version": "2.3.0-beta.6",
+  "version": "2.3.0-beta.8",
   "description": "Shopgate Connect user extension",
   "repository": {
     "type": "git",
@@ -21,13 +21,13 @@
     "url-pattern": "^1.0.3"
   },
   "devDependencies": {
-    "@shopgate/pwa-core": "5.9.0-beta.8",
-    "@shopgate/pwa-common": "5.9.0-beta.8",
-    "@shopgate/pwa-common-commerce": "5.9.0-beta.8",
-    "@shopgate/pwa-ui-shared": "5.9.0-beta.8",
-    "@shopgate/pwa-unit-test": "5.9.0-beta.8",
+    "@shopgate/pwa-core": "5.9.0-beta.10",
+    "@shopgate/pwa-common": "5.9.0-beta.10",
+    "@shopgate/pwa-common-commerce": "5.9.0-beta.10",
+    "@shopgate/pwa-ui-shared": "5.9.0-beta.10",
+    "@shopgate/pwa-unit-test": "5.9.0-beta.10",
     "@shopgate/react-hammerjs": "0.5.8",
-    "@shopgate/eslint-config": "5.9.0-beta.8",
+    "@shopgate/eslint-config": "5.9.0-beta.10",
     "babel-core": "^6.26.0",
     "babel-plugin-transform-class-properties": "^6.24.1",
     "babel-plugin-transform-export-extensions": "^6.22.0",
