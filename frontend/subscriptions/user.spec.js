@@ -49,7 +49,7 @@ describe('User subscriptions', () => {
 
   it('should create toast on userUpdateSuccess$ stream', () => {
     // eslint-disable-next-line extra-rules/no-single-line-objects
-    userUpdateSuccess$[1]({ dispatch, action: {} });
+    userUpdateSuccess$[1]({ dispatch, action: {}, getState: () => {} });
     expect(mockCreateToast).toHaveBeenCalledWith({ message: 'profile.updated' });
   });
 });
