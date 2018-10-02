@@ -187,7 +187,7 @@ class AddressForm extends Component {
   filterUnavailableDefaultTag = (tag) => {
     if (/^(default|default_.*)$/.test(tag)) {
       // Check if the default tag is part of the config and keep, if so
-      return this.props.config.addressDefaultGroups.includes(tag);
+      return this.props.config.addressDefaultGroups.includes(tag.replace('default_', ''));
     }
 
     // Don't filter out non-default tags
