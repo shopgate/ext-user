@@ -21,10 +21,21 @@ const UserMenu = (props) => {
     List,
     SubHeader,
     isLoggedIn,
+
+    // Rename config variables for convenience
+    userMenuEntries: {
+      accountProfile: displayAccountProfileMenuItem = true,
+      addressBook: displayAddressBookMenuItem = true,
+    } = {},
   } = props;
 
   // Make sure a user is available of whom account data could be shown
   if (!isLoggedIn) {
+    return null;
+  }
+
+  // Check if any menu entries are there to be displayed
+  if (!displayAccountProfileMenuItem && !displayAddressBookMenuItem) {
     return null;
   }
 
@@ -38,26 +49,30 @@ const UserMenu = (props) => {
       <Portal name={portals.NAV_MENU_ADDRESS_BOOK_BEFORE} props={props} />
       <Portal name={portals.NAV_MENU_ADDRESS_BOOK} props={props}>
         <List>
-          <Item
-            title="navigation.profile"
-            href={path.USER_PROFILE_PATH}
-            link={path.USER_PROFILE_PATH}
-            icon={AccountBoxIcon}
-            close={handleClose}
-            testId="menuProfileButton"
-          >
-            <I18n.Text string="navigation.profile" />
-          </Item>
-          <Item
-            title="navigation.address_book"
-            href={path.USER_ADDRESS_BOOK_PATH}
-            link={path.USER_ADDRESS_BOOK_PATH}
-            icon={LocalShippingIcon}
-            close={handleClose}
-            testId="menuAddressBookButton"
-          >
-            <I18n.Text string="navigation.address_book" />
-          </Item>
+          {displayAccountProfileMenuItem &&
+            <Item
+              title="navigation.profile"
+              href={path.USER_PROFILE_PATH}
+              link={path.USER_PROFILE_PATH}
+              icon={AccountBoxIcon}
+              close={handleClose}
+              testId="menuProfileButton"
+            >
+              <I18n.Text string="navigation.profile" />
+            </Item>
+          }
+          {displayAddressBookMenuItem &&
+            <Item
+              title="navigation.address_book"
+              href={path.USER_ADDRESS_BOOK_PATH}
+              link={path.USER_ADDRESS_BOOK_PATH}
+              icon={LocalShippingIcon}
+              close={handleClose}
+              testId="menuAddressBookButton"
+            >
+              <I18n.Text string="navigation.address_book" />
+            </Item>
+          }
         </List>
       </Portal>
       <Portal name={portals.NAV_MENU_ADDRESS_BOOK_AFTER} props={props} />
@@ -73,6 +88,10 @@ UserMenu.propTypes = {
   Headline: PropTypes.func,
   List: PropTypes.func,
   SubHeader: PropTypes.func,
+  userMenuEntries: PropTypes.shape({
+    accountProfile: PropTypes.bool,
+    addressBook: PropTypes.bool,
+  }),
 };
 
 UserMenu.defaultProps = {
@@ -82,6 +101,7 @@ UserMenu.defaultProps = {
   // eslint-disable-next-line react/prop-types
   List: ({ children }) => (<Fragment>{children}</Fragment>), // Pass through by default
   SubHeader: () => (null), // Skip render by default
+  userMenuEntries: {},
 };
 
 export default connect(UserMenu);

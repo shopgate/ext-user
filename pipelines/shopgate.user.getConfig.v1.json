@@ -6,7 +6,8 @@
     "input": [],
     "output": [
       {"key": "addressForm", "id": "2", "optional": true},
-      {"key": "addressDefaultGroups", "id": "3", "optional": true}
+      {"key": "addressDefaultGroups", "id": "3", "optional": true},
+      {"key": "userMenuEntries", "id": "4", "optional": true}
     ],
     "steps": [
       {
@@ -16,7 +17,8 @@
         "input": [],
         "output": [
           {"key": "addressForm", "id": "2", "optional": true},
-          {"key": "addressDefaultGroups", "id": "3", "optional": true}
+          {"key": "addressDefaultGroups", "id": "3", "optional": true},
+          {"key": "userMenuEntries", "id": "4", "optional": true}
         ]
       }
     ]

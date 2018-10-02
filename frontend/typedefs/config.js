@@ -3,6 +3,7 @@
  * @property {string[]} addressDefaultGroups
  * @property {Form} addressForm
  * @property {string[]} countryCodes
+ * @property {UserMenuEntries} userMenuEntries
  */
 
 /**
@@ -166,4 +167,10 @@
  * @property {boolean|null|undefined} required
  * @property {boolean|null|undefined} visible
  * @property {FormFieldAction[]|null|undefined} actions
+ */
+
+/**
+ * @typedef {Object} UserMenuEntries
+ * @property {boolean} accountProfile
+ * @property {boolean} addressBook
  */
