@@ -100,6 +100,22 @@
           "placeholder": "[\"shipping\", \"billing\"]"
         }
       }
+    },
+    "userMenuEntries": {
+      "type": "admin",
+      "destination": "backend",
+      "default": {
+        "accountProfile": true,
+        "addressBook": true
+      },
+      "params": {
+        "type": "json",
+        "label": "User menu entries",
+        "required": true,
+        "options": {
+          "placeholder": "{\"accountProfile\": true, \"addressBook\": true}"
+        }
+      }
     }
   },
   "components": [
