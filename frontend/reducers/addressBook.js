@@ -9,6 +9,7 @@ import {
   ADD_USER_ADDRESS_FAILED,
   UPDATE_USER_ADDRESS_FAILED,
   USER_ADDRESS_VALIDATION_FAILED,
+  USER_ADDRESS_FORM_LEAVE,
 } from './../constants/ActionTypes';
 
 /**
@@ -103,6 +104,15 @@ export default (state = initialState, action) => {
         busy: false,
         validationErrors: action.error ? action.error.validationErrors : [],
       };
+
+    // Leave address form, reset form related data
+    case USER_ADDRESS_FORM_LEAVE: {
+      return {
+        ...state,
+        busy: false,
+        validationErrors: [],
+      };
+    }
 
     case SUCCESS_LOGOUT:
       return {};

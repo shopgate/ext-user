@@ -145,3 +145,11 @@ export const deleteUserAddressesFailed = error => ({
   type: types.DELETE_USER_ADDRESSES_FAILED,
   error,
 });
+
+/**
+ * Creates the dispatched USER_ADDRESS_FORM_LEAVE action object.
+ * @returns {Object} The dispatched action object.
+ */
+export const userAddressFormLeave = () => ({
+  type: types.USER_ADDRESS_FORM_LEAVE,
+});
