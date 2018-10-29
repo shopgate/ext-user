@@ -11,7 +11,7 @@ import {
   userAddressValidationFailed$,
   userSetDefaultAddress$,
 } from './../streams/addressBook';
-import { deleteUserAddressesConfirmed } from '../action-creators/addressBook';
+import { deleteUserAddressesConfirmed, userAddressFormLeave } from '../action-creators/addressBook';
 import { getUserAddressIdSelector } from './../selectors/addressBook';
 import updateAddress from './../actions/updateAddress';
 import deleteAddresses from './../actions/deleteAddresses';
@@ -25,6 +25,14 @@ export default (subscribe) => {
   const userAddressBookEnter$ = routeDidChange$
     .filter(({ pathname, prevPathname }) => pathname === USER_ADDRESS_BOOK_PATH &&
       !prevPathname.startsWith(userAddressPathPrefix));
+
+  const addressFormLeave$ = routeDidChange$
+    .filter(({ prevPathname }) => prevPathname.startsWith(`${userAddressPathPrefix}/`));
+
+  // Leave address form
+  subscribe(addressFormLeave$, ({ dispatch }) => {
+    dispatch(userAddressFormLeave());
+  });
 
   // Show a toast message when validation is failed
   subscribe(userAddressValidationFailed$, ({ dispatch }) => {
