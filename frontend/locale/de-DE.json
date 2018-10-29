@@ -36,8 +36,8 @@
     }
   },
   "addresses": {
-    "title": "Addressbuch",
-    "headline": "Addressbuch",
+    "title": "Adressbuch",
+    "headline": "Adressbuch",
     "button": "Neue Adresse hinzufügen",
     "noAddresses": "Adressbuch ist leer",
     "defaults": {
