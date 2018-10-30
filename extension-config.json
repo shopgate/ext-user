@@ -154,18 +154,6 @@
       "type": "portals"
     },
     {
-      "id": "Empty",
-      "path": "frontend/components/Empty.jsx",
-      "target": "nav-menu.my-account",
-      "type": "portals"
-    },
-    {
-      "id": "LogoutMenuEntry",
-      "path": "frontend/components/LogoutMenuEntry/index.jsx",
-      "target": "nav-menu.content.after",
-      "type": "portals"
-    },
-    {
       "id": "UserMenu",
       "path": "frontend/components/UserMenu/index.jsx",
       "target": "nav-menu.store-information.before",
