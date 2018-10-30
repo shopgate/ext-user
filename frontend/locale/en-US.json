@@ -101,7 +101,8 @@
         "title": "Delete address",
         "message": "Do you really want to delete this address?"
       },
-      "successMessage": "The address has been removed"
+      "successMessage": "The address has been removed",
+      "noRemoveDefault": "The default address can not be removed"
     },
     "makeDefault": {
       "default": "Make this your default address",

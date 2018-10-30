@@ -59,12 +59,16 @@ describe('AddressBook reducers', () => {
   it('Should reduce UPDATE_USER_ADDRESS_SUCCESS', () => {
     const state = {
       addresses: [
+        // eslint-disable-next-line extra-rules/no-single-line-objects
         { id: 1, street1: 'not to be changed' },
+        // eslint-disable-next-line extra-rules/no-single-line-objects
         { id: 2, street1: 'street1 to be updated' },
+        // eslint-disable-next-line extra-rules/no-single-line-objects
         { id: 3, street1: 'not to be changed' },
       ],
       busy: true,
     };
+    // eslint-disable-next-line extra-rules/no-single-line-objects
     const newAddress = { id: 2, street1: 'updated street1' };
     const action = {
       type: UPDATE_USER_ADDRESS_SUCCESS,
