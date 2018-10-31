@@ -101,7 +101,8 @@
         "title": "Adresse löschen",
         "message": "Möchten Sie diese Adresse wirklich löschen?"
       },
-      "successMessage": "Die Adresse wurde gelöscht"
+      "successMessage": "Die Adresse wurde gelöscht",
+      "noRemoveDefault": "Die Standard-Adresse kann nicht gelöscht werden"
     },
     "makeDefault": {
       "default": "Als Standard-Adresse festlegen",

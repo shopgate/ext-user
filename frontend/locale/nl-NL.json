@@ -100,7 +100,8 @@
         "title": "Verwijder adres",
         "message": "Wilt u dit adres echt verwijderen?"
       },
-      "successMessage": "Het adres is verwijderd"
+      "successMessage": "Het adres is verwijderd",
+      "noRemoveDefault": "Het standaard adres kan niet worden verwijderd"
     },
     "makeDefault": {
       "default": "Maak dit uw standaard adres",

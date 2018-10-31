@@ -116,6 +116,7 @@ describe('<AddressForm>', () => {
           },
         },
       }}
+      // eslint-disable-next-line extra-rules/no-single-line-objects
       address={{ id: 1, firstName: 'old value' }}
       addAddress={noop}
       updateAddress={noop}

@@ -16,7 +16,9 @@ const isIos = themeName.includes('ios');
  * @param {function} setDefault set as default handler
  * @constructor
  */
-const Address = ({ address, defaults, defaultTags, setDefault }) => (
+const Address = ({
+  address, defaults, defaultTags, setDefault,
+}) => (
   <div className={style.address}>
     <Info address={address} />
 

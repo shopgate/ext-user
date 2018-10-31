@@ -10,12 +10,14 @@ import {
   userAddressesDeleted$,
   userAddressValidationFailed$,
   userSetDefaultAddress$,
+  userAddressesDeleteFailed$,
 } from './../streams/addressBook';
 import { deleteUserAddressesConfirmed, userAddressFormLeave } from '../action-creators/addressBook';
 import { getUserAddressIdSelector } from './../selectors/addressBook';
 import updateAddress from './../actions/updateAddress';
 import deleteAddresses from './../actions/deleteAddresses';
 import { userAddressPathPattern, USER_ADDRESS_BOOK_PATH } from '../constants/RoutePaths';
+import { ENOREMOVEDEFAULT } from '../constants/Pipelines';
 
 const userAddressPathPrefix = userAddressPathPattern.stringify();
 
@@ -102,5 +104,13 @@ export default (subscribe) => {
 
     addressClone.tags.push(defTag);
     dispatch(updateAddress(addressClone, true));
+  });
+
+  // Dispatch action to show a toast message that deletion failed
+  subscribe(userAddressesDeleteFailed$, ({ dispatch, action }) => {
+    const { error: { code } = {} } = action;
+    if (code === ENOREMOVEDEFAULT) {
+      dispatch(createToast({ message: 'address.delete.noRemoveDefault' }));
+    }
   });
 };
