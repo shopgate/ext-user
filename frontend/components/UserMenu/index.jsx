@@ -1,6 +1,5 @@
 import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
-import { Helmet } from 'react-helmet';
 import I18n from '@shopgate/pwa-common/components/I18n';
 import Portal from '@shopgate/pwa-common/components/Portal';
 import AccountBoxIcon from '@shopgate/pwa-ui-shared/icons/AccountBoxIcon';
@@ -77,14 +76,6 @@ const UserMenu = (props) => {
         </List>
       </Portal>
       <Portal name={portals.NAV_MENU_ADDRESS_BOOK_AFTER} props={props} />
-
-      {/* Hide duplicated bottom header before logout menu entry (ios)*/}
-      <Helmet
-        style={[{
-            cssText: '[data-test-id="userMenu"] h2 {display: none}',
-        }]}
-      />
-
     </Fragment>
   );
 };
