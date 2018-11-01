@@ -1,6 +1,6 @@
 {
   "name": "@shopgate/user",
-  "version": "2.3.0-beta.7",
+  "version": "2.3.0-rc.1",
   "description": "Shopgate Connect user extension",
   "repository": {
     "type": "git",
