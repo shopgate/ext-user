@@ -42,7 +42,7 @@ class Register extends Component {
             <I18n.Text string="register.subTitle" />
           </div>
           {/* Kick of user form immediately after register */}
-          {!isLoggedIn && <UserForm />}
+          {!isLoggedIn && <UserForm register />}
         </section>
       </View>
     );

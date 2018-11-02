@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import { isUserLoggedIn, getUserData } from '@shopgate/pwa-common/selectors/user';
+import { getUserData } from '@shopgate/pwa-common/selectors/user';
 import registerUser from '../../actions/registerUser';
 import updateUser from '../../actions/updateUser';
 import userSchema from '../../common/userSchema';
@@ -34,7 +34,6 @@ const validateUser = (user, isUpdate = true) => {
  * @return {{user: User}}
  */
 const mapStateToProps = state => ({
-  isRegister: !isUserLoggedIn(state),
   user: getUserData(state),
 });
 

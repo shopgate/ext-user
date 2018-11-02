@@ -19,17 +19,18 @@ import styles from './style';
  */
 class UserForm extends Component {
   static propTypes = {
-    isRegister: PropTypes.bool.isRequired,
     registerUser: PropTypes.func.isRequired,
     updateUser: PropTypes.func.isRequired,
     user: PropTypes.shape().isRequired,
     validateUser: PropTypes.func.isRequired,
     disabled: PropTypes.bool,
+    register: PropTypes.bool,
     validationErrors: PropTypes.shape(),
   }
 
   static defaultProps = {
     disabled: false,
+    register: false,
     validationErrors: {},
   }
 
@@ -61,7 +62,7 @@ class UserForm extends Component {
    */
   componentDidMount() {
     EventEmitter.on(events.NAVIGATOR_SAVE_BUTTON_CLICK, this.saveUser);
-    if (!this.props.isRegister) {
+    if (!this.props.register) {
       EventEmitter.emit(events.NAVIGATOR_SAVE_BUTTON_SHOW);
     }
   }
@@ -75,7 +76,7 @@ class UserForm extends Component {
       this.setState({ errors: nextProps.validationErrors });
     }
 
-    if (!this.props.isRegister) {
+    if (!this.props.register) {
       EventEmitter.emit(events.NAVIGATOR_SAVE_BUTTON_DISABLE);
     }
 
@@ -112,12 +113,12 @@ class UserForm extends Component {
   }
 
   validateInline = () => {
-    const errors = this.props.validateUser(this.state.user, !this.props.isRegister);
+    const errors = this.props.validateUser(this.state.user, !this.props.register);
     this.setState({
       errors,
       disabled: Object.keys(errors).length > 0,
     });
-    if (!this.props.isRegister) {
+    if (!this.props.register) {
       EventEmitter.emit(Object.keys(errors).length ?
         events.NAVIGATOR_SAVE_BUTTON_DISABLE :
         events.NAVIGATOR_SAVE_BUTTON_ENABLE);
@@ -129,7 +130,7 @@ class UserForm extends Component {
   }
 
   saveUser = () => {
-    const errors = this.props.validateUser(this.state.user, !this.props.isRegister);
+    const errors = this.props.validateUser(this.state.user, !this.props.register);
     this.setState({
       inlineValidation: true,
       errors,
@@ -141,7 +142,7 @@ class UserForm extends Component {
       return;
     }
 
-    if (this.props.isRegister) {
+    if (this.props.register) {
       this.props.registerUser(this.state.user);
     } else {
       this.props.updateUser(this.state.user);
@@ -173,7 +174,7 @@ class UserForm extends Component {
    * @return {*}
    */
   render() {
-    const { isRegister } = this.props;
+    const { register } = this.props;
     return (
       <Fragment>
         <Portal name={portals.USER_FORM_BEFORE} />
@@ -183,9 +184,22 @@ class UserForm extends Component {
           {this.renderTextField('lastName')}
           {this.renderTextField('mail')}
 
-          {isRegister && this.renderTextField('password', 'password')}
+          { /* The reister form has an additional "password" field and a "register" button. */ }
+          {register &&
+            <Fragment>
+              {this.renderTextField('password', 'password')}
 
-          {!isRegister &&
+              <div data-test-id="RegisterButton" className={styles.buttonWrapper}>
+                <RippleButton type="secondary" disabled={this.state.disabled} className={styles.button} onClick={this.saveUser}>
+                  <I18n.Text string="register.button" />
+                </RippleButton>
+              </div>
+            </Fragment>
+          }
+
+          { /* The user profile editing form shows a "locked" password field and a text
+               link to change it. */ }
+          {!register &&
             <Fragment>
               <div className={styles.fieldWrapperDisabled}>
                 <TextField
@@ -207,14 +221,6 @@ class UserForm extends Component {
                 </Link>
               </div>
             </Fragment>
-          }
-
-          {isRegister &&
-            <div data-test-id="RegisterButton" className={styles.buttonWrapper}>
-              <RippleButton type="secondary" disabled={this.state.disabled} className={styles.button} onClick={this.saveUser}>
-                <I18n.Text string="register.button" />
-              </RippleButton>
-            </div>
           }
 
         </Portal>
