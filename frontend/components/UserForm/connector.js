@@ -4,6 +4,7 @@ import registerUser from '../../actions/registerUser';
 import updateUser from '../../actions/updateUser';
 import userSchema from '../../common/userSchema';
 import { joiToValidationErrors, validationErrorsToMap } from '../../common/transform';
+import { getValidationErrors } from '../../selectors/user';
 
 /**
  * @param {Object} user user
@@ -31,10 +32,11 @@ const validateUser = (user, isUpdate = true) => {
 
 /**
  * @param {Object} state state
- * @return {{user: User}}
+ * @return {{user: User, validationErrors: Object}}
  */
 const mapStateToProps = state => ({
   user: getUserData(state),
+  validationErrors: getValidationErrors(state) || [],
 });
 
 /**
