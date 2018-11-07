@@ -41,7 +41,7 @@ describe('AddressBook subscriptions', () => {
   });
 
   it('should subscribe to the streams', () => {
-    expect(subscribe.mock.calls.length).toEqual(8);
+    expect(subscribe.mock.calls.length).toEqual(9);
   });
 
   it('should create toast message when validation is failed ', () => {

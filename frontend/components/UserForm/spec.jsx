@@ -15,7 +15,7 @@ describe('<UserForm>', () => {
     user: {},
     validateUser: noop,
     disabled: false,
-    validationErrors: {},
+    validationErrors: [],
   };
 
   it('should render user register form', () => {
