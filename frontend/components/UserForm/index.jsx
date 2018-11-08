@@ -53,13 +53,8 @@ class UserForm extends Component {
       // Inline validation is activated on the first click on the "save" or "register" button
       inlineValidation: false,
     };
-  }
 
-  /**
-   * Did mount
-   */
-  componentDidMount() {
-    if (!this.props.register) {
+    if (!props.register) {
       // On the user profile edit page the save button shows up in greyed out state initially
       EventEmitter.on(events.NAVIGATOR_SAVE_BUTTON_CLICK, this.saveUserData);
       EventEmitter.emit(events.NAVIGATOR_SAVE_BUTTON_SHOW);
@@ -72,7 +67,6 @@ class UserForm extends Component {
    * @param {Object} nextProps The next props.
    */
   componentWillReceiveProps(nextProps) {
-
     // Check if backend validation errors came in to be displayed (only available on profile page)
     if (!this.props.register) {
       const newState = {
