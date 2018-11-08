@@ -53,11 +53,8 @@ class ChangePasswordForm extends Component {
       inlineValidation: false,
     };
 
-  /**
-   * Did mount
-   */
-  componentDidMount() {
-    if (isIos) {
+    // Change the behavior of the top right save button on ios; hide it completely on others.
+    if (!isIos) {
       EventEmitter.on(events.NAVIGATOR_SAVE_BUTTON_CLICK, this.updatePassword);
       EventEmitter.emit(events.NAVIGATOR_SAVE_BUTTON_SHOW);
       EventEmitter.emit(events.NAVIGATOR_SAVE_BUTTON_ENABLE);
