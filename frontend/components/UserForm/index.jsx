@@ -7,6 +7,7 @@ import Link from '@shopgate/pwa-common/components/Router/components/Link';
 import buildValidationErrorList from '@shopgate/pwa-ui-shared/Form/Builder/builders/buildValidationErrorList';
 import TextField from '@shopgate/pwa-ui-shared/Form/TextField';
 import LockIcon from '@shopgate/pwa-ui-shared/icons/LockIcon';
+import Form from '@shopgate/pwa-ui-shared/Form';
 import RippleButton from '@shopgate/pwa-ui-shared/RippleButton';
 import * as portals from '../../constants/Portals';
 import EventEmitter from '../../events/emitter';
@@ -72,7 +73,6 @@ class UserForm extends Component {
    * @param {Object} nextProps The next props.
    */
   componentWillReceiveProps(nextProps) {
-
     // Check if backend validation errors came in to be displayed (only available on profile page)
     if (!this.props.register) {
       const newState = {
@@ -236,12 +236,14 @@ class UserForm extends Component {
         <Portal name={portals.USER_FORM_BEFORE} />
         <Portal name={portals.USER_FORM}>
 
-          {this.renderTextField('firstName')}
-          {this.renderTextField('lastName')}
-          {this.renderTextField('mail')}
+          <Form onSubmit={this.saveUserData}>
+
+            {this.renderTextField('firstName')}
+            {this.renderTextField('lastName')}
+            {this.renderTextField('mail')}
 
           { /* The reister form has an additional "password" field and a "register" button. */ }
-          {register &&
+            {register &&
             <Fragment>
               {this.renderTextField('password', 'password')}
 
@@ -255,7 +257,7 @@ class UserForm extends Component {
 
           { /* The user profile editing form shows a "locked" password field and a text
                link to change it. */ }
-          {!register &&
+            {!register &&
             <Fragment>
               <div className={styles.fieldWrapperDisabled}>
                 <TextField
@@ -278,6 +280,8 @@ class UserForm extends Component {
               </div>
             </Fragment>
           }
+
+          </Form>
 
         </Portal>
         <Portal name={portals.USER_FORM_AFTER} />

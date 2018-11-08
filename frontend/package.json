@@ -18,7 +18,8 @@
     "babel-plugin-transform-proto-to-assign": "^6.26.0",
     "babel-preset-es2015": "^6.24.1",
     "joi-browser": "^13.0.1",
-    "url-pattern": "^1.0.3"
+    "url-pattern": "^1.0.3",
+    "lodash": "^4.17.11"
   },
   "devDependencies": {
     "@shopgate/pwa-core": "5.9.0",

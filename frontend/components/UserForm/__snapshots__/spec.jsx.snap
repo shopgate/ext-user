@@ -2,18 +2,17 @@
 
 exports[`<UserForm> should render user profile form 1`] = `
 <UserForm
-  disabled={false}
   isRegister={false}
-  register={false}
-  registerUser={[Function]}
-  updateUser={[Function]}
+  register={true}
+  registerUser={[MockFunction]}
+  updateUser={[MockFunction]}
   user={
     Object {
       "firstName": "John",
       "lastName": "Doe",
     }
   }
-  validateUser={[Function]}
+  validateUser={[MockFunction]}
   validationErrors={Array []}
 >
   <Portal
@@ -559,11 +558,10 @@ exports[`<UserForm> should render user profile form 1`] = `
       </TextField>
     </div>
     <div
-      className="css-eaovj6"
+      className="css-1sbrycg"
     >
       <TextField
-        className="css-1a2wdlb"
-        disabled={true}
+        className=""
         errorText=""
         label="user.password"
         leftElement={null}
@@ -571,20 +569,16 @@ exports[`<UserForm> should render user profile form 1`] = `
         name="password"
         onChange={[Function]}
         placeholder=""
-        rightElement={
-          <LockIcon
-            size="24"
-          />
-        }
+        rightElement={null}
         type="password"
-        value="**********"
+        value=""
       >
         <FormElement
-          className="css-1a2wdlb"
+          className=""
           errorText=""
           hasPlaceholder={true}
           hasUnderline={true}
-          hasValue={true}
+          hasValue={false}
           htmlFor="password"
           isFocused={false}
           label="user.password"
@@ -592,7 +586,7 @@ exports[`<UserForm> should render user profile form 1`] = `
           translateErrorText={true}
         >
           <div
-            className="css-1vjh8yv css-1a2wdlb"
+            className="css-1vjh8yv "
           >
             <Placeholder
               placeholder=""
@@ -615,12 +609,12 @@ exports[`<UserForm> should render user profile form 1`] = `
             <Label
               hasErrorMessage={false}
               htmlFor="password"
-              isFloating={true}
+              isFloating={false}
               isFocused={false}
               label="user.password"
             >
               <label
-                className="css-1nn9zl4 css-16msjt6 css-1fekhao"
+                className="css-1nn9zl4 css-1fekhao"
                 htmlFor="password"
               >
                 <Translate
@@ -655,19 +649,18 @@ exports[`<UserForm> should render user profile form 1`] = `
                   >
                     <Component
                       className="css-xtw4m3"
-                      disabled={true}
                       multiLine={false}
                       name="password"
                       onChange={[Function]}
                       type="password"
                       validateOnBlur={true}
-                      value="**********"
+                      value=""
                     >
                       <SimpleInput
                         autoComplete={false}
                         autoCorrect={false}
                         className="css-xtw4m3"
-                        disabled={true}
+                        disabled={false}
                         id={null}
                         isControlled={false}
                         multiLine={false}
@@ -680,62 +673,23 @@ exports[`<UserForm> should render user profile form 1`] = `
                         setRef={[Function]}
                         type="password"
                         validateOnBlur={true}
-                        value="**********"
+                        value=""
                       >
                         <input
                           autoComplete="off"
                           autoCorrect="off"
                           className="css-xtw4m3"
-                          disabled={true}
+                          disabled={false}
                           id={null}
                           name="password"
                           onBlur={[Function]}
                           onChange={[Function]}
                           onFocus={[Function]}
                           type="password"
-                          value="**********"
+                          value=""
                         />
                       </SimpleInput>
                     </Component>
-                  </li>
-                </GridItem>
-                <GridItem
-                  className="css-h3zoee"
-                  component="li"
-                  grow={0}
-                  shrink={1}
-                >
-                  <li
-                    className="css-h3zoee"
-                  >
-                    <LockIcon
-                      size="24"
-                    >
-                      <Icon
-                        className=""
-                        color={null}
-                        content="<path d=\\"M0 0h24v24H0z\\" fill=\\"none\\"/><path d=\\"M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z\\"/>"
-                        size="24"
-                        viewBox="0 0 24 24"
-                      >
-                        <svg
-                          className="css-yys9hb "
-                          dangerouslySetInnerHTML={
-                            Object {
-                              "__html": "<path d=\\"M0 0h24v24H0z\\" fill=\\"none\\"/><path d=\\"M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z\\"/>",
-                            }
-                          }
-                          style={
-                            Object {
-                              "fill": null,
-                              "fontSize": "24",
-                            }
-                          }
-                          viewBox="0 0 24 24"
-                          xmlns="http://www.w3.org/2000/svg"
-                        />
-                      </Icon>
-                    </LockIcon>
                   </li>
                 </GridItem>
               </ul>
@@ -782,33 +736,79 @@ exports[`<UserForm> should render user profile form 1`] = `
       </TextField>
     </div>
     <div
-      className="css-1sbrycg"
+      className="css-p6g9oq"
+      data-test-id="RegisterButton"
     >
-      <Link
-        className="css-ncwxpj"
+      <RippleButton
+        className="css-63oe3q"
         disabled={false}
-        href="/user/password"
+        flat={false}
+        onClick={[Function]}
+        rippleClassName=""
+        rippleSize={null}
+        testId="Button"
+        type="secondary"
+        wrapContent={true}
       >
-        <div
-          aria-hidden={true}
-          className="css-c6ki83 css-ncwxpj"
-          data-test-id="link: /user/password"
+        <Button
+          className="css-63oe3q"
+          disabled={false}
+          flat={false}
           onClick={[Function]}
-          role="link"
+          testId="Button"
+          type="secondary"
+          wrapContent={false}
         >
-          <Translate
-            className=""
-            params={Object {}}
-            string="password.update"
+          <Button
+            className="css-187rja2 css-63oe3q"
+            disabled={false}
+            onClick={[Function]}
+            testId="Button"
           >
-            <span
-              className=""
+            <button
+              className="css-187rja2 css-63oe3q css-1rn65c0"
+              data-test-id="Button"
+              disabled={false}
+              onClick={[Function]}
             >
-              password.update
-            </span>
-          </Translate>
-        </div>
-      </Link>
+              <Ripple
+                className="css-8s1fw2 "
+                color="#000"
+                disabled={false}
+                fill={true}
+                onComplete={[Function]}
+                overflow={false}
+                size={null}
+              >
+                <div
+                  aria-hidden={true}
+                  className="css-8s1fw2 "
+                  data-test-id="Ripple"
+                  onClick={[Function]}
+                  style={
+                    Object {
+                      "overflow": "hidden",
+                      "position": "relative",
+                    }
+                  }
+                >
+                  <Translate
+                    className=""
+                    params={Object {}}
+                    string="register.button"
+                  >
+                    <span
+                      className=""
+                    >
+                      register.button
+                    </span>
+                  </Translate>
+                </div>
+              </Ripple>
+            </button>
+          </Button>
+        </Button>
+      </RippleButton>
     </div>
   </Portal>
   <Portal
@@ -820,13 +820,11 @@ exports[`<UserForm> should render user profile form 1`] = `
 
 exports[`<UserForm> should render user register form 1`] = `
 <UserForm
-  disabled={false}
-  isRegister={true}
-  register={false}
-  registerUser={[Function]}
-  updateUser={[Function]}
+  register={true}
+  registerUser={[MockFunction]}
+  updateUser={[MockFunction]}
   user={Object {}}
-  validateUser={[Function]}
+  validateUser={[MockFunction]}
   validationErrors={Array []}
 >
   <Portal
@@ -1372,11 +1370,10 @@ exports[`<UserForm> should render user register form 1`] = `
       </TextField>
     </div>
     <div
-      className="css-eaovj6"
+      className="css-1sbrycg"
     >
       <TextField
-        className="css-1a2wdlb"
-        disabled={true}
+        className=""
         errorText=""
         label="user.password"
         leftElement={null}
@@ -1384,20 +1381,16 @@ exports[`<UserForm> should render user register form 1`] = `
         name="password"
         onChange={[Function]}
         placeholder=""
-        rightElement={
-          <LockIcon
-            size="24"
-          />
-        }
+        rightElement={null}
         type="password"
-        value="**********"
+        value=""
       >
         <FormElement
-          className="css-1a2wdlb"
+          className=""
           errorText=""
           hasPlaceholder={true}
           hasUnderline={true}
-          hasValue={true}
+          hasValue={false}
           htmlFor="password"
           isFocused={false}
           label="user.password"
@@ -1405,7 +1398,7 @@ exports[`<UserForm> should render user register form 1`] = `
           translateErrorText={true}
         >
           <div
-            className="css-1vjh8yv css-1a2wdlb"
+            className="css-1vjh8yv "
           >
             <Placeholder
               placeholder=""
@@ -1428,12 +1421,12 @@ exports[`<UserForm> should render user register form 1`] = `
             <Label
               hasErrorMessage={false}
               htmlFor="password"
-              isFloating={true}
+              isFloating={false}
               isFocused={false}
               label="user.password"
             >
               <label
-                className="css-1nn9zl4 css-16msjt6 css-1fekhao"
+                className="css-1nn9zl4 css-1fekhao"
                 htmlFor="password"
               >
                 <Translate
@@ -1468,19 +1461,18 @@ exports[`<UserForm> should render user register form 1`] = `
                   >
                     <Component
                       className="css-xtw4m3"
-                      disabled={true}
                       multiLine={false}
                       name="password"
                       onChange={[Function]}
                       type="password"
                       validateOnBlur={true}
-                      value="**********"
+                      value=""
                     >
                       <SimpleInput
                         autoComplete={false}
                         autoCorrect={false}
                         className="css-xtw4m3"
-                        disabled={true}
+                        disabled={false}
                         id={null}
                         isControlled={false}
                         multiLine={false}
@@ -1493,62 +1485,23 @@ exports[`<UserForm> should render user register form 1`] = `
                         setRef={[Function]}
                         type="password"
                         validateOnBlur={true}
-                        value="**********"
+                        value=""
                       >
                         <input
                           autoComplete="off"
                           autoCorrect="off"
                           className="css-xtw4m3"
-                          disabled={true}
+                          disabled={false}
                           id={null}
                           name="password"
                           onBlur={[Function]}
                           onChange={[Function]}
                           onFocus={[Function]}
                           type="password"
-                          value="**********"
+                          value=""
                         />
                       </SimpleInput>
                     </Component>
-                  </li>
-                </GridItem>
-                <GridItem
-                  className="css-h3zoee"
-                  component="li"
-                  grow={0}
-                  shrink={1}
-                >
-                  <li
-                    className="css-h3zoee"
-                  >
-                    <LockIcon
-                      size="24"
-                    >
-                      <Icon
-                        className=""
-                        color={null}
-                        content="<path d=\\"M0 0h24v24H0z\\" fill=\\"none\\"/><path d=\\"M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z\\"/>"
-                        size="24"
-                        viewBox="0 0 24 24"
-                      >
-                        <svg
-                          className="css-yys9hb "
-                          dangerouslySetInnerHTML={
-                            Object {
-                              "__html": "<path d=\\"M0 0h24v24H0z\\" fill=\\"none\\"/><path d=\\"M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z\\"/>",
-                            }
-                          }
-                          style={
-                            Object {
-                              "fill": null,
-                              "fontSize": "24",
-                            }
-                          }
-                          viewBox="0 0 24 24"
-                          xmlns="http://www.w3.org/2000/svg"
-                        />
-                      </Icon>
-                    </LockIcon>
                   </li>
                 </GridItem>
               </ul>
@@ -1595,33 +1548,79 @@ exports[`<UserForm> should render user register form 1`] = `
       </TextField>
     </div>
     <div
-      className="css-1sbrycg"
+      className="css-p6g9oq"
+      data-test-id="RegisterButton"
     >
-      <Link
-        className="css-ncwxpj"
+      <RippleButton
+        className="css-63oe3q"
         disabled={false}
-        href="/user/password"
+        flat={false}
+        onClick={[Function]}
+        rippleClassName=""
+        rippleSize={null}
+        testId="Button"
+        type="secondary"
+        wrapContent={true}
       >
-        <div
-          aria-hidden={true}
-          className="css-c6ki83 css-ncwxpj"
-          data-test-id="link: /user/password"
+        <Button
+          className="css-63oe3q"
+          disabled={false}
+          flat={false}
           onClick={[Function]}
-          role="link"
+          testId="Button"
+          type="secondary"
+          wrapContent={false}
         >
-          <Translate
-            className=""
-            params={Object {}}
-            string="password.update"
+          <Button
+            className="css-187rja2 css-63oe3q"
+            disabled={false}
+            onClick={[Function]}
+            testId="Button"
           >
-            <span
-              className=""
+            <button
+              className="css-187rja2 css-63oe3q css-1rn65c0"
+              data-test-id="Button"
+              disabled={false}
+              onClick={[Function]}
             >
-              password.update
-            </span>
-          </Translate>
-        </div>
-      </Link>
+              <Ripple
+                className="css-8s1fw2 "
+                color="#000"
+                disabled={false}
+                fill={true}
+                onComplete={[Function]}
+                overflow={false}
+                size={null}
+              >
+                <div
+                  aria-hidden={true}
+                  className="css-8s1fw2 "
+                  data-test-id="Ripple"
+                  onClick={[Function]}
+                  style={
+                    Object {
+                      "overflow": "hidden",
+                      "position": "relative",
+                    }
+                  }
+                >
+                  <Translate
+                    className=""
+                    params={Object {}}
+                    string="register.button"
+                  >
+                    <span
+                      className=""
+                    >
+                      register.button
+                    </span>
+                  </Translate>
+                </div>
+              </Ripple>
+            </button>
+          </Button>
+        </Button>
+      </RippleButton>
     </div>
   </Portal>
   <Portal
