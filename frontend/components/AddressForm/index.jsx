@@ -11,7 +11,6 @@ import EventEmitter from '../../events/emitter';
 import {
   NAVIGATOR_SAVE_BUTTON_CLICK,
   NAVIGATOR_SAVE_BUTTON_SHOW,
-  NAVIGATOR_SAVE_BUTTON_HIDE,
   NAVIGATOR_SAVE_BUTTON_ENABLE,
   NAVIGATOR_SAVE_BUTTON_DISABLE,
 } from '../../constants/EventTypes';
@@ -47,11 +46,13 @@ class AddressForm extends Component {
     super(props);
 
     const { id: addressId, tags, ...addressData } = props.address;
+    const editMode = !!addressId;
+
     this.state = {
       address: addressData,
       isBusy: props.isBusy,
       hasChanges: false,
-      editMode: !!addressId,
+      editMode,
       hasErrors: false,
       tags: this.props.isFirstAddress || !tags ? [] : tags,
     };
@@ -65,13 +66,8 @@ class AddressForm extends Component {
     if (this.props.isFirstAddress) {
       this.state.tags = this.initialAddressTags;
     }
-  }
 
-  /**
-   * Did mount
-   */
-  componentDidMount() {
-    if (this.state.editMode) {
+    if (editMode) {
       // Attach event handler for updating an address to the "save" button of the theme
       EventEmitter.on(NAVIGATOR_SAVE_BUTTON_CLICK, this.addOrUpdateAddress);
       EventEmitter.emit(NAVIGATOR_SAVE_BUTTON_SHOW);
@@ -94,14 +90,6 @@ class AddressForm extends Component {
 
       this.setState({ isBusy: nextProps.isBusy });
     }
-  }
-
-  /**
-   * Will unmount
-   */
-  componentWillUnmount() {
-    EventEmitter.off(NAVIGATOR_SAVE_BUTTON_CLICK, this.addOrUpdateAddress);
-    EventEmitter.emit(NAVIGATOR_SAVE_BUTTON_HIDE);
   }
 
   /**
