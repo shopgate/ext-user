@@ -52,12 +52,11 @@ class ChangePasswordForm extends Component {
       errors: buildValidationErrorList(props.validationErrors),
       inlineValidation: false,
     };
+  }
 
-    // Change the behavior of the top right save button on ios; hide it completely on others.
-    if (!isIos) {
-      EventEmitter.on(events.NAVIGATOR_SAVE_BUTTON_CLICK, this.updatePassword);
-      EventEmitter.emit(events.NAVIGATOR_SAVE_BUTTON_SHOW);
-      EventEmitter.emit(events.NAVIGATOR_SAVE_BUTTON_ENABLE);
+  componentDidMount = () => {
+    if (isIos) {
+      EventEmitter.on(events.NAVIGATOR_CHANGE_PASSWORD_BUTTON_CLICK, this.updatePassword);
     }
   }
 
@@ -92,6 +91,12 @@ class ChangePasswordForm extends Component {
     this.setState(newState);
   }
 
+  componentWillUnmount = () => {
+    if (isIos) {
+      EventEmitter.off(events.NAVIGATOR_CHANGE_PASSWORD_BUTTON_CLICK, this.updatePassword);
+    }
+  }
+
   /**
    * Takes an object to add into the state
    * @param {Object} field field
@@ -119,11 +124,9 @@ class ChangePasswordForm extends Component {
       disabled: Object.keys(errors).length > 0,
     });
     if (isIos) {
-      EventEmitter.emit(
-        Object.keys(errors).length ?
-          events.NAVIGATOR_SAVE_BUTTON_DISABLE :
-          events.NAVIGATOR_SAVE_BUTTON_ENABLE
-      );
+      EventEmitter.emit(Object.keys(errors).length ?
+        events.NAVIGATOR_CHANGE_PASSWORD_BUTTON_DISABLE :
+        events.NAVIGATOR_CHANGE_PASSWORD_BUTTON_ENABLE);
     }
   }
 
@@ -141,7 +144,7 @@ class ChangePasswordForm extends Component {
 
     if (Object.keys(errors).length > 0) {
       if (isIos) {
-        EventEmitter.emit(events.NAVIGATOR_SAVE_BUTTON_DISABLE);
+        EventEmitter.emit(events.NAVIGATOR_CHANGE_PASSWORD_BUTTON_DISABLE);
       }
       return;
     }

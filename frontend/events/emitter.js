@@ -10,7 +10,7 @@ class UserEventEmitter extends EventEmitter {
    */
   on(event, listener) {
     this.addListener(event, listener);
-    logger.log(`%cUserEventEmitter: %c${event}: ${this.listenerCount(event)}`, 'color: green', 'color: black');
+    logger.log(`%cUserEventEmitter:%c Added listener for ${event}: ${this.listenerCount(event)}`, 'color: green', 'color: black');
     return this;
   }
 
@@ -19,7 +19,7 @@ class UserEventEmitter extends EventEmitter {
    */
   off(event, listener) {
     this.removeListener(event, listener);
-    logger.log(`%cUserEventEmitter: %c${event}: ${this.listenerCount(event)}`, 'color: green', 'color: black');
+    logger.log(`%cUserEventEmitter:%c Removed listener for ${event}: ${this.listenerCount(event)}`, 'color: green', 'color: black');
     return this;
   }
 

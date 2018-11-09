@@ -70,7 +70,6 @@ class AddressForm extends Component {
     if (editMode) {
       // Attach event handler for updating an address to the "save" button of the theme
       EventEmitter.on(NAVIGATOR_SAVE_BUTTON_CLICK, this.addOrUpdateAddress);
-      EventEmitter.emit(NAVIGATOR_SAVE_BUTTON_SHOW);
 
       this.setSaveButtonEnabledStatus(this.isSaveButtonVisible());
     }
@@ -90,6 +89,10 @@ class AddressForm extends Component {
 
       this.setState({ isBusy: nextProps.isBusy });
     }
+  }
+
+  componentWillUnmount = () => {
+    EventEmitter.off(NAVIGATOR_SAVE_BUTTON_CLICK, this.addOrUpdateAddress);
   }
 
   /**

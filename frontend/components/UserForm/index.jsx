@@ -58,9 +58,14 @@ class UserForm extends Component {
     if (!props.register) {
       // On the user profile edit page the save button shows up in greyed out state initially
       EventEmitter.on(events.NAVIGATOR_SAVE_BUTTON_CLICK, this.saveUserData);
-      EventEmitter.emit(events.NAVIGATOR_SAVE_BUTTON_SHOW);
-      EventEmitter.emit(events.NAVIGATOR_SAVE_BUTTON_DISABLE);
     }
+  }
+
+  componentDidMount = () => {
+    EventEmitter.on(events.NAVIGATOR_SAVE_BUTTON_CLICK, this.saveUserData);
+
+    // Start out in disabled state.
+    EventEmitter.emit(events.NAVIGATOR_SAVE_BUTTON_DISABLE);
   }
 
   /**
@@ -107,6 +112,10 @@ class UserForm extends Component {
       // Send changes to React to handle component update
       this.setState(newState);
     }
+  }
+
+  componentWillUnmount = () => {
+    EventEmitter.off(events.NAVIGATOR_SAVE_BUTTON_CLICK, this.saveUserData);
   }
 
   /**

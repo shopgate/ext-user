@@ -126,8 +126,8 @@
       "type": "portals"
     },
     {
-      "id": "NavigatorButton",
-      "path": "frontend/components/NavigatorSaveButton/index.jsx",
+      "id": "NavigatorButtons",
+      "path": "frontend/components/NavigatorButtons/index.jsx",
       "target": "nav-bar.navigator.icons.after",
       "type": "portals"
     },
