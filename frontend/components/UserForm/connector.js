@@ -1,9 +1,10 @@
 import { connect } from 'react-redux';
 import { getUserData } from '@shopgate/pwa-common/selectors/user';
+import buildValidationErrorList from '@shopgate/pwa-ui-shared/Form/Builder/builders/buildValidationErrorList';
 import registerUser from '../../actions/registerUser';
 import updateUser from '../../actions/updateUser';
 import userSchema from '../../common/userSchema';
-import { joiToValidationErrors, validationErrorsToMap } from '../../common/transform';
+import { joiToValidationErrors } from '../../common/transform';
 import { getValidationErrors } from '../../selectors/user';
 
 /**
@@ -27,7 +28,7 @@ const validateUser = (user, isUpdate = true) => {
       }
       return err;
     });
-  return validationErrorsToMap(validationErrors);
+  return buildValidationErrorList(validationErrors);
 };
 
 /**

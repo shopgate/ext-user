@@ -88,9 +88,11 @@ class UserForm extends Component {
       // Enable or disable the inline validation (disabled when form is first displayed)
       newState.inlineValidation = hasErrors;
 
-      // Check for user data changes
-      const hasChanges = !Object.keys(this.state.user)
-        .every(key => this.state.user[key] === nextProps.user[key]);
+      // Check for user data changes (use only relevant data for the differences detection)
+      const userProps = this.filterUserProfileData(this.props.user);
+      const nextUserProps = this.filterUserProfileData(nextProps.user);
+      const hasChanges = !isEqual(userProps, nextUserProps)
+        && !isEqual(this.state.user, nextUserProps);
 
       // Disable top right "save" button if no changes or validation errors set
       newState.disabled = hasErrors || !hasChanges;
@@ -147,12 +149,9 @@ class UserForm extends Component {
 
     // Handle en-/disabling of the register and save buttons
     if (!this.props.register) {
-      // Use only relevant data for the differences detection
+      // Check for user data changes (use only relevant data for the differences detection)
       const userProps = this.filterUserProfileData(this.props.user);
-
-      // Disabled state of the top right button is controlled by changes to init state and errors
-      const hasChanges = !Object.keys(newState.user)
-        .every(key => newState.user[key] === userProps[key]);
+      const hasChanges = !isEqual(newState.user, userProps);
       newState.disabled = hasErrors || !hasChanges;
 
       if (this.state.disabled !== newState.disabled) {
@@ -176,16 +175,17 @@ class UserForm extends Component {
        to receive this action! */
     const errors = this.props.validateUser(this.state.user, !this.props.register);
     const hasErrors = Object.keys(errors).length > 0;
+
+    // Deactivate the top right "save" button on the edit profile page
+    if (!this.props.register && !this.state.disabled) {
+      EventEmitter.emit(events.NAVIGATOR_SAVE_BUTTON_DISABLE);
+    }
+
     this.setState({
       inlineValidation: hasErrors,
       errors,
       disabled: true,
     });
-
-    // Deactivate the top right "save" button on the edit profile page
-    if (!this.props.register) {
-      EventEmitter.emit(events.NAVIGATOR_SAVE_BUTTON_DISABLE);
-    }
 
     // Abort updating user data on validation errors.
     if (hasErrors) {
@@ -237,44 +237,44 @@ class UserForm extends Component {
             {this.renderTextField('lastName')}
             {this.renderTextField('mail')}
 
-          { /* The reister form has an additional "password" field and a "register" button. */ }
+            { /* The reister form has an additional "password" field and a "register" button. */ }
             {register &&
-            <Fragment>
-              {this.renderTextField('password', 'password')}
+              <Fragment>
+                {this.renderTextField('password', 'password')}
 
-              <div data-test-id="RegisterButton" className={styles.buttonWrapper}>
-                <RippleButton type="secondary" disabled={this.state.disabled} className={styles.button} onClick={this.saveUserData}>
-                  <I18n.Text string="register.button" />
-                </RippleButton>
-              </div>
-            </Fragment>
-          }
+                <div data-test-id="RegisterButton" className={styles.buttonWrapper}>
+                  <RippleButton type="secondary" disabled={this.state.disabled} className={styles.button} onClick={this.saveUserData}>
+                    <I18n.Text string="register.button" />
+                  </RippleButton>
+                </div>
+              </Fragment>
+            }
 
-          { /* The user profile editing form shows a "locked" password field and a text
+            { /* The user profile editing form shows a "locked" password field and a text
                link to change it. */ }
-            {!register &&
-            <Fragment>
-              <div className={styles.fieldWrapperDisabled}>
-                <TextField
-                  className={styles.noPad}
-                  name="password"
-                  type="password"
-                  label="user.password"
-                  value="**********"
-                  disabled
-                  rightElement={<LockIcon size="24" />}
-                />
-              </div>
-              <div className={styles.fieldWrapper}>
-                <Link
-                  href={USER_PASSWORD_PATH}
-                  className={styles.changePasswordButton}
-                >
-                  <I18n.Text string="password.update" />
-                </Link>
-              </div>
-            </Fragment>
-          }
+            { !register &&
+              <Fragment>
+                <div className={styles.fieldWrapperDisabled}>
+                  <TextField
+                    className={styles.noPad}
+                    name="password"
+                    type="password"
+                    label="user.password"
+                    value="**********"
+                    disabled
+                    rightElement={<LockIcon size="24" />}
+                  />
+                </div>
+                <div className={styles.fieldWrapper}>
+                  <Link
+                    href={USER_PASSWORD_PATH}
+                    className={styles.changePasswordButton}
+                  >
+                    <I18n.Text string="password.update" />
+                  </Link>
+                </div>
+              </Fragment>
+            }
 
           </Form>
 
