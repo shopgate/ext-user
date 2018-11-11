@@ -30,10 +30,14 @@ export class NavigatorButtons extends Component {
     super(props);
 
     this.state = {
-      [`${BUTTON_SAVE}_disabled`]: true,
-      [`${BUTTON_SAVE}_hidden`]: true,
-      [`${BUTTON_CHANGE_PASSWORD}_disabled`]: true,
-      [`${BUTTON_CHANGE_PASSWORD}_hidden`]: true,
+      [BUTTON_SAVE]: {
+        disabled: true,
+        hidden: true,
+      },
+      [BUTTON_CHANGE_PASSWORD]: {
+        disabled: true,
+        hidden: true,
+      },
     };
   }
 
@@ -114,35 +118,26 @@ export class NavigatorButtons extends Component {
   }
 
   /**
-   * Maps button state and saves it into the component state. Designed to work similar to setState.
+   * Maps button state and saves it into the component state. Designed to work in async functions.
    * @param {string} buttonName The button to which this field should be assigned to.
    * @param {Object} obj The state of the button to set
    */
   setButtonState = (buttonName, obj) => {
-    this.setState(Object.keys(obj).reduce((accumulator, key) => ({
-      ...accumulator,
-      [`${buttonName}_${key}`]: obj[key],
-    }), {}));
+    this.setState(prevState => ({
+      ...prevState,
+      [buttonName]: {
+        ...prevState[buttonName],
+        ...obj,
+      },
+    }));
   }
 
   /**
-   * Returns a natural button state object.
+   * Returns the state object for the requested button.
    * @param {string} buttonName The button to which the state should be returned
    * @returns {Object}
    */
-  getButtonState = buttonName => (
-    Object.keys(this.state).reduce((accumulator, cur) => {
-      const keys = cur.split('_');
-      if (buttonName === keys[0]) {
-        return {
-          ...accumulator,
-          [keys[1]]: this.state[cur],
-        };
-      }
-
-      return accumulator;
-    }, {})
-  )
+  getButtonState = buttonName => this.state[buttonName];
 
   /**
    * Show button
