@@ -5,17 +5,15 @@ import { UnwrappedUserForm as UserForm } from './';
 /**
  * Noop function
  */
-const noop = () => {};
+const noop = jest.fn();
 
 describe('<UserForm>', () => {
   const props = {
-    isRegister: true,
+    register: true,
     registerUser: noop,
     updateUser: noop,
     user: {},
     validateUser: noop,
-    disabled: false,
-    validationErrors: {},
   };
 
   it('should render user register form', () => {
