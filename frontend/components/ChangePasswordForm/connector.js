@@ -1,8 +1,9 @@
 import { connect } from 'react-redux';
 import goBackHistory from '@shopgate/pwa-common/actions/history/goBackHistory';
+import buildValidationErrorList from '@shopgate/pwa-ui-shared/Form/Builder/builders/buildValidationErrorList';
 import updatePassword from '../../actions/updatePassword';
 import { changePasswordSchema } from '../../common/userSchema';
-import { joiToValidationErrors, validationErrorsToMap } from '../../common/transform';
+import { joiToValidationErrors } from '../../common/transform';
 
 /**
  * @param {Object} passwords passwords
@@ -19,7 +20,7 @@ const validatePassword = (passwords) => {
       ...err,
       message: passwords[err.path] ? err.message : 'user.errors.blank',
     }));
-  return validationErrorsToMap(validationErrors);
+  return buildValidationErrorList(validationErrors);
 };
 
 /**

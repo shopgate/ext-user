@@ -54,11 +54,14 @@ class UserForm extends Component {
       // Inline validation is activated on the first click on the "save" or "register" button
       inlineValidation: false,
     };
+  }
 
-    if (!props.register) {
-      // On the user profile edit page the save button shows up in greyed out state initially
+  componentDidMount = () => {
+    // The register page's "save" button is not the one on the top right corner (no need to add it).
+    if (!this.props.register) {
       EventEmitter.on(events.NAVIGATOR_SAVE_BUTTON_CLICK, this.saveUserData);
-      EventEmitter.emit(events.NAVIGATOR_SAVE_BUTTON_SHOW);
+
+      // Start out in disabled state.
       EventEmitter.emit(events.NAVIGATOR_SAVE_BUTTON_DISABLE);
     }
   }
@@ -106,6 +109,13 @@ class UserForm extends Component {
 
       // Send changes to React to handle component update
       this.setState(newState);
+    }
+  }
+
+  componentWillUnmount = () => {
+    // Do this on "edit profile" page only.
+    if (!this.props.register) {
+      EventEmitter.off(events.NAVIGATOR_SAVE_BUTTON_CLICK, this.saveUserData);
     }
   }
 

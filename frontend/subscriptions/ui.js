@@ -2,11 +2,9 @@ import { routeDidEnter, routeDidLeave } from '@shopgate/pwa-common/streams/histo
 import setViewLoading from '@shopgate/pwa-common/actions/view/setViewLoading';
 import unsetViewLoading from '@shopgate/pwa-common/actions/view/unsetViewLoading';
 import { getHistoryPathname } from '@shopgate/pwa-common/selectors/history';
+import { themeName } from '@shopgate/pwa-common/helpers/config';
 import EventEmitter from '../events/emitter';
-import {
-  NAVIGATOR_SAVE_BUTTON_CLICK,
-  NAVIGATOR_SAVE_BUTTON_HIDE,
-} from '../constants/EventTypes';
+import * as events from '../constants/EventTypes';
 import { toggleNavigatorCart, toggleNavigatorSearch, setUserViewIsLoading } from '../action-creators/ui';
 import {
   USER_PROFILE_PATH,
@@ -14,6 +12,7 @@ import {
   USER_ADDRESS_BOOK_PATH,
   userAddressPathPattern,
   USER_PASSWORD_PATH,
+  USER_ADDRESS_PATH_START,
 } from '../constants/RoutePaths';
 import {
   userWillRegister$,
@@ -34,6 +33,8 @@ import {
 } from '../streams/addressBook';
 import { getLoadingViewPathName } from '../selectors/ui';
 
+const isIos = themeName.includes('ios');
+
 export default (subscribe) => {
   const userAddressPath = userAddressPathPattern.stringify();
   const fullPageViewEnter$ = routeDidEnter(USER_REGISTER_PATH)
@@ -51,6 +52,13 @@ export default (subscribe) => {
       routeDidLeave(USER_PASSWORD_PATH)
     );
 
+  const userAddressPageViewEnter$ = routeDidEnter(USER_ADDRESS_PATH_START);
+  const userAddressPageViewLeave$ = routeDidLeave(USER_ADDRESS_PATH_START);
+  const userProfilePageViewEnter$ = routeDidEnter(USER_PROFILE_PATH);
+  const userProfilePageViewLeave$ = routeDidLeave(USER_PROFILE_PATH);
+  const userPasswordPageViewEnter$ = routeDidEnter(USER_PASSWORD_PATH);
+  const userPasswordPageViewLeave$ = routeDidLeave(USER_PASSWORD_PATH);
+
   const viewIsLoading$ = userWillRegister$.merge(
     userWillUpdate$,
     getUserAddresses$,
@@ -67,13 +75,45 @@ export default (subscribe) => {
     userAddressFailed$
   );
 
+  subscribe(userAddressPageViewEnter$, ({ pathname }) => {
+    // Only show when editing an address
+    if (!pathname.endsWith('/0')) {
+      EventEmitter.emit(events.NAVIGATOR_SAVE_BUTTON_SHOW);
+    }
+  });
+
+  subscribe(userAddressPageViewLeave$, ({ pathname }) => {
+    // Only hide when an address was edited
+    if (!pathname.endsWith('/0')) {
+      EventEmitter.emit(events.NAVIGATOR_SAVE_BUTTON_HIDE);
+    }
+  });
+
+  subscribe(userProfilePageViewEnter$, () => {
+    EventEmitter.emit(events.NAVIGATOR_SAVE_BUTTON_SHOW);
+  });
+
+  subscribe(userProfilePageViewLeave$, () => {
+    EventEmitter.emit(events.NAVIGATOR_SAVE_BUTTON_HIDE);
+  });
+
+  subscribe(userPasswordPageViewEnter$, () => {
+    // When the change password page is shown, it has it's own save button (depending on theme)
+    if (isIos) {
+      EventEmitter.emit(events.NAVIGATOR_CHANGE_PASSWORD_BUTTON_SHOW);
+    }
+  });
+
+  subscribe(userPasswordPageViewLeave$, () => {
+    if (isIos) {
+      EventEmitter.emit(events.NAVIGATOR_CHANGE_PASSWORD_BUTTON_HIDE);
+    }
+  });
+
   // Show search and cart buttons in navigator again after address book is closed.
   subscribe(fullPageViewLeave$, ({ dispatch }) => {
     dispatch(toggleNavigatorCart(true));
     dispatch(toggleNavigatorSearch(true));
-
-    EventEmitter.removeAllListeners(NAVIGATOR_SAVE_BUTTON_CLICK);
-    EventEmitter.emit(NAVIGATOR_SAVE_BUTTON_HIDE);
   });
 
   // Hide search and cart buttons in navigator when address book is opened.

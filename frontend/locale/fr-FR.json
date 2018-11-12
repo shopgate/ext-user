@@ -135,6 +135,7 @@
     "payment_options": "Options de paiement"
   },
   "navigator": {
-    "save": "Save"
+    "save": "Save",
+    "changePassword": "Save"
   }
 }
