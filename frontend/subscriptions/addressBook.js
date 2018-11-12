@@ -3,6 +3,7 @@ import { routeDidChange$ } from '@shopgate/pwa-common/streams/history';
 import showModal from '@shopgate/pwa-common/actions/modal/showModal';
 import createToast from '@shopgate/pwa-common/actions/toast/createToast';
 import { userDidUpdate$ } from '@shopgate/pwa-common/streams/user';
+import { getHistoryPathname } from '@shopgate/pwa-common/selectors/history';
 import getAddresses from './../actions/getAddresses';
 import {
   userAddressChanged$,
@@ -42,11 +43,15 @@ export default (subscribe) => {
   });
 
   // Return back to address book, when address is added/updated
-  subscribe(userAddressChanged$, ({ dispatch, action }) => {
+  subscribe(userAddressChanged$, ({ dispatch, action, getState }) => {
     // Wait for getUser action to finish before continuing to avoid changing view
     dispatch(getAddresses(false)).then(() => {
       if (!action.silent) {
-        dispatch(goBackHistory());
+        const currentPath = getHistoryPathname(getState());
+        // Check if we still on address page
+        if (currentPath.startsWith(`${userAddressPathPrefix}/`)) {
+          dispatch(goBackHistory());
+        }
       }
     });
   });

@@ -4,15 +4,20 @@ import subscription from './ui';
 let mockToggleNavigatorCart;
 let mockToggleNavigatorSearch;
 let mockSetViewLoading;
+let mockSetUserViewIsLoading;
 let mockUnsetViewLoading;
 jest.mock('../action-creators/ui', () => ({
   toggleNavigatorCart: (...args) => mockToggleNavigatorCart(...args),
   toggleNavigatorSearch: (...args) => mockToggleNavigatorSearch(...args),
+  setUserViewIsLoading: (...args) => mockSetUserViewIsLoading(...args),
 }));
 jest.mock('@shopgate/pwa-common/actions/view/setViewLoading', () => pathname => mockSetViewLoading(pathname));
 jest.mock('@shopgate/pwa-common/actions/view/unsetViewLoading', () => pathname => mockUnsetViewLoading(pathname));
 jest.mock('@shopgate/pwa-common/selectors/history', () => ({
   getHistoryPathname: () => '/user',
+}));
+jest.mock('../selectors/ui', () => ({
+  getLoadingViewPathName: () => '/user',
 }));
 
 describe('UI subscriptions', () => {
@@ -31,6 +36,7 @@ describe('UI subscriptions', () => {
     dispatch = jest.fn();
     mockToggleNavigatorCart = jest.fn();
     mockToggleNavigatorSearch = jest.fn();
+    mockSetUserViewIsLoading = jest.fn();
     mockSetViewLoading = jest.fn();
     mockUnsetViewLoading = jest.fn();
   });
@@ -52,6 +58,7 @@ describe('UI subscriptions', () => {
   it('should set view as loading', () => {
     // eslint-disable-next-line extra-rules/no-single-line-objects
     viewIsLoading$[1]({ dispatch, getState: () => {} });
+    expect(mockSetUserViewIsLoading).toHaveBeenCalledWith('/user');
     expect(mockSetViewLoading).toHaveBeenCalledWith('/user');
   });
 

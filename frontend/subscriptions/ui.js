@@ -4,7 +4,7 @@ import unsetViewLoading from '@shopgate/pwa-common/actions/view/unsetViewLoading
 import { getHistoryPathname } from '@shopgate/pwa-common/selectors/history';
 import EventEmitter from '../events/emitter';
 import * as events from '../constants/EventTypes';
-import { toggleNavigatorCart, toggleNavigatorSearch } from '../action-creators/ui';
+import { toggleNavigatorCart, toggleNavigatorSearch, setUserViewIsLoading } from '../action-creators/ui';
 import {
   USER_PROFILE_PATH,
   USER_REGISTER_PATH,
@@ -30,6 +30,7 @@ import {
   userAddressFailed$,
   userAddressesDeleteConfirmed$,
 } from '../streams/addressBook';
+import { getLoadingViewPathName } from '../selectors/ui';
 
 export default (subscribe) => {
   const userAddressPath = userAddressPathPattern.stringify();
@@ -116,11 +117,13 @@ export default (subscribe) => {
 
   // View is loading
   subscribe(viewIsLoading$, ({ dispatch, getState }) => {
-    dispatch(setViewLoading(getHistoryPathname(getState())));
+    const historyPathname = getHistoryPathname(getState());
+    dispatch(setUserViewIsLoading(historyPathname));
+    dispatch(setViewLoading(historyPathname));
   });
 
   // View is idle
   subscribe(viewIsIdle$, ({ dispatch, getState }) => {
-    dispatch(unsetViewLoading(getHistoryPathname(getState())));
+    dispatch(unsetViewLoading(getLoadingViewPathName(getState())));
   });
 };
