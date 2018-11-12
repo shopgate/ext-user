@@ -1,5 +1,8 @@
 import EventEmitter from 'events';
 
+/**
+ * Mock version of Emitter
+ */
 class UserEventEmitter extends EventEmitter {
   /**
    * @inheritDoc

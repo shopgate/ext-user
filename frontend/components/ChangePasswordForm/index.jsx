@@ -57,6 +57,7 @@ class ChangePasswordForm extends Component {
   componentDidMount = () => {
     if (isIos) {
       EventEmitter.on(events.NAVIGATOR_CHANGE_PASSWORD_BUTTON_CLICK, this.updatePassword);
+      EventEmitter.emit(events.NAVIGATOR_CHANGE_PASSWORD_BUTTON_ENABLE);
     }
   }
 

@@ -19,7 +19,8 @@ describe('UI subscriptions', () => {
   const subscribe = jest.fn();
   subscription(subscribe);
 
-  const [
+  // Skip first 6 Event subscriptions
+  const [,,,,,,
     fullPageViewLeave$,
     fullPageViewEnter$,
     viewIsLoading$,
@@ -36,7 +37,7 @@ describe('UI subscriptions', () => {
   });
 
   it('should subscribe to the streams', () => {
-    expect(subscribe.mock.calls.length).toEqual(4);
+    expect(subscribe.mock.calls.length).toEqual(10);
   });
 
   it('should toggle navigator controls when route is entered', () => {

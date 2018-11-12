@@ -10,7 +10,6 @@ import * as portals from '../../constants/Portals';
 import EventEmitter from '../../events/emitter';
 import {
   NAVIGATOR_SAVE_BUTTON_CLICK,
-  NAVIGATOR_SAVE_BUTTON_SHOW,
   NAVIGATOR_SAVE_BUTTON_ENABLE,
   NAVIGATOR_SAVE_BUTTON_DISABLE,
 } from '../../constants/EventTypes';

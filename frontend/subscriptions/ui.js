@@ -2,6 +2,7 @@ import { routeDidEnter, routeDidLeave } from '@shopgate/pwa-common/streams/histo
 import setViewLoading from '@shopgate/pwa-common/actions/view/setViewLoading';
 import unsetViewLoading from '@shopgate/pwa-common/actions/view/unsetViewLoading';
 import { getHistoryPathname } from '@shopgate/pwa-common/selectors/history';
+import { themeName } from '@shopgate/pwa-common/helpers/config';
 import EventEmitter from '../events/emitter';
 import * as events from '../constants/EventTypes';
 import { toggleNavigatorCart, toggleNavigatorSearch } from '../action-creators/ui';
@@ -31,6 +32,8 @@ import {
   userAddressesDeleteConfirmed$,
 } from '../streams/addressBook';
 
+const isIos = themeName.includes('ios');
+
 export default (subscribe) => {
   const userAddressPath = userAddressPathPattern.stringify();
   const fullPageViewEnter$ = routeDidEnter(USER_REGISTER_PATH)
@@ -52,8 +55,8 @@ export default (subscribe) => {
   const userAddressPageViewLeave$ = routeDidLeave(USER_ADDRESS_PATH_START);
   const userProfilePageViewEnter$ = routeDidEnter(USER_PROFILE_PATH);
   const userProfilePageViewLeave$ = routeDidLeave(USER_PROFILE_PATH);
-  const userPasswordPageViewEnter$ = routeDidEnter(USER_REGISTER_PATH);
-  const userPasswordPageViewLeave$ = routeDidLeave(USER_REGISTER_PATH);
+  const userPasswordPageViewEnter$ = routeDidEnter(USER_PASSWORD_PATH);
+  const userPasswordPageViewLeave$ = routeDidLeave(USER_PASSWORD_PATH);
 
   const viewIsLoading$ = userWillRegister$.merge(
     userWillUpdate$,
@@ -95,11 +98,15 @@ export default (subscribe) => {
 
   subscribe(userPasswordPageViewEnter$, () => {
     // When the change password page is shown, it has it's own save button (depending on theme)
-    EventEmitter.emit(events.NAVIGATOR_SAVE_BUTTON_HIDE);
+    if (isIos) {
+      EventEmitter.emit(events.NAVIGATOR_CHANGE_PASSWORD_BUTTON_SHOW);
+    }
   });
 
   subscribe(userPasswordPageViewLeave$, () => {
-    EventEmitter.emit(events.NAVIGATOR_CHANGE_PASSWORD_BUTTON_HIDE);
+    if (isIos) {
+      EventEmitter.emit(events.NAVIGATOR_CHANGE_PASSWORD_BUTTON_HIDE);
+    }
   });
 
   // Show search and cart buttons in navigator again after address book is closed.
