@@ -53,7 +53,7 @@ export default ({ mail, password: ignore, ...restUser }) => async (dispatch, get
   dispatch(updateUserSuccess(messages, {
     ...restUser,
     // Add "mail" property only if it was set
-    ...Object.assign({}, mail ? { mail } : undefined),
+    ...mail && { mail },
   }));
 };
 
