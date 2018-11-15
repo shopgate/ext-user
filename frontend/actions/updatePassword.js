@@ -8,7 +8,8 @@ import { updateUser, updateUserSuccess, updateUserFailed } from './../action-cre
  * @return {function(*): *}
  */
 export default passwords => (dispatch) => {
-  dispatch(updateUser());
+  const userData = { passwords };
+  dispatch(updateUser(userData));
 
   new PipelineRequest(PIPELINE_UPDATE_PASSWORD)
     .setTrusted()
@@ -16,9 +17,9 @@ export default passwords => (dispatch) => {
     .setErrorBlacklist([EINVALIDCREDENTIALS])
     .dispatch()
     .then(() => {
-      dispatch(updateUserSuccess());
+      dispatch(updateUserSuccess([], userData));
     })
     .catch((error) => {
-      dispatch(updateUserFailed(error));
+      dispatch(updateUserFailed(error, userData));
     });
 };

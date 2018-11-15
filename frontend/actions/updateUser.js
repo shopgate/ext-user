@@ -32,7 +32,7 @@ export default ({ mail, password: ignore, ...restUser }) => async (dispatch, get
   try {
     await updateUserAction(restUser);
   } catch (error) {
-    dispatch(updateUserFailed(error));
+    dispatch(updateUserFailed(error, restUser));
     return;
   }
 
@@ -43,13 +43,17 @@ export default ({ mail, password: ignore, ...restUser }) => async (dispatch, get
       try {
         ({ messages } = await updateMailAction(mail));
       } catch (error) {
-        dispatch(updateUserFailed(error));
+        dispatch(updateUserFailed(error, restUser));
         return;
       }
     }
   }
 
   // Success after all
-  dispatch(updateUserSuccess(messages));
+  dispatch(updateUserSuccess(messages, {
+    ...restUser,
+    // Add "mail" property only if it was set
+    ...Object.assign({}, mail ? { mail } : undefined),
+  }));
 };
 
