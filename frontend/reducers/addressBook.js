@@ -115,7 +115,7 @@ export default (state = initialState, action) => {
     }
 
     case SUCCESS_LOGOUT:
-      return {};
+      return initialState;
     default:
       return state;
   }

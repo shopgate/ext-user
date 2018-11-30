@@ -9,8 +9,8 @@ import buildValidationErrorList from '@shopgate/pwa-ui-shared/Form/Builder/build
 import { themeName } from '@shopgate/pwa-common/helpers/config';
 import TextField from '@shopgate/pwa-ui-shared/Form/TextField';
 import Password from '@shopgate/pwa-ui-shared/Form/Password';
+import { UIEvents } from '@shopgate/pwa-core';
 import * as portals from '../../constants/Portals';
-import EventEmitter from '../../events/emitter';
 import * as events from '../../constants/EventTypes';
 import connect from './connector';
 import styles from './style';
@@ -56,11 +56,11 @@ class ChangePasswordForm extends Component {
 
   componentDidMount = () => {
     if (isIos) {
-      EventEmitter.on(events.NAVIGATOR_CHANGE_PASSWORD_BUTTON_CLICK, this.updatePassword);
-      EventEmitter.emit(events.NAVIGATOR_CHANGE_PASSWORD_BUTTON_ENABLE);
+      this.registerSaveButton();
     }
   }
 
+  // noinspection JSCheckFunctionSignatures
   /**
    * Update state with next props (on successful or failed "update" with backend validation errors).
    * @param {Object} nextProps The next props.
@@ -92,11 +92,19 @@ class ChangePasswordForm extends Component {
     this.setState(newState);
   }
 
-  componentWillUnmount = () => {
-    if (isIos) {
-      EventEmitter.off(events.NAVIGATOR_CHANGE_PASSWORD_BUTTON_CLICK, this.updatePassword);
-    }
-  }
+  /**
+   * @returns {boolean}
+   */
+  enableSaveButton = () => UIEvents.emit(events.APP_BAR_SAVE_BUTTON_ENABLE);
+  /**
+   * @returns {boolean}
+   */
+  disableSaveButton = () => UIEvents.emit(events.APP_BAR_SAVE_BUTTON_DISABLE);
+  /**
+   * @returns {boolean}
+   */
+  registerSaveButton = () => UIEvents
+    .addListener(events.APP_BAR_SAVE_BUTTON_CLICK, this.updatePassword);
 
   /**
    * Takes an object to add into the state
@@ -125,9 +133,11 @@ class ChangePasswordForm extends Component {
       disabled: Object.keys(errors).length > 0,
     });
     if (isIos) {
-      EventEmitter.emit(Object.keys(errors).length ?
-        events.NAVIGATOR_CHANGE_PASSWORD_BUTTON_DISABLE :
-        events.NAVIGATOR_CHANGE_PASSWORD_BUTTON_ENABLE);
+      if (Object.keys(errors).length) {
+        this.disableSaveButton();
+      } else {
+        this.enableSaveButton();
+      }
     }
   }
 
@@ -145,7 +155,7 @@ class ChangePasswordForm extends Component {
 
     if (Object.keys(errors).length > 0) {
       if (isIos) {
-        EventEmitter.emit(events.NAVIGATOR_CHANGE_PASSWORD_BUTTON_DISABLE);
+        this.disableSaveButton();
       }
       return;
     }

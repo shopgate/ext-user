@@ -5,6 +5,10 @@ import { userDataReceived$ } from '@shopgate/pwa-common/streams/user';
 import getUser from '@shopgate/pwa-common/actions/user/getUser';
 import { historyReplace } from '@shopgate/pwa-common/actions/router/historyReplace';
 
+/**
+ * @refactor !!!
+ * @param {Function} subscribe subscribe
+ */
 export default (subscribe) => {
   const selectAddressRouteDidEnter$ = routeDidChange$.filter(({ pathname }) => pathname === '/checkout/selectAddress');
   const checkoutEnter$ = main$.filter(({ action }) => action.type === 'CHECKOUT_ENTER');

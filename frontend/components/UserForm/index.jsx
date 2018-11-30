@@ -3,14 +3,14 @@ import PropTypes from 'prop-types';
 import { isEqual } from 'lodash';
 import Portal from '@shopgate/pwa-common/components/Portal';
 import I18n from '@shopgate/pwa-common/components/I18n';
-import Link from '@shopgate/pwa-common/components/Router/components/Link';
+import Link from '@shopgate/pwa-common/components/Link';
 import buildValidationErrorList from '@shopgate/pwa-ui-shared/Form/Builder/builders/buildValidationErrorList';
 import TextField from '@shopgate/pwa-ui-shared/Form/TextField';
 import LockIcon from '@shopgate/pwa-ui-shared/icons/LockIcon';
 import Form from '@shopgate/pwa-ui-shared/Form';
 import RippleButton from '@shopgate/pwa-ui-shared/RippleButton';
+import { UIEvents } from '@shopgate/pwa-core';
 import * as portals from '../../constants/Portals';
-import EventEmitter from '../../events/emitter';
 import * as events from '../../constants/EventTypes';
 import { USER_PASSWORD_PATH } from '../../constants/RoutePaths';
 import connect from './connector';
@@ -59,13 +59,11 @@ class UserForm extends Component {
   componentDidMount = () => {
     // The register page's "save" button is not the one on the top right corner (no need to add it).
     if (!this.props.register) {
-      EventEmitter.on(events.NAVIGATOR_SAVE_BUTTON_CLICK, this.saveUserData);
-
-      // Start out in disabled state.
-      EventEmitter.emit(events.NAVIGATOR_SAVE_BUTTON_DISABLE);
+      this.registerSaveButton();
     }
   }
 
+  // noinspection JSCheckFunctionSignatures
   /**
    * Update state with next props (on successful or failed "update" with backend validation errors).
    * @param {Object} nextProps The next props.
@@ -102,9 +100,11 @@ class UserForm extends Component {
 
       // Avoid disabling the already disabled button
       if (this.state.disabled !== newState.disabled) {
-        EventEmitter.emit(newState.disabled ?
-          events.NAVIGATOR_SAVE_BUTTON_DISABLE :
-          events.NAVIGATOR_SAVE_BUTTON_ENABLE);
+        if (newState.disabled) {
+          this.disableSaveButton();
+        } else {
+          this.enableSaveButton();
+        }
       }
 
       // Send changes to React to handle component update
@@ -115,9 +115,23 @@ class UserForm extends Component {
   componentWillUnmount = () => {
     // Do this on "edit profile" page only.
     if (!this.props.register) {
-      EventEmitter.off(events.NAVIGATOR_SAVE_BUTTON_CLICK, this.saveUserData);
+      this.registerSaveButton();
     }
   }
+
+  /**
+   * @returns {boolean}
+   */
+  enableSaveButton = () => UIEvents.emit(events.APP_BAR_SAVE_BUTTON_ENABLE);
+  /**
+   * @returns {boolean}
+   */
+  disableSaveButton = () => UIEvents.emit(events.APP_BAR_SAVE_BUTTON_DISABLE);
+  /**
+   * @returns {boolean}
+   */
+  registerSaveButton = () => UIEvents
+    .addListener(events.APP_BAR_SAVE_BUTTON_CLICK, this.saveUserData);
 
   /**
    * @param {Object} userData The user data to filter from
@@ -165,9 +179,11 @@ class UserForm extends Component {
       newState.disabled = hasErrors || !hasChanges;
 
       if (this.state.disabled !== newState.disabled) {
-        EventEmitter.emit(newState.disabled ?
-          events.NAVIGATOR_SAVE_BUTTON_DISABLE :
-          events.NAVIGATOR_SAVE_BUTTON_ENABLE);
+        if (newState.disabled) {
+          this.disableSaveButton();
+        } else {
+          this.enableSaveButton();
+        }
       }
     } else {
       // Disabled state is only controlled by errors being there or not
@@ -188,7 +204,7 @@ class UserForm extends Component {
 
     // Deactivate the top right "save" button on the edit profile page
     if (!this.props.register && !this.state.disabled) {
-      EventEmitter.emit(events.NAVIGATOR_SAVE_BUTTON_DISABLE);
+      this.disableSaveButton();
     }
 
     this.setState({
@@ -296,4 +312,5 @@ class UserForm extends Component {
 }
 
 export { UserForm as UnwrappedUserForm };
+
 export default connect(UserForm);

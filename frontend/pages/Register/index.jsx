@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import I18n from '@shopgate/pwa-common/components/I18n';
 import { Route } from '@shopgate/pwa-common/components';
+import { themeName } from '@shopgate/pwa-common/helpers/config';
 import { Theme } from '@shopgate/pwa-common/context';
 import UserForm from '../../components/UserForm';
 import { USER_REGISTER_PATH } from './../../constants/RoutePaths';
@@ -19,7 +20,7 @@ const Register = ({ isLoggedIn }) => (
   <Theme>
     {({ View, AppBar }) => (
       <View>
-        <AppBar title={isIos ? undefined : 'register.title'} right={null} />
+        <AppBar title={isIos ? '' : 'register.title'} right={null} />
         <section className={styles.container}>
           <div className={styles.subline}>
             <I18n.Text string="register.subTitle" />

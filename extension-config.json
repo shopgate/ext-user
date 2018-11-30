@@ -132,6 +132,12 @@
       "type": "portals"
     },
     {
+      "id": "PasswordPage",
+      "path": "frontend/pages/ChangePassword/index.jsx",
+      "target": "app.routes",
+      "type": "portals"
+    },
+    {
       "id": "AddressBookPage",
       "path": "frontend/pages/AddressBook/Overview/index.jsx",
       "target": "app.routes",
@@ -141,12 +147,6 @@
       "id": "AddressDetailsPage",
       "path": "frontend/pages/AddressBook/AddressDetails/index.jsx",
       "target": "app.routes",
-      "type": "portals"
-    },
-    {
-      "id": "NavigatorButtons",
-      "path": "frontend/components/NavigatorButtons/index.jsx",
-      "target": "nav-bar.navigator.icons.after",
       "type": "portals"
     },
     {

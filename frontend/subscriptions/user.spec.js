@@ -2,16 +2,13 @@ import subscription from './user';
 
 // Create action mocks.
 let mockGetUser;
-let mockCreateToast;
 let mockSuccessLogin;
 jest.mock('@shopgate/pwa-common/actions/user/getUser', () => () => mockGetUser());
-jest.mock('@shopgate/pwa-common/actions/toast/createToast', () => options => mockCreateToast(options));
-jest.mock('@shopgate/pwa-common/selectors/history', () => ({
-  getHistoryPathname: () => '/user',
-  getRedirectLocation: () => null,
-}));
 jest.mock('@shopgate/pwa-common/action-creators/user', () => ({
   successLogin: () => mockSuccessLogin(),
+}));
+jest.mock('@shopgate/pwa-common/helpers/router', () => ({
+  getCurrentRoute: () => ({ pattern: '/login' }),
 }));
 
 describe('User subscriptions', () => {
@@ -22,13 +19,13 @@ describe('User subscriptions', () => {
     fetchUser$,
     registerAndDataReceived$,
     userUpdateSuccess$,
+    userUpdateFailed$,
   ] = subscribe.mock.calls;
 
   let dispatch;
   beforeEach(() => {
     dispatch = jest.fn();
     mockGetUser = jest.fn();
-    mockCreateToast = jest.fn();
     mockSuccessLogin = jest.fn();
   });
 
@@ -48,8 +45,30 @@ describe('User subscriptions', () => {
   });
 
   it('should create toast on userUpdateSuccess$ stream', () => {
+    const events = jest.fn();
+    events.emit = jest.fn();
+    // noinspection JSCheckFunctionSignatures
+    jest.spyOn(events, 'emit');
+
     // eslint-disable-next-line extra-rules/no-single-line-objects
-    userUpdateSuccess$[1]({ dispatch, action: {}, getState: () => {} });
-    expect(mockCreateToast).toHaveBeenCalledWith({ message: 'profile.updated' });
+    userUpdateSuccess$[1]({ dispatch, action: {}, events });
+    expect(events.emit).toHaveBeenCalledWith('toast_add', {
+      id: 'profile.updated',
+      message: 'profile.updated',
+    });
+  });
+
+  it('should create toast on userUpdateSuccess$ stream', () => {
+    const events = jest.fn();
+    events.emit = jest.fn();
+    // noinspection JSCheckFunctionSignatures
+    jest.spyOn(events, 'emit');
+
+    // eslint-disable-next-line extra-rules/no-single-line-objects
+    userUpdateFailed$[1]({ dispatch, action: { error: {} }, events });
+    expect(events.emit).toHaveBeenCalledWith('toast_add', {
+      id: 'profile.failed',
+      message: 'profile.failed',
+    });
   });
 });

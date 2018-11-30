@@ -1,54 +1,52 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+import React from 'react';
 import { themeName } from '@shopgate/pwa-common/helpers/config';
 import I18n from '@shopgate/pwa-common/components/I18n';
 import Portal from '@shopgate/pwa-common/components/Portal';
+import { Theme, RouteContext } from '@shopgate/pwa-common/context';
+import { Route } from '@shopgate/pwa-common/components';
 import * as portals from '../../constants/Portals';
 import ChangePasswordForm from '../../components/ChangePasswordForm';
+import { USER_PASSWORD_PATH } from '../../constants/RoutePaths';
+import AppBarSaveButton from '../../components/AppBarSaveButton';
+import connect from '../Register/connector';
 import styles from './style';
 
 const isIos = themeName.includes('ios');
 
 /**
  * The Change password page.
+ * @returns {JSX}
  */
-class ChangePassword extends Component {
-  static contextTypes = {
-    i18n: PropTypes.func,
-  };
+const ChangePassword = () => (
+  <Theme>
+    {({ View, AppBar }) => (
+      <RouteContext.Consumer>
+        {({ visible }) => (
+          <View>
+            <AppBar
+              title={isIos ? '' : 'password.update'}
+              right={(isIos && visible) ? <AppBarSaveButton testId="ChangePasswordSaveButton" /> : null}
+            />
+            <section className={styles.container} data-test-id="ChangePasswordPage">
 
-  /**
-   * @return {string}
-   */
-  get title() {
-    const { __ } = this.context.i18n();
-    return __('password.update');
-  }
+              <h1 className={styles.headline}>
+                <I18n.Text string="password.update" />
+              </h1>
 
-  /**
-   * @return {*}
-   */
-  render() {
-    // eslint-disable-next-line react/prop-types
-    const { View } = this.props;
-    return (
-      <View title={isIos ? '' : this.title}>
-        <section className={styles.container} data-test-id="ChangePasswordPage">
+              <Portal name={portals.USER_PASSWORD_BEFORE} />
+              <Portal name={portals.USER_PASSWORD} >
+                <ChangePasswordForm />
+              </Portal>
+              <Portal name={portals.USER_PASSWORD_AFTER} />
 
-          <h1 className={styles.headline}>
-            <I18n.Text string={this.title} />
-          </h1>
+            </section>
+          </View>
+        )}
+      </RouteContext.Consumer>
+    )}
+  </Theme>
+);
 
-          <Portal name={portals.USER_PASSWORD_BEFORE} />
-          <Portal name={portals.USER_PASSWORD} >
-            <ChangePasswordForm />
-          </Portal>
-          <Portal name={portals.USER_PASSWORD_AFTER} />
-
-        </section>
-      </View>
-    );
-  }
-}
-
-export default ChangePassword;
+export default () => (
+  <Route pattern={USER_PASSWORD_PATH} component={connect(ChangePassword)} />
+);

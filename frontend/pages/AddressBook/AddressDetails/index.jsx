@@ -1,13 +1,14 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { Route } from '@shopgate/pwa-common/components';
-import { Theme } from '@shopgate/pwa-common/context';
+import { Theme, RouteContext } from '@shopgate/pwa-common/context';
 import I18n from '@shopgate/pwa-common/components/I18n';
 import Portal from '@shopgate/pwa-common/components/Portal';
 import { themeName } from '@shopgate/pwa-common/helpers/config';
 import * as portals from '../../../constants/Portals';
 import AddressForm from '../../../components/AddressForm';
 import { USER_ADDRESS_PATH } from '../../../constants/RoutePaths';
+import AppBarSaveButton from '../../../components/AppBarSaveButton';
 import connect from './connector';
 import style from './style';
 
@@ -32,23 +33,35 @@ const title = (address) => {
 const AddressDetails = ({ address }) => (
   <Theme>
     {({ View, AppBar }) => (
-      <View>
-        <AppBar title={title(address)} right={null} />
-        <section className={style.container} data-test-id="UserAddressBookAddPage">
+      <RouteContext.Consumer>
+        {({ visible }) => (
+          <View>
+            <AppBar
+              title={title(address)}
+              right={(visible && address.id) ? <AppBarSaveButton testId="UserAddressSaveButton" /> : null}
+            />
+            <section className={style.container} data-test-id="UserAddressBookAddPage">
 
-          {isIos &&
-            <h1 className={style.headline}>
-              <I18n.Text string={this.title} />
-            </h1>
-          }
+              {isIos &&
+                <h1 className={style.headline}>
+                  <I18n.Text string={title(address)} />
+                </h1>
+              }
 
-          <Portal name={portals.USER_ADDRESSES_ADD_BEFORE} />
-          <Portal name={portals.USER_ADDRESSES_ADD}>
-            <AddressForm address={address} />
-          </Portal>
-          <Portal name={portals.USER_ADDRESSES_ADD_AFTER} />
-        </section>
-      </View>
+              {visible && /* kick form off, when route is not visible */
+                <Fragment>
+                  <Portal name={portals.USER_ADDRESSES_ADD_BEFORE} />
+                  <Portal name={portals.USER_ADDRESSES_ADD}>
+                    <AddressForm address={address} />
+                  </Portal>
+                  <Portal name={portals.USER_ADDRESSES_ADD_AFTER} />
+                </Fragment>
+              }
+
+            </section>
+          </View>
+        )}
+      </RouteContext.Consumer>
     )}
   </Theme>
 );

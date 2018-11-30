@@ -8,6 +8,7 @@
   },
   "license": "Apache-2.0",
   "scripts": {
+    "test": "jest .",
     "cover": "jest --coverage",
     "lint": "./node_modules/.bin/eslint --ignore-path ../.gitignore --ext .js --ext .jsx ."
   },

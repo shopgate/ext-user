@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 import { isUserLoggedIn } from '@shopgate/pwa-common/selectors/user';
-import { getUserMenuEntries } from '../../selectors/config';
 import { historyPush } from '@shopgate/pwa-common/actions/router';
+import { getUserMenuEntries } from '../../selectors/config';
 
 /**
  * Maps the contents of the state to the component props.

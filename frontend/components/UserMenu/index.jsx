@@ -18,7 +18,6 @@ const UserMenu = (props) => {
     Headline,
     Item,
     isLoggedIn,
-
     // Rename config variables for convenience
     userMenuEntries: {
       accountProfile: displayAccountProfileMenuItem = true,
@@ -46,7 +45,7 @@ const UserMenu = (props) => {
       {/* Address book */}
       <Portal name={portals.NAV_MENU_ADDRESS_BOOK_BEFORE} props={props} />
       <Portal name={portals.NAV_MENU_ADDRESS_BOOK} props={props}>
-          {displayAccountProfileMenuItem &&
+        {displayAccountProfileMenuItem &&
           <Item
             label="navigation.profile"
             onClick={navigate(path.USER_PROFILE_PATH, 'navigation.profile')}
@@ -55,8 +54,8 @@ const UserMenu = (props) => {
           >
             <I18n.Text string="navigation.profile" />
           </Item>
-          }
-          {displayAddressBookMenuItem &&
+        }
+        {displayAddressBookMenuItem &&
           <Item
             label="navigation.address_book"
             onClick={navigate(path.USER_ADDRESS_BOOK_PATH, 'navigation.address_book')}
@@ -65,7 +64,7 @@ const UserMenu = (props) => {
           >
             <I18n.Text string="navigation.address_book" />
           </Item>
-          }
+        }
       </Portal>
       <Portal name={portals.NAV_MENU_ADDRESS_BOOK_AFTER} props={props} />
     </Fragment>

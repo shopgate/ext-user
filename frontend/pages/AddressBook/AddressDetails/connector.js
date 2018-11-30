@@ -1,7 +1,6 @@
 import { connect } from 'react-redux';
-import { getHistoryPathname } from '@shopgate/pwa-common/selectors/history';
+import { getCurrentRoute } from '@shopgate/pwa-common/helpers/router';
 import { getUserAddressIdSelector } from '../../../selectors/addressBook';
-import { userAddressPathPattern } from '../../../constants/RoutePaths';
 
 /**
  * Match current route and fetch user address for a form
@@ -9,8 +8,8 @@ import { userAddressPathPattern } from '../../../constants/RoutePaths';
  * @return {UserAddress}
  */
 const getAddressByRoute = (state) => {
-  const { id: addressId = 0 } = userAddressPathPattern.match(getHistoryPathname(state)) || {};
-  return getUserAddressIdSelector(state)(addressId);
+  const { params: { id = 0 } = {} } = getCurrentRoute();
+  return getUserAddressIdSelector(state)(id);
 };
 
 /**
@@ -21,4 +20,4 @@ const mapStateToProps = state => ({
   address: getAddressByRoute(state),
 });
 
-export default connect(mapStateToProps, null, null, { withRef: true });
+export default connect(mapStateToProps);
