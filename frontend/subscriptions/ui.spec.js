@@ -4,22 +4,28 @@ import subscription from './ui';
 let mockToggleNavigatorCart;
 let mockToggleNavigatorSearch;
 let mockSetViewLoading;
+let mockSetUserViewIsLoading;
 let mockUnsetViewLoading;
 jest.mock('../action-creators/ui', () => ({
   toggleNavigatorCart: (...args) => mockToggleNavigatorCart(...args),
   toggleNavigatorSearch: (...args) => mockToggleNavigatorSearch(...args),
+  setUserViewIsLoading: (...args) => mockSetUserViewIsLoading(...args),
 }));
 jest.mock('@shopgate/pwa-common/actions/view/setViewLoading', () => pathname => mockSetViewLoading(pathname));
 jest.mock('@shopgate/pwa-common/actions/view/unsetViewLoading', () => pathname => mockUnsetViewLoading(pathname));
 jest.mock('@shopgate/pwa-common/selectors/history', () => ({
   getHistoryPathname: () => '/user',
 }));
+jest.mock('../selectors/ui', () => ({
+  getLoadingViewPathName: () => '/user',
+}));
 
 describe('UI subscriptions', () => {
   const subscribe = jest.fn();
   subscription(subscribe);
 
-  const [
+  // Skip first 6 Event subscriptions
+  const [,,,,,,
     fullPageViewLeave$,
     fullPageViewEnter$,
     viewIsLoading$,
@@ -31,12 +37,13 @@ describe('UI subscriptions', () => {
     dispatch = jest.fn();
     mockToggleNavigatorCart = jest.fn();
     mockToggleNavigatorSearch = jest.fn();
+    mockSetUserViewIsLoading = jest.fn();
     mockSetViewLoading = jest.fn();
     mockUnsetViewLoading = jest.fn();
   });
 
   it('should subscribe to the streams', () => {
-    expect(subscribe.mock.calls.length).toEqual(4);
+    expect(subscribe.mock.calls.length).toEqual(10);
   });
 
   it('should toggle navigator controls when route is entered', () => {
@@ -52,6 +59,7 @@ describe('UI subscriptions', () => {
   it('should set view as loading', () => {
     // eslint-disable-next-line extra-rules/no-single-line-objects
     viewIsLoading$[1]({ dispatch, getState: () => {} });
+    expect(mockSetUserViewIsLoading).toHaveBeenCalledWith('/user');
     expect(mockSetViewLoading).toHaveBeenCalledWith('/user');
   });
 

@@ -1,10 +1,11 @@
 import { connect } from 'react-redux';
-import joi from 'joi-browser';
-import { isUserLoggedIn, getUserData } from '@shopgate/pwa-common/selectors/user';
+import { getUserData } from '@shopgate/pwa-common/selectors/user';
+import buildValidationErrorList from '@shopgate/pwa-ui-shared/Form/Builder/builders/buildValidationErrorList';
 import registerUser from '../../actions/registerUser';
 import updateUser from '../../actions/updateUser';
 import userSchema from '../../common/userSchema';
-import { joiToValidationErrors, validationErrorsToMap } from '../../common/transform';
+import { joiToValidationErrors } from '../../common/transform';
+import { getValidationErrors } from '../../selectors/user';
 
 /**
  * @param {Object} user user
@@ -12,7 +13,7 @@ import { joiToValidationErrors, validationErrorsToMap } from '../../common/trans
  * @return {Object}
  */
 const validateUser = (user, isUpdate = true) => {
-  const result = userSchema(joi, isUpdate).validate(user, { abortEarly: false });
+  const result = userSchema(isUpdate).validate(user, { abortEarly: false });
   if (!result.error) {
     return {};
   }
@@ -27,16 +28,16 @@ const validateUser = (user, isUpdate = true) => {
       }
       return err;
     });
-  return validationErrorsToMap(validationErrors);
+  return buildValidationErrorList(validationErrors);
 };
 
 /**
  * @param {Object} state state
- * @return {{user: User}}
+ * @return {{user: User, validationErrors: Object}}
  */
 const mapStateToProps = state => ({
-  isRegister: !isUserLoggedIn(state),
   user: getUserData(state),
+  validationErrors: getValidationErrors(state) || [],
 });
 
 /**

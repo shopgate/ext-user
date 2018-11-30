@@ -30,28 +30,34 @@ export const registerUserFailed = error => ({
 
 /**
  * Creates the dispatched UPDATE_USER action object.
- * @return {{type: string}}
+ * @param {Object|undefined} user user
+ * @return {{type: string, user: Object}}
  */
-export const updateUser = () => ({
+export const updateUser = user => ({
   type: types.UPDATE_USER,
+  user,
 });
 
 /**
  * Creates the dispatched UPDATE_USER_SUCCESS action object.
- * @param {string[]} messages messages
- * @return {{type: string}}
+ * @param {string[]|undefined} messages messages
+ * @param {Object|undefined} user user
+ * @return {{type: string, user: Object}}
  */
-export const updateUserSuccess = messages => ({
+export const updateUserSuccess = (messages = [], user) => ({
   type: types.UPDATE_USER_SUCCESS,
   messages,
+  user,
 });
 
 /**
  * Creates the dispatched UPDATE_USER_FAILED action object.
  * @param {Object} error error
- * @return {{type: string, error: Object}}
+ * @param {Object|undefined} user user
+ * @return {{type: string, error: Object, user: Object}}
  */
-export const updateUserFailed = error => ({
+export const updateUserFailed = (error, user) => ({
   type: types.UPDATE_USER_FAILED,
   error,
+  user,
 });

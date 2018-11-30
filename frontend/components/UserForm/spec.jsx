@@ -5,17 +5,15 @@ import { UnwrappedUserForm as UserForm } from './';
 /**
  * Noop function
  */
-const noop = () => {};
+const noop = jest.fn();
 
 describe('<UserForm>', () => {
   const props = {
-    isRegister: true,
+    register: true,
     registerUser: noop,
     updateUser: noop,
     user: {},
     validateUser: noop,
-    disabled: false,
-    validationErrors: {},
   };
 
   it('should render user register form', () => {
@@ -50,8 +48,5 @@ describe('<UserForm>', () => {
 
     expect(firstName.get(0).props.value).toEqual('John');
     expect(lastName.get(0).props.value).toEqual('Doe');
-
-    // Profile should not have a password field
-    expect(wrapper.find('input[name="password"]').length).toEqual(0);
   });
 });

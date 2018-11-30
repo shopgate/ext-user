@@ -6,7 +6,21 @@
   },
   "profile": {
     "title": "My profile",
-    "updated": "Your data has been saved"
+    "updated": "Your data has been saved",
+    "failed": "Updating your data failed"
+  },
+  "password": {
+    "update": "Change password",
+    "updated": "Your password has been saved",
+    "current": "Current password *",
+    "new": "New password *",
+    "repeat": "Repeat new password *",
+    "save": "Save",
+    "errors": {
+      "blank": "Please complete this field",
+      "password": "The minimum password length must be 8 characters",
+      "repeatPassword": "Those passwords didn't match. Try again"
+    }
   },
   "user": {
     "firstName": "First name",
@@ -87,7 +101,8 @@
         "title": "Delete address",
         "message": "Do you really want to delete this address?"
       },
-      "successMessage": "The address has been removed"
+      "successMessage": "The address has been removed",
+      "noRemoveDefault": "The default address can not be removed"
     },
     "makeDefault": {
       "default": "Make this your default address",
@@ -120,6 +135,7 @@
     "payment_options": "Payment options"
   },
   "navigator": {
-    "save": "Save"
+    "save": "Save",
+    "changePassword": "Save"
   }
 }

@@ -6,7 +6,21 @@
   },
   "profile": {
     "title": "Mon profil",
-    "updated": "vos données ont été enregistrées"
+    "updated": "vos données ont été enregistrées",
+    "failed": "Updating your data failed"
+  },
+  "password": {
+    "update": "Change password",
+    "updated": "Your password has been saved",
+    "current": "Current password *",
+    "new": "New password *",
+    "repeat": "Repeat new password *",
+    "save": "Save",
+    "errors": {
+      "blank": "Please complete this field",
+      "password": "The minimum password length must be 8 characters",
+      "repeatPassword": "Those passwords didn't match. Try again"
+    }
   },
   "user": {
     "firstName": "First name",
@@ -87,7 +101,8 @@
         "title": "Supprimer l'adresse",
         "message": "Voulez-vous vraiment supprimer cette adresse?"
       },
-      "successMessage": "L'adresse a été supprimée"
+      "successMessage": "L'adresse a été supprimée",
+      "noRemoveDefault": "L'adresse par défaut ne peut pas être supprimée"
     },
     "makeDefault": {
       "default": "Faites-en votre adresse par défaut",
@@ -120,6 +135,7 @@
     "payment_options": "Options de paiement"
   },
   "navigator": {
-    "save": "Save"
+    "save": "Save",
+    "changePassword": "Save"
   }
 }

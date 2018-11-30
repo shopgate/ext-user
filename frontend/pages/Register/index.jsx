@@ -8,6 +8,8 @@ import { USER_REGISTER_PATH } from './../../constants/RoutePaths';
 import connect from './connector';
 import styles from './style';
 
+const isIos = themeName.includes('ios');
+
 /**
  * @param {Object} props The component props.
  * @param {boolean} props.isLoggedIn The user's logged in state.
@@ -17,13 +19,13 @@ const Register = ({ isLoggedIn }) => (
   <Theme>
     {({ View, AppBar }) => (
       <View>
-        <AppBar title="register.title" right={null} />
+        <AppBar title={isIos ? undefined : 'register.title'} right={null} />
         <section className={styles.container}>
           <div className={styles.subline}>
             <I18n.Text string="register.subTitle" />
           </div>
           {/* Kick off user form immediately after register */}
-          {!isLoggedIn && <UserForm />}
+          {!isLoggedIn && <UserForm register />}
         </section>
       </View>
     )}

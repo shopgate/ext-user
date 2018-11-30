@@ -1,5 +1,5 @@
 import PipelineRequest from '@shopgate/pwa-core/classes/PipelineRequest';
-import { PIPELINE_DELETE_ADDRESSES } from './../constants/Pipelines';
+import { PIPELINE_DELETE_ADDRESSES, ENOREMOVEDEFAULT } from './../constants/Pipelines';
 import { deleteUserAddressesSuccess, deleteUserAddressesFailed } from './../action-creators/addressBook';
 
 /**
@@ -10,6 +10,7 @@ export default addressIds => (dispatch) => {
   new PipelineRequest(PIPELINE_DELETE_ADDRESSES)
     .setTrusted()
     .setInput({ ids: addressIds })
+    .setErrorBlacklist([ENOREMOVEDEFAULT])
     .dispatch()
     .then(() => {
       dispatch(deleteUserAddressesSuccess());

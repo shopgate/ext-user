@@ -10,8 +10,6 @@ import * as portals from '../../constants/Portals';
 import EventEmitter from '../../events/emitter';
 import {
   NAVIGATOR_SAVE_BUTTON_CLICK,
-  NAVIGATOR_SAVE_BUTTON_SHOW,
-  NAVIGATOR_SAVE_BUTTON_HIDE,
   NAVIGATOR_SAVE_BUTTON_ENABLE,
   NAVIGATOR_SAVE_BUTTON_DISABLE,
 } from '../../constants/EventTypes';
@@ -24,19 +22,18 @@ import style from './style';
 class AddressForm extends Component {
   static propTypes = {
     addAddress: PropTypes.func.isRequired,
+    /** @type {UserConfig} */
+    config: PropTypes.shape().isRequired,
     deleteAddress: PropTypes.func.isRequired,
     isBusy: PropTypes.bool.isRequired,
     isFirstAddress: PropTypes.bool.isRequired,
     updateAddress: PropTypes.func.isRequired,
     address: PropTypes.shape(),
-    /** @type {UserConfig} */
-    config: PropTypes.shape(),
     validationErrors: PropTypes.arrayOf(PropTypes.shape()),
   }
 
   static defaultProps = {
     address: {},
-    config: {},
     validationErrors: [],
   }
 
@@ -48,26 +45,30 @@ class AddressForm extends Component {
     super(props);
 
     const { id: addressId, tags, ...addressData } = props.address;
+    const editMode = !!addressId;
+
     this.state = {
       address: addressData,
       isBusy: props.isBusy,
       hasChanges: false,
-      editMode: !!addressId,
+      editMode,
       hasErrors: false,
       tags: this.props.isFirstAddress || !tags ? [] : tags,
     };
 
     this.initialAddressTags = [];
-  }
+    this.props.config.addressDefaultGroups.forEach(tag => (
+      this.initialAddressTags.push(tag === 'default' ? tag : `default_${tag}`)
+    ));
 
-  /**
-   * Did mount
-   */
-  componentDidMount() {
-    if (this.state.editMode) {
+    // Init default tags for first address
+    if (this.props.isFirstAddress) {
+      this.state.tags = this.initialAddressTags;
+    }
+
+    if (editMode) {
       // Attach event handler for updating an address to the "save" button of the theme
       EventEmitter.on(NAVIGATOR_SAVE_BUTTON_CLICK, this.addOrUpdateAddress);
-      EventEmitter.emit(NAVIGATOR_SAVE_BUTTON_SHOW);
 
       this.setSaveButtonEnabledStatus(this.isSaveButtonVisible());
     }
@@ -87,23 +88,10 @@ class AddressForm extends Component {
 
       this.setState({ isBusy: nextProps.isBusy });
     }
-    if (Array.isArray(nextProps.config.addressDefaultGroups)) {
-      nextProps.config.addressDefaultGroups.forEach(tag => (
-        this.initialAddressTags.push(tag === 'default' ? tag : `default_${tag}`)
-      ));
-      // Init default tags for first address
-      if (nextProps.isFirstAddress) {
-        this.state.tags = this.initialAddressTags;
-      }
-    }
   }
 
-  /**
-   * Will unmount
-   */
-  componentWillUnmount() {
+  componentWillUnmount = () => {
     EventEmitter.off(NAVIGATOR_SAVE_BUTTON_CLICK, this.addOrUpdateAddress);
-    EventEmitter.emit(NAVIGATOR_SAVE_BUTTON_HIDE);
   }
 
   /**
@@ -147,7 +135,7 @@ class AddressForm extends Component {
     const defaultTag = tag === 'default' ? tag : `default_${tag}`;
 
     const tags = makeDefault
-      ? [...addressTags, defaultTag].filter(this.filterUnavailableDefaultTag)
+      ? [...addressTags, defaultTag]
       : addressTags.filter(t => t !== defaultTag);
 
     this.setState({ tags: tags.filter(this.filterUnavailableDefaultTag) });
@@ -189,9 +177,8 @@ class AddressForm extends Component {
   filterUnavailableDefaultTag = (tag) => {
     if (/^(default|default_.*)$/.test(tag)) {
       // Check if the default tag is part of the config and keep, if so
-      return this.props.config.addressDefaultGroups.includes(tag);
+      return this.props.config.addressDefaultGroups.includes(tag.replace('default_', ''));
     }
-
     // Don't filter out non-default tags
     return true;
   };
@@ -295,12 +282,7 @@ class AddressForm extends Component {
    * @return {*}
    */
   render() {
-    const { isFirstAddress, validationErrors, config } = this.props;
-    if (!config.addressForm) {
-      // Not ready yet
-      return null;
-    }
-
+    const { isFirstAddress, validationErrors } = this.props;
     return (
       <Fragment>
 
@@ -310,7 +292,7 @@ class AddressForm extends Component {
           <FormBuilder
             name="address"
             className={style.fields}
-            config={config.addressForm}
+            config={this.props.config.addressForm}
             defaults={this.state.address}
             handleUpdate={this.handleUpdate}
             onSubmit={this.addOrUpdateAddress}
@@ -334,17 +316,23 @@ class AddressForm extends Component {
             {/* Default address and submit button for new address */}
             {!this.state.editMode &&
               <Fragment>
-                {this.props.config.addressDefaultGroups.map(tag => (
-                  <Checkbox
-                    className={isFirstAddress ? style.defaultsDisabled : style.defaults}
-                    key={tag}
-                    name={`default_${tag}`}
-                    label={`address.makeDefault.${tag}`}
-                    onChange={makeDefault => this.handleMakeDefault(makeDefault, tag)}
-                    checked={isFirstAddress || this.state.tags.includes(`default_${tag}`)}
-                    disabled={isFirstAddress}
-                  />
-                ))}
+                {this.props.config.addressDefaultGroups.map((tag) => {
+                  let checkTag = tag;
+                  if (tag !== 'default') {
+                    checkTag = `default_${tag}`;
+                  }
+                  return (
+                    <Checkbox
+                      className={isFirstAddress ? style.defaultsDisabled : style.defaults}
+                      key={tag}
+                      name={`default_${tag}`}
+                      label={`address.makeDefault.${tag}`}
+                      onChange={makeDefault => this.handleMakeDefault(makeDefault, tag)}
+                      checked={isFirstAddress || this.state.tags.includes(checkTag)}
+                      disabled={isFirstAddress}
+                    />
+                  );
+                })}
 
                 <Portal name={portals.USER_ADDRESS_FORM_BUTTON_BEFORE} />
                 <Portal name={portals.USER_ADDRESS_FORM_BUTTON}>

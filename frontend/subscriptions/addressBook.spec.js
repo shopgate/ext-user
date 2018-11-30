@@ -19,6 +19,7 @@ describe('AddressBook subscriptions', () => {
   subscription(subscribe);
 
   const [
+    ,
     userAddressValidationFailed$,
     userAddressChanged$,
     userAddressBookEnter$,
@@ -40,7 +41,7 @@ describe('AddressBook subscriptions', () => {
   });
 
   it('should subscribe to the streams', () => {
-    expect(subscribe.mock.calls.length).toEqual(7);
+    expect(subscribe.mock.calls.length).toEqual(9);
   });
 
   it('should create toast message when validation is failed ', () => {

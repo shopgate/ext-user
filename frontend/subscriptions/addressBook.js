@@ -1,8 +1,9 @@
-import { routeDidEnter$ } from '@shopgate/pwa-common/streams/router';
-import { ToastProvider } from '@shopgate/pwa-common/providers';
+import goBackHistory from '@shopgate/pwa-common/actions/history/goBackHistory';
+import { routeDidChange$ } from '@shopgate/pwa-common/streams/history';
 import showModal from '@shopgate/pwa-common/actions/modal/showModal';
+import createToast from '@shopgate/pwa-common/actions/toast/createToast';
 import { userDidUpdate$ } from '@shopgate/pwa-common/streams/user';
-import { historyPop } from '@shopgate/pwa-common/actions/router';
+import { getHistoryPathname } from '@shopgate/pwa-common/selectors/history';
 import getAddresses from './../actions/getAddresses';
 import {
   userAddressChanged$,
@@ -10,32 +11,47 @@ import {
   userAddressesDeleted$,
   userAddressValidationFailed$,
   userSetDefaultAddress$,
+  userAddressesDeleteFailed$,
 } from './../streams/addressBook';
-import { deleteUserAddressesConfirmed } from '../action-creators/addressBook';
+import { deleteUserAddressesConfirmed, userAddressFormLeave } from '../action-creators/addressBook';
 import { getUserAddressIdSelector } from './../selectors/addressBook';
 import updateAddress from './../actions/updateAddress';
 import deleteAddresses from './../actions/deleteAddresses';
-import { USER_ADDRESS_BOOK_PATH } from '../constants/RoutePaths';
+import { userAddressPathPattern, USER_ADDRESS_BOOK_PATH } from '../constants/RoutePaths';
+import { ENOREMOVEDEFAULT } from '../constants/Pipelines';
+
+const userAddressPathPrefix = userAddressPathPattern.stringify();
 
 export default (subscribe) => {
-  const userAddressBookEnter$ = routeDidEnter$
-    .filter(({ pathname }) => pathname === USER_ADDRESS_BOOK_PATH);
+  // Fetch addresses after login
+  const userDidUpdateDebounced$ = userDidUpdate$.debounceTime(0);
+  const userAddressBookEnter$ = routeDidChange$
+    .filter(({ pathname, prevPathname }) => pathname === USER_ADDRESS_BOOK_PATH &&
+      !prevPathname.startsWith(userAddressPathPrefix));
+
+  const addressFormLeave$ = routeDidChange$
+    .filter(({ prevPathname }) => prevPathname.startsWith(`${userAddressPathPrefix}/`));
+
+  // Leave address form
+  subscribe(addressFormLeave$, ({ dispatch }) => {
+    dispatch(userAddressFormLeave());
+  });
 
   // Show a toast message when validation is failed
-  subscribe(userAddressValidationFailed$, ({ events }) => {
-    events.emit(ToastProvider.ADD, {
-      id: 'address.validationFailed',
-      message: 'address.validationFailedToastMessage',
-      action: () => {},
-    });
+  subscribe(userAddressValidationFailed$, ({ dispatch }) => {
+    dispatch(createToast({ message: 'address.validationFailedToastMessage' }));
   });
 
   // Return back to address book, when address is added/updated
-  subscribe(userAddressChanged$, ({ dispatch, action }) => {
+  subscribe(userAddressChanged$, ({ dispatch, action, getState }) => {
     // Wait for getUser action to finish before continuing to avoid changing view
     dispatch(getAddresses(false)).then(() => {
       if (!action.silent) {
-        dispatch(historyPop());
+        const currentPath = getHistoryPathname(getState());
+        // Check if we still on address page
+        if (currentPath.startsWith(`${userAddressPathPrefix}/`)) {
+          dispatch(goBackHistory());
+        }
       }
     });
   });
@@ -46,7 +62,7 @@ export default (subscribe) => {
   });
 
   // Fetch user addresses silently
-  subscribe(userDidUpdate$, ({ dispatch, getState }) => {
+  subscribe(userDidUpdateDebounced$, ({ dispatch, getState }) => {
     const { user: { data: { id: userId = null } = {} } = {} } = getState();
     if (userId) {
       dispatch(getAddresses());
@@ -71,12 +87,8 @@ export default (subscribe) => {
   });
 
   // Dispatch action to show a toast message after the deletion was successfully performed
-  subscribe(userAddressesDeleted$, ({ events }) => {
-    events.emit(ToastProvider.ADD, {
-      id: 'address.delete.successMessage',
-      message: 'address.delete.successMessage',
-      action: () => {},
-    });
+  subscribe(userAddressesDeleted$, ({ dispatch }) => {
+    dispatch(createToast({ message: 'address.delete.successMessage' }));
   });
 
   // Dispatch action to backend to sync user selection
@@ -97,5 +109,13 @@ export default (subscribe) => {
 
     addressClone.tags.push(defTag);
     dispatch(updateAddress(addressClone, true));
+  });
+
+  // Dispatch action to show a toast message that deletion failed
+  subscribe(userAddressesDeleteFailed$, ({ dispatch, action }) => {
+    const { error: { code } = {} } = action;
+    if (code === ENOREMOVEDEFAULT) {
+      dispatch(createToast({ message: 'address.delete.noRemoveDefault' }));
+    }
   });
 };

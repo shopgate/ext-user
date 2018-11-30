@@ -1,5 +1,6 @@
 import { connect } from 'react-redux';
 import { isUserLoggedIn } from '@shopgate/pwa-common/selectors/user';
+import { getUserMenuEntries } from '../../selectors/config';
 import { historyPush } from '@shopgate/pwa-common/actions/router';
 
 /**
@@ -9,6 +10,7 @@ import { historyPush } from '@shopgate/pwa-common/actions/router';
  */
 const mapStateToProps = state => ({
   isLoggedIn: isUserLoggedIn(state),
+  userMenuEntries: getUserMenuEntries(state),
 });
 
 /**

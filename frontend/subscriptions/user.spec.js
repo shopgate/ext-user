@@ -33,7 +33,7 @@ describe('User subscriptions', () => {
   });
 
   it('should subscribe to the streams', () => {
-    expect(subscribe.mock.calls.length).toEqual(3);
+    expect(subscribe.mock.calls.length).toEqual(4);
   });
 
   it('should get user on fetchUser$ stream', () => {
@@ -49,7 +49,7 @@ describe('User subscriptions', () => {
 
   it('should create toast on userUpdateSuccess$ stream', () => {
     // eslint-disable-next-line extra-rules/no-single-line-objects
-    userUpdateSuccess$[1]({ dispatch, action: {} });
+    userUpdateSuccess$[1]({ dispatch, action: {}, getState: () => {} });
     expect(mockCreateToast).toHaveBeenCalledWith({ message: 'profile.updated' });
   });
 });

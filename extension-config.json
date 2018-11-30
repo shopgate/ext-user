@@ -1,5 +1,5 @@
 {
-  "version": "2.3.0-beta.1",
+  "version": "2.3.0-beta.7",
   "id": "@shopgate/user",
   "trusted": true,
   "configuration": {
@@ -100,6 +100,22 @@
           "placeholder": "[\"shipping\", \"billing\"]"
         }
       }
+    },
+    "userMenuEntries": {
+      "type": "admin",
+      "destination": "backend",
+      "default": {
+        "accountProfile": true,
+        "addressBook": true
+      },
+      "params": {
+        "type": "json",
+        "label": "User menu entries",
+        "required": true,
+        "options": {
+          "placeholder": "{\"accountProfile\": true, \"addressBook\": true}"
+        }
+      }
     }
   },
   "components": [
@@ -128,8 +144,8 @@
       "type": "portals"
     },
     {
-      "id": "NavigatorButton",
-      "path": "frontend/components/NavigatorSaveButton/index.jsx",
+      "id": "NavigatorButtons",
+      "path": "frontend/components/NavigatorButtons/index.jsx",
       "target": "nav-bar.navigator.icons.after",
       "type": "portals"
     },
@@ -156,21 +172,15 @@
       "type": "portals"
     },
     {
-      "id": "Empty",
-      "path": "frontend/components/Empty.jsx",
-      "target": "nav-menu.my-account",
-      "type": "portals"
-    },
-    {
-      "id": "LogoutMenuEntry",
-      "path": "frontend/components/LogoutMenuEntry/index.jsx",
-      "target": "nav-menu.content.after",
-      "type": "portals"
-    },
-    {
       "id": "UserMenu",
       "path": "frontend/components/UserMenu/index.jsx",
       "target": "nav-menu.store-information.before",
+      "type": "portals"
+    },
+    {
+      "id": "Empty",
+      "path": "frontend/components/Empty.jsx",
+      "target": "nav-menu.my-account.header",
       "type": "portals"
     },
     {
