@@ -1,9 +1,9 @@
 import { main$ } from '@shopgate/pwa-common/streams/main';
 import { routeDidChange$ } from '@shopgate/pwa-common/streams/router';
 import { getUserData } from '@shopgate/pwa-common/selectors/user';
-import { userDataReceived$, userDidLogin$ } from '@shopgate/pwa-common/streams/user';
+import { userDataReceived$ } from '@shopgate/pwa-common/streams/user';
 import getUser from '@shopgate/pwa-common/actions/user/getUser';
-import replaceHistory from '@shopgate/pwa-common/actions/history/replaceHistory';
+import { historyReplace } from '@shopgate/pwa-common/actions/router/historyReplace';
 
 export default (subscribe) => {
   const selectAddressRouteDidEnter$ = routeDidChange$.filter(({ pathname }) => pathname === '/checkout/selectAddress');
@@ -23,16 +23,6 @@ export default (subscribe) => {
    * to update checkout state
    */
   const checkoutEnterUser$ = checkoutEnter$.merge(userDataReceivedCheckout$);
-
-  /**
-   * Request user data with addresses, if addresses not fetched yet
-   */
-  subscribe(userDidLogin$, ({ dispatch, getState }) => {
-    const { addresses } = getUserData(getState());
-    if (!addresses) {
-      dispatch(getUser());
-    }
-  });
 
   /**
    * Add addresses selection to checkout
@@ -102,7 +92,7 @@ export default (subscribe) => {
   subscribe(selectAddressRouteDidEnter$, ({ dispatch, getState }) => {
     const { addresses } = getUserData(getState());
     if (!addresses || !addresses.length) {
-      dispatch(replaceHistory({ pathname: '/checkout/addAddress' }));
+      dispatch(historyReplace({ pathname: '/checkout/addAddress' }));
     }
   });
 };

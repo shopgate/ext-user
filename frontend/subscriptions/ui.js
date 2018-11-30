@@ -1,7 +1,6 @@
+import { getCurrentRoute } from '@shopgate/pwa-common/selectors/router';
 import { routeDidEnter$, routeDidLeave$ } from '@shopgate/pwa-common/streams/router';
-import setViewLoading from '@shopgate/pwa-common/actions/view/setViewLoading';
-import unsetViewLoading from '@shopgate/pwa-common/actions/view/unsetViewLoading';
-import { getHistoryPathname } from '@shopgate/pwa-common/selectors/history';
+import { LoadingProvider } from '@shopgate/pwa-common/providers';
 import EventEmitter from '../events/emitter';
 import {
   NAVIGATOR_SAVE_BUTTON_CLICK,
@@ -77,15 +76,15 @@ export default (subscribe) => {
     dispatch(toggleNavigatorSearch(false));
   });
 
-  // View is loading
-  subscribe(viewIsLoading$, ({ dispatch, getState }) => {
-    // TODO: change
-    dispatch(setViewLoading(getHistoryPathname(getState())));
+  /** View is loading */
+  subscribe(viewIsLoading$, () => {
+    const { pathname } = getCurrentRoute();
+    LoadingProvider.setLoading(pathname);
   });
 
-  // View is idle
-  subscribe(viewIsIdle$, ({ dispatch, getState }) => {
-    // TODO: change
-    dispatch(unsetViewLoading(getHistoryPathname(getState())));
+  /** View is idle */
+  subscribe(viewIsIdle$, () => {
+    const { pathname } = getCurrentRoute();
+    LoadingProvider.unsetLoading(pathname);
   });
 };

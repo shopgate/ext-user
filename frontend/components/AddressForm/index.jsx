@@ -24,18 +24,19 @@ import style from './style';
 class AddressForm extends Component {
   static propTypes = {
     addAddress: PropTypes.func.isRequired,
-    /** @type {UserConfig} */
-    config: PropTypes.shape().isRequired,
     deleteAddress: PropTypes.func.isRequired,
     isBusy: PropTypes.bool.isRequired,
     isFirstAddress: PropTypes.bool.isRequired,
     updateAddress: PropTypes.func.isRequired,
     address: PropTypes.shape(),
+    /** @type {UserConfig} */
+    config: PropTypes.shape(),
     validationErrors: PropTypes.arrayOf(PropTypes.shape()),
   }
 
   static defaultProps = {
     address: {},
+    config: {},
     validationErrors: [],
   }
 
@@ -57,14 +58,6 @@ class AddressForm extends Component {
     };
 
     this.initialAddressTags = [];
-    this.props.config.addressDefaultGroups.forEach(tag => (
-      this.initialAddressTags.push(tag === 'default' ? tag : `default_${tag}`)
-    ));
-
-    // Init default tags for first address
-    if (this.props.isFirstAddress) {
-      this.state.tags = this.initialAddressTags;
-    }
   }
 
   /**
@@ -93,6 +86,15 @@ class AddressForm extends Component {
       }
 
       this.setState({ isBusy: nextProps.isBusy });
+    }
+    if (Array.isArray(nextProps.config.addressDefaultGroups)) {
+      nextProps.config.addressDefaultGroups.forEach(tag => (
+        this.initialAddressTags.push(tag === 'default' ? tag : `default_${tag}`)
+      ));
+      // Init default tags for first address
+      if (nextProps.isFirstAddress) {
+        this.state.tags = this.initialAddressTags;
+      }
     }
   }
 
@@ -293,7 +295,12 @@ class AddressForm extends Component {
    * @return {*}
    */
   render() {
-    const { isFirstAddress, validationErrors } = this.props;
+    const { isFirstAddress, validationErrors, config } = this.props;
+    if (!config.addressForm) {
+      // Not ready yet
+      return null;
+    }
+
     return (
       <Fragment>
 
@@ -303,7 +310,7 @@ class AddressForm extends Component {
           <FormBuilder
             name="address"
             className={style.fields}
-            config={this.props.config.addressForm}
+            config={config.addressForm}
             defaults={this.state.address}
             handleUpdate={this.handleUpdate}
             onSubmit={this.addOrUpdateAddress}

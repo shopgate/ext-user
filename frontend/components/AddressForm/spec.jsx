@@ -69,7 +69,7 @@ describe('<AddressForm>', () => {
   });
 
   it('should disable update button if no changes are done', () => {
-    let buttonState;
+    let buttonState = null;
     EventEmitter.on(NAVIGATOR_SAVE_BUTTON_ENABLE, () => {
       buttonState = true;
     });
@@ -116,6 +116,7 @@ describe('<AddressForm>', () => {
           },
         },
       }}
+      // eslint-disable-next-line extra-rules/no-single-line-objects
       address={{ id: 1, firstName: 'old value' }}
       addAddress={noop}
       updateAddress={noop}

@@ -1,8 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import I18n from '@shopgate/pwa-common/components/I18n';
+import { Route } from '@shopgate/pwa-common/components';
 import { Theme } from '@shopgate/pwa-common/context';
 import UserForm from '../../components/UserForm';
+import { USER_REGISTER_PATH } from './../../constants/RoutePaths';
 import connect from './connector';
 import styles from './style';
 
@@ -13,8 +15,9 @@ import styles from './style';
  */
 const Register = ({ isLoggedIn }) => (
   <Theme>
-    {({ View }) => (
+    {({ View, AppBar }) => (
       <View>
+        <AppBar title="register.title" right={null} />
         <section className={styles.container}>
           <div className={styles.subline}>
             <I18n.Text string="register.subTitle" />
@@ -31,8 +34,6 @@ Register.propTypes = {
   isLoggedIn: PropTypes.bool.isRequired,
 };
 
-Register.contextTypes = {
-  i18n: PropTypes.func,
-};
-
-export default connect(Register);
+export default () => (
+  <Route pattern={USER_REGISTER_PATH} component={connect(Register)} />
+);

@@ -1,22 +1,13 @@
-import setTitle from '@shopgate/pwa-common/actions/view/setTitle';
-import redirects from '@shopgate/pwa-common/collections/Redirects';
-import { appWillStart$ } from '@shopgate/pwa-common/streams/app';
+import { ToastProvider, LoadingProvider } from '@shopgate/pwa-common/providers';
 import getUser from '@shopgate/pwa-common/actions/user/getUser';
 import showModal from '@shopgate/pwa-common/actions/modal/showModal';
-import { getRedirectLocation, getHistoryPathname } from '@shopgate/pwa-common/selectors/history';
-import replaceHistory from '@shopgate/pwa-common/actions/history/replaceHistory';
 import { successLogin } from '@shopgate/pwa-common/action-creators/user';
 import { userDataReceived$ } from '@shopgate/pwa-common/streams/user';
-import { setRedirectLocation } from '@shopgate/pwa-common/action-creators/history';
-import goBackHistory from '@shopgate/pwa-common/actions/history/goBackHistory';
-import unsetViewLoading from '@shopgate/pwa-common/actions/view/unsetViewLoading';
-import createToast from '@shopgate/pwa-common/actions/toast/createToast';
+import { getCurrentRoute } from '@shopgate/pwa-common/selectors/router';
 import {
-  registerRouteWillEnter$,
   userRegisterSuccess$,
   userUpdateSuccess$,
 } from './../streams/user';
-import { USER_REGISTER_PATH } from '../constants/RoutePaths';
 
 /**
  * Register subscriptions.
@@ -25,42 +16,21 @@ import { USER_REGISTER_PATH } from '../constants/RoutePaths';
 export default (subscribe) => {
   const fetchUser$ = userRegisterSuccess$.merge(userUpdateSuccess$);
 
-  const registerAndDataReceived$ = userRegisterSuccess$
-    .zip(userDataReceived$)
-    .map(([first]) => first);
+  /** After register and user data received */
+  const registerAndDataReceived$ = userRegisterSuccess$.switchMap(() => userDataReceived$.first());
 
   subscribe(fetchUser$, ({ dispatch }) => {
     dispatch(getUser());
   });
 
-  subscribe(appWillStart$, () => {
-    redirects.unset(USER_REGISTER_PATH);
+  subscribe(registerAndDataReceived$, ({ dispatch }) => {
+    const { pathname } = getCurrentRoute();
+    LoadingProvider.unsetLoading(pathname);
+    dispatch(successLogin('/'));
   });
 
-  subscribe(registerRouteWillEnter$, ({ dispatch }) => {
-    dispatch(setTitle('register.title'));
-  });
-
-  /**
-   * After register and user data received
-   */
-  subscribe(registerAndDataReceived$, ({ dispatch, getState }) => {
-    dispatch(unsetViewLoading(getHistoryPathname(getState())));
-
-    const redirectLocation = getRedirectLocation(getState());
-
-    dispatch(setRedirectLocation(null));
-
-    dispatch(successLogin());
-    if (redirectLocation) {
-      setTimeout(dispatch, 50, replaceHistory(redirectLocation));
-    } else {
-      dispatch(goBackHistory(1));
-    }
-  });
-
-  // Toast message, profile is updated
-  subscribe(userUpdateSuccess$, ({ dispatch, action }) => {
+  /** Profile is updated */
+  subscribe(userUpdateSuccess$, ({ dispatch, action, events }) => {
     const { messages } = action;
     if (Array.isArray(messages) && messages.length > 0) {
       dispatch(showModal({
@@ -71,6 +41,9 @@ export default (subscribe) => {
       return;
     }
 
-    dispatch(createToast({ message: 'profile.updated' }));
+    events.emit(ToastProvider.ADD, {
+      id: 'profile.updated',
+      message: 'profile.updated',
+    });
   });
 };

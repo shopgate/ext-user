@@ -1,4 +1,4 @@
-import connect from '@shopgate/pwa-common/components/Router/helpers/connect';
+import { connect } from 'react-redux';
 import { getQueryParam } from '@shopgate/pwa-common/selectors/history';
 
 /**

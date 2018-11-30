@@ -15,12 +15,10 @@ import connect from './connector';
 const UserMenu = (props) => {
   const {
     Divider,
-    handleClose,
     Headline,
     Item,
-    List,
-    SubHeader,
     isLoggedIn,
+    navigate,
   } = props;
 
   // Make sure a user is available of whom account data could be shown
@@ -30,35 +28,29 @@ const UserMenu = (props) => {
 
   return (
     <Fragment>
-      <Divider close={handleClose} />
+      <Divider />
       <Headline small text="navigation.your_account" />
-      <SubHeader title="navigation.your_account" />
+      {/* @REFACTOR <SubHeader title="navigation.your_account" /> */}
 
       {/* Address book */}
       <Portal name={portals.NAV_MENU_ADDRESS_BOOK_BEFORE} props={props} />
       <Portal name={portals.NAV_MENU_ADDRESS_BOOK} props={props}>
-        <List>
-          <Item
-            title="navigation.profile"
-            href={path.USER_PROFILE_PATH}
-            link={path.USER_PROFILE_PATH}
-            icon={AccountBoxIcon}
-            close={handleClose}
-            testId="menuProfileButton"
-          >
-            <I18n.Text string="navigation.profile" />
-          </Item>
-          <Item
-            title="navigation.address_book"
-            href={path.USER_ADDRESS_BOOK_PATH}
-            link={path.USER_ADDRESS_BOOK_PATH}
-            icon={LocalShippingIcon}
-            close={handleClose}
-            testId="menuAddressBookButton"
-          >
-            <I18n.Text string="navigation.address_book" />
-          </Item>
-        </List>
+        <Item
+          label="navigation.profile"
+          onClick={navigate(path.USER_PROFILE_PATH, 'navigation.profile')}
+          icon={AccountBoxIcon}
+          testId="menuProfileButton"
+        >
+          <I18n.Text string="navigation.profile" />
+        </Item>
+        <Item
+          label="navigation.address_book"
+          onClick={navigate(path.USER_ADDRESS_BOOK_PATH, 'navigation.address_book')}
+          icon={LocalShippingIcon}
+          testId="menuAddressBookButton"
+        >
+          <I18n.Text string="navigation.address_book" />
+        </Item>
       </Portal>
       <Portal name={portals.NAV_MENU_ADDRESS_BOOK_AFTER} props={props} />
     </Fragment>
@@ -68,20 +60,14 @@ const UserMenu = (props) => {
 UserMenu.propTypes = {
   isLoggedIn: PropTypes.bool.isRequired,
   Item: PropTypes.func.isRequired,
+  navigate: PropTypes.func.isRequired,
   Divider: PropTypes.func,
-  handleClose: PropTypes.func,
   Headline: PropTypes.func,
-  List: PropTypes.func,
-  SubHeader: PropTypes.func,
 };
 
 UserMenu.defaultProps = {
-  handleClose: null,
-  Divider: () => (null), // Skip render by default
-  Headline: () => (null), // Skip render by default
-  // eslint-disable-next-line react/prop-types
-  List: ({ children }) => (<Fragment>{children}</Fragment>), // Pass through by default
-  SubHeader: () => (null), // Skip render by default
+  Divider: () => null,
+  Headline: () => null,
 };
 
 export default connect(UserMenu);

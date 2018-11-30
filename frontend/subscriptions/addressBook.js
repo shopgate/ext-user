@@ -1,8 +1,8 @@
-import goBackHistory from '@shopgate/pwa-common/actions/history/goBackHistory';
-import { routeDidChange$ } from '@shopgate/pwa-common/streams/router';
+import { routeDidEnter$ } from '@shopgate/pwa-common/streams/router';
+import { ToastProvider } from '@shopgate/pwa-common/providers';
 import showModal from '@shopgate/pwa-common/actions/modal/showModal';
-import createToast from '@shopgate/pwa-common/actions/toast/createToast';
 import { userDidUpdate$ } from '@shopgate/pwa-common/streams/user';
+import { historyPop } from '@shopgate/pwa-common/actions/router';
 import getAddresses from './../actions/getAddresses';
 import {
   userAddressChanged$,
@@ -15,20 +15,19 @@ import { deleteUserAddressesConfirmed } from '../action-creators/addressBook';
 import { getUserAddressIdSelector } from './../selectors/addressBook';
 import updateAddress from './../actions/updateAddress';
 import deleteAddresses from './../actions/deleteAddresses';
-import { userAddressPathPattern, USER_ADDRESS_BOOK_PATH } from '../constants/RoutePaths';
-
-const userAddressPathPrefix = userAddressPathPattern.stringify();
+import { USER_ADDRESS_BOOK_PATH } from '../constants/RoutePaths';
 
 export default (subscribe) => {
-  // Fetch addresses after login
-  const userDidUpdateDebounced$ = userDidUpdate$.debounceTime(0);
-  const userAddressBookEnter$ = routeDidChange$
-    .filter(({ pathname, prevPathname }) => pathname === USER_ADDRESS_BOOK_PATH &&
-      !prevPathname.startsWith(userAddressPathPrefix));
+  const userAddressBookEnter$ = routeDidEnter$
+    .filter(({ pathname }) => pathname === USER_ADDRESS_BOOK_PATH);
 
   // Show a toast message when validation is failed
-  subscribe(userAddressValidationFailed$, ({ dispatch }) => {
-    dispatch(createToast({ message: 'address.validationFailedToastMessage' }));
+  subscribe(userAddressValidationFailed$, ({ events }) => {
+    events.emit(ToastProvider.ADD, {
+      id: 'address.validationFailed',
+      message: 'address.validationFailedToastMessage',
+      action: () => {},
+    });
   });
 
   // Return back to address book, when address is added/updated
@@ -36,7 +35,7 @@ export default (subscribe) => {
     // Wait for getUser action to finish before continuing to avoid changing view
     dispatch(getAddresses(false)).then(() => {
       if (!action.silent) {
-        dispatch(goBackHistory());
+        dispatch(historyPop());
       }
     });
   });
@@ -47,7 +46,7 @@ export default (subscribe) => {
   });
 
   // Fetch user addresses silently
-  subscribe(userDidUpdateDebounced$, ({ dispatch, getState }) => {
+  subscribe(userDidUpdate$, ({ dispatch, getState }) => {
     const { user: { data: { id: userId = null } = {} } = {} } = getState();
     if (userId) {
       dispatch(getAddresses());
@@ -72,8 +71,12 @@ export default (subscribe) => {
   });
 
   // Dispatch action to show a toast message after the deletion was successfully performed
-  subscribe(userAddressesDeleted$, ({ dispatch }) => {
-    dispatch(createToast({ message: 'address.delete.successMessage' }));
+  subscribe(userAddressesDeleted$, ({ events }) => {
+    events.emit(ToastProvider.ADD, {
+      id: 'address.delete.successMessage',
+      message: 'address.delete.successMessage',
+      action: () => {},
+    });
   });
 
   // Dispatch action to backend to sync user selection

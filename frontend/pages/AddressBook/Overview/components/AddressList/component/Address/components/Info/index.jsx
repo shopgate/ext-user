@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import Grid from '@shopgate/pwa-common/components/Grid';
-import Link from '@shopgate/pwa-common/components/Router/components/Link';
+import Link from '@shopgate/pwa-common/components/Link';
 import ChevronIcon from '@shopgate/pwa-ui-shared/icons/ChevronIcon';
 import Portal from '@shopgate/pwa-common/components/Portal';
 import * as portals from '../../../../../../../../../constants/Portals';
