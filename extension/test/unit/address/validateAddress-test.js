@@ -7,10 +7,10 @@ describe('validateUserAddress', () => {
   const validAddress = {
     firstName: ' John ',
     lastName: ' Doe ',
-    street: ' Street 10 ',
+    street1: ' Street 10 ',
     city: ' City',
-    provinceCode: ' HS ',
-    countryCode: ' DE ',
+    province: ' HS ',
+    country: ' DE ',
     zipCode: ' 35510 '
   }
 
@@ -18,16 +18,17 @@ describe('validateUserAddress', () => {
     const expectedAddress = {
       firstName: 'John',
       lastName: 'Doe',
-      street: 'Street 10',
+      street1: 'Street 10',
       city: 'City',
-      provinceCode: 'HS',
-      countryCode: 'DE',
+      province: 'HS',
+      country: 'DE',
       zipCode: '35510',
-      tags: []
+      tags: [],
+      customAttributes: {}
     }
     try {
       // noinspection JSCheckFunctionSignatures
-      const actualAddress = (await stepExecute({}, {address: validAddress})).address
+      const actualAddress = (await stepExecute({}, {...validAddress}))
       assert.deepEqual(actualAddress, expectedAddress)
     } catch (stepError) {
       assert.ifError(stepError)
@@ -38,16 +39,17 @@ describe('validateUserAddress', () => {
     const expectedAddress = {
       firstName: 'John',
       lastName: 'Doe',
-      street: 'Street 10',
+      street1: 'Street 10',
       city: 'City',
-      provinceCode: 'HS',
-      countryCode: 'DE',
+      province: 'HS',
+      country: 'DE',
       zipCode: '35510',
-      tags: ['shipping']
+      tags: ['shipping'],
+      customAttributes: {}
     }
     try {
       // noinspection JSCheckFunctionSignatures
-      const actualAddress = (await stepExecute({}, {address: {...validAddress, tags: ['shipping']}})).address
+      const actualAddress = (await stepExecute({}, {...validAddress, tags: ['shipping']}))
       assert.deepEqual(actualAddress, expectedAddress)
     } catch (stepError) {
       assert.ifError(stepError)
@@ -56,18 +58,18 @@ describe('validateUserAddress', () => {
 
   describe('Should not throw address validation errors', async () => {
     const tests = {
-      'Province code is undefined': {provinceCode: void 0},
-      'Province code is null': {provinceCode: null},
-      'Province code is empty string': {provinceCode: ''},
-      'Street in EU': {street: 'Schlossstrasse 10'},
-      'Street in US/UK': {street: '44 Morningside Road'}
+      'Province code is undefined': {province: void 0},
+      'Province code is null': {province: null},
+      'Province code is empty string': {province: ''},
+      'Street in EU': {street1: 'Schlossstrasse 10'},
+      'Street in US/UK': {street1: '44 Morningside Road'}
     }
 
     Object.keys(tests).forEach((testTitle) => {
       it(testTitle, async () => {
         try {
           // noinspection JSCheckFunctionSignatures
-          await stepExecute({}, {address: {...validAddress, ...tests[testTitle]}})
+          await stepExecute({}, {...validAddress, ...tests[testTitle]})
         } catch (stepError) {
           assert.ifError(stepError)
         }
@@ -79,18 +81,18 @@ describe('validateUserAddress', () => {
     const tests = {
       'First name is empty': {firstName: ''},
       'Last name is too long': {lastName: 'Very long last name. More then 255 characters'.repeat(10)},
-      'Street is too long': {street: 'Very long street'.repeat(100)},
-      'Street is not valid': {street: 'Castle street'},
-      'Street has special characters': {street: '<script>alert(1)</script>'},
-      'Province is not valid: max 10 length': {provinceCode: '12345678901'},
-      'Country is too long': {countryCode: 'Very long countryCode'}
+      'Street is too long': {street1: 'Very long street'.repeat(100)},
+      'Street is not valid': {street1: 'Castle street'},
+      'Street has special characters': {street1: '<script>alert(1)</script>'},
+      'Province is not valid: max 10 length': {province: '12345678901'},
+      'Country is too long': {country: 'Very long country'}
     }
 
     Object.keys(tests).forEach((testTitle) => {
       it(testTitle, async () => {
         try {
           // noinspection JSCheckFunctionSignatures
-          await stepExecute({}, {address: {...validAddress, ...tests[testTitle]}})
+          await stepExecute({}, {...validAddress, ...tests[testTitle]})
         } catch (stepError) {
           assert(stepError instanceof ValidationError)
         }

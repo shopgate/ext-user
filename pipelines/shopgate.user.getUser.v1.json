@@ -9,14 +9,17 @@
       {"key": "mail", "id": "1020"},
       {"key": "firstName", "id": "1030"},
       {"key": "lastName", "id": "1040"},
-      {"key": "gender", "id": "1050"},
-      {"key": "birthday", "id": "1060"},
-      {"key": "phone", "id": "1070"},
-      {"key": "customerGroups", "id": "1080", "optional": true},
-      {"key": "addresses", "id": "1090", "optional": true},
-      {"key": "messages", "id": "1100", "optional": true}
+      {"key": "userGroups", "id": "1080", "optional": true},
+      {"key": "customAttributes", "id": "1090", "optional": true}
     ],
     "steps": [
+      {
+        "type": "extension",
+        "id": "@shopgate/user",
+        "path": "@shopgate/user/user/checkLoginStatus.js",
+        "input": [],
+        "output": []
+      },
       {
         "type": "extension",
         "id": "@shopgate/user",
@@ -27,20 +30,8 @@
           {"key": "mail", "id": "1020"},
           {"key": "firstName", "id": "1030"},
           {"key": "lastName", "id": "1040"},
-          {"key": "gender", "id": "1050"},
-          {"key": "birthday", "id": "1060"},
-          {"key": "phone", "id": "1070"},
-          {"key": "customerGroups", "id": "1080", "optional": true},
-          {"key": "messages", "id": "1100", "optional": true}
-        ]
-      },
-      {
-        "type": "extension",
-        "id": "@shopgate/user",
-        "path": "@shopgate/user/address/getAddresses.js",
-        "input": [],
-        "output": [
-          {"key": "addresses", "id": "1090", "optional": true}
+          {"key": "userGroups", "id": "1080", "optional": true},
+          {"key": "customAttributes", "id": "1090", "optional": true}
         ]
       }
     ]

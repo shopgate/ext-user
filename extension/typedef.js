@@ -45,27 +45,45 @@
 
 /**
  * @typedef {Object} ExtUser
+ * @property {string} id
+ * @property {string|undefined} title
+ * @property {string|undefined} prefix
+ * @property {string} firstName
+ * @property {string|undefined} middleName
+ * @property {string} lastName
+ * @property {string|undefined} suffix
  * @property {string} mail
  * @property {string} password
- * @property {string} firstName
- * @property {string} lastName
- * @property {string|undefined} gender
- * @property {string|undefined} birthday
+ * @property {string|undefined} gender male|female
  * @property {string|undefined} phone
- * @property {Object[]|undefined} customerGroups
- * @property {ExtUserAddress[]|undefined} addresses
- * @property {Array|undefined} messages
+ * @property {string|undefined} birthday YYYY-MM-DD
+ * @property {ExtUserGroup[]} userGroups
+ * @property {Object} customAttributes key value attributes
+ */
+
+/**
+ * @typedef {Object} ExtUserGroup
+ * @property {string} id
+ * @property {string} name
  */
 
 /**
  * @typedef {Object} ExtUserAddress
- * @property {string|undefined} id
+ * @property {string} id
+ * @property {string|undefined} title
+ * @property {string|undefined} prefix
  * @property {string} firstName
+ * @property {string|undefined} middleName
  * @property {string} lastName
- * @property {string} street
- * @property {string} city
- * @property {string} provinceCode
- * @property {string} countryCode
+ * @property {string|undefined} suffix
+ * @property {string|undefined} phone
+ * @property {string} company
+ * @property {string} street1
+ * @property {string} street2
  * @property {string} zipCode
- * @property {string[]|null} tags
+ * @property {string} city
+ * @property {string} province ISO code
+ * @property {string} country ISO alpha-2 code
+ * @property {string[]} tags default, shipping, billing, etc.
+ * @property {Object} customAttributes key value attributes
  */

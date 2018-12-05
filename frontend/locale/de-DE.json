@@ -2,40 +2,114 @@
   "register": {
     "title": "Registrieren",
     "subTitle": "Einen neuen Account erstellen",
-    "mail": "E-Mail",
-    "password": "Passwort",
+    "button": "Registrieren"
+  },
+  "profile": {
+    "title": "Meine Angaben",
+    "updated": "Ihre Daten wurden gespeichert",
+    "failed": "Die Aktualisierung Ihrer Daten ist fehlgeschlagen"
+  },
+  "password": {
+    "update": "Passwort ändern",
+    "current": "Aktuell Passwort *",
+    "new": "Neue Passwort *",
+    "repeat": "Neue Passwort bestätigen *",
+    "save": "Speichern",
+    "errors": {
+      "blank": "Bitte vervollständigen Sie dieses Feld.",
+      "oldPassword": "Das aktuelle Passwort ist falsch.",
+      "password": "Ihr Passwort muss mindestens 8 Zeichen lang sein.",
+      "repeatPassword": "Die Passwörter stimmen nicht überein. Versuchen Sie es erneut."
+    }
+  },
+  "user": {
     "firstName": "Vorname",
     "lastName": "Nachname",
-    "button": "Registrieren",
+    "mail": "E-Mail",
+    "password": "Passwort",
     "errors": {
-      "blank": "Bitte vervollständigen Sie dieses Feld",
-      "mail": "Geben Sie bitte eine gültige E-Mail-Adresse ein",
-      "password": "Das Passwort muss mindestens 8 Stellen haben",
-      "firstName": "Nur Buchstaben und Leerzeichen sind erlaubt",
-      "lastName": "Nur Buchstaben und Leerzeichen sind erlaubt"
+      "blank": "Bitte vervollständigen Sie dieses Feld.",
+      "mail": "Geben Sie bitte eine gültige E-Mail-Adresse ein.",
+      "password": "Ihr Passwort muss mindestens 8 Zeichen lang sein.",
+      "firstName": "Nur Buchstaben und Leerzeichen sind erlaubt.",
+      "lastName": "Nur Buchstaben und Leerzeichen sind erlaubt."
+    }
+  },
+  "addresses": {
+    "title": "Adressbuch",
+    "headline": "Adressbuch",
+    "button": "Neue Adresse hinzufügen",
+    "noAddresses": "Adressbuch ist leer",
+    "defaults": {
+      "default": "Standard-Adresse",
+      "shipping": "Standard-Lieferadresse",
+      "billing": "Standard-Rechnungsadresse"
+    },
+    "setAsDefault": {
+      "default": "Als Standard-Adresse festlegen",
+      "shipping": "Als Standard-Lieferadresse festlegen",
+      "billing": "Als Standard-Rechnungsadresse festlegen"
+    },
+    "error": {
+      "add": "Das Hinzufügen der Adresse ist fehlgeschlagen, bitte überprüfen Sie Ihre Eingaben",
+      "update": "Die Aktualisierung der Adresse ist fehlgeschlagen, bitte überprüfen Sie Ihre Eingaben",
+      "setAsDefault": "Die Adresse konnte nicht als Standard festgelegt werden"
     }
   },
   "address": {
+    "title": "Anrede",
+    "prefix": "Vorname *",
+    "firstName": "Vorname *",
+    "middleName": "Zweiter Vorname",
+    "lastName": "Nachname *",
+    "suffix": "Suffix",
+    "company": "Firma",
+    "street1": "Straße und Hausnummer *",
+    "street2": "Adresszusatz",
+    "city": "Stadt *",
+    "province": "Bundesland *",
+    "country": "Land *",
+    "zipCode": "PLZ *",
+    "button": "Neue Adresse speichern",
+    "errors": {
+      "title": "Nur Buchstaben und Leerzeichen sind erlaubt",
+      "prefix": "Nur Buchstaben und Leerzeichen sind erlaubt",
+      "firstName": "Nur Buchstaben und Leerzeichen sind erlaubt",
+      "middleName": "Nur Buchstaben und Leerzeichen sind erlaubt",
+      "lastName": "Nur Buchstaben und Leerzeichen sind erlaubt",
+      "suffix": "Nur Buchstaben und Leerzeichen sind erlaubt",
+      "street1": "Straße und Hausnummer sind erforderlich",
+      "street2": "Die Eingabe enthält unerlaubte Sonderzeichen",
+      "city": "Nur Buchstaben und Leerzeichen sind erlaubt",
+      "country": "Wähle ein Land aus",
+      "province": "Wähle ein Bundesland aus",
+      "zipCode": "Höchstens 10 Zeichen sind erlaubt"
+    },
+    "select": {
+      "button": "Adresse auswählen"
+    },
     "add": {
       "title": "Adresse hinzufügen",
-      "firstName": "Vorname *",
-      "lastName": "Nachname *",
-      "street": "Straße *",
-      "city": "Stadt *",
-      "provinceCode": "Bundesland *",
-      "countryCode": "Land *",
-      "zipCode": "PLZ *",
-      "button": "Addresse speichern",
-      "errors": {
-        "firstName": "Nur Buchstaben und Leerzeichen sind erlaubt",
-        "lastName": "Nur Buchstaben und Leerzeichen sind erlaubt",
-        "street": "Straße und Hausnummer sind erforderlich",
-        "city": "Nur Buchstaben und Leerzeichen sind erlaubt",
-        "countryCode": "Wähle ein Land aus",
-        "provinceCode": "Wähle ein Bundesland aus",
-        "zipCode": "Höchstens 10 Zeichen sind erlaubt"
-      }
-    }
+      "button": "Neue Adresse speichern"
+    },
+    "update": {
+      "title": "Adresse aktualisieren"
+    },
+    "delete": {
+      "button": "Löschen",
+      "confirmationDialog": {
+        "title": "Adresse löschen",
+        "message": "Möchten Sie diese Adresse wirklich löschen?"
+      },
+      "successMessage": "Die Adresse wurde gelöscht",
+      "noRemoveDefault": "Die Standard-Adresse kann nicht gelöscht werden"
+    },
+    "makeDefault": {
+      "default": "Als Standard-Adresse festlegen",
+      "shipping": "Als Standard-Lieferadresse festlegen",
+      "billing": "Als Standard-Rechnungsadresse festlegen"
+    },
+    "validationFailedToastMessage": "Bitte überprüfen Sie Ihre Felder"
   },
   "checkout": {
     "shipping": {
@@ -53,5 +127,15 @@
         "change": "Ändern"
       }
     }
+  },
+  "navigation": {
+    "profile": "Meine Angaben",
+    "change_password": "Passwort ändern",
+    "address_book": "Adressbuch",
+    "payment_options": "Zahlungsoptionen"
+  },
+  "navigator": {
+    "save": "Speichern",
+    "changePassword": "Speichern"
   }
 }

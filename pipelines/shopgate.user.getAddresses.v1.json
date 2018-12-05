@@ -1,0 +1,29 @@
+{
+  "version": "1",
+  "pipeline": {
+    "id": "shopgate.user.getAddresses.v1",
+    "public": true,
+    "input": [],
+    "output": [
+      {"key": "addresses", "id": "1"}
+    ],
+    "steps": [
+      {
+        "type": "extension",
+        "id": "@shopgate/user",
+        "path": "@shopgate/user/user/checkLoginStatus.js",
+        "input": [],
+        "output": []
+      },
+      {
+        "type": "extension",
+        "id": "@shopgate/user",
+        "path": "@shopgate/user/address/getAddresses.js",
+        "input": [],
+        "output": [
+          {"key": "addresses", "id": "1"}
+        ]
+      }
+    ]
+  }
+}

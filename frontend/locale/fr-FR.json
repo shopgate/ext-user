@@ -1,0 +1,141 @@
+{
+  "register": {
+    "title": "Register",
+    "subTitle": "Create a new account",
+    "button": "Register"
+  },
+  "profile": {
+    "title": "Mon profil",
+    "updated": "vos données ont été enregistrées",
+    "failed": "Updating your data failed"
+  },
+  "password": {
+    "update": "Change password",
+    "updated": "Your password has been saved",
+    "current": "Current password *",
+    "new": "New password *",
+    "repeat": "Repeat new password *",
+    "save": "Save",
+    "errors": {
+      "blank": "Please complete this field",
+      "password": "The minimum password length must be 8 characters",
+      "repeatPassword": "Those passwords didn't match. Try again"
+    }
+  },
+  "user": {
+    "firstName": "First name",
+    "lastName": "Last name",
+    "mail": "Email",
+    "password": "Password",
+    "errors": {
+      "blank": "Please complete this field",
+      "mail": "Please enter a valid e-mail address",
+      "password": "The minimum password length must be 8 characters",
+      "firstName": "Only letters and spaces are allowed",
+      "lastName": "Only letters and spaces are allowed"
+    }
+  },
+  "addresses": {
+    "title": "Carnet d'adresses",
+    "headline": "Carnet d'adresses",
+    "button": "Ajouter une nouvelle adresse",
+    "noAddresses": "Le carnet d'adresses est vide",
+    "defaults": {
+      "default": "Adresse par défaut",
+      "shipping": "Adresse d'expédition par défaut",
+      "billing": "Adresse de facturation par défaut"
+    },
+    "setAsDefault": {
+      "default": "Définir comme adresse par défaut",
+      "shipping": "Définir comme adresse de livraison par défaut",
+      "billing": "Définir comme adresse de facturation par défaut"
+    },
+    "error": {
+      "add": "L'ajout de l'adresse a échoué, veuillez vérifier vos champs",
+      "update": "La mise à jour de l'adresse a échoué, veuillez vérifier vos champs",
+      "setAsDefault": "Impossible de définir l'adresse par défaut"
+    }
+  },
+  "address": {
+    "title": "Title",
+    "prefix": "Prefix",
+    "firstName": "First Name *",
+    "middleName": "Middle name",
+    "lastName": "Last Name *",
+    "suffix": "Suffix",
+    "company": "Company",
+    "street1": "Street & Number *",
+    "street2": "Additional address",
+    "city": "City *",
+    "province": "State *",
+    "country": "Country *",
+    "zipCode": "Zip Code *",
+    "button": "Save address",
+    "errors": {
+      "title": "Only letters and spaces are allowed",
+      "prefix": "Only letters and spaces are allowed",
+      "firstName": "Only letters and spaces are allowed",
+      "middleName": "Only letters and spaces are allowed",
+      "lastName": "Only letters and spaces are allowed",
+      "suffix": "Street and number are required",
+      "street1": "Street and number are required",
+      "street2": "Street and number are required",
+      "city": "Only letters and spaces are allowed",
+      "province": "Choose a State",
+      "country": "Choose a country",
+      "zipCode": "A max. of 10 characters are allowed"
+    },
+    "add": {
+      "title": "Add address",
+      "button": "Save new address"
+    },
+    "select": {
+      "button": "Choose address"
+    },
+    "update": {
+      "title": "Edit address"
+    },
+    "delete": {
+      "button": "Supprimer",
+      "confirmationDialog": {
+        "title": "Supprimer l'adresse",
+        "message": "Voulez-vous vraiment supprimer cette adresse?"
+      },
+      "successMessage": "L'adresse a été supprimée",
+      "noRemoveDefault": "L'adresse par défaut ne peut pas être supprimée"
+    },
+    "makeDefault": {
+      "default": "Faites-en votre adresse par défaut",
+      "shipping": "Faites-en votre adresse de livraison par défaut",
+      "billing": "Faites-en votre adresse de facturation par défaut"
+    },
+    "validationFailedToastMessage": "Veuillez vérifier vos champs"
+  },
+  "checkout": {
+    "shipping": {
+      "address": {
+        "title": "Shipping address",
+        "select": "Add shipping address",
+        "change": "Change",
+        "makeBilling": "Make this my billing address"
+      }
+    },
+    "billing": {
+      "address": {
+        "title": "Billing address",
+        "select": "Add billing address",
+        "change": "Change"
+      }
+    }
+  },
+  "navigation": {
+    "profile": "Mon profil",
+    "change_password": "Changer mot de passe",
+    "address_book": "Carnet d'adresses",
+    "payment_options": "Options de paiement"
+  },
+  "navigator": {
+    "save": "Save",
+    "changePassword": "Save"
+  }
+}

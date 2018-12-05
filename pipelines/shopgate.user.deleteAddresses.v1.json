@@ -1,0 +1,36 @@
+{
+  "version": "1",
+  "pipeline": {
+    "id": "shopgate.user.deleteAddresses.v1",
+    "public": true,
+    "input": [
+      {"key": "ids", "id": "1"}
+    ],
+    "output": [],
+    "steps": [
+      {
+        "type": "extension",
+        "id": "@shopgate/user",
+        "path": "@shopgate/user/user/checkLoginStatus.js",
+        "input": [],
+        "output": []
+      },
+      {
+        "type": "extension",
+        "id": "@shopgate/user",
+        "path": "@shopgate/user/address/deleteAddresses.js",
+        "input": [
+          {"key": "ids", "id": "1"}
+        ],
+        "output": []
+      },
+      {
+        "type": "extension",
+        "id": "@shopgate/user",
+        "path": "@shopgate/user/address/sortAddresses.js",
+        "input": [],
+        "output": []
+      }
+    ]
+  }
+}
