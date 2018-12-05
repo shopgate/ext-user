@@ -1,13 +1,12 @@
 const UserError = require('./UserError')
 
 class ValidationError extends UserError {
-  constructor (error) {
+  constructor (validationErrors) {
     super()
 
     this.code = 'EVALIDATION'
-    this.message = `Validation error ${error}`
-    this.error = error
-    this.validationErrors = []
+    this.message = 'There was an error with a request'
+    this.validationErrors = validationErrors
   }
 }
 

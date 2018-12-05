@@ -1,12 +1,12 @@
 const InternalError = require('./../common/Error/InternalError')
-const UserError = require('./../common/Error/UserError')
+const NotFoundError = require('./../common/Error/NotFoundError')
 
 /**
  * @param {SDKContext} context
- * @param {{addressId: string}} input
+ * @param {{id: string}} input address id
  * @return {Promise<{address: ExtUserAddress}>}
  */
-module.exports = async (context, input) => {
+module.exports = async (context, { id: addressId }) => {
   let addresses
   try {
     addresses = (await context.storage.user.get('addresses')) || []
@@ -14,10 +14,10 @@ module.exports = async (context, input) => {
     context.log.warn(err, 'User storage error: Failed to load the user\'s addresses.')
     throw new InternalError()
   }
-  const address = addresses.find(/** @type ExtUserAddress */address => address.id === input.addressId)
+  const address = addresses.find(/** @type ExtUserAddress */address => address.id === addressId)
 
   if (!address) {
-    throw new UserError('Address not found')
+    throw new NotFoundError('Address not found')
   }
 
   return {address}

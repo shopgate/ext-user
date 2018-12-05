@@ -1,0 +1,48 @@
+{
+  "version": "1",
+  "pipeline": {
+    "id": "shopgate.user.updateUser.v1",
+    "public": true,
+    "input": [
+      {"key": "firstName", "id": "100"},
+      {"key": "lastName", "id": "101"},
+      {"key": "customAttributes", "id": "102", "optional": true}
+    ],
+    "output": [],
+    "steps": [
+      {
+        "type": "extension",
+        "id": "@shopgate/user",
+        "path": "@shopgate/user/user/checkLoginStatus.js",
+        "input": [],
+        "output": []
+      },
+      {
+        "type": "extension",
+        "id": "@shopgate/user",
+        "path": "@shopgate/user/user/update/validateUser.js",
+        "input": [
+          {"key": "firstName", "id": "100"},
+          {"key": "lastName", "id": "101"},
+          {"key": "customAttributes", "id": "102", "optional": true}
+        ],
+        "output": [
+          {"key": "firstName", "id": "100"},
+          {"key": "lastName", "id": "101"},
+          {"key": "customAttributes", "id": "102", "optional": true}
+        ]
+      },
+      {
+        "type": "extension",
+        "id": "@shopgate/user",
+        "path": "@shopgate/user/user/update/updateUser.js",
+        "input": [
+          {"key": "firstName", "id": "100"},
+          {"key": "lastName", "id": "101"},
+          {"key": "customAttributes", "id": "102", "optional": true}
+        ],
+        "output": []
+      }
+    ]
+  }
+}

@@ -1,0 +1,1132 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<AddressForm> should print validation errors inline 1`] = `
+<AddressForm
+  addAddress={[Function]}
+  address={
+    Object {
+      "firstName": "old value",
+    }
+  }
+  config={
+    Object {
+      "addressDefaultGroups": Array [],
+      "addressForm": Object {
+        "fields": Object {
+          "firstName": Object {
+            "label": "address.firstName",
+            "required": true,
+            "sortOrder": 1,
+            "type": "text",
+            "visible": true,
+          },
+          "lastName": Object {
+            "label": "address.lastName",
+            "required": true,
+            "sortOrder": 1,
+            "type": "text",
+            "visible": true,
+          },
+        },
+      },
+    }
+  }
+  deleteAddress={[Function]}
+  isBusy={false}
+  isFirstAddress={false}
+  updateAddress={[Function]}
+  validationErrors={
+    Array [
+      Object {
+        "message": "foo",
+        "path": "firstName",
+      },
+    ]
+  }
+>
+  <Portal
+    name="user.address-form.before"
+    props={null}
+  />
+  <Portal
+    name="user.address-form"
+    props={null}
+  >
+    <Builder
+      className="css-6m9p5c"
+      config={
+        Object {
+          "fields": Object {
+            "firstName": Object {
+              "label": "address.firstName",
+              "required": true,
+              "sortOrder": 1,
+              "type": "text",
+              "visible": true,
+            },
+            "lastName": Object {
+              "label": "address.lastName",
+              "required": true,
+              "sortOrder": 1,
+              "type": "text",
+              "visible": true,
+            },
+          },
+        }
+      }
+      defaults={
+        Object {
+          "firstName": "old value",
+          "lastName": "",
+        }
+      }
+      handleUpdate={[Function]}
+      name="address"
+      onSubmit={[Function]}
+      validationErrors={
+        Array [
+          Object {
+            "message": "foo",
+            "path": "firstName",
+          },
+        ]
+      }
+    >
+      <Form
+        onSubmit={[Function]}
+      >
+        <form
+          action="#"
+          onKeyPress={[Function]}
+          onSubmit={[Function]}
+        >
+          <div
+            className="css-6m9p5c"
+          >
+            <Portal
+              name="address.firstName.before"
+              props={null}
+            />
+            <Portal
+              name="address.firstName"
+              props={null}
+            >
+              <TextElement
+                element={
+                  Object {
+                    "custom": false,
+                    "handleChange": [Function],
+                    "id": "firstName",
+                    "label": "address.firstName",
+                    "required": true,
+                    "sortOrder": 1,
+                    "type": "text",
+                    "visible": true,
+                  }
+                }
+                errorText="foo"
+                name="address.firstName"
+                style={
+                  Object {
+                    "field": "",
+                  }
+                }
+                value="old value"
+                visible={true}
+              >
+                <TextField
+                  className=""
+                  errorText="foo"
+                  hintText=""
+                  isControlled={true}
+                  label="address.firstName"
+                  multiLine={false}
+                  name="address.firstName"
+                  onChange={[Function]}
+                  onFocusChange={[Function]}
+                  onSanitize={[Function]}
+                  onValidate={[Function]}
+                  password={false}
+                  setRef={[Function]}
+                  translateErrorText={false}
+                  type="text"
+                  value="old value"
+                >
+                  <div
+                    className="css-e4z0u6 "
+                  >
+                    <Hint
+                      hintText=""
+                      visible={false}
+                    >
+                      <div
+                        className="css-tnfb18 css-1jyyyen"
+                      >
+                        <Translate
+                          className=""
+                          params={Object {}}
+                          string=""
+                        >
+                          <span
+                            className=""
+                          />
+                        </Translate>
+                      </div>
+                    </Hint>
+                    <Label
+                      hasErrorMessage={true}
+                      isFloating={true}
+                      isFocused={false}
+                      label="address.firstName"
+                      name="address.firstName"
+                    >
+                      <label
+                        className="css-u7lqu6 css-16msjt6 css-1fekhao"
+                        htmlFor="address.firstName"
+                      >
+                        <Translate
+                          className=""
+                          params={Object {}}
+                          string="address.firstName"
+                        >
+                          <span
+                            className=""
+                          >
+                            address.firstName
+                          </span>
+                        </Translate>
+                      </label>
+                    </Label>
+                    <FormElement
+                      id="address.firstName"
+                      isControlled={true}
+                      multiLine={false}
+                      name="address.firstName"
+                      onChange={[Function]}
+                      onFocusChange={[Function]}
+                      onSanitize={[Function]}
+                      onValidate={[Function]}
+                      password={false}
+                      setRef={[Function]}
+                      type="text"
+                      value="old value"
+                    >
+                      <Component
+                        className="css-keangt"
+                        id="address.firstName"
+                        isControlled={true}
+                        multiLine={false}
+                        name="address.firstName"
+                        onChange={[Function]}
+                        onFocusChange={[Function]}
+                        onSanitize={[Function]}
+                        onValidate={[Function]}
+                        password={false}
+                        setRef={[Function]}
+                        type="text"
+                        validateOnBlur={true}
+                        value="old value"
+                      >
+                        <SimpleInput
+                          autoComplete={false}
+                          autoCorrect={false}
+                          className="css-keangt"
+                          disabled={false}
+                          id="address.firstName"
+                          isControlled={true}
+                          multiLine={false}
+                          name="address.firstName"
+                          onChange={[Function]}
+                          onFocusChange={[Function]}
+                          onSanitize={[Function]}
+                          onValidate={[Function]}
+                          password={false}
+                          setRef={[Function]}
+                          type="text"
+                          validateOnBlur={true}
+                          value="old value"
+                        >
+                          <input
+                            autoComplete="off"
+                            autoCorrect="off"
+                            className="css-keangt"
+                            disabled={false}
+                            id="address.firstName"
+                            name="address.firstName"
+                            onBlur={[Function]}
+                            onChange={[Function]}
+                            onFocus={[Function]}
+                            type="text"
+                            value="old value"
+                          />
+                        </SimpleInput>
+                      </Component>
+                    </FormElement>
+                    <Underline
+                      hasErrorMessage={true}
+                      isFocused={false}
+                    >
+                      <div
+                        className="css-ycal4l"
+                      >
+                        <div
+                          className="css-1tpmuef"
+                          style={
+                            Object {
+                              "borderBottomColor": "#ff0000",
+                            }
+                          }
+                        />
+                      </div>
+                    </Underline>
+                    <ErrorText
+                      className=""
+                      errorText="foo"
+                      translate={false}
+                      validationError={null}
+                    >
+                      <div
+                        className=" css-hmgfge"
+                      >
+                        foo
+                      </div>
+                    </ErrorText>
+                  </div>
+                </TextField>
+              </TextElement>
+            </Portal>
+            <Portal
+              name="address.firstName.after"
+              props={null}
+            />
+            <Portal
+              name="address.lastName.before"
+              props={null}
+            />
+            <Portal
+              name="address.lastName"
+              props={null}
+            >
+              <TextElement
+                element={
+                  Object {
+                    "custom": false,
+                    "handleChange": [Function],
+                    "id": "lastName",
+                    "label": "address.lastName",
+                    "required": true,
+                    "sortOrder": 1,
+                    "type": "text",
+                    "visible": true,
+                  }
+                }
+                errorText=""
+                name="address.lastName"
+                style={
+                  Object {
+                    "field": "",
+                  }
+                }
+                value=""
+                visible={true}
+              >
+                <TextField
+                  className=""
+                  errorText=""
+                  hintText=""
+                  isControlled={true}
+                  label="address.lastName"
+                  multiLine={false}
+                  name="address.lastName"
+                  onChange={[Function]}
+                  onFocusChange={[Function]}
+                  onSanitize={[Function]}
+                  onValidate={[Function]}
+                  password={false}
+                  setRef={[Function]}
+                  translateErrorText={false}
+                  type="text"
+                  value=""
+                >
+                  <div
+                    className="css-e4z0u6 "
+                  >
+                    <Hint
+                      hintText=""
+                      visible={false}
+                    >
+                      <div
+                        className="css-tnfb18 css-1jyyyen"
+                      >
+                        <Translate
+                          className=""
+                          params={Object {}}
+                          string=""
+                        >
+                          <span
+                            className=""
+                          />
+                        </Translate>
+                      </div>
+                    </Hint>
+                    <Label
+                      hasErrorMessage={false}
+                      isFloating={false}
+                      isFocused={false}
+                      label="address.lastName"
+                      name="address.lastName"
+                    >
+                      <label
+                        className="css-u7lqu6 css-1fekhao"
+                        htmlFor="address.lastName"
+                      >
+                        <Translate
+                          className=""
+                          params={Object {}}
+                          string="address.lastName"
+                        >
+                          <span
+                            className=""
+                          >
+                            address.lastName
+                          </span>
+                        </Translate>
+                      </label>
+                    </Label>
+                    <FormElement
+                      id="address.lastName"
+                      isControlled={true}
+                      multiLine={false}
+                      name="address.lastName"
+                      onChange={[Function]}
+                      onFocusChange={[Function]}
+                      onSanitize={[Function]}
+                      onValidate={[Function]}
+                      password={false}
+                      setRef={[Function]}
+                      type="text"
+                      value=""
+                    >
+                      <Component
+                        className="css-keangt"
+                        id="address.lastName"
+                        isControlled={true}
+                        multiLine={false}
+                        name="address.lastName"
+                        onChange={[Function]}
+                        onFocusChange={[Function]}
+                        onSanitize={[Function]}
+                        onValidate={[Function]}
+                        password={false}
+                        setRef={[Function]}
+                        type="text"
+                        validateOnBlur={true}
+                        value=""
+                      >
+                        <SimpleInput
+                          autoComplete={false}
+                          autoCorrect={false}
+                          className="css-keangt"
+                          disabled={false}
+                          id="address.lastName"
+                          isControlled={true}
+                          multiLine={false}
+                          name="address.lastName"
+                          onChange={[Function]}
+                          onFocusChange={[Function]}
+                          onSanitize={[Function]}
+                          onValidate={[Function]}
+                          password={false}
+                          setRef={[Function]}
+                          type="text"
+                          validateOnBlur={true}
+                          value=""
+                        >
+                          <input
+                            autoComplete="off"
+                            autoCorrect="off"
+                            className="css-keangt"
+                            disabled={false}
+                            id="address.lastName"
+                            name="address.lastName"
+                            onBlur={[Function]}
+                            onChange={[Function]}
+                            onFocus={[Function]}
+                            type="text"
+                            value=""
+                          />
+                        </SimpleInput>
+                      </Component>
+                    </FormElement>
+                    <Underline
+                      hasErrorMessage={false}
+                      isFocused={false}
+                    >
+                      <div
+                        className="css-ycal4l"
+                      >
+                        <div
+                          className="css-1tpmuef"
+                          style={
+                            Object {
+                              "borderBottomColor": undefined,
+                              "transform": "scale3d(0,1,1)",
+                            }
+                          }
+                        />
+                      </div>
+                    </Underline>
+                    <ErrorText
+                      className=""
+                      errorText=""
+                      translate={false}
+                      validationError={null}
+                    >
+                      <div
+                        className=" css-hmgfge"
+                      />
+                    </ErrorText>
+                  </div>
+                </TextField>
+              </TextElement>
+            </Portal>
+            <Portal
+              name="address.lastName.after"
+              props={null}
+            />
+          </div>
+        </form>
+      </Form>
+    </Builder>
+    <div
+      className="css-1xnhj1e"
+    >
+      <Portal
+        name="user.address-form.button.before"
+        props={null}
+      />
+      <Portal
+        name="user.address-form.button"
+        props={null}
+      >
+        <RippleButton
+          className="css-1dwy2jc"
+          data-test-id="AddAddressButton"
+          disabled={true}
+          flat={false}
+          onClick={[Function]}
+          rippleClassName=""
+          rippleSize={null}
+          testId="Button"
+          type="secondary"
+          wrapContent={true}
+        >
+          <Button
+            className="css-1dwy2jc"
+            disabled={true}
+            flat={false}
+            onClick={[Function]}
+            testId="Button"
+            type="secondary"
+            wrapContent={true}
+          >
+            <Button
+              className="css-ot1d6i css-1dwy2jc"
+              disabled={true}
+              onClick={[Function]}
+              testId="Button"
+            >
+              <button
+                className="css-ot1d6i css-1dwy2jc css-1rn65c0"
+                data-test-id="Button"
+                disabled={true}
+                onClick={null}
+              >
+                <div
+                  className="css-4uxwj9"
+                >
+                  <Translate
+                    className=""
+                    params={Object {}}
+                    string="address.add.button"
+                  >
+                    <span
+                      className=""
+                    >
+                      address.add.button
+                    </span>
+                  </Translate>
+                </div>
+              </button>
+            </Button>
+          </Button>
+        </RippleButton>
+      </Portal>
+      <Portal
+        name="user.address-form.button.after"
+        props={null}
+      />
+    </div>
+  </Portal>
+  <Portal
+    name="user.address-form.after"
+    props={null}
+  />
+</AddressForm>
+`;
+
+exports[`<AddressForm> should render only configured address fields 1`] = `
+<AddressForm
+  addAddress={[Function]}
+  address={Object {}}
+  config={
+    Object {
+      "addressDefaultGroups": Array [],
+      "addressForm": Object {
+        "fields": Object {
+          "firstName": Object {
+            "label": "address.firstName",
+            "required": true,
+            "sortOrder": 1,
+            "type": "text",
+            "visible": true,
+          },
+          "lastName": Object {
+            "label": "address.lastName",
+            "required": true,
+            "sortOrder": 1,
+            "type": "text",
+            "visible": true,
+          },
+        },
+      },
+    }
+  }
+  deleteAddress={[Function]}
+  isBusy={false}
+  isFirstAddress={false}
+  updateAddress={[Function]}
+  validationErrors={Array []}
+>
+  <Portal
+    name="user.address-form.before"
+    props={null}
+  />
+  <Portal
+    name="user.address-form"
+    props={null}
+  >
+    <Builder
+      className="css-6m9p5c"
+      config={
+        Object {
+          "fields": Object {
+            "firstName": Object {
+              "label": "address.firstName",
+              "required": true,
+              "sortOrder": 1,
+              "type": "text",
+              "visible": true,
+            },
+            "lastName": Object {
+              "label": "address.lastName",
+              "required": true,
+              "sortOrder": 1,
+              "type": "text",
+              "visible": true,
+            },
+          },
+        }
+      }
+      defaults={
+        Object {
+          "firstName": "",
+          "lastName": "",
+        }
+      }
+      handleUpdate={[Function]}
+      name="address"
+      onSubmit={[Function]}
+      validationErrors={Array []}
+    >
+      <Form
+        onSubmit={[Function]}
+      >
+        <form
+          action="#"
+          onKeyPress={[Function]}
+          onSubmit={[Function]}
+        >
+          <div
+            className="css-6m9p5c"
+          >
+            <Portal
+              name="address.firstName.before"
+              props={null}
+            />
+            <Portal
+              name="address.firstName"
+              props={null}
+            >
+              <TextElement
+                element={
+                  Object {
+                    "custom": false,
+                    "handleChange": [Function],
+                    "id": "firstName",
+                    "label": "address.firstName",
+                    "required": true,
+                    "sortOrder": 1,
+                    "type": "text",
+                    "visible": true,
+                  }
+                }
+                errorText=""
+                name="address.firstName"
+                style={
+                  Object {
+                    "field": "",
+                  }
+                }
+                value=""
+                visible={true}
+              >
+                <TextField
+                  className=""
+                  errorText=""
+                  hintText=""
+                  isControlled={true}
+                  label="address.firstName"
+                  multiLine={false}
+                  name="address.firstName"
+                  onChange={[Function]}
+                  onFocusChange={[Function]}
+                  onSanitize={[Function]}
+                  onValidate={[Function]}
+                  password={false}
+                  setRef={[Function]}
+                  translateErrorText={false}
+                  type="text"
+                  value=""
+                >
+                  <div
+                    className="css-e4z0u6 "
+                  >
+                    <Hint
+                      hintText=""
+                      visible={false}
+                    >
+                      <div
+                        className="css-tnfb18 css-1jyyyen"
+                      >
+                        <Translate
+                          className=""
+                          params={Object {}}
+                          string=""
+                        >
+                          <span
+                            className=""
+                          />
+                        </Translate>
+                      </div>
+                    </Hint>
+                    <Label
+                      hasErrorMessage={false}
+                      isFloating={false}
+                      isFocused={false}
+                      label="address.firstName"
+                      name="address.firstName"
+                    >
+                      <label
+                        className="css-u7lqu6 css-1fekhao"
+                        htmlFor="address.firstName"
+                      >
+                        <Translate
+                          className=""
+                          params={Object {}}
+                          string="address.firstName"
+                        >
+                          <span
+                            className=""
+                          >
+                            address.firstName
+                          </span>
+                        </Translate>
+                      </label>
+                    </Label>
+                    <FormElement
+                      id="address.firstName"
+                      isControlled={true}
+                      multiLine={false}
+                      name="address.firstName"
+                      onChange={[Function]}
+                      onFocusChange={[Function]}
+                      onSanitize={[Function]}
+                      onValidate={[Function]}
+                      password={false}
+                      setRef={[Function]}
+                      type="text"
+                      value=""
+                    >
+                      <Component
+                        className="css-keangt"
+                        id="address.firstName"
+                        isControlled={true}
+                        multiLine={false}
+                        name="address.firstName"
+                        onChange={[Function]}
+                        onFocusChange={[Function]}
+                        onSanitize={[Function]}
+                        onValidate={[Function]}
+                        password={false}
+                        setRef={[Function]}
+                        type="text"
+                        validateOnBlur={true}
+                        value=""
+                      >
+                        <SimpleInput
+                          autoComplete={false}
+                          autoCorrect={false}
+                          className="css-keangt"
+                          disabled={false}
+                          id="address.firstName"
+                          isControlled={true}
+                          multiLine={false}
+                          name="address.firstName"
+                          onChange={[Function]}
+                          onFocusChange={[Function]}
+                          onSanitize={[Function]}
+                          onValidate={[Function]}
+                          password={false}
+                          setRef={[Function]}
+                          type="text"
+                          validateOnBlur={true}
+                          value=""
+                        >
+                          <input
+                            autoComplete="off"
+                            autoCorrect="off"
+                            className="css-keangt"
+                            disabled={false}
+                            id="address.firstName"
+                            name="address.firstName"
+                            onBlur={[Function]}
+                            onChange={[Function]}
+                            onFocus={[Function]}
+                            type="text"
+                            value=""
+                          />
+                        </SimpleInput>
+                      </Component>
+                    </FormElement>
+                    <Underline
+                      hasErrorMessage={false}
+                      isFocused={false}
+                    >
+                      <div
+                        className="css-ycal4l"
+                      >
+                        <div
+                          className="css-1tpmuef"
+                          style={
+                            Object {
+                              "borderBottomColor": undefined,
+                              "transform": "scale3d(0,1,1)",
+                            }
+                          }
+                        />
+                      </div>
+                    </Underline>
+                    <ErrorText
+                      className=""
+                      errorText=""
+                      translate={false}
+                      validationError={null}
+                    >
+                      <div
+                        className=" css-hmgfge"
+                      />
+                    </ErrorText>
+                  </div>
+                </TextField>
+              </TextElement>
+            </Portal>
+            <Portal
+              name="address.firstName.after"
+              props={null}
+            />
+            <Portal
+              name="address.lastName.before"
+              props={null}
+            />
+            <Portal
+              name="address.lastName"
+              props={null}
+            >
+              <TextElement
+                element={
+                  Object {
+                    "custom": false,
+                    "handleChange": [Function],
+                    "id": "lastName",
+                    "label": "address.lastName",
+                    "required": true,
+                    "sortOrder": 1,
+                    "type": "text",
+                    "visible": true,
+                  }
+                }
+                errorText=""
+                name="address.lastName"
+                style={
+                  Object {
+                    "field": "",
+                  }
+                }
+                value=""
+                visible={true}
+              >
+                <TextField
+                  className=""
+                  errorText=""
+                  hintText=""
+                  isControlled={true}
+                  label="address.lastName"
+                  multiLine={false}
+                  name="address.lastName"
+                  onChange={[Function]}
+                  onFocusChange={[Function]}
+                  onSanitize={[Function]}
+                  onValidate={[Function]}
+                  password={false}
+                  setRef={[Function]}
+                  translateErrorText={false}
+                  type="text"
+                  value=""
+                >
+                  <div
+                    className="css-e4z0u6 "
+                  >
+                    <Hint
+                      hintText=""
+                      visible={false}
+                    >
+                      <div
+                        className="css-tnfb18 css-1jyyyen"
+                      >
+                        <Translate
+                          className=""
+                          params={Object {}}
+                          string=""
+                        >
+                          <span
+                            className=""
+                          />
+                        </Translate>
+                      </div>
+                    </Hint>
+                    <Label
+                      hasErrorMessage={false}
+                      isFloating={false}
+                      isFocused={false}
+                      label="address.lastName"
+                      name="address.lastName"
+                    >
+                      <label
+                        className="css-u7lqu6 css-1fekhao"
+                        htmlFor="address.lastName"
+                      >
+                        <Translate
+                          className=""
+                          params={Object {}}
+                          string="address.lastName"
+                        >
+                          <span
+                            className=""
+                          >
+                            address.lastName
+                          </span>
+                        </Translate>
+                      </label>
+                    </Label>
+                    <FormElement
+                      id="address.lastName"
+                      isControlled={true}
+                      multiLine={false}
+                      name="address.lastName"
+                      onChange={[Function]}
+                      onFocusChange={[Function]}
+                      onSanitize={[Function]}
+                      onValidate={[Function]}
+                      password={false}
+                      setRef={[Function]}
+                      type="text"
+                      value=""
+                    >
+                      <Component
+                        className="css-keangt"
+                        id="address.lastName"
+                        isControlled={true}
+                        multiLine={false}
+                        name="address.lastName"
+                        onChange={[Function]}
+                        onFocusChange={[Function]}
+                        onSanitize={[Function]}
+                        onValidate={[Function]}
+                        password={false}
+                        setRef={[Function]}
+                        type="text"
+                        validateOnBlur={true}
+                        value=""
+                      >
+                        <SimpleInput
+                          autoComplete={false}
+                          autoCorrect={false}
+                          className="css-keangt"
+                          disabled={false}
+                          id="address.lastName"
+                          isControlled={true}
+                          multiLine={false}
+                          name="address.lastName"
+                          onChange={[Function]}
+                          onFocusChange={[Function]}
+                          onSanitize={[Function]}
+                          onValidate={[Function]}
+                          password={false}
+                          setRef={[Function]}
+                          type="text"
+                          validateOnBlur={true}
+                          value=""
+                        >
+                          <input
+                            autoComplete="off"
+                            autoCorrect="off"
+                            className="css-keangt"
+                            disabled={false}
+                            id="address.lastName"
+                            name="address.lastName"
+                            onBlur={[Function]}
+                            onChange={[Function]}
+                            onFocus={[Function]}
+                            type="text"
+                            value=""
+                          />
+                        </SimpleInput>
+                      </Component>
+                    </FormElement>
+                    <Underline
+                      hasErrorMessage={false}
+                      isFocused={false}
+                    >
+                      <div
+                        className="css-ycal4l"
+                      >
+                        <div
+                          className="css-1tpmuef"
+                          style={
+                            Object {
+                              "borderBottomColor": undefined,
+                              "transform": "scale3d(0,1,1)",
+                            }
+                          }
+                        />
+                      </div>
+                    </Underline>
+                    <ErrorText
+                      className=""
+                      errorText=""
+                      translate={false}
+                      validationError={null}
+                    >
+                      <div
+                        className=" css-hmgfge"
+                      />
+                    </ErrorText>
+                  </div>
+                </TextField>
+              </TextElement>
+            </Portal>
+            <Portal
+              name="address.lastName.after"
+              props={null}
+            />
+          </div>
+        </form>
+      </Form>
+    </Builder>
+    <div
+      className="css-1xnhj1e"
+    >
+      <Portal
+        name="user.address-form.button.before"
+        props={null}
+      />
+      <Portal
+        name="user.address-form.button"
+        props={null}
+      >
+        <RippleButton
+          className="css-1dwy2jc"
+          data-test-id="AddAddressButton"
+          disabled={true}
+          flat={false}
+          onClick={[Function]}
+          rippleClassName=""
+          rippleSize={null}
+          testId="Button"
+          type="secondary"
+          wrapContent={true}
+        >
+          <Button
+            className="css-1dwy2jc"
+            disabled={true}
+            flat={false}
+            onClick={[Function]}
+            testId="Button"
+            type="secondary"
+            wrapContent={true}
+          >
+            <Button
+              className="css-ot1d6i css-1dwy2jc"
+              disabled={true}
+              onClick={[Function]}
+              testId="Button"
+            >
+              <button
+                className="css-ot1d6i css-1dwy2jc css-1rn65c0"
+                data-test-id="Button"
+                disabled={true}
+                onClick={null}
+              >
+                <div
+                  className="css-4uxwj9"
+                >
+                  <Translate
+                    className=""
+                    params={Object {}}
+                    string="address.add.button"
+                  >
+                    <span
+                      className=""
+                    >
+                      address.add.button
+                    </span>
+                  </Translate>
+                </div>
+              </button>
+            </Button>
+          </Button>
+        </RippleButton>
+      </Portal>
+      <Portal
+        name="user.address-form.button.after"
+        props={null}
+      />
+    </div>
+  </Portal>
+  <Portal
+    name="user.address-form.after"
+    props={null}
+  />
+</AddressForm>
+`;

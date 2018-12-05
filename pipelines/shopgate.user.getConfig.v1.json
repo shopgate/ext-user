@@ -1,0 +1,26 @@
+{
+  "version": "1",
+  "pipeline": {
+    "id": "shopgate.user.getConfig.v1",
+    "public": true,
+    "input": [],
+    "output": [
+      {"key": "addressForm", "id": "2", "optional": true},
+      {"key": "addressDefaultGroups", "id": "3", "optional": true},
+      {"key": "userMenuEntries", "id": "4", "optional": true}
+    ],
+    "steps": [
+      {
+        "type": "extension",
+        "id": "@shopgate/user",
+        "path": "@shopgate/user/config/getConfig.js",
+        "input": [],
+        "output": [
+          {"key": "addressForm", "id": "2", "optional": true},
+          {"key": "addressDefaultGroups", "id": "3", "optional": true},
+          {"key": "userMenuEntries", "id": "4", "optional": true}
+        ]
+      }
+    ]
+  }
+}

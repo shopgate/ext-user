@@ -1,34 +1,18 @@
 const Joi = require('joi')
 const userAddressSchema = require('./../common/userAddressSchema')(Joi)
 const ValidationError = require('./../common/Error/ValidationError')
+const joiErrorToValidationErrors = require('./../common/joiErrorToValidationErrors')
 
 /**
  * @param {SDKContext} context
- * @param {{address: ExtUserAddress}} input
+ * @param {ExtUserAddress} address
  * @return {Promise<{address: Object}>}
  */
-module.exports = async (context, input) => {
-  /** @type {ExtUserAddress} */
-  const address = {
-    firstName: input.address.firstName.trim(),
-    lastName: input.address.lastName.trim(),
-    street: input.address.street.trim(),
-    city: input.address.city.trim(),
-    provinceCode: input.address.provinceCode && input.address.provinceCode.trim(),
-    countryCode: input.address.countryCode.trim(),
-    zipCode: input.address.zipCode.trim(),
-    tags: input.address.tags || []
-  }
-
-  let validationResult = Joi.validate(address, userAddressSchema)
+module.exports = async (context, address) => {
+  let validationResult = userAddressSchema.validate(address)
   if (validationResult.error) {
-    throw new ValidationError(validationResult.error.details[0].message)
+    throw new ValidationError(joiErrorToValidationErrors(validationResult.error))
   }
 
-  return {
-    address: {
-      ...input.address,
-      ...address
-    }
-  }
+  return validationResult.value
 }
