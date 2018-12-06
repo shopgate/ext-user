@@ -38,7 +38,7 @@ const AddressDetails = ({ address }) => (
           <View>
             <AppBar
               title={title(address)}
-              right={(visible && address.id) ? <AppBarSaveButton testId="UserAddressSaveButton" /> : null}
+              right={(visible && address.id) ? <AppBarSaveButton testId="UserAddressSaveButton" key="right" /> : null}
             />
             <section className={style.container} data-test-id="UserAddressBookAddPage">
 

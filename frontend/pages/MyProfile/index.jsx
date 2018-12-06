@@ -24,7 +24,7 @@ const MyProfile = () => (
           <View>
             <AppBar
               title={isIos ? '' : 'profile.title'}
-              right={visible ? <AppBarSaveButton testId="UserProfileSaveButton" /> : null}
+              right={visible ? <AppBarSaveButton testId="UserProfileSaveButton" key="right" /> : null}
             />
             <section className={styles.container} data-test-id="UserProfilePage">
 

@@ -25,7 +25,7 @@ const ChangePassword = () => (
           <View>
             <AppBar
               title={isIos ? '' : 'password.update'}
-              right={(isIos && visible) ? <AppBarSaveButton testId="ChangePasswordSaveButton" /> : null}
+              right={(isIos && visible) ? <AppBarSaveButton testId="ChangePasswordSaveButton" key="right" /> : null}
             />
             <section className={styles.container} data-test-id="ChangePasswordPage">
 
