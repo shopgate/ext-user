@@ -120,15 +120,33 @@
   },
   "components": [
     {
-      "id": "UserRoutes",
-      "path": "frontend/pages/routes.jsx",
+      "id": "RegisterPage",
+      "path": "frontend/pages/Register/index.jsx",
       "target": "app.routes",
       "type": "portals"
     },
     {
-      "id": "NavigatorButtons",
-      "path": "frontend/components/NavigatorButtons/index.jsx",
-      "target": "nav-bar.navigator.icons.after",
+      "id": "MyProfilePage",
+      "path": "frontend/pages/MyProfile/index.jsx",
+      "target": "app.routes",
+      "type": "portals"
+    },
+    {
+      "id": "PasswordPage",
+      "path": "frontend/pages/ChangePassword/index.jsx",
+      "target": "app.routes",
+      "type": "portals"
+    },
+    {
+      "id": "AddressBookPage",
+      "path": "frontend/pages/AddressBook/Overview/index.jsx",
+      "target": "app.routes",
+      "type": "portals"
+    },
+    {
+      "id": "AddressDetailsPage",
+      "path": "frontend/pages/AddressBook/AddressDetails/index.jsx",
+      "target": "app.routes",
       "type": "portals"
     },
     {

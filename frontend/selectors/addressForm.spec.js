@@ -7,13 +7,13 @@ describe('AddressForm selectors', () => {
     const state = {
       extensions: {
         [statePrefix]: {
-          addressForm: { error: 'fooo' },
+          addressForm: { error: 'foo' },
         },
       },
     };
 
     expect(selectors.hasErrors(state)).toEqual(true);
-    expect(selectors.getErrors(state)).toEqual('fooo');
+    expect(selectors.getErrors(state)).toEqual('foo');
 
     const stateB = {
       extensions: {

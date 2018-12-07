@@ -3,21 +3,26 @@ import subscription from './ui';
 // Create action mocks.
 let mockToggleNavigatorCart;
 let mockToggleNavigatorSearch;
-let mockSetViewLoading;
 let mockSetUserViewIsLoading;
-let mockUnsetViewLoading;
 jest.mock('../action-creators/ui', () => ({
   toggleNavigatorCart: (...args) => mockToggleNavigatorCart(...args),
   toggleNavigatorSearch: (...args) => mockToggleNavigatorSearch(...args),
   setUserViewIsLoading: (...args) => mockSetUserViewIsLoading(...args),
 }));
-jest.mock('@shopgate/pwa-common/actions/view/setViewLoading', () => pathname => mockSetViewLoading(pathname));
-jest.mock('@shopgate/pwa-common/actions/view/unsetViewLoading', () => pathname => mockUnsetViewLoading(pathname));
-jest.mock('@shopgate/pwa-common/selectors/history', () => ({
-  getHistoryPathname: () => '/user',
+jest.mock('@shopgate/pwa-common/helpers/router', () => ({
+  getCurrentRoute: () => ({ pattern: '/user/addresses' }),
+}));
+
+let mockSetLoading;
+let mockUnsetLoading;
+jest.mock('@shopgate/pwa-common/providers', () => ({
+  LoadingProvider: {
+    setLoading: (...args) => mockSetLoading(...args),
+    unsetLoading: (...args) => mockUnsetLoading(...args),
+  },
 }));
 jest.mock('../selectors/ui', () => ({
-  getLoadingViewPathName: () => '/user',
+  getLoadingViewPathName: () => '/user/addresses',
 }));
 
 describe('UI subscriptions', () => {
@@ -25,7 +30,7 @@ describe('UI subscriptions', () => {
   subscription(subscribe);
 
   // Skip first 6 Event subscriptions
-  const [,,,,,,
+  const [
     fullPageViewLeave$,
     fullPageViewEnter$,
     viewIsLoading$,
@@ -38,34 +43,36 @@ describe('UI subscriptions', () => {
     mockToggleNavigatorCart = jest.fn();
     mockToggleNavigatorSearch = jest.fn();
     mockSetUserViewIsLoading = jest.fn();
-    mockSetViewLoading = jest.fn();
-    mockUnsetViewLoading = jest.fn();
+    mockSetLoading = jest.fn();
+    mockUnsetLoading = jest.fn();
   });
 
   it('should subscribe to the streams', () => {
-    expect(subscribe.mock.calls.length).toEqual(10);
+    expect(subscribe.mock.calls.length).toEqual(4);
+  });
+
+  it('should toggle navigator controls when route is leaved', () => {
+    fullPageViewLeave$[1]({ dispatch });
+    expect(mockToggleNavigatorCart).toHaveBeenCalledWith(true);
+    expect(mockToggleNavigatorSearch).toHaveBeenCalledWith(true);
   });
 
   it('should toggle navigator controls when route is entered', () => {
     fullPageViewEnter$[1]({ dispatch });
     expect(mockToggleNavigatorCart).toHaveBeenCalledWith(false);
     expect(mockToggleNavigatorSearch).toHaveBeenCalledWith(false);
-
-    fullPageViewLeave$[1]({ dispatch });
-    expect(mockToggleNavigatorCart).toHaveBeenCalledWith(true);
-    expect(mockToggleNavigatorSearch).toHaveBeenCalledWith(true);
   });
 
   it('should set view as loading', () => {
     // eslint-disable-next-line extra-rules/no-single-line-objects
     viewIsLoading$[1]({ dispatch, getState: () => {} });
-    expect(mockSetUserViewIsLoading).toHaveBeenCalledWith('/user');
-    expect(mockSetViewLoading).toHaveBeenCalledWith('/user');
+    expect(mockSetUserViewIsLoading).toHaveBeenCalledWith('/user/addresses');
+    expect(mockSetLoading).toHaveBeenCalledWith('/user/addresses');
   });
 
   it('should unset view as loading', () => {
     // eslint-disable-next-line extra-rules/no-single-line-objects
     viewIsIdle$[1]({ dispatch, getState: () => {} });
-    expect(mockUnsetViewLoading).toHaveBeenCalledWith('/user');
+    expect(mockUnsetLoading).toHaveBeenCalledWith('/user/addresses');
   });
 });

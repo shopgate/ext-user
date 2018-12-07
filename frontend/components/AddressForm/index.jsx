@@ -6,13 +6,9 @@ import FormBuilder from '@shopgate/pwa-ui-shared/Form/Builder';
 import Button from '@shopgate/pwa-ui-shared/Button';
 import RippleButton from '@shopgate/pwa-ui-shared/RippleButton';
 import Checkbox from '@shopgate/pwa-ui-shared/Form/Checkbox';
+import { UIEvents } from '@shopgate/pwa-core';
 import * as portals from '../../constants/Portals';
-import EventEmitter from '../../events/emitter';
-import {
-  NAVIGATOR_SAVE_BUTTON_CLICK,
-  NAVIGATOR_SAVE_BUTTON_ENABLE,
-  NAVIGATOR_SAVE_BUTTON_DISABLE,
-} from '../../constants/EventTypes';
+import * as events from '../../constants/EventTypes';
 import connect from './connector';
 import style from './style';
 
@@ -68,12 +64,12 @@ class AddressForm extends Component {
 
     if (editMode) {
       // Attach event handler for updating an address to the "save" button of the theme
-      EventEmitter.on(NAVIGATOR_SAVE_BUTTON_CLICK, this.addOrUpdateAddress);
-
+      this.registerSaveButton();
       this.setSaveButtonEnabledStatus(this.isSaveButtonVisible());
     }
   }
 
+  // noinspection JSCheckFunctionSignatures
   /**
    * Update state with next props.
    * @param {Object} nextProps The next props.
@@ -82,16 +78,10 @@ class AddressForm extends Component {
     // Disable save button if busy
     if (nextProps.isBusy !== this.state.isBusy) {
       // Update only if the button status actually has to change
-      if (nextProps.isBusy !== this.state.isBusy) {
-        this.setSaveButtonEnabledStatus(this.isSaveButtonVisible());
-      }
+      this.setSaveButtonEnabledStatus(this.isSaveButtonVisible());
 
       this.setState({ isBusy: nextProps.isBusy });
     }
-  }
-
-  componentWillUnmount = () => {
-    EventEmitter.off(NAVIGATOR_SAVE_BUTTON_CLICK, this.addOrUpdateAddress);
   }
 
   /**
@@ -104,11 +94,25 @@ class AddressForm extends Component {
     }
 
     if (enabled) {
-      EventEmitter.emit(NAVIGATOR_SAVE_BUTTON_ENABLE);
+      this.enableSaveButton();
     } else {
-      EventEmitter.emit(NAVIGATOR_SAVE_BUTTON_DISABLE);
+      this.disableSaveButton();
     }
   }
+
+  /**
+   * @returns {boolean}
+   */
+  enableSaveButton = () => UIEvents.emit(events.APP_BAR_SAVE_BUTTON_ENABLE);
+  /**
+   * @returns {boolean}
+   */
+  disableSaveButton = () => UIEvents.emit(events.APP_BAR_SAVE_BUTTON_DISABLE);
+  /**
+   * @returns {boolean}
+   */
+  registerSaveButton = () => UIEvents
+    .addListener(events.APP_BAR_SAVE_BUTTON_CLICK, this.addOrUpdateAddress);
 
   /**
    * Evaluates all values that affect the button enabled state
@@ -360,4 +364,5 @@ class AddressForm extends Component {
 }
 
 export { AddressForm as UnwrappedAddressForm };
+
 export default connect(AddressForm);

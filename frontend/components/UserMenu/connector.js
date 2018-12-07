@@ -1,5 +1,6 @@
 import { connect } from 'react-redux';
 import { isUserLoggedIn } from '@shopgate/pwa-common/selectors/user';
+import { historyPush } from '@shopgate/pwa-common/actions/router';
 import { getUserMenuEntries } from '../../selectors/config';
 
 /**
@@ -12,4 +13,16 @@ const mapStateToProps = state => ({
   userMenuEntries: getUserMenuEntries(state),
 });
 
-export default connect(mapStateToProps);
+/**
+ * Maps the contents of the state to the component props.
+ * @param {Function} dispatch The dispatch method from the store.
+ * @return {Object}
+ */
+const mapDispatchToProps = dispatch => ({
+  navigate: (pathname, title) => () => dispatch(historyPush({
+    pathname,
+    state: { title },
+  })),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps);

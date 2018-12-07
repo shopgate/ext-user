@@ -1,16 +1,9 @@
 import React from 'react';
 import { mount } from 'enzyme';
+import { UIEvents } from '@shopgate/pwa-core';
+import * as events from './../../constants/EventTypes';
 import { UnwrappedAddressForm as AddressForm } from './';
-import EventEmitter from '../../events/emitter';
-import {
-  NAVIGATOR_SAVE_BUTTON_DISABLE,
-  NAVIGATOR_SAVE_BUTTON_ENABLE,
-} from '../../constants/EventTypes';
 
-/**
- * Noop function
- */
-const noop = () => {};
 const userConfig = {
   addressDefaultGroups: [],
   addressForm: {
@@ -34,12 +27,21 @@ const userConfig = {
 };
 
 describe('<AddressForm>', () => {
+  beforeAll(() => {
+    jest.resetAllMocks();
+    // noinspection JSCheckFunctionSignatures
+    jest.spyOn(UIEvents, 'emit');
+  });
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
+
   it('should render only configured address fields', () => {
     const wrapper = mount(<AddressForm
       config={userConfig}
-      addAddress={noop}
-      updateAddress={noop}
-      deleteAddress={noop}
+      addAddress={jest.fn()}
+      updateAddress={jest.fn()}
+      deleteAddress={jest.fn()}
       isFirstAddress={false}
       isBusy={false}
     />);
@@ -57,7 +59,7 @@ describe('<AddressForm>', () => {
       address={{ firstName: 'old value' }}
       addAddress={updateFn}
       updateAddress={updateFn}
-      deleteAddress={noop}
+      deleteAddress={jest.fn()}
       isFirstAddress={false}
       isBusy={false}
     />);
@@ -69,14 +71,6 @@ describe('<AddressForm>', () => {
   });
 
   it('should disable update button if no changes are done', () => {
-    let buttonState;
-    EventEmitter.on(NAVIGATOR_SAVE_BUTTON_ENABLE, () => {
-      buttonState = true;
-    });
-    EventEmitter.on(NAVIGATOR_SAVE_BUTTON_DISABLE, () => {
-      buttonState = false;
-    });
-
     mount(<AddressForm
       config={userConfig}
       address={{
@@ -84,25 +78,18 @@ describe('<AddressForm>', () => {
         firstName: 'old value',
         lastName: 'old value',
       }}
-      addAddress={noop}
-      updateAddress={noop}
-      deleteAddress={noop}
+      addAddress={jest.fn()}
+      updateAddress={jest.fn()}
+      deleteAddress={jest.fn()}
       isFirstAddress={false}
       isBusy={false}
     />);
 
-    expect(buttonState).toEqual(false);
+    expect(UIEvents.emit).toHaveBeenCalledTimes(1);
+    expect(UIEvents.emit).toHaveBeenCalledWith(events.APP_BAR_SAVE_BUTTON_DISABLE);
   });
 
   it('should enable update button if no changes are done', () => {
-    let buttonState;
-    EventEmitter.on(NAVIGATOR_SAVE_BUTTON_ENABLE, () => {
-      buttonState = true;
-    });
-    EventEmitter.on(NAVIGATOR_SAVE_BUTTON_DISABLE, () => {
-      buttonState = false;
-    });
-
     mount(<AddressForm
       config={{
         ...userConfig,
@@ -118,23 +105,26 @@ describe('<AddressForm>', () => {
       }}
       // eslint-disable-next-line extra-rules/no-single-line-objects
       address={{ id: 1, firstName: 'old value' }}
-      addAddress={noop}
-      updateAddress={noop}
-      deleteAddress={noop}
+      addAddress={jest.fn()}
+      updateAddress={jest.fn()}
+      deleteAddress={jest.fn()}
       isFirstAddress={false}
       isBusy={false}
     />);
 
-    expect(buttonState).toEqual(true);
+    expect(UIEvents.emit).toHaveBeenCalledTimes(3);
+    expect(UIEvents.emit).nthCalledWith(1, events.APP_BAR_SAVE_BUTTON_DISABLE);
+    expect(UIEvents.emit).nthCalledWith(2, events.APP_BAR_SAVE_BUTTON_ENABLE);
+    expect(UIEvents.emit).nthCalledWith(3, events.APP_BAR_SAVE_BUTTON_ENABLE);
   });
 
   it('should print validation errors inline', () => {
     const wrapper = mount(<AddressForm
       config={userConfig}
       address={{ firstName: 'old value' }}
-      addAddress={noop}
-      updateAddress={noop}
-      deleteAddress={noop}
+      addAddress={jest.fn()}
+      updateAddress={jest.fn()}
+      deleteAddress={jest.fn()}
       isFirstAddress={false}
       isBusy={false}
       validationErrors={[{

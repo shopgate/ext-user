@@ -5,7 +5,8 @@ import Address from './../../../components/Address';
 import style from './style';
 
 /**
- * @return {*}
+ * @refactor !!
+ * @return {JSX}
  */
 const BillingAddress = () => (
   <App>

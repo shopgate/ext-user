@@ -1,11 +1,12 @@
 import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import Grid from '@shopgate/pwa-common/components/Grid';
-import Link from '@shopgate/pwa-common/components/Router/components/Link';
+import Link from '@shopgate/pwa-common/components/Link';
 import ChevronIcon from '@shopgate/pwa-ui-shared/icons/ChevronIcon';
 import Portal from '@shopgate/pwa-common/components/Portal';
 import * as portals from '../../../../../../../../../constants/Portals';
 import { userAddressPathPattern } from '../../../../../../../../../constants/RoutePaths';
+import style from './style';
 
 /**
  * @param {UserAddress} address address
@@ -23,7 +24,7 @@ const Info = ({ address }) => (
             <div>{`${address.zipCode} ${address.city}`}</div>
           </Grid.Item>
           <Grid.Item grow={0}>
-            <ChevronIcon size={28} />
+            <ChevronIcon size={28} className={style.chevron} />
           </Grid.Item>
         </Grid>
       </Link>
