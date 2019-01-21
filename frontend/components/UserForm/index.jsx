@@ -115,7 +115,7 @@ class UserForm extends Component {
   componentWillUnmount = () => {
     // Do this on "edit profile" page only.
     if (!this.props.register) {
-      this.registerSaveButton();
+      UIEvents.removeAllListeners(events.APP_BAR_SAVE_BUTTON_CLICK);
     }
   }
 

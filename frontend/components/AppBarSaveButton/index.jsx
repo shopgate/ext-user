@@ -1,5 +1,6 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
+import debounce from 'lodash/debounce';
 import { UIEvents } from '@shopgate/pwa-core';
 import I18n from '@shopgate/pwa-common/components/I18n';
 import ActionButton from '@shopgate/pwa-ui-shared/ActionButton';
@@ -57,10 +58,10 @@ class AppBarSaveButton extends PureComponent {
    */
   disable = () => this.setState({ disabled: true })
 
-  /**
-   * @returns {boolean}
-   */
-  click = () => UIEvents.emit(event.APP_BAR_SAVE_BUTTON_CLICK);
+  click = debounce(() => UIEvents.emit(event.APP_BAR_SAVE_BUTTON_CLICK), 200, {
+    leading: true,
+    trailing: false,
+  })
 
   /**
    * @return {JSX}
