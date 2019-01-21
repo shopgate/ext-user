@@ -43,7 +43,7 @@ class ChangePasswordForm extends Component {
     super(props);
 
     this.state = {
-      disabled: false,
+      disabled: true,
       user: {
         password: '',
         oldPassword: '',
@@ -92,6 +92,12 @@ class ChangePasswordForm extends Component {
     this.setState(newState);
   }
 
+  componentWillUnmount = () => {
+    if (isIos) {
+      UIEvents.removeAllListeners(events.APP_BAR_SAVE_BUTTON_CLICK);
+    }
+  }
+
   /**
    * @returns {boolean}
    */
@@ -123,10 +129,28 @@ class ChangePasswordForm extends Component {
    * Triggers validation of the user fields in the state and updates the "error" field in the state.
    */
   validateInline = () => {
+    // Inline validation is only enabled after the first form submit
     if (!this.state.inlineValidation) {
+      // Enable the save button as soon as all fields are set for better usability (no validation)
+      const newState = {
+        disabled: this.state.user.password === ''
+          || this.state.user.oldPassword === ''
+          || this.state.user.repeatPassword === '',
+      };
+
+      if (isIos) {
+        if (!newState.disabled) {
+          this.enableSaveButton();
+        } else {
+          this.disableSaveButton();
+        }
+      }
+      this.setState(newState);
+
       return;
     }
 
+    // Check validation whenever inline validation is active (on form submit)
     const errors = this.props.validatePassword(this.state.user);
     this.setState({
       errors,
