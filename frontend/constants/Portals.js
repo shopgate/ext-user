@@ -4,6 +4,8 @@ export const NAV_MENU = 'nav-menu';
 // CONTENTS
 const PROFILE = 'profile';
 const PASSWORD = 'password';
+const USER_MENU = 'user-menu';
+const ACCOUNT_PROFILE = 'account-profile';
 const ADDRESS_BOOK = 'address-book';
 const USER = 'user';
 const ADDRESSES = 'addresses';
@@ -19,6 +21,14 @@ export const BEFORE = 'before';
 export const AFTER = 'after';
 
 // PORTAL COMPOSITIONS
+export const NAV_MENU_USER_MENU_BEFORE = `${NAV_MENU}.${USER_MENU}.${BEFORE}`;
+export const NAV_MENU_USER_MENU = `${NAV_MENU}.${USER_MENU}`;
+export const NAV_MENU_USER_MENU_AFTER = `${NAV_MENU}.${USER_MENU}.${AFTER}`;
+
+export const NAV_MENU_ACCOUNT_PROFILE_BEFORE = `${NAV_MENU}.${ACCOUNT_PROFILE}.${BEFORE}`;
+export const NAV_MENU_ACCOUNT_PROFILE = `${NAV_MENU}.${ACCOUNT_PROFILE}`;
+export const NAV_MENU_ACCOUNT_PROFILE_AFTER = `${NAV_MENU}.${ACCOUNT_PROFILE}.${AFTER}`;
+
 export const NAV_MENU_ADDRESS_BOOK_BEFORE = `${NAV_MENU}.${ADDRESS_BOOK}.${BEFORE}`;
 export const NAV_MENU_ADDRESS_BOOK = `${NAV_MENU}.${ADDRESS_BOOK}`;
 export const NAV_MENU_ADDRESS_BOOK_AFTER = `${NAV_MENU}.${ADDRESS_BOOK}.${AFTER}`;

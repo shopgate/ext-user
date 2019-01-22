@@ -14,9 +14,7 @@ import connect from './connector';
  */
 const UserMenu = (props) => {
   const {
-    Divider,
-    Headline,
-    Item,
+    Section,
     isLoggedIn,
     // Rename config variables for convenience
     userMenuEntries: {
@@ -36,47 +34,54 @@ const UserMenu = (props) => {
     return null;
   }
 
+  /**
+   * @type {Section} @shopgate/pwa-ui-material/NavDrawer/components/Section
+   */
   return (
     <Fragment>
-      <Divider />
-      <Headline small text="navigation.your_account" />
-      {/* @REFACTOR <SubHeader title="navigation.your_account" /> */}
-
-      {/* Address book */}
-      <Portal name={portals.NAV_MENU_ADDRESS_BOOK_BEFORE} props={props} />
-      <Portal name={portals.NAV_MENU_ADDRESS_BOOK} props={props}>
-        {displayAccountProfileMenuItem &&
-          <Item
-            label="navigation.profile"
-            onClick={navigate(path.USER_PROFILE_PATH, 'navigation.profile')}
-            icon={AccountBoxIcon}
-            testId="menuProfileButton"
-          >
-            <I18n.Text string="navigation.profile" />
-          </Item>
-        }
-        {displayAddressBookMenuItem &&
-          <Item
-            label="navigation.address_book"
-            onClick={navigate(path.USER_ADDRESS_BOOK_PATH, 'navigation.address_book')}
-            icon={LocalShippingIcon}
-            testId="menuAddressBookButton"
-          >
-            <I18n.Text string="navigation.address_book" />
-          </Item>
-        }
+      <Portal name={portals.NAV_MENU_USER_MENU_BEFORE} props={props} />
+      <Portal name={portals.NAV_MENU_USER_MENU} props={props}>
+        <Section title="navigation.your_account" dividerTop dividerBottom>
+          {/* Address book */}
+          <Portal name={portals.NAV_MENU_ACCOUNT_PROFILE_BEFORE} props={props} />
+          <Portal name={portals.NAV_MENU_ACCOUNT_PROFILE} props={props}>
+            {displayAccountProfileMenuItem &&
+              <Section.Item
+                label="navigation.profile"
+                onClick={navigate(path.USER_PROFILE_PATH, 'navigation.profile')}
+                icon={AccountBoxIcon}
+                testId="menuProfileButton"
+              >
+                <I18n.Text string="navigation.profile" />
+              </Section.Item>
+            }
+          </Portal>
+          <Portal name={portals.NAV_MENU_ACCOUNT_PROFILE_AFTER} props={props} />
+          <Portal name={portals.NAV_MENU_ADDRESS_BOOK_BEFORE} props={props} />
+          <Portal name={portals.NAV_MENU_ADDRESS_BOOK} props={props}>
+            {displayAddressBookMenuItem &&
+              <Section.Item
+                label="navigation.address_book"
+                onClick={navigate(path.USER_ADDRESS_BOOK_PATH, 'navigation.address_book')}
+                icon={LocalShippingIcon}
+                testId="menuAddressBookButton"
+              >
+                <I18n.Text string="navigation.address_book" />
+              </Section.Item>
+            }
+          </Portal>
+          <Portal name={portals.NAV_MENU_ADDRESS_BOOK_AFTER} props={props} />
+        </Section>
       </Portal>
-      <Portal name={portals.NAV_MENU_ADDRESS_BOOK_AFTER} props={props} />
+      <Portal name={portals.NAV_MENU_USER_MENU_AFTER} props={props} />
     </Fragment>
   );
 };
 
 UserMenu.propTypes = {
   isLoggedIn: PropTypes.bool.isRequired,
-  Item: PropTypes.func.isRequired,
   navigate: PropTypes.func.isRequired,
-  Divider: PropTypes.func,
-  Headline: PropTypes.func,
+  Section: PropTypes.func.isRequired,
   userMenuEntries: PropTypes.shape({
     accountProfile: PropTypes.bool,
     addressBook: PropTypes.bool,
@@ -85,8 +90,6 @@ UserMenu.propTypes = {
 
 UserMenu.defaultProps = {
   userMenuEntries: {},
-  Divider: () => null,
-  Headline: () => null,
 };
 
 export default connect(UserMenu);

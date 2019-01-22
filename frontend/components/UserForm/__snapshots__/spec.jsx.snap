@@ -73,7 +73,11 @@ exports[`<UserForm> should render user profile form 1`] = `
                       className=""
                       params={Object {}}
                       string=""
-                    />
+                    >
+                      <span
+                        className=""
+                      />
+                    </Translate>
                   </div>
                 </Placeholder>
                 <Label
@@ -188,13 +192,17 @@ exports[`<UserForm> should render user profile form 1`] = `
                   translate={true}
                 >
                   <div
-                    className="css-hyvrm8"
+                    className="css-hmgfge"
                   >
                     <Translate
                       className=""
                       params={Object {}}
                       string=""
-                    />
+                    >
+                      <span
+                        className=""
+                      />
+                    </Translate>
                   </div>
                 </ErrorText>
               </div>
@@ -243,7 +251,11 @@ exports[`<UserForm> should render user profile form 1`] = `
                       className=""
                       params={Object {}}
                       string=""
-                    />
+                    >
+                      <span
+                        className=""
+                      />
+                    </Translate>
                   </div>
                 </Placeholder>
                 <Label
@@ -358,13 +370,17 @@ exports[`<UserForm> should render user profile form 1`] = `
                   translate={true}
                 >
                   <div
-                    className="css-hyvrm8"
+                    className="css-hmgfge"
                   >
                     <Translate
                       className=""
                       params={Object {}}
                       string=""
-                    />
+                    >
+                      <span
+                        className=""
+                      />
+                    </Translate>
                   </div>
                 </ErrorText>
               </div>
@@ -413,7 +429,11 @@ exports[`<UserForm> should render user profile form 1`] = `
                       className=""
                       params={Object {}}
                       string=""
-                    />
+                    >
+                      <span
+                        className=""
+                      />
+                    </Translate>
                   </div>
                 </Placeholder>
                 <Label
@@ -528,13 +548,17 @@ exports[`<UserForm> should render user profile form 1`] = `
                   translate={true}
                 >
                   <div
-                    className="css-hyvrm8"
+                    className="css-hmgfge"
                   >
                     <Translate
                       className=""
                       params={Object {}}
                       string=""
-                    />
+                    >
+                      <span
+                        className=""
+                      />
+                    </Translate>
                   </div>
                 </ErrorText>
               </div>
@@ -583,7 +607,11 @@ exports[`<UserForm> should render user profile form 1`] = `
                       className=""
                       params={Object {}}
                       string=""
-                    />
+                    >
+                      <span
+                        className=""
+                      />
+                    </Translate>
                   </div>
                 </Placeholder>
                 <Label
@@ -698,13 +726,17 @@ exports[`<UserForm> should render user profile form 1`] = `
                   translate={true}
                 >
                   <div
-                    className="css-hyvrm8"
+                    className="css-hmgfge"
                   >
                     <Translate
                       className=""
                       params={Object {}}
                       string=""
-                    />
+                    >
+                      <span
+                        className=""
+                      />
+                    </Translate>
                   </div>
                 </ErrorText>
               </div>
@@ -748,18 +780,17 @@ exports[`<UserForm> should render user profile form 1`] = `
                   onClick={[Function]}
                 >
                   <Ripple
-                    className="css-1fscwua "
+                    className="css-8s1fw2 "
                     color="#000"
                     disabled={false}
                     fill={true}
-                    onClick={[Function]}
                     onComplete={[Function]}
                     overflow={false}
                     size={null}
                   >
                     <div
                       aria-hidden={true}
-                      className="css-1fscwua "
+                      className="css-8s1fw2 "
                       data-test-id="Ripple"
                       onClick={[Function]}
                       style={
@@ -864,7 +895,11 @@ exports[`<UserForm> should render user register form 1`] = `
                       className=""
                       params={Object {}}
                       string=""
-                    />
+                    >
+                      <span
+                        className=""
+                      />
+                    </Translate>
                   </div>
                 </Placeholder>
                 <Label
@@ -979,13 +1014,17 @@ exports[`<UserForm> should render user register form 1`] = `
                   translate={true}
                 >
                   <div
-                    className="css-hyvrm8"
+                    className="css-hmgfge"
                   >
                     <Translate
                       className=""
                       params={Object {}}
                       string=""
-                    />
+                    >
+                      <span
+                        className=""
+                      />
+                    </Translate>
                   </div>
                 </ErrorText>
               </div>
@@ -1034,7 +1073,11 @@ exports[`<UserForm> should render user register form 1`] = `
                       className=""
                       params={Object {}}
                       string=""
-                    />
+                    >
+                      <span
+                        className=""
+                      />
+                    </Translate>
                   </div>
                 </Placeholder>
                 <Label
@@ -1149,13 +1192,17 @@ exports[`<UserForm> should render user register form 1`] = `
                   translate={true}
                 >
                   <div
-                    className="css-hyvrm8"
+                    className="css-hmgfge"
                   >
                     <Translate
                       className=""
                       params={Object {}}
                       string=""
-                    />
+                    >
+                      <span
+                        className=""
+                      />
+                    </Translate>
                   </div>
                 </ErrorText>
               </div>
@@ -1204,7 +1251,11 @@ exports[`<UserForm> should render user register form 1`] = `
                       className=""
                       params={Object {}}
                       string=""
-                    />
+                    >
+                      <span
+                        className=""
+                      />
+                    </Translate>
                   </div>
                 </Placeholder>
                 <Label
@@ -1319,13 +1370,17 @@ exports[`<UserForm> should render user register form 1`] = `
                   translate={true}
                 >
                   <div
-                    className="css-hyvrm8"
+                    className="css-hmgfge"
                   >
                     <Translate
                       className=""
                       params={Object {}}
                       string=""
-                    />
+                    >
+                      <span
+                        className=""
+                      />
+                    </Translate>
                   </div>
                 </ErrorText>
               </div>
@@ -1374,7 +1429,11 @@ exports[`<UserForm> should render user register form 1`] = `
                       className=""
                       params={Object {}}
                       string=""
-                    />
+                    >
+                      <span
+                        className=""
+                      />
+                    </Translate>
                   </div>
                 </Placeholder>
                 <Label
@@ -1489,13 +1548,17 @@ exports[`<UserForm> should render user register form 1`] = `
                   translate={true}
                 >
                   <div
-                    className="css-hyvrm8"
+                    className="css-hmgfge"
                   >
                     <Translate
                       className=""
                       params={Object {}}
                       string=""
-                    />
+                    >
+                      <span
+                        className=""
+                      />
+                    </Translate>
                   </div>
                 </ErrorText>
               </div>
@@ -1539,18 +1602,17 @@ exports[`<UserForm> should render user register form 1`] = `
                   onClick={[Function]}
                 >
                   <Ripple
-                    className="css-1fscwua "
+                    className="css-8s1fw2 "
                     color="#000"
                     disabled={false}
                     fill={true}
-                    onClick={[Function]}
                     onComplete={[Function]}
                     overflow={false}
                     size={null}
                   >
                     <div
                       aria-hidden={true}
-                      className="css-1fscwua "
+                      className="css-8s1fw2 "
                       data-test-id="Ripple"
                       onClick={[Function]}
                       style={
