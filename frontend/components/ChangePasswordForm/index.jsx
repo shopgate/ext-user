@@ -152,12 +152,13 @@ class ChangePasswordForm extends Component {
 
     // Check validation whenever inline validation is active (on form submit)
     const errors = this.props.validatePassword(this.state.user);
+    const disabled = Object.keys(errors).length > 0;
     this.setState({
       errors,
-      disabled: Object.keys(errors).length > 0,
+      disabled,
     });
     if (isIos) {
-      if (Object.keys(errors).length) {
+      if (disabled) {
         this.disableSaveButton();
       } else {
         this.enableSaveButton();
@@ -176,11 +177,11 @@ class ChangePasswordForm extends Component {
       errors,
       disabled: true,
     });
+    if (isIos) {
+      this.disableSaveButton();
+    }
 
     if (Object.keys(errors).length > 0) {
-      if (isIos) {
-        this.disableSaveButton();
-      }
       return;
     }
 
