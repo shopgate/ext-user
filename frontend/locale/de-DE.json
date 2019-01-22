@@ -11,9 +11,9 @@
   },
   "password": {
     "update": "Passwort ändern",
-    "current": "Aktuell Passwort *",
-    "new": "Neue Passwort *",
-    "repeat": "Neue Passwort bestätigen *",
+    "current": "Aktuelles Passwort *",
+    "new": "Neues Passwort *",
+    "repeat": "Neues Passwort bestätigen *",
     "save": "Speichern",
     "errors": {
       "blank": "Bitte vervollständigen Sie dieses Feld.",
