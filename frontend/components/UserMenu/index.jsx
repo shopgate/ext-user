@@ -41,7 +41,7 @@ const UserMenu = (props) => {
     <Fragment>
       <Portal name={portals.NAV_MENU_USER_MENU_BEFORE} props={props} />
       <Portal name={portals.NAV_MENU_USER_MENU} props={props}>
-        <Section title="navigation.your_account" dividerTop dividerBottom>
+        <Section title="navigation.your_account">
           {/* Address book */}
           <Portal name={portals.NAV_MENU_ACCOUNT_PROFILE_BEFORE} props={props} />
           <Portal name={portals.NAV_MENU_ACCOUNT_PROFILE} props={props}>
