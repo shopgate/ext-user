@@ -178,12 +178,6 @@
       "type": "portals"
     },
     {
-      "id": "Empty",
-      "path": "frontend/components/Empty.jsx",
-      "target": "nav-menu.my-account.header",
-      "type": "portals"
-    },
-    {
       "id": "en-US",
       "path": "frontend/locale/en-US.json",
       "type": "translations"

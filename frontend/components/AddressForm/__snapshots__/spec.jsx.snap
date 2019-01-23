@@ -166,7 +166,11 @@ exports[`<AddressForm> should print validation errors inline 1`] = `
                           className=""
                           params={Object {}}
                           string=""
-                        />
+                        >
+                          <span
+                            className=""
+                          />
+                        </Translate>
                       </div>
                     </Hint>
                     <Label
@@ -358,7 +362,11 @@ exports[`<AddressForm> should print validation errors inline 1`] = `
                           className=""
                           params={Object {}}
                           string=""
-                        />
+                        >
+                          <span
+                            className=""
+                          />
+                        </Translate>
                       </div>
                     </Hint>
                     <Label
@@ -535,7 +543,7 @@ exports[`<AddressForm> should print validation errors inline 1`] = `
                 onClick={null}
               >
                 <div
-                  className="css-kwqjom"
+                  className="css-4uxwj9"
                 >
                   <Translate
                     className=""
@@ -715,7 +723,11 @@ exports[`<AddressForm> should render only configured address fields 1`] = `
                           className=""
                           params={Object {}}
                           string=""
-                        />
+                        >
+                          <span
+                            className=""
+                          />
+                        </Translate>
                       </div>
                     </Hint>
                     <Label
@@ -906,7 +918,11 @@ exports[`<AddressForm> should render only configured address fields 1`] = `
                           className=""
                           params={Object {}}
                           string=""
-                        />
+                        >
+                          <span
+                            className=""
+                          />
+                        </Translate>
                       </div>
                     </Hint>
                     <Label
@@ -1083,7 +1099,7 @@ exports[`<AddressForm> should render only configured address fields 1`] = `
                 onClick={null}
               >
                 <div
-                  className="css-kwqjom"
+                  className="css-4uxwj9"
                 >
                   <Translate
                     className=""
