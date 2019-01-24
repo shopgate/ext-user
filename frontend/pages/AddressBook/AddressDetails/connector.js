@@ -8,8 +8,8 @@ import { getUserAddressIdSelector } from '../../../selectors/addressBook';
  * @return {UserAddress}
  */
 const getAddressByRoute = (state) => {
-  const { params: { id = 0 } = {} } = getCurrentRoute();
-  return getUserAddressIdSelector(state)(id);
+  const { params: { id = '' } = {} } = getCurrentRoute();
+  return getUserAddressIdSelector(state)(decodeURIComponent(id));
 };
 
 /**
