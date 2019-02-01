@@ -1,38 +1,38 @@
 {
   "register": {
-    "title": "Register",
-    "subTitle": "Create a new account",
-    "button": "Register"
+    "title": "S'inscrire",
+    "subTitle": "Créer un nouveau compte",
+    "button": "S'inscrire"
   },
   "profile": {
     "title": "Mon profil",
-    "updated": "vos données ont été enregistrées",
-    "failed": "Updating your data failed"
+    "updated": "Vos données ont été enregistrées",
+    "failed": "Échec de la mise à jour"
   },
   "password": {
-    "update": "Change password",
-    "updated": "Your password has been saved",
-    "current": "Current password *",
-    "new": "New password *",
-    "repeat": "Repeat new password *",
-    "save": "Save",
+    "update": "Modifier le mot de passe",
+    "updated": "Votre mot de passe a été enregistré",
+    "current": "Mot de passe actuel *",
+    "new": "Nouveau mot de passe *",
+    "repeat": "Répétez le nouveau mot de passe *",
+    "save": "Enregistrer",
     "errors": {
-      "blank": "Please complete this field",
-      "password": "The minimum password length must be 8 characters",
-      "repeatPassword": "Those passwords didn't match. Try again"
+      "blank": "Veuillez remplir ce champ",
+      "password": "La longueur minimale du mot de passe est de 8 caractères",
+      "repeatPassword": "Les mots de passe de correspondent pas. Veuillez réessayer"
     }
   },
   "user": {
-    "firstName": "First name",
-    "lastName": "Last name",
-    "mail": "Email",
-    "password": "Password",
+    "firstName": "Prénom",
+    "lastName": "Nom",
+    "mail": "E-mail",
+    "password": "Mot de passe",
     "errors": {
-      "blank": "Please complete this field",
-      "mail": "Please enter a valid e-mail address",
-      "password": "The minimum password length must be 8 characters",
-      "firstName": "Only letters and spaces are allowed",
-      "lastName": "Only letters and spaces are allowed"
+      "blank": "Veuillez remplir ce champ",
+      "mail": "Veuillez saisir une adresse mail valide",
+      "password": "La longueur minimale du mot de passe est de 8 caractères",
+      "firstName": "Seules les lettres et les espaces sont permises.",
+      "lastName": "Seules les lettres et les espaces sont permises."
     }
   },
   "addresses": {
@@ -42,7 +42,7 @@
     "noAddresses": "Le carnet d'adresses est vide",
     "defaults": {
       "default": "Adresse par défaut",
-      "shipping": "Adresse d'expédition par défaut",
+      "shipping": "Adresse de livraison par défaut",
       "billing": "Adresse de facturation par défaut"
     },
     "setAsDefault": {
@@ -57,43 +57,43 @@
     }
   },
   "address": {
-    "title": "Title",
-    "prefix": "Prefix",
-    "firstName": "First Name *",
-    "middleName": "Middle name",
-    "lastName": "Last Name *",
-    "suffix": "Suffix",
-    "company": "Company",
-    "street1": "Street & Number *",
-    "street2": "Additional address",
-    "city": "City *",
-    "province": "State *",
-    "country": "Country *",
-    "zipCode": "Zip Code *",
-    "button": "Save address",
+    "title": "Titre",
+    "prefix": "Préfixe",
+    "firstName": "Prénom *",
+    "middleName": "Deuxième prénom",
+    "lastName": "Nom *",
+    "suffix": "Suffixe",
+    "company": "Compagnie",
+    "street1": "Rue et numéro *",
+    "street2": "Adresse supplémentaire",
+    "city": "Ville *",
+    "province": "État *",
+    "country": "Pays *",
+    "zipCode": "Code postal *",
+    "button": "Enregistrer l'adresse",
     "errors": {
-      "title": "Only letters and spaces are allowed",
-      "prefix": "Only letters and spaces are allowed",
-      "firstName": "Only letters and spaces are allowed",
-      "middleName": "Only letters and spaces are allowed",
-      "lastName": "Only letters and spaces are allowed",
-      "suffix": "Street and number are required",
-      "street1": "Street and number are required",
-      "street2": "Street and number are required",
-      "city": "Only letters and spaces are allowed",
-      "province": "Choose a State",
-      "country": "Choose a country",
-      "zipCode": "A max. of 10 characters are allowed"
+      "title": "Seules les lettres et les espaces sont permises.",
+      "prefix": "Seules les lettres et les espaces sont permises.",
+      "firstName": "Seules les lettres et les espaces sont permises.",
+      "middleName": "Seules les lettres et les espaces sont permises.",
+      "lastName": "Seules les lettres et les espaces sont permises.",
+      "suffix": "Seules les lettres et les espaces sont permises.",
+      "street1": "La rue et le numéro sont requis",
+      "street2": "La rue et le numéro sont requis",
+      "city": "Seules les lettres et les espaces sont permises.",
+      "province": "Sélectionnez un État",
+      "country": "Sélectionnez un pays",
+      "zipCode": "Un maximum de 10 caractères est permis"
     },
     "add": {
-      "title": "Add address",
-      "button": "Save new address"
+      "title": "Ajouter une adresse",
+      "button": "Enregistrer une nouvelle adresse"
     },
     "select": {
-      "button": "Choose address"
+      "button": "Choisissez une adresse"
     },
     "update": {
-      "title": "Edit address"
+      "title": "Modifier l'adresse"
     },
     "delete": {
       "button": "Supprimer",
@@ -114,28 +114,28 @@
   "checkout": {
     "shipping": {
       "address": {
-        "title": "Shipping address",
-        "select": "Add shipping address",
-        "change": "Change",
-        "makeBilling": "Make this my billing address"
+        "title": "Adresse de livraison",
+        "select": "Ajouter une adresse de livraison",
+        "change": "Modifier",
+        "makeBilling": "En faire mon adresse de facturation"
       }
     },
     "billing": {
       "address": {
-        "title": "Billing address",
-        "select": "Add billing address",
-        "change": "Change"
+        "title": "Adresse de facturation",
+        "select": "Ajouter une adresse de facturation",
+        "change": "Modifier"
       }
     }
   },
   "navigation": {
     "profile": "Mon profil",
-    "change_password": "Changer mot de passe",
+    "change_password": "Modifier le mot de passe",
     "address_book": "Carnet d'adresses",
     "payment_options": "Options de paiement"
   },
   "navigator": {
-    "save": "Save",
-    "changePassword": "Save"
+    "save": "Enregistrer",
+    "changePassword": "Enregistrer"
   }
 }

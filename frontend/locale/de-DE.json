@@ -79,7 +79,7 @@
       "lastName": "Nur Buchstaben und Leerzeichen sind erlaubt",
       "suffix": "Nur Buchstaben und Leerzeichen sind erlaubt",
       "street1": "Straße und Hausnummer sind erforderlich",
-      "street2": "Die Eingabe enthält unerlaubte Sonderzeichen",
+      "street2": "Straße und Hausnummer sind erforderlich",
       "city": "Nur Buchstaben und Leerzeichen sind erlaubt",
       "country": "Wähle ein Land aus",
       "province": "Wähle ein Bundesland aus",
