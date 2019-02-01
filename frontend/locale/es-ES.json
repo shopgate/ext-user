@@ -1,0 +1,141 @@
+{
+  "register": {
+    "title": "Registrarse",
+    "subTitle": "Crear una nueva cuenta",
+    "button": "Registrarse"
+  },
+  "profile": {
+    "title": "Mi perfil",
+    "updated": "Tus datos se han guardado",
+    "failed": "Error al actualizar tus datos"
+  },
+  "password": {
+    "update": "Cambiar contraseña",
+    "updated": "Tu contraseña se ha guardado",
+    "current": "Contraseña actual *",
+    "new": "Nueva contraseña *",
+    "repeat": "Repite la nueva contraseña *",
+    "save": "Guardar",
+    "errors": {
+      "blank": "Debes rellenar este campo",
+      "password": "La longitud mínima de la contraseña es de 8 caracteres",
+      "repeatPassword": "Estas contraseñas no coinciden. Inténtalo de nuevo."
+    }
+  },
+  "user": {
+    "firstName": "Nombre",
+    "lastName": "Apellidos",
+    "mail": "Correo electrónico",
+    "password": "Contraseña",
+    "errors": {
+      "blank": "Debes rellenar este campo",
+      "mail": "Debes introducir una dirección de correo electrónico válida",
+      "password": "La longitud mínima de la contraseña es de 8 caracteres",
+      "firstName": "Solo se permiten letras y espacios",
+      "lastName": "Solo se permiten letras y espacios"
+    }
+  },
+  "addresses": {
+    "title": "Libreta de direcciones",
+    "headline": "Libreta de direcciones",
+    "button": "Añadir una nueva dirección",
+    "noAddresses": "La libreta de direcciones está vacía",
+    "defaults": {
+      "default": "Dirección por defecto",
+      "shipping": "Dirección de envío por defecto",
+      "billing": "Dirección de facturación por defecto"
+    },
+    "setAsDefault": {
+      "default": "Establecer como dirección por defecto",
+      "shipping": "Establecer como dirección de envío por defecto",
+      "billing": "Establecer como dirección de facturación por defecto"
+    },
+    "error": {
+      "add": "Error al añadir la dirección. Comprueba los datos introducidos",
+      "update": "Error al actualizar la dirección. Comprueba los datos introducidos",
+      "setAsDefault": "No se ha podido establecer la dirección como predeterminada"
+    }
+  },
+  "address": {
+    "title": "Título",
+    "prefix": "Prefijo",
+    "firstName": "Nombre *",
+    "middleName": "Segundo nombre",
+    "lastName": "Apellidos *",
+    "suffix": "Sufijo",
+    "company": "Empresa",
+    "street1": "Calle y número *",
+    "street2": "Dirección adicional",
+    "city": "Ciudad *",
+    "province": "Provincia *",
+    "country": "País *",
+    "zipCode": "Código Postal *",
+    "button": "Guardar dirección",
+    "errors": {
+      "title": "Solo se permiten letras y espacios",
+      "prefix": "Solo se permiten letras y espacios",
+      "firstName": "Solo se permiten letras y espacios",
+      "middleName": "Solo se permiten letras y espacios",
+      "lastName": "Solo se permiten letras y espacios",
+      "suffix": "La calle y el número son obligatorios",
+      "street1": "La calle y el número son obligatorios",
+      "street2": "La calle y el número son obligatorios",
+      "city": "La calle y el número son obligatorios",
+      "province": "Elige un estado",
+      "country": "Elige un país",
+      "zipCode": "Se permiten un máximo de 10 caracteres"
+    },
+    "select": {
+      "button": "Elige una dirección"
+    },
+    "add": {
+      "title": "Añadir una nueva dirección",
+      "button": "Guardar nueva dirección"
+    },
+    "update": {
+      "title": "Editar dirección"
+    },
+    "delete": {
+      "button": "Borrar",
+      "confirmationDialog": {
+        "title": "Borrar dirección",
+        "message": "¿Realmente quieres borrar esta dirección?"
+      },
+      "successMessage": "La dirección se ha borrado",
+      "noRemoveDefault": "La dirección por defecto no se puede borrar"
+    },
+    "makeDefault": {
+      "default": "Convertir en dirección por defecto",
+      "shipping": "Convertir en dirección de envío por defecto",
+      "billing": "Convertir en dirección de facturación por defecto"
+    },
+    "validationFailedToastMessage": "Comprueba los campos"
+  },
+  "checkout": {
+    "shipping": {
+      "address": {
+        "title": "Dirección de envío",
+        "select": "Añadir dirección de envío",
+        "change": "Cambiar",
+        "makeBilling": "Convertir en mi dirección de facturación"
+      }
+    },
+    "billing": {
+      "address": {
+        "title": "Dirección de facturación",
+        "select": "Añadir dirección de facturación",
+        "change": "Cambiar"
+      }
+    }
+  },
+  "navigation": {
+    "profile": "Mi perfil",
+    "change_password": "Cambiar contraseña",
+    "address_book": "Libreta de direcciones",
+    "payment_options": "Opciones de pago"
+  },
+  "navigator": {
+    "save": "Guardar",
+    "changePassword": "Guardar"
+  }
+}

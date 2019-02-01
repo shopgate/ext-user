@@ -1,37 +1,37 @@
 {
   "register": {
-    "title": "Register",
-    "subTitle": "Create a new account",
-    "button": "Register"
+    "title": "Registreren",
+    "subTitle": "Maak een nieuw account",
+    "button": "Registreren"
   },
   "profile": {
     "title": "Mijn profiel",
     "updated": "Uw gegevens zijn opgeslagen"
   },
   "password": {
-    "update": "Change password",
-    "updated": "Your password has been saved",
-    "current": "Current password *",
-    "new": "New password *",
-    "repeat": "Repeat new password *",
-    "save": "Save",
+    "update": "Wachtwoord wijzigen",
+    "updated": "Uw wachtwoord is bewaard",
+    "current": "Huidig wachtwoord *",
+    "new": "Nieuw wachtwoord *",
+    "repeat": "Herhaal nieuw wachtwoord *",
+    "save": "Bewaar",
     "errors": {
-      "blank": "Please complete this field",
-      "password": "The minimum password length must be 8 characters",
-      "repeatPassword": "Those passwords didn't match. Try again"
+      "blank": "Vul dit veld in",
+      "password": "De minimale wachtwoordlengte moet 8 tekens zijn",
+      "repeatPassword": "Deze wachtwoorden kwamen niet overeen. Probeer het opnieuw"
     }
   },
   "user": {
-    "firstName": "First name",
-    "lastName": "Last name",
-    "mail": "Email",
-    "password": "Password",
+    "firstName": "Voornaam",
+    "lastName": "Achternaam",
+    "mail": "E-mail",
+    "password": "Wachtwoord",
     "errors": {
-      "blank": "Please complete this field",
-      "mail": "Please enter a valid e-mail address",
-      "password": "The minimum password length must be 8 characters",
-      "firstName": "Only letters and spaces are allowed",
-      "lastName": "Only letters and spaces are allowed"
+      "blank": "Vul dit veld in",
+      "mail": "Vul een geldig e-mailadres in",
+      "password": "De minimale wachtwoordlengte moet 8 tekens zijn",
+      "firstName": "Alleen letters en spaties zijn toegestaan",
+      "lastName": "Alleen letters en spaties zijn toegestaan"
     }
   },
   "addresses": {
@@ -56,43 +56,43 @@
     }
   },
   "address": {
-    "title": "Title",
-    "prefix": "Prefix",
-    "firstName": "First Name *",
-    "middleName": "Middle name",
-    "lastName": "Last Name *",
-    "suffix": "Suffix",
-    "company": "Company",
-    "street1": "Street & Number *",
-    "street2": "Additional address",
-    "city": "City *",
-    "province": "State *",
-    "country": "Country *",
-    "zipCode": "Zip Code *",
-    "button": "Save address",
+    "title": "Titel",
+    "prefix": "Voorvoegsel",
+    "firstName": "Voornaam *",
+    "middleName": "Midden-naam",
+    "lastName": "Achternaam *",
+    "suffix": "Achtervoegsel",
+    "company": "Bedrijf",
+    "street1": "Straat & nummer *",
+    "street2": "Bijkomend adres",
+    "city": "Stad *",
+    "province": "Staat *",
+    "country": "Land *",
+    "zipCode": "Postcode *",
+    "button": "Adres bewaren",
     "errors": {
-      "title": "Only letters and spaces are allowed",
-      "prefix": "Only letters and spaces are allowed",
-      "firstName": "Only letters and spaces are allowed",
-      "middleName": "Only letters and spaces are allowed",
-      "lastName": "Only letters and spaces are allowed",
-      "suffix": "Street and number are required",
-      "street1": "Street and number are required",
-      "street2": "Street and number are required",
-      "city": "Only letters and spaces are allowed",
-      "province": "Choose a State",
-      "country": "Choose a country",
-      "zipCode": "A max. of 10 characters are allowed"
+      "title": "Alleen letters en spaties zijn toegestaan",
+      "prefix": "Alleen letters en spaties zijn toegestaan",
+      "firstName": "Alleen letters en spaties zijn toegestaan",
+      "middleName": "Alleen letters en spaties zijn toegestaan",
+      "lastName": "Alleen letters en spaties zijn toegestaan",
+      "suffix": "Alleen letters en spaties zijn toegestaan",
+      "street1": "Straat en nummer zijn verplicht",
+      "street2": "Straat en nummer zijn verplicht",
+      "city": "Alleen letters en spaties zijn toegestaan",
+      "province": "Kies een staat",
+      "country": "Kies een land",
+      "zipCode": "Maximaal 10 tekens zijn toegestaan"
     },
     "add": {
-      "title": "Add new address",
-      "button": "Save new address"
+      "title": "Nieuw adres toevoegen",
+      "button": "Nieuw adres bewaren"
     },
     "select": {
-      "button": "Choose address"
+      "button": "Kies adres"
     },
     "update": {
-      "title": "Edit address"
+      "title": "Verander adres"
     },
     "delete": {
       "button": "Verwijderen",
@@ -113,17 +113,17 @@
   "checkout": {
     "shipping": {
       "address": {
-        "title": "Shipping address",
-        "select": "Add shipping address",
-        "change": "Change",
-        "makeBilling": "Make this my billing address"
+        "title": "Verzendadres",
+        "select": "Verzendadres toevoegen",
+        "change": "Verandering",
+        "makeBilling": "Maak dit mijn factuuradres"
       }
     },
     "billing": {
       "address": {
-        "title": "Billing address",
-        "select": "Add billing address",
-        "change": "Change"
+        "title": "Factuuradres",
+        "select": "Factuuradres toevoegen",
+        "change": "Verandering"
       }
     }
   },
@@ -134,7 +134,7 @@
     "payment_options": "Betalingsmogelijkheden"
   },
   "navigator": {
-    "save": "Save",
-    "changePassword": "Save"
+    "save": "Bewaar",
+    "changePassword": "Bewaar"
   }
 }
