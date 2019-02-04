@@ -1,0 +1,141 @@
+{
+  "register": {
+    "title": "Registrati",
+    "subTitle": "Crea un nuovo account",
+    "button": "Registrati"
+  },
+  "profile": {
+    "title": "Mio profilo",
+    "updated": "I tuoi dati sono stati salvati",
+    "failed": "L'aggiornamento dei tuoi dati non è andato a buon fine"
+  },
+  "password": {
+    "update": "Cambia la password",
+    "updated": "La tua password è stata salvata",
+    "current": "Password attuale *",
+    "new": "Nuova password *",
+    "repeat": "Ripeti la nuova password *",
+    "save": "Salva",
+    "errors": {
+      "blank": "Compila questo campo per favore",
+      "password": "La password deve contenere almeno 8 caratteri",
+      "repeatPassword": "Queste password non corrispondono. Riprova"
+    }
+  },
+  "user": {
+    "firstName": "Nome",
+    "lastName": "Cognome",
+    "mail": "E-mail",
+    "password": "Password",
+    "errors": {
+      "blank": "Compila questo campo per favore",
+      "mail": "Inserisci un indirizzo e-mail valido per favore",
+      "password": "La password deve contenere almeno 8 caratteri",
+      "firstName": "Sono ammessi solo lettere e spazi",
+      "lastName": "Sono ammessi solo lettere e spazi"
+    }
+  },
+  "addresses": {
+    "title": "Rubrica degli indirizzi",
+    "headline": "Rubrica degli indirizzi",
+    "button": "Aggiungi un nuovo indirizzo",
+    "noAddresses": "La rubrica degli indirizzi è vuota",
+    "defaults": {
+      "default": "Indirizzo predefinito",
+      "shipping": "Indirizzo di spedizione predefinito",
+      "billing": "Indirizzo di fatturazione predefinito"
+    },
+    "setAsDefault": {
+      "default": "Imposta come tuo indirizzo predefinito",
+      "shipping": "Imposta come tuo indirizzo di spedizione predefinito",
+      "billing": "Imposta come tuo indirizzo di fatturazione predefinito"
+    },
+    "error": {
+      "add": "L'inserimento dell'indirizzo non è andato a buon fine, controlla i dati inseriti per favore",
+      "update": "L'aggiornamento dell'indirizzo non è andato a buon fine, controlla i dati inseriti per favore",
+      "setAsDefault": "Non è possibile impostare l'indirizzo come predefinito"
+    }
+  },
+  "address": {
+    "title": "Titolo",
+    "prefix": "Prefisso",
+    "firstName": "Nome *",
+    "middleName": "Secondo nome",
+    "lastName": "Cognome *",
+    "suffix": "Suffisso",
+    "company": "Società",
+    "street1": "Via & Numero *",
+    "street2": "Indirizzo aggiuntivo",
+    "city": "Città *",
+    "province": "Stato *",
+    "country": "Nazione *",
+    "zipCode": "Codice postale *",
+    "button": "Salva l'indirizzo",
+    "errors": {
+      "title": "Sono ammessi solo lettere e spazi",
+      "prefix": "Sono ammessi solo lettere e spazi",
+      "firstName": "Sono ammessi solo lettere e spazi",
+      "middleName": "Sono ammessi solo lettere e spazi",
+      "lastName": "Sono ammessi solo lettere e spazi",
+      "suffix": "La via ed il numero sono obbligatori",
+      "street1": "La via ed il numero sono obbligatori",
+      "street2": "La via ed il numero sono obbligatori",
+      "city": "La via ed il numero sono obbligatori",
+      "province": "Seleziona uno stato",
+      "country": "Seleziona una nazione",
+      "zipCode": "Sono ammessi al massimo 10 caratteri"
+    },
+    "select": {
+      "button": "Seleziona un indirizzo"
+    },
+    "add": {
+      "title": "Aggiungi un nuovo indirizzo",
+      "button": "Salva il nuovo indirizzo"
+    },
+    "update": {
+      "title": "Modifica l'indirizzo"
+    },
+    "delete": {
+      "button": "Cancella",
+      "confirmationDialog": {
+        "title": "Cancella l'indirizzo",
+        "message": "Sei sicuro di voler cancellare questo indirizzo?"
+      },
+      "successMessage": "L'indirizzo è stato cancellato",
+      "noRemoveDefault": "L'indirizzo predefinito non può essere cancellato"
+    },
+    "makeDefault": {
+      "default": "Imposta questo indirizzo come tuo indirizzo predefinito",
+      "shipping": "Imposta questo indirizzo come tuo indirizzo di spedizione predefinito",
+      "billing": "Imposta questo indirizzo come tuo indirizzo di fatturazione predefinito"
+    },
+    "validationFailedToastMessage": "Controlla i tuoi campi per favore"
+  },
+  "checkout": {
+    "shipping": {
+      "address": {
+        "title": "Indirizzo di spedizione",
+        "select": "Aggiungi un indirizzo di spedizione",
+        "change": "Cambia",
+        "makeBilling": "Imposta questo indirizzo come mio indirizzo di fatturazione"
+      }
+    },
+    "billing": {
+      "address": {
+        "title": "Indirizzo di fatturazione",
+        "select": "Aggiungi un indirizzo di fatturazione",
+        "change": "Cambia"
+      }
+    }
+  },
+  "navigation": {
+    "profile": "Mio profilo",
+    "change_password": "Cambia la password",
+    "address_book": "Rubrica degli indirizzi",
+    "payment_options": "Opzioni di pagamento"
+  },
+  "navigator": {
+    "save": "Salva",
+    "changePassword": "Salva"
+  }
+}
