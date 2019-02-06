@@ -196,6 +196,16 @@
       "id": "nl-NL",
       "path": "frontend/locale/nl-NL.json",
       "type": "translations"
+    },
+    {
+      "id": "es-ES",
+      "path": "frontend/locale/es-ES.json",
+      "type": "translations"
+    },
+    {
+      "id": "it-IT",
+      "path": "frontend/locale/it-IT.json",
+      "type": "translations"
     }
   ]
 }
