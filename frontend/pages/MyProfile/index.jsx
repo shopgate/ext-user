@@ -1,54 +1,55 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+import React, { Fragment } from 'react';
+import { Route } from '@shopgate/pwa-common/components';
+import { Theme, RouteContext } from '@shopgate/pwa-common/context';
 import { themeName } from '@shopgate/pwa-common/helpers/config';
 import I18n from '@shopgate/pwa-common/components/I18n';
 import Portal from '@shopgate/pwa-common/components/Portal';
+import { USER_PROFILE_PATH } from '../../constants/RoutePaths';
 import * as portals from '../../constants/Portals';
 import UserForm from '../../components/UserForm';
+import AppBarSaveButton from '../../components/AppBarSaveButton';
 import styles from './style';
 
 const isIos = themeName.includes('ios');
 
 /**
  * The User Profile component.
+ * @returns {JSX}
  */
-class MyProfile extends Component {
-  static contextTypes = {
-    i18n: PropTypes.func,
-  };
+const MyProfile = () => (
+  <Theme>
+    {({ View, AppBar }) => (
+      <RouteContext.Consumer>
+        {({ visible }) => (
+          <View>
+            <AppBar
+              title={isIos ? '' : 'profile.title'}
+              right={visible ? <AppBarSaveButton testId="UserProfileSaveButton" key="right" /> : null}
+            />
+            <section className={styles.container} data-test-id="UserProfilePage">
 
-  /**
-   * @return {string}
-   */
-  get title() {
-    const { __ } = this.context.i18n();
-    return __('profile.title');
-  }
+              <h1 className={styles.headline}>
+                <I18n.Text string="profile.title" />
+              </h1>
 
-  /**
-   * @return {*}
-   */
-  render() {
-    // eslint-disable-next-line react/prop-types
-    const { View } = this.props;
-    return (
-      <View title={isIos ? '' : this.title}>
-        <section className={styles.container} data-test-id="UserProfilePage">
+              {visible &&
+                <Fragment>
+                  <Portal name={portals.USER_PROFILE_BEFORE} />
+                  <Portal name={portals.USER_PROFILE}>
+                    <UserForm />
+                  </Portal>
+                  <Portal name={portals.USER_PROFILE_AFTER} />
+                </Fragment>
+              }
 
-          <h1 className={styles.headline}>
-            <I18n.Text string={this.title} />
-          </h1>
+            </section>
+          </View>
+        )}
+      </RouteContext.Consumer>
+    )}
+  </Theme>
+);
 
-          <Portal name={portals.USER_PROFILE_BEFORE} />
-          <Portal name={portals.USER_PROFILE} >
-            <UserForm />
-          </Portal>
-          <Portal name={portals.USER_PROFILE_AFTER} />
-
-        </section>
-      </View>
-    );
-  }
-}
-
-export default MyProfile;
+export default () => (
+  <Route pattern={USER_PROFILE_PATH} component={MyProfile} />
+);

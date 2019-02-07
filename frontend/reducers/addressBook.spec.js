@@ -123,6 +123,10 @@ describe('AddressBook reducers', () => {
       type: SUCCESS_LOGOUT,
     };
     // eslint-disable-next-line extra-rules/no-single-line-objects
-    expect(reducer({ addresses: [], default: {} }, action)).toEqual({});
+    expect(reducer({ addresses: [], default: {} }, action)).toEqual({
+      addresses: [],
+      busy: false,
+      default: {},
+    });
   });
 });

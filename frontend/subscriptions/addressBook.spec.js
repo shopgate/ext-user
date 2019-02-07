@@ -1,12 +1,11 @@
 import subscription from './addressBook';
+import { ENOREMOVEDEFAULT } from '../constants/Pipelines';
 
 let mockUpdateAddress;
 let mockGetAddresses;
-let mockCreateToast;
 let mockShowModal;
 jest.mock('../actions/updateAddress', () => (...args) => mockUpdateAddress(...args));
 jest.mock('../actions/getAddresses', () => () => mockGetAddresses());
-jest.mock('@shopgate/pwa-common/actions/toast/createToast', () => options => mockCreateToast(options));
 jest.mock('@shopgate/pwa-common/actions/modal/showModal', () => (...args) => mockShowModal(...args));
 jest.mock('@shopgate/pwa-common/streams/user', () => ({
   userDidUpdate$: {
@@ -19,7 +18,7 @@ describe('AddressBook subscriptions', () => {
   subscription(subscribe);
 
   const [
-    ,
+    addressFormLeave$,
     userAddressValidationFailed$,
     userAddressChanged$,
     userAddressBookEnter$,
@@ -27,6 +26,7 @@ describe('AddressBook subscriptions', () => {
     userAddressesDelete$,
     userAddressesDeleted$,
     userSetDefaultAddress$,
+    userAddressesDeleteFailed$,
   ] = subscribe.mock.calls;
 
   let dispatch;
@@ -36,7 +36,6 @@ describe('AddressBook subscriptions', () => {
 
     mockUpdateAddress = jest.fn();
     mockGetAddresses = jest.fn();
-    mockCreateToast = jest.fn();
     mockShowModal = jest.fn();
   });
 
@@ -44,9 +43,21 @@ describe('AddressBook subscriptions', () => {
     expect(subscribe.mock.calls.length).toEqual(9);
   });
 
+  it('should dispatch action on address form leave', () => {
+    addressFormLeave$[1]({ dispatch });
+  });
+
   it('should create toast message when validation is failed ', () => {
-    userAddressValidationFailed$[1]({ dispatch });
-    expect(mockCreateToast).toHaveBeenCalledWith({ message: 'address.validationFailedToastMessage' });
+    const events = jest.fn();
+    events.emit = jest.fn();
+    // noinspection JSCheckFunctionSignatures
+    jest.spyOn(events, 'emit');
+    userAddressValidationFailed$[1]({ events });
+
+    expect(events.emit).toHaveBeenCalledWith('toast_add', {
+      id: 'address.validationFailed',
+      message: 'address.validationFailedToastMessage',
+    });
   });
 
   it('should fetch addresses when single address is changed', () => {
@@ -77,8 +88,16 @@ describe('AddressBook subscriptions', () => {
   });
 
   it('should create toast message when addresses are deleted', () => {
-    userAddressesDeleted$[1]({ dispatch });
-    expect(mockCreateToast).toHaveBeenCalledWith({ message: 'address.delete.successMessage' });
+    const events = jest.fn();
+    events.emit = jest.fn();
+    // noinspection JSCheckFunctionSignatures
+    jest.spyOn(events, 'emit');
+    // eslint-disable-next-line extra-rules/no-single-line-objects
+    userAddressesDeleted$[1]({ dispatch, events });
+    expect(events.emit).toHaveBeenCalledWith('toast_add', {
+      id: 'address.delete',
+      message: 'address.delete.successMessage',
+    });
   });
 
   it('should add tags when marked as default', () => {
@@ -101,5 +120,18 @@ describe('AddressBook subscriptions', () => {
 
     // eslint-disable-next-line extra-rules/no-single-line-objects
     expect(mockUpdateAddress).toHaveBeenCalledWith({ id: 1, firstName: 'foo', tags: ['default_shipping'] }, true);
+  });
+
+  it('should create toast message when default address can not be deleted', () => {
+    const events = jest.fn();
+    events.emit = jest.fn();
+    // noinspection JSCheckFunctionSignatures
+    jest.spyOn(events, 'emit');
+    // eslint-disable-next-line extra-rules/no-single-line-objects
+    userAddressesDeleteFailed$[1]({ action: { error: { code: ENOREMOVEDEFAULT } }, events });
+    expect(events.emit).toHaveBeenCalledWith('toast_add', {
+      id: 'address.delete',
+      message: 'address.delete.noRemoveDefault',
+    });
   });
 });

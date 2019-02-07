@@ -5,8 +5,9 @@ import getConfig from './../actions/getConfig';
  * @param {Function} subscribe The subscribe function.
  */
 export default (subscribe) => {
-  // Fetch config on app start
-  subscribe(appDidStart$, ({ dispatch }) => {
+  /** Fetch config after app start */
+  const appDidStartDebounced$ = appDidStart$.debounceTime(500);
+  subscribe(appDidStartDebounced$, ({ dispatch }) => {
     dispatch(getConfig());
   });
 };

@@ -1,76 +1,79 @@
-import React, { Component } from 'react';
+import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
+import { Route } from '@shopgate/pwa-common/components';
+import { Theme, RouteContext } from '@shopgate/pwa-common/context';
 import I18n from '@shopgate/pwa-common/components/I18n';
 import Portal from '@shopgate/pwa-common/components/Portal';
 import { themeName } from '@shopgate/pwa-common/helpers/config';
 import * as portals from '../../../constants/Portals';
 import AddressForm from '../../../components/AddressForm';
+import { USER_ADDRESS_PATH } from '../../../constants/RoutePaths';
+import AppBarSaveButton from '../../../components/AppBarSaveButton';
 import connect from './connector';
 import style from './style';
 
 const isIos = themeName.includes('ios');
 
 /**
- * The Add address component.
+ * Get page title
+ * @param {Object} address address
+ * @returns {string}
  */
-class AddAddress extends Component {
-  static propTypes = {
-    View: PropTypes.func.isRequired,
-    address: PropTypes.shape(),
+const title = (address) => {
+  if (isIos) {
+    return '';
   }
+  return address.id ? 'address.update.title' : 'address.add.title';
+};
 
-  static defaultProps = {
-    address: {},
-  }
+/**
+ * The Add address component.
+ * @returns {JSX}
+ */
+const AddressDetails = ({ address }) => (
+  <Theme>
+    {({ View, AppBar }) => (
+      <RouteContext.Consumer>
+        {({ visible }) => (
+          <View>
+            <AppBar
+              title={title(address)}
+              right={(visible && address.id) ? <AppBarSaveButton testId="UserAddressSaveButton" key="right" /> : null}
+            />
+            <section className={style.container} data-test-id="UserAddressBookAddPage">
 
-  static contextTypes = {
-    i18n: PropTypes.func,
-  };
+              {isIos &&
+                <h1 className={style.headline}>
+                  <I18n.Text string={title(address)} />
+                </h1>
+              }
 
-  /**
-   * Don't update if addressId changed.
-   * This only happens when the address was deleted and
-   * therefore no longer has an id, and when the address was added
-   * and therefore got a new id.
-   * @param {Object} nextProps The next props.
-   * @returns {boolean}
-   */
-  shouldComponentUpdate(nextProps) {
-    return this.props.address.id === nextProps.address.id;
-  }
+              {visible && /* kick form off, when route is not visible */
+                <Fragment>
+                  <Portal name={portals.USER_ADDRESSES_ADD_BEFORE} />
+                  <Portal name={portals.USER_ADDRESSES_ADD}>
+                    <AddressForm address={address} />
+                  </Portal>
+                  <Portal name={portals.USER_ADDRESSES_ADD_AFTER} />
+                </Fragment>
+              }
 
-  /**
-   * @return {string}
-   */
-  get title() {
-    const { __ } = this.context.i18n();
-    return __(this.props.address.id ? 'address.update.title' : 'address.add.title');
-  }
+            </section>
+          </View>
+        )}
+      </RouteContext.Consumer>
+    )}
+  </Theme>
+);
 
-  /**
-   * @return {*}
-   */
-  render() {
-    const { View, address } = this.props;
-    return (
-      <View title={!isIos ? this.title : ''}>
-        <section className={style.container} data-test-id="UserAddressBookAddPage">
+AddressDetails.propTypes = {
+  address: PropTypes.shape(),
+};
 
-          {isIos &&
-          <h1 className={style.headline}>
-            <I18n.Text string={this.title} />
-          </h1>
-          }
+AddressDetails.defaultProps = {
+  address: {},
+};
 
-          <Portal name={portals.USER_ADDRESSES_ADD_BEFORE} />
-          <Portal name={portals.USER_ADDRESSES_ADD}>
-            <AddressForm address={address} />
-          </Portal>
-          <Portal name={portals.USER_ADDRESSES_ADD_AFTER} />
-        </section>
-      </View>
-    );
-  }
-}
-
-export default connect(AddAddress);
+export default () => (
+  <Route pattern={USER_ADDRESS_PATH} component={connect(AddressDetails)} />
+);

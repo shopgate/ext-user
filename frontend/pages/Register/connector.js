@@ -9,4 +9,4 @@ const mapStateToProps = state => ({
   isLoggedIn: isUserLoggedIn(state),
 });
 
-export default connect(mapStateToProps, null, null, { withRef: true });
+export default connect(mapStateToProps);

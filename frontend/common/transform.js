@@ -4,7 +4,7 @@
  *
  * @param {{details: Object[]}} joiValidationError joi validation error
  * @param {string} stringPrefix prefix
- * @return {{path: string, message: string}[]}}
+ * @returns {{path: string, message: string}[]}
  */
 const joiToValidationErrors = ({ details = [] }, stringPrefix = '') => details.map(err => ({
   path: err.context.key,

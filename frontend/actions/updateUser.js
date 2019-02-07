@@ -24,7 +24,7 @@ const updateUserAction = user => new PipelineRequest(PIPELINE_UPDATE_USER)
   .dispatch();
 
 export default ({ mail, password: ignore, ...restUser }) => async (dispatch, getState) => {
-  dispatch(updateUser());
+  dispatch(updateUser(restUser));
 
   let messages;
 

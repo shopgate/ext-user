@@ -2,7 +2,7 @@
 
 exports[`<AddressForm> should print validation errors inline 1`] = `
 <AddressForm
-  addAddress={[Function]}
+  addAddress={[MockFunction]}
   address={
     Object {
       "firstName": "old value",
@@ -31,10 +31,10 @@ exports[`<AddressForm> should print validation errors inline 1`] = `
       },
     }
   }
-  deleteAddress={[Function]}
+  deleteAddress={[MockFunction]}
   isBusy={false}
   isFirstAddress={false}
-  updateAddress={[Function]}
+  updateAddress={[MockFunction]}
   validationErrors={
     Array [
       Object {
@@ -577,7 +577,7 @@ exports[`<AddressForm> should print validation errors inline 1`] = `
 
 exports[`<AddressForm> should render only configured address fields 1`] = `
 <AddressForm
-  addAddress={[Function]}
+  addAddress={[MockFunction]}
   address={Object {}}
   config={
     Object {
@@ -602,10 +602,10 @@ exports[`<AddressForm> should render only configured address fields 1`] = `
       },
     }
   }
-  deleteAddress={[Function]}
+  deleteAddress={[MockFunction]}
   isBusy={false}
   isFirstAddress={false}
-  updateAddress={[Function]}
+  updateAddress={[MockFunction]}
   validationErrors={Array []}
 >
   <Portal

@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
-import goBackHistory from '@shopgate/pwa-common/actions/history/goBackHistory';
 import buildValidationErrorList from '@shopgate/pwa-ui-shared/Form/Builder/builders/buildValidationErrorList';
+import { historyPop } from '@shopgate/pwa-common/actions/router';
 import updatePassword from '../../actions/updatePassword';
 import { changePasswordSchema } from '../../common/userSchema';
 import { joiToValidationErrors } from '../../common/transform';
@@ -28,7 +28,7 @@ const validatePassword = (passwords) => {
  * @return {{updatePassword: function, validatePassword: function}}
  */
 const mapDispatchToProps = dispatch => ({
-  cancel: () => dispatch(goBackHistory(1)),
+  cancel: () => dispatch(historyPop()),
   updatePassword: passwords => dispatch(updatePassword(passwords)),
   validatePassword,
 });

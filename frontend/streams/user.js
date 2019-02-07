@@ -1,4 +1,5 @@
 import { main$ } from '@shopgate/pwa-common/streams/main';
+import { routeWillEnter$ } from '@shopgate/pwa-common/streams/router';
 import {
   REGISTER_USER,
   REGISTER_USER_SUCCESS,
@@ -7,6 +8,14 @@ import {
   UPDATE_USER_SUCCESS,
   UPDATE_USER_FAILED,
 } from './../constants/ActionTypes';
+import { USER_REGISTER_PATH } from '../constants/RoutePaths';
+
+/**
+ * Get triggered when user will update.
+ * @type {Observable}
+ */
+export const registerRouteWillEnter$ = routeWillEnter$
+  .filter(({ action }) => action.route.pattern === USER_REGISTER_PATH);
 
 /**
  * Get triggered when user will register.

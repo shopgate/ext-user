@@ -9,8 +9,8 @@ import buildValidationErrorList from '@shopgate/pwa-ui-shared/Form/Builder/build
 import { themeName } from '@shopgate/pwa-common/helpers/config';
 import TextField from '@shopgate/pwa-ui-shared/Form/TextField';
 import Password from '@shopgate/pwa-ui-shared/Form/Password';
+import { UIEvents } from '@shopgate/pwa-core';
 import * as portals from '../../constants/Portals';
-import EventEmitter from '../../events/emitter';
 import * as events from '../../constants/EventTypes';
 import connect from './connector';
 import styles from './style';
@@ -43,7 +43,7 @@ class ChangePasswordForm extends Component {
     super(props);
 
     this.state = {
-      disabled: false,
+      disabled: true,
       user: {
         password: '',
         oldPassword: '',
@@ -56,11 +56,11 @@ class ChangePasswordForm extends Component {
 
   componentDidMount = () => {
     if (isIos) {
-      EventEmitter.on(events.NAVIGATOR_CHANGE_PASSWORD_BUTTON_CLICK, this.updatePassword);
-      EventEmitter.emit(events.NAVIGATOR_CHANGE_PASSWORD_BUTTON_ENABLE);
+      this.registerSaveButton();
     }
   }
 
+  // noinspection JSCheckFunctionSignatures
   /**
    * Update state with next props (on successful or failed "update" with backend validation errors).
    * @param {Object} nextProps The next props.
@@ -94,9 +94,23 @@ class ChangePasswordForm extends Component {
 
   componentWillUnmount = () => {
     if (isIos) {
-      EventEmitter.off(events.NAVIGATOR_CHANGE_PASSWORD_BUTTON_CLICK, this.updatePassword);
+      UIEvents.removeAllListeners(events.APP_BAR_SAVE_BUTTON_CLICK);
     }
   }
+
+  /**
+   * @returns {boolean}
+   */
+  enableSaveButton = () => UIEvents.emit(events.APP_BAR_SAVE_BUTTON_ENABLE);
+  /**
+   * @returns {boolean}
+   */
+  disableSaveButton = () => UIEvents.emit(events.APP_BAR_SAVE_BUTTON_DISABLE);
+  /**
+   * @returns {boolean}
+   */
+  registerSaveButton = () => UIEvents
+    .addListener(events.APP_BAR_SAVE_BUTTON_CLICK, this.updatePassword);
 
   /**
    * Takes an object to add into the state
@@ -115,19 +129,40 @@ class ChangePasswordForm extends Component {
    * Triggers validation of the user fields in the state and updates the "error" field in the state.
    */
   validateInline = () => {
+    // Inline validation is only enabled after the first form submit
     if (!this.state.inlineValidation) {
+      // Enable the save button as soon as all fields are set for better usability (no validation)
+      const newState = {
+        disabled: this.state.user.password === ''
+          || this.state.user.oldPassword === ''
+          || this.state.user.repeatPassword === '',
+      };
+
+      if (isIos) {
+        if (!newState.disabled) {
+          this.enableSaveButton();
+        } else {
+          this.disableSaveButton();
+        }
+      }
+      this.setState(newState);
+
       return;
     }
 
+    // Check validation whenever inline validation is active (on form submit)
     const errors = this.props.validatePassword(this.state.user);
+    const disabled = Object.keys(errors).length > 0;
     this.setState({
       errors,
-      disabled: Object.keys(errors).length > 0,
+      disabled,
     });
     if (isIos) {
-      EventEmitter.emit(Object.keys(errors).length ?
-        events.NAVIGATOR_CHANGE_PASSWORD_BUTTON_DISABLE :
-        events.NAVIGATOR_CHANGE_PASSWORD_BUTTON_ENABLE);
+      if (disabled) {
+        this.disableSaveButton();
+      } else {
+        this.enableSaveButton();
+      }
     }
   }
 
@@ -142,11 +177,11 @@ class ChangePasswordForm extends Component {
       errors,
       disabled: true,
     });
+    if (isIos) {
+      this.disableSaveButton();
+    }
 
     if (Object.keys(errors).length > 0) {
-      if (isIos) {
-        EventEmitter.emit(events.NAVIGATOR_CHANGE_PASSWORD_BUTTON_DISABLE);
-      }
       return;
     }
 

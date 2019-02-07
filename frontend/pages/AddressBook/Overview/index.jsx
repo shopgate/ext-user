@@ -1,11 +1,13 @@
-import React, { Component } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
+import { Route } from '@shopgate/pwa-common/components';
+import { Theme } from '@shopgate/pwa-common/context';
 import I18n from '@shopgate/pwa-common/components/I18n';
-import Link from '@shopgate/pwa-common/components/Router/components/Link';
+import Link from '@shopgate/pwa-common/components/Link';
 import Portal from '@shopgate/pwa-common/components/Portal';
 import RippleButton from '@shopgate/pwa-ui-shared/RippleButton';
 import { themeName } from '@shopgate/pwa-common/helpers/config';
-import { userAddressPathPattern } from '../../../constants/RoutePaths';
+import { USER_ADDRESS_BOOK_PATH, addressUri } from '../../../constants/RoutePaths';
 import * as portals from '../../../constants/Portals';
 import AddressList from './components/AddressList';
 import NoAddresses from './components/NoAddresses';
@@ -16,32 +18,13 @@ const isIos = themeName.includes('ios');
 
 /**
  * The User AddressBook component.
+ * @returns {JSX}
  */
-class AddressBook extends Component {
-  static propTypes = {
-    hasAddresses: PropTypes.bool.isRequired,
-    View: PropTypes.func.isRequired,
-  }
-
-  static contextTypes = {
-    i18n: PropTypes.func,
-  };
-
-  /**
-   * @return {string}
-   */
-  get title() {
-    const { __ } = this.context.i18n();
-    return __('addresses.title');
-  }
-
-  /**
-   * @return {*}
-   */
-  render() {
-    const { hasAddresses, View } = this.props;
-    return (
-      <View title={!isIos ? this.title : ''}>
+const AddressBook = ({ hasAddresses }) => (
+  <Theme>
+    {({ View, AppBar }) => (
+      <View>
+        <AppBar title={isIos ? '' : 'addresses.title'} right={null} />
         <section className={styles.container} data-test-id="UserAddressBookPage">
 
           {isIos &&
@@ -60,7 +43,7 @@ class AddressBook extends Component {
           <Portal name={portals.USER_ADDRESSES_ADD_BEFORE} />
           <Portal name={portals.USER_ADDRESSES_ADD}>
             <div className={styles.buttonWrapper} data-test-id="AddAddressButton">
-              <Link className={styles.link} href={userAddressPathPattern.stringify({ id: 0 })}>
+              <Link className={styles.link} href={addressUri({ id: 0 })}>
                 <RippleButton className={styles.button} type="secondary">
                   <I18n.Text string="addresses.button" />
                 </RippleButton>
@@ -71,8 +54,14 @@ class AddressBook extends Component {
 
         </section>
       </View>
-    );
-  }
-}
+      )}
+  </Theme>
+);
 
-export default connect(AddressBook);
+AddressBook.propTypes = {
+  hasAddresses: PropTypes.bool.isRequired,
+};
+
+export default () => (
+  <Route pattern={USER_ADDRESS_BOOK_PATH} component={connect(AddressBook)} />
+);

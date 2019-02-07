@@ -1,5 +1,5 @@
 {
-  "version": "2.4.1",
+  "version": "3.0.0",
   "id": "@shopgate/user",
   "trusted": true,
   "configuration": {
@@ -120,15 +120,33 @@
   },
   "components": [
     {
-      "id": "UserRoutes",
-      "path": "frontend/pages/routes.jsx",
+      "id": "RegisterPage",
+      "path": "frontend/pages/Register/index.jsx",
       "target": "app.routes",
       "type": "portals"
     },
     {
-      "id": "NavigatorButtons",
-      "path": "frontend/components/NavigatorButtons/index.jsx",
-      "target": "nav-bar.navigator.icons.after",
+      "id": "MyProfilePage",
+      "path": "frontend/pages/MyProfile/index.jsx",
+      "target": "app.routes",
+      "type": "portals"
+    },
+    {
+      "id": "PasswordPage",
+      "path": "frontend/pages/ChangePassword/index.jsx",
+      "target": "app.routes",
+      "type": "portals"
+    },
+    {
+      "id": "AddressBookPage",
+      "path": "frontend/pages/AddressBook/Overview/index.jsx",
+      "target": "app.routes",
+      "type": "portals"
+    },
+    {
+      "id": "AddressDetailsPage",
+      "path": "frontend/pages/AddressBook/AddressDetails/index.jsx",
+      "target": "app.routes",
       "type": "portals"
     },
     {
@@ -157,12 +175,6 @@
       "id": "UserMenu",
       "path": "frontend/components/UserMenu/index.jsx",
       "target": "nav-menu.store-information.before",
-      "type": "portals"
-    },
-    {
-      "id": "Empty",
-      "path": "frontend/components/Empty.jsx",
-      "target": "nav-menu.my-account.header",
       "type": "portals"
     },
     {
