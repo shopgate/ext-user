@@ -1,3 +1,4 @@
+/* eslint-disable extra-rules/no-single-line-objects */
 import subscription from './user';
 
 // Create action mocks.
@@ -22,6 +23,8 @@ describe('User subscriptions', () => {
     fetchUser$,
     registerAndDataReceived$,
     userUpdateSuccess$,
+    userUpdateFailed$,
+    userUpdateMailFailed$,
   ] = subscribe.mock.calls;
 
   let dispatch;
@@ -33,7 +36,7 @@ describe('User subscriptions', () => {
   });
 
   it('should subscribe to the streams', () => {
-    expect(subscribe.mock.calls.length).toEqual(4);
+    expect(subscribe.mock.calls.length).toEqual(5);
   });
 
   it('should get user on fetchUser$ stream', () => {
@@ -42,14 +45,24 @@ describe('User subscriptions', () => {
   });
 
   it('should trigger success login on registerAndDataReceived$ stream', () => {
-    // eslint-disable-next-line extra-rules/no-single-line-objects
     registerAndDataReceived$[1]({ dispatch, getState: () => {} });
     expect(mockSuccessLogin).toHaveBeenCalledTimes(1);
   });
 
   it('should create toast on userUpdateSuccess$ stream', () => {
-    // eslint-disable-next-line extra-rules/no-single-line-objects
     userUpdateSuccess$[1]({ dispatch, action: {}, getState: () => {} });
     expect(mockCreateToast).toHaveBeenCalledWith({ message: 'profile.updated' });
   });
+
+  it('should create toast on userUpdateFailed$ stream', () => {
+    userUpdateFailed$[1]({ dispatch, action: { error: {} } });
+    expect(mockCreateToast).toHaveBeenCalledWith({ message: 'profile.failed' });
+  });
+
+  it('should create toast on userUpdateMailFailed$ stream', () => {
+    const validationErrors = [{ path: 'mail', message: 'Email has already been taken' }];
+    userUpdateMailFailed$[1]({ dispatch, action: { error: { validationErrors } } });
+    expect(mockCreateToast).toHaveBeenCalledWith({ message: 'Email has already been taken' });
+  });
 });
+/* eslint-enable extra-rules/no-single-line-objects */

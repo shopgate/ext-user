@@ -61,3 +61,15 @@ export const updateUserFailed = (error, user) => ({
   error,
   user,
 });
+
+/**
+ * Creates the dispatched UPDATE_USER_MAIL_FAILED action object.
+ * @param {Object} error error
+ * @param {string} mail mail
+ * @return {{type: string, error: Object, mail: string}}
+ */
+export const updateUserMailFailed = (error, mail) => ({
+  type: types.UPDATE_USER_MAIL_FAILED,
+  error,
+  mail,
+});
