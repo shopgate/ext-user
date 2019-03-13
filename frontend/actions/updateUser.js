@@ -1,7 +1,12 @@
 import PipelineRequest from '@shopgate/pwa-core/classes/PipelineRequest';
 import { getUserData } from '@shopgate/pwa-common/selectors/user';
 import { PIPELINE_UPDATE_USER, PIPELINE_UPDATE_MAIL } from './../constants/Pipelines';
-import { updateUser, updateUserSuccess, updateUserFailed } from './../action-creators/user';
+import {
+  updateUser,
+  updateUserSuccess,
+  updateUserFailed,
+  updateUserMailFailed,
+} from './../action-creators/user';
 
 /**
  * Update mail pipeline action
@@ -24,7 +29,7 @@ const updateUserAction = user => new PipelineRequest(PIPELINE_UPDATE_USER)
   .dispatch();
 
 export default ({ mail, password: ignore, ...restUser }) => async (dispatch, getState) => {
-  dispatch(updateUser());
+  dispatch(updateUser(restUser));
 
   let messages;
 
@@ -43,7 +48,7 @@ export default ({ mail, password: ignore, ...restUser }) => async (dispatch, get
       try {
         ({ messages } = await updateMailAction(mail));
       } catch (error) {
-        dispatch(updateUserFailed(error, restUser));
+        dispatch(updateUserMailFailed(error, mail));
         return;
       }
     }

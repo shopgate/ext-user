@@ -13,6 +13,7 @@ import {
   userRegisterSuccess$,
   userUpdateSuccess$,
   userUpdateFailed$,
+  userUpdateMailFailed$,
 } from './../streams/user';
 import { USER_PASSWORD_PATH } from './../constants/RoutePaths';
 
@@ -81,6 +82,18 @@ export default (subscribe) => {
         message: 'password.errors.oldPassword',
       }));
     } else {
+      dispatch(createToast({ message: 'profile.failed' }));
+    }
+  });
+
+  subscribe(userUpdateMailFailed$, ({ dispatch, action }) => {
+    const { error: { validationErrors = [] } = {} } = action;
+
+    const mailError = validationErrors.find(err => err.path === 'mail' || err.path === 'email');
+    if (mailError) {
+      dispatch(createToast({ message: mailError.message || 'profile.failed' }));
+    } else {
+      // Path not found, show general toast
       dispatch(createToast({ message: 'profile.failed' }));
     }
   });

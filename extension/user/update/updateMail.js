@@ -1,5 +1,5 @@
 const InternalError = require('./../../common/Error/InternalError')
-const UserExistError = require('./../../common/Error/UserExistError')
+const ValidationError = require('./../../common/Error/ValidationError')
 
 /**
  * @param {SDKContext} context
@@ -22,7 +22,10 @@ module.exports = async (context, { mail, oldMail }) => {
 
   if (existingUserId) {
     context.log.info(`User already exists with given email [${mail}]`)
-    throw new UserExistError()
+    throw new ValidationError([{
+      path: 'mail',
+      message: 'Email has already been taken'
+    }])
   }
 
   try {
