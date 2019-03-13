@@ -1,3 +1,4 @@
+/* eslint-disable extra-rules/no-single-line-objects */
 import subscription from './user';
 
 // Create action mocks.
@@ -20,6 +21,7 @@ describe('User subscriptions', () => {
     registerAndDataReceived$,
     userUpdateSuccess$,
     userUpdateFailed$,
+    userUpdateMailFailed$,
   ] = subscribe.mock.calls;
 
   let dispatch;
@@ -30,7 +32,7 @@ describe('User subscriptions', () => {
   });
 
   it('should subscribe to the streams', () => {
-    expect(subscribe.mock.calls.length).toEqual(4);
+    expect(subscribe.mock.calls.length).toEqual(5);
   });
 
   it('should get user on fetchUser$ stream', () => {
@@ -39,7 +41,6 @@ describe('User subscriptions', () => {
   });
 
   it('should trigger success login on registerAndDataReceived$ stream', () => {
-    // eslint-disable-next-line extra-rules/no-single-line-objects
     registerAndDataReceived$[1]({ dispatch, getState: () => {} });
     expect(mockSuccessLogin).toHaveBeenCalledTimes(1);
   });
@@ -50,7 +51,6 @@ describe('User subscriptions', () => {
     // noinspection JSCheckFunctionSignatures
     jest.spyOn(events, 'emit');
 
-    // eslint-disable-next-line extra-rules/no-single-line-objects
     userUpdateSuccess$[1]({ dispatch, action: {}, events });
     expect(events.emit).toHaveBeenCalledWith('toast_add', {
       id: 'profile.updated',
@@ -64,11 +64,26 @@ describe('User subscriptions', () => {
     // noinspection JSCheckFunctionSignatures
     jest.spyOn(events, 'emit');
 
-    // eslint-disable-next-line extra-rules/no-single-line-objects
     userUpdateFailed$[1]({ dispatch, action: { error: {} }, events });
     expect(events.emit).toHaveBeenCalledWith('toast_add', {
       id: 'profile.failed',
       message: 'profile.failed',
     });
   });
+
+  it('should create toast on userUpdateMailFailed$ stream', () => {
+    const events = jest.fn();
+    events.emit = jest.fn();
+    // noinspection JSCheckFunctionSignatures
+    jest.spyOn(events, 'emit');
+
+    const validationErrors = [{ path: 'mail', message: 'Email has already been taken' }];
+    userUpdateMailFailed$[1]({ dispatch, action: { error: { validationErrors } }, events });
+
+    expect(events.emit).toHaveBeenCalledWith('toast_add', {
+      id: 'profile.failed',
+      message: 'Email has already been taken',
+    });
+  });
 });
+/* eslint-enable extra-rules/no-single-line-objects */

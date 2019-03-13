@@ -7,6 +7,7 @@ import {
   UPDATE_USER,
   UPDATE_USER_SUCCESS,
   UPDATE_USER_FAILED,
+  UPDATE_USER_MAIL_FAILED,
 } from './../constants/ActionTypes';
 import { USER_REGISTER_PATH } from '../constants/RoutePaths';
 
@@ -56,3 +57,10 @@ export const userUpdateSuccess$ = main$
  */
 export const userUpdateFailed$ = main$
   .filter(({ action }) => action.type === UPDATE_USER_FAILED);
+
+/**
+ * Get triggered when user mail update failed
+ * @type {Observable}
+ */
+export const userUpdateMailFailed$ = main$
+  .filter(({ action }) => action.type === UPDATE_USER_MAIL_FAILED);
