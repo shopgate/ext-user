@@ -9,4 +9,4 @@ const mapStateToProps = state => ({
   hasAddresses: !!getUserAddresses(state) && getUserAddresses(state).length > 0,
 });
 
-export default connect(mapStateToProps, null, null, { withRef: true });
+export default connect(mapStateToProps);

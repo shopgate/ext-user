@@ -13,6 +13,7 @@ import {
   userRegisterFailed$,
   userUpdateFailed$,
   userUpdateSuccess$,
+  userUpdateMailFailed$,
   userWillRegister$,
   userWillUpdate$,
 } from '../streams/user';
@@ -54,6 +55,7 @@ export default (subscribe) => {
     userAddressReceiveFailed$,
     userUpdateFailed$,
     userRegisterFailed$,
+    userUpdateMailFailed$,
     userAddressChanged$,
     userAddressFailed$
   );

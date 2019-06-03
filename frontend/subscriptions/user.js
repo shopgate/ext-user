@@ -6,7 +6,12 @@ import { successLogin } from '@shopgate/pwa-common/action-creators/user';
 import { userDataReceived$ } from '@shopgate/pwa-common/streams/user';
 import { EINVALIDCREDENTIALS } from '@shopgate/pwa-core/constants/Pipeline';
 import { getCurrentRoute } from '@shopgate/pwa-common/helpers/router';
-import { userRegisterSuccess$, userUpdateFailed$, userUpdateSuccess$ } from './../streams/user';
+import {
+  userRegisterSuccess$,
+  userUpdateFailed$,
+  userUpdateSuccess$,
+  userUpdateMailFailed$,
+} from './../streams/user';
 import { USER_PASSWORD_PATH } from './../constants/RoutePaths';
 
 /**
@@ -64,6 +69,24 @@ export default (subscribe) => {
         message: 'password.errors.oldPassword',
       }));
     } else {
+      events.emit(ToastProvider.ADD, {
+        id: 'profile.failed',
+        message: 'profile.failed',
+      });
+    }
+  });
+
+  subscribe(userUpdateMailFailed$, ({ action, events }) => {
+    const { error: { validationErrors = [] } = {} } = action;
+
+    const mailError = validationErrors.find(err => err.path === 'mail' || err.path === 'email');
+    if (mailError) {
+      events.emit(ToastProvider.ADD, {
+        id: 'profile.failed',
+        message: mailError.message || 'profile.failed',
+      });
+    } else {
+      // Path not found, show general toast
       events.emit(ToastProvider.ADD, {
         id: 'profile.failed',
         message: 'profile.failed',
