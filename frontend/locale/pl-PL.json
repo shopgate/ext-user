@@ -1,0 +1,141 @@
+{
+  "register": {
+    "title": "Rejestr",
+    "subTitle": "Utwórz nowe konto",
+    "button": "Rejestr"
+  },
+  "profile": {
+    "title": "Moje dane",
+    "updated": "Twoje dane zostały zapisane",
+    "failed": "Aktualizacja danych nie powiodła się"
+  },
+  "password": {
+    "update": "Zmień hasło",
+    "current": "Aktualne hasło *",
+    "new": "Nowe hasło *",
+    "repeat": "Potwierdź nowe hasło *",
+    "save": "Zapisz",
+    "errors": {
+      "blank": "Proszę wypełnić to pole.",
+      "oldPassword": "Bieżące hasło jest nieprawidłowe.",
+      "password": "Hasło musi składać się z co najmniej 8 znaków.",
+      "repeatPassword": "Hasła nie są zgodne. Proszę spróbować ponownie."
+    }
+  },
+  "user": {
+    "firstName": "Imię i nazwisko",
+    "lastName": "Nazwisko",
+    "mail": "E-Mail",
+    "password": "Hasło",
+    "errors": {
+      "blank": "Proszę wypełnić to pole.",
+      "mail": "Wprowadź prawidłowy adres e-mail.",
+      "password": "Hasło musi składać się z co najmniej 8 znaków.",
+      "firstName": "Dozwolone są tylko litery i spacje.",
+      "lastName": "Dozwolone są tylko litery i spacje."
+    }
+  },
+  "addresses": {
+    "title": "Książka adresowa",
+    "headline": "Książka adresowa",
+    "button": "Dodaj nowy adres",
+    "noAddresses": "Książka adresowa jest pusta",
+    "defaults": {
+      "default": "Adres domyślny",
+      "shipping": "Domyślny adres dostawy",
+      "billing": "Domyślny adres rozliczeniowy"
+    },
+    "setAsDefault": {
+      "default": "Ustaw jako adres domyślny",
+      "shipping": "Ustaw jako domyślny adres dostawy",
+      "billing": "Ustaw jako domyślny adres rozliczeniowy"
+    },
+    "error": {
+      "add": "Dodanie adresu nie powiodło się, sprawdź swoje wpisy",
+      "update": "Aktualizacja adresu nie powiodła się, proszę sprawdzić swoje wpisy",
+      "setAsDefault": "Adres nie może być ustawiony jako domyślny"
+    }
+  },
+  "address": {
+    "title": "Salutation",
+    "prefix": "Imię i nazwisko *",
+    "firstName": "Imię i nazwisko *",
+    "middleName": "Drugie imię",
+    "lastName": "Nazwisko *",
+    "suffix": "Przyrostek",
+    "company": "Firma",
+    "street1": "Ulica i numer domu *",
+    "street2": "Przyrostek adresu",
+    "city": "Miasto *",
+    "province": "Państwo *",
+    "country": "Kraj *",
+    "zipCode": "Kod pocztowy *",
+    "button": "Zapisz nowy adres",
+    "errors": {
+      "title": "Dozwolone są tylko litery i spacje",
+      "prefix": "Dozwolone są tylko litery i spacje",
+      "firstName": "Dozwolone są tylko litery i spacje",
+      "middleName": "Dozwolone są tylko litery i spacje",
+      "lastName": "Dozwolone są tylko litery i spacje",
+      "suffix": "Dozwolone są tylko litery i spacje",
+      "street1": "Wymagane są ulica i numer domu",
+      "street2": "Wymagane są ulica i numer domu",
+      "city": "Dozwolone są tylko litery i spacje",
+      "country": "Wybierz kraj",
+      "province": "Wybierz stan",
+      "zipCode": "Maksymalnie 10 znaków."
+    },
+    "select": {
+      "button": "Wybierz adres"
+    },
+    "add": {
+      "title": "Dodaj adres",
+      "button": "Zapisz nowy adres"
+    },
+    "update": {
+      "title": "Adres aktualizacji"
+    },
+    "delete": {
+      "button": "Usuń",
+      "confirmationDialog": {
+        "title": "Usuń adres",
+        "message": "Czy naprawdę chcesz usunąć ten adres?"
+      },
+      "successMessage": "Adres został usunięty",
+      "noRemoveDefault": "Nie można usunąć adresu domyślnego"
+    },
+    "makeDefault": {
+      "default": "Ustaw jako adres domyślny",
+      "shipping": "Ustaw jako domyślny adres dostawy",
+      "billing": "Ustaw jako domyślny adres rozliczeniowy"
+    },
+    "validationFailedToastMessage": "Sprawdź swoje pola"
+  },
+  "checkout": {
+    "shipping": {
+      "address": {
+        "title": "Adres wysyłki",
+        "select": "Dodaj adres wysyłki",
+        "change": "Zmiana",
+        "makeBilling": "Użyj jako adresu rozliczeniowego"
+      }
+    },
+    "billing": {
+      "address": {
+        "title": "Adres rozliczeniowy",
+        "select": "Dodaj adres rozliczeniowy",
+        "change": "Zmiana"
+      }
+    }
+  },
+  "navigation": {
+    "profile": "Moje dane",
+    "change_password": "Zmień hasło",
+    "address_book": "Książka adresowa",
+    "payment_options": "Opcje płatności"
+  },
+  "navigator": {
+    "save": "Zapisz",
+    "changePassword": "Zapisz"
+  }
+}
