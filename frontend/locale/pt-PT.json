@@ -1,0 +1,141 @@
+{
+  "register": {
+    "title": "Registe-se",
+    "subTitle": "Criar uma nova conta",
+    "button": "Registe-se"
+  },
+  "profile": {
+    "title": "Os meus dados",
+    "updated": "Os seus dados foram guardados",
+    "failed": "A actualização dos seus dados falhou"
+  },
+  "password": {
+    "update": "Alterar palavra-passe",
+    "current": "Palavra-passe actual *",
+    "new": "Nova palavra-passe *",
+    "repeat": "Confirmar nova senha *",
+    "save": "Guardar",
+    "errors": {
+      "blank": "Por favor preencha este campo.",
+      "oldPassword": "A palavra-passe actual está incorrecta.",
+      "password": "A sua palavra-passe deve ter pelo menos 8 caracteres.",
+      "repeatPassword": "As palavras-passe não coincidem. Por favor, tente novamente."
+    }
+  },
+  "user": {
+    "firstName": "Primeiro nome",
+    "lastName": "Apelido",
+    "mail": "Email",
+    "password": "Senha",
+    "errors": {
+      "blank": "Por favor preencha este campo.",
+      "mail": "Por favor introduza um endereço de correio electrónico válido.",
+      "password": "A sua palavra-passe deve ter pelo menos 8 caracteres.",
+      "firstName": "Só são permitidas cartas e espaços.",
+      "lastName": "Só são permitidas cartas e espaços."
+    }
+  },
+  "addresses": {
+    "title": "Livro de endereços",
+    "headline": "Livro de endereços",
+    "button": "Acrescentar novo endereço",
+    "noAddresses": "O livro de endereços está vazio",
+    "defaults": {
+      "default": "Endereço predefinido",
+      "shipping": "Endereço de entrega por defeito",
+      "billing": "Endereço de facturação por defeito"
+    },
+    "setAsDefault": {
+      "default": "Definir como endereço padrão",
+      "shipping": "Definir como endereço de entrega padrão",
+      "billing": "Definir como endereço de facturação padrão"
+    },
+    "error": {
+      "add": "Adicionando o endereço falhou, por favor verifique as suas entradas",
+      "update": "A actualização do endereço falhou, por favor verifique as suas entradas",
+      "setAsDefault": "O endereço não pôde ser definido como padrão"
+    }
+  },
+  "address": {
+    "title": "Saudação",
+    "prefix": "Primeiro nome *",
+    "firstName": "Primeiro nome *",
+    "middleName": "Nome do meio",
+    "lastName": "Apelido *",
+    "suffix": "Sufixo",
+    "company": "Empresa",
+    "street1": "Rua e número da casa *",
+    "street2": "Sufixo de endereço",
+    "city": "Cidade *",
+    "province": "Estado *",
+    "country": "País *",
+    "zipCode": "CEP *",
+    "button": "Guardar novo endereço",
+    "errors": {
+      "title": "Só são permitidas cartas e espaços",
+      "prefix": "Só são permitidas cartas e espaços",
+      "firstName": "Só são permitidas cartas e espaços",
+      "middleName": "Só são permitidas cartas e espaços",
+      "lastName": "Só são permitidas cartas e espaços",
+      "suffix": "Só são permitidas cartas e espaços",
+      "street1": "São necessários o número da rua e da casa",
+      "street2": "São necessários o número da rua e da casa",
+      "city": "Só são permitidas cartas e espaços",
+      "province": "Seleccione um estado",
+      "country": "Seleccione um país",
+      "zipCode": "É permitido um máximo de 10 caracteres"
+    },
+    "select": {
+      "button": "Seleccionar morada"
+    },
+    "add": {
+      "title": "Acrescentar endereço",
+      "button": "Guardar novo endereço"
+    },
+    "update": {
+      "title": "Endereço de actualização"
+    },
+    "delete": {
+      "button": "Eliminar",
+      "confirmationDialog": {
+        "title": "Apagar endereço",
+        "message": "Quer mesmo apagar este endereço?"
+      },
+      "successMessage": "O endereço foi apagado",
+      "noRemoveDefault": "O endereço por defeito não pode ser apagado"
+    },
+    "makeDefault": {
+      "default": "Definir como endereço padrão",
+      "shipping": "Definir como endereço de entrega padrão",
+      "billing": "Definir como endereço de facturação padrão"
+    },
+    "validationFailedToastMessage": "Por favor, verifique os seus cam"
+  },
+  "checkout": {
+    "shipping": {
+      "address": {
+        "title": "Endereço de envio",
+        "select": "Acrescentar endereço de envio",
+        "change": "Alterar",
+        "makeBilling": "Utilização como endereço de facturação"
+      }
+    },
+    "billing": {
+      "address": {
+        "title": "Endereço para facturação",
+        "select": "Adicionar morada de facturação",
+        "change": "Alterar"
+      }
+    }
+  },
+  "navigation": {
+    "profile": "Os meus dados",
+    "change_password": "Alterar palavra-passe",
+    "address_book": "Livro de endereços",
+    "payment_options": "Opções de pagamento"
+  },
+  "navigator": {
+    "save": "Guardar",
+    "changePassword": "Guardar"
+  }
+}
