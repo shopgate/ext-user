@@ -1,6 +1,6 @@
 {
   "name": "@shopgate/user",
-  "version": "3.0.2",
+  "version": "3.0.5",
   "description": "Shopgate Connect user extension",
   "repository": {
     "type": "git",
@@ -48,8 +48,5 @@
     "react-redux": "^5.0.5",
     "react-transform-catch-errors": "^1.0.2",
     "redbox-react": "^1.5.0"
-  },
-  "peerDependencies": {
-    "@shopgate/pwa-common": "^6.1.0"
   }
 }
